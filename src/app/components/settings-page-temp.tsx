@@ -25,18 +25,18 @@ import {
   Upload,
   User,
   Zap,
-} from 'lucide-react';
-import { motion } from 'motion/react';
-import { useState } from 'react';
+} from 'lucide-react'
+import { motion } from 'motion/react'
+import { useState } from 'react'
 
-import { useThemeColors } from './hooks/use-theme-colors';
+import { useThemeColors } from './hooks/use-theme-colors'
 
 /**
  * 临时设置页面 - 快速修复版本
  */
 export function SettingsPage() {
-  const tc = useThemeColors();
-  const [activeCategory, setActiveCategory] = useState('account');
+  const tc = useThemeColors()
+  const [activeCategory, setActiveCategory] = useState('account')
 
   const categories = [
     { id: 'account', label: '账号信息', icon: User },
@@ -49,7 +49,7 @@ export function SettingsPage() {
     { id: 'rules', label: '规则管理', icon: FileCode },
     { id: 'skills', label: '技能管理', icon: Zap },
     { id: 'import-export', label: '导入/导出', icon: Download },
-  ];
+  ]
 
   return (
     <div
@@ -60,11 +60,7 @@ export function SettingsPage() {
       }}
     >
       {/* 页面头部 */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
         <h1 className="text-4xl font-bold mb-2" style={{ color: tc.primary }}>
           ⚙️ 系统设置
         </h1>
@@ -74,11 +70,7 @@ export function SettingsPage() {
       </motion.div>
 
       {/* 搜索栏 */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-6"
-      >
+      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <div
           className="relative rounded-xl overflow-hidden"
           style={{
@@ -115,8 +107,8 @@ export function SettingsPage() {
           >
             <div className="space-y-1">
               {categories.map((category) => {
-                const Icon = category.icon;
-                const isActive = activeCategory === category.id;
+                const Icon = category.icon
+                const isActive = activeCategory === category.id
 
                 return (
                   <button
@@ -126,14 +118,16 @@ export function SettingsPage() {
                     style={{
                       background: isActive ? tc.alpha(tc.primary, 0.1) : 'transparent',
                       color: isActive ? tc.primary : tc.textSecondary,
-                      border: isActive ? `1px solid ${tc.alpha(tc.primary, 0.3)}` : '1px solid transparent',
+                      border: isActive
+                        ? `1px solid ${tc.alpha(tc.primary, 0.3)}`
+                        : '1px solid transparent',
                     }}
                   >
                     <Icon size={18} />
                     <span className="flex-1 text-sm font-medium">{category.label}</span>
                     {isActive && <ChevronRight size={16} />}
                   </button>
-                );
+                )
               })}
             </div>
           </div>
@@ -165,7 +159,7 @@ export function SettingsPage() {
                 设置系统已就绪
               </h2>
               <p className="text-lg mb-4" style={{ color: tc.textSecondary }}>
-                当前选择: {categories.find(c => c.id === activeCategory)?.label}
+                当前选择: {categories.find((c) => c.id === activeCategory)?.label}
               </p>
               <div
                 className="inline-block px-6 py-3 rounded-lg"
@@ -174,9 +168,7 @@ export function SettingsPage() {
                   border: `1px solid ${tc.alpha(tc.accent, 0.3)}`,
                 }}
               >
-                <p style={{ color: tc.accent }}>
-                  🎉 设置面板正在加载中...
-                </p>
+                <p style={{ color: tc.accent }}>🎉 设置面板正在加载中...</p>
                 <p className="text-sm mt-2" style={{ color: tc.textMuted }}>
                   完整功能即将上线
                 </p>
@@ -186,5 +178,5 @@ export function SettingsPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -3,14 +3,14 @@
  * Displays current theme label and animated icon; switches between
  * cyberpunk and liquid glass modes on click.
  */
-import { Droplets, Palette } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { Droplets, Palette } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 
-import { useThemeSwitcher } from './theme-switcher-context';
+import { useThemeSwitcher } from './theme-switcher-context'
 
 export function ThemeSwitcherButton() {
-  const { theme, toggleTheme } = useThemeSwitcher();
-  const isCyberpunk = theme === 'cyberpunk';
+  const { theme, toggleTheme } = useThemeSwitcher()
+  const isCyberpunk = theme === 'cyberpunk'
 
   return (
     <motion.button
@@ -20,7 +20,7 @@ export function ThemeSwitcherButton() {
       whileTap={{ scale: 0.95 }}
       title={isCyberpunk ? '切换到液态玻璃主题' : '切换到赛博朋克主题'}
       style={{
-        background: isCyberpunk 
+        background: isCyberpunk
           ? 'linear-gradient(135deg, rgba(0,240,255,0.15), rgba(0,212,255,0.1))'
           : 'linear-gradient(135deg, rgba(0,255,135,0.15), rgba(6,182,212,0.1))',
         border: `1px solid ${isCyberpunk ? 'rgba(0,240,255,0.3)' : 'rgba(0,255,135,0.3)'}`,
@@ -31,9 +31,7 @@ export function ThemeSwitcherButton() {
         gap: '8px',
         color: isCyberpunk ? '#00f0ff' : '#00ff87',
         transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-        boxShadow: isCyberpunk
-          ? '0 0 20px rgba(0,240,255,0.15)'
-          : '0 0 20px rgba(0,255,135,0.15)',
+        boxShadow: isCyberpunk ? '0 0 20px rgba(0,240,255,0.15)' : '0 0 20px rgba(0,255,135,0.15)',
       }}
     >
       {/* 图标切换动画 */}
@@ -70,9 +68,7 @@ export function ThemeSwitcherButton() {
       <span
         className="text-[9px] px-2 py-0.5 rounded-full"
         style={{
-          background: isCyberpunk 
-            ? 'rgba(0,240,255,0.1)' 
-            : 'rgba(0,255,135,0.1)',
+          background: isCyberpunk ? 'rgba(0,240,255,0.1)' : 'rgba(0,255,135,0.1)',
           border: `1px solid ${isCyberpunk ? 'rgba(0,240,255,0.2)' : 'rgba(0,255,135,0.2)'}`,
         }}
       >
@@ -89,7 +85,7 @@ export function ThemeSwitcherButton() {
         }}
       />
     </motion.button>
-  );
+  )
 }
 
 /**
@@ -97,8 +93,8 @@ export function ThemeSwitcherButton() {
  * Shows a minimal icon-only toggle with tooltip.
  */
 export function ThemeSwitcherButtonCompact() {
-  const { theme, toggleTheme } = useThemeSwitcher();
-  const isCyberpunk = theme === 'cyberpunk';
+  const { theme, toggleTheme } = useThemeSwitcher()
+  const isCyberpunk = theme === 'cyberpunk'
 
   return (
     <motion.button
@@ -108,9 +104,7 @@ export function ThemeSwitcherButtonCompact() {
       whileTap={{ scale: 0.9 }}
       title={isCyberpunk ? '切换到液态玻璃主题' : '切换到赛博朋克主题'}
       style={{
-        background: isCyberpunk 
-          ? 'rgba(0,240,255,0.1)' 
-          : 'rgba(0,255,135,0.1)',
+        background: isCyberpunk ? 'rgba(0,240,255,0.1)' : 'rgba(0,255,135,0.1)',
         border: `1px solid ${isCyberpunk ? 'rgba(0,240,255,0.3)' : 'rgba(0,255,135,0.3)'}`,
         borderRadius: '50%',
         width: '40px',
@@ -120,9 +114,7 @@ export function ThemeSwitcherButtonCompact() {
         justifyContent: 'center',
         color: isCyberpunk ? '#00f0ff' : '#00ff87',
         transition: 'all 0.3s ease',
-        boxShadow: isCyberpunk
-          ? '0 0 15px rgba(0,240,255,0.2)'
-          : '0 0 15px rgba(0,255,135,0.2)',
+        boxShadow: isCyberpunk ? '0 0 15px rgba(0,240,255,0.2)' : '0 0 15px rgba(0,255,135,0.2)',
       }}
     >
       <AnimatePresence mode="wait">
@@ -149,5 +141,5 @@ export function ThemeSwitcherButtonCompact() {
         )}
       </AnimatePresence>
     </motion.button>
-  );
+  )
 }

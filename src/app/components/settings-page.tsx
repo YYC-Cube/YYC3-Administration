@@ -28,7 +28,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { useMemo, useState, type ReactNode } from 'react'
+import { type ReactNode, useMemo, useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'

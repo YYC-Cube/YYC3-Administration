@@ -1,11 +1,24 @@
 import {
-  AlertCircle, CheckCircle2, Clock, Eye, EyeOff, Globe, Info,
-  Link, Mail, RotateCcw, Save, Server, Settings, Shield, Zap,
-} from "lucide-react";
-import { useState } from "react";
+  AlertCircle,
+  CheckCircle2,
+  Clock,
+  Eye,
+  EyeOff,
+  Globe,
+  Info,
+  Link,
+  Mail,
+  RotateCcw,
+  Save,
+  Server,
+  Settings,
+  Shield,
+  Zap,
+} from 'lucide-react'
+import { useState } from 'react'
 
-import { useThemeColors } from "./hooks/use-theme-colors";
-import { NeonCard } from "./neon-card";
+import { useThemeColors } from './hooks/use-theme-colors'
+import { NeonCard } from './neon-card'
 
 // ==========================================
 // YYC³ 参数设置页面 - Parameter Settings
@@ -13,65 +26,65 @@ import { NeonCard } from "./neon-card";
 // ==========================================
 
 interface SystemConfig {
-  siteName: string;
-  siteUrl: string;
-  adminEmail: string;
-  timezone: string;
-  language: string;
-  currency: string;
-  dateFormat: string;
-  timeFormat: string;
+  siteName: string
+  siteUrl: string
+  adminEmail: string
+  timezone: string
+  language: string
+  currency: string
+  dateFormat: string
+  timeFormat: string
 }
 
 interface EmailConfig {
-  smtpHost: string;
-  smtpPort: string;
-  smtpUser: string;
-  smtpPassword: string;
-  smtpEncryption: "none" | "ssl" | "tls";
-  fromName: string;
-  fromEmail: string;
+  smtpHost: string
+  smtpPort: string
+  smtpUser: string
+  smtpPassword: string
+  smtpEncryption: 'none' | 'ssl' | 'tls'
+  fromName: string
+  fromEmail: string
 }
 
 interface SecurityConfig {
-  passwordMinLength: number;
-  passwordRequireSpecial: boolean;
-  passwordRequireNumber: boolean;
-  passwordRequireUpper: boolean;
-  sessionTimeout: number;
-  maxLoginAttempts: number;
-  twoFactorAuth: boolean;
-  ipWhitelist: string;
+  passwordMinLength: number
+  passwordRequireSpecial: boolean
+  passwordRequireNumber: boolean
+  passwordRequireUpper: boolean
+  sessionTimeout: number
+  maxLoginAttempts: number
+  twoFactorAuth: boolean
+  ipWhitelist: string
 }
 
-type ConfigSection = "system" | "platform" | "email" | "security";
+type ConfigSection = 'system' | 'platform' | 'email' | 'security'
 
 export function ParameterSettingsPage() {
-  const tc = useThemeColors();
-  const [activeSection, setActiveSection] = useState<ConfigSection>("system");
-  const [showPassword, setShowPassword] = useState(false);
-  const [modified, setModified] = useState(false);
+  const tc = useThemeColors()
+  const [activeSection, setActiveSection] = useState<ConfigSection>('system')
+  const [showPassword, setShowPassword] = useState(false)
+  const [modified, setModified] = useState(false)
 
   const [systemConfig, setSystemConfig] = useState<SystemConfig>({
-    siteName: "YYC³ CloudPivot Intelli-Matrix",
-    siteUrl: "https://yyc3.ai",
-    adminEmail: "admin@yyc3.ai",
-    timezone: "Asia/Shanghai",
-    language: "zh-CN",
-    currency: "CNY",
-    dateFormat: "YYYY-MM-DD",
-    timeFormat: "HH:mm:ss",
-  });
+    siteName: 'YYC³ CloudPivot Intelli-Matrix',
+    siteUrl: 'https://yyc3.ai',
+    adminEmail: 'admin@yyc3.ai',
+    timezone: 'Asia/Shanghai',
+    language: 'zh-CN',
+    currency: 'CNY',
+    dateFormat: 'YYYY-MM-DD',
+    timeFormat: 'HH:mm:ss',
+  })
 
   const [emailConfig, setEmailConfig] = useState<EmailConfig>({
-    smtpHost: "smtp.example.com",
-    smtpPort: "587",
-    smtpUser: "noreply@yyc3.ai",
-    smtpPassword: "••••••••",
-    smtpEncryption: "tls",
-    fromName: "YYC³ System",
-    fromEmail: "noreply@yyc3.ai",
-  });
+    smtpHost: 'smtp.example.com',
+    smtpPort: '587',
+    smtpUser: 'noreply@yyc3.ai',
+    smtpPassword: '••••••••',
+    smtpEncryption: 'tls',
+    fromName: 'YYC³ System',
+    fromEmail: 'noreply@yyc3.ai',
+  })
 
   const [securityConfig, setSecurityConfig] = useState<SecurityConfig>({
     passwordMinLength: 8,
@@ -81,29 +94,29 @@ export function ParameterSettingsPage() {
     sessionTimeout: 30,
     maxLoginAttempts: 5,
     twoFactorAuth: false,
-    ipWhitelist: "",
-  });
+    ipWhitelist: '',
+  })
 
   const handleSave = () => {
-    console.log("Saving configuration...", { systemConfig, emailConfig, securityConfig });
-    setModified(false);
+    console.log('Saving configuration...', { systemConfig, emailConfig, securityConfig })
+    setModified(false)
     // Simulate save success
-  };
+  }
 
   const handleReset = () => {
     // Reset to defaults
-    setModified(false);
-  };
+    setModified(false)
+  }
 
   const sections = [
-    { id: "system" as const, label: "系统基础配置", icon: Settings, color: tc.primary },
-    { id: "platform" as const, label: "平台连接参数", icon: Link, color: tc.secondary },
-    { id: "email" as const, label: "邮件服务配置", icon: Mail, color: tc.success },
-    { id: "security" as const, label: "安全策略配置", icon: Shield, color: tc.destructive },
-  ];
+    { id: 'system' as const, label: '系统基础配置', icon: Settings, color: tc.primary },
+    { id: 'platform' as const, label: '平台连接参数', icon: Link, color: tc.secondary },
+    { id: 'email' as const, label: '邮件服务配置', icon: Mail, color: tc.success },
+    { id: 'security' as const, label: '安全策略配置', icon: Shield, color: tc.destructive },
+  ]
 
   return (
-    <div className="h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+    <div className="h-full overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
       {/* Top accent line */}
       <div
         className="absolute top-0 left-0 right-0 h-1 z-10"
@@ -120,12 +133,12 @@ export function ParameterSettingsPage() {
             <div
               className="w-10 h-10 rounded-2xl flex items-center justify-center"
               style={{
-                background: tc.alpha("#8b5cf6", 0.1),
-                border: `1px solid ${tc.alpha("#8b5cf6", 0.2)}`,
-                boxShadow: `0 0 15px ${tc.alpha("#8b5cf6", 0.1)}`,
+                background: tc.alpha('#8b5cf6', 0.1),
+                border: `1px solid ${tc.alpha('#8b5cf6', 0.2)}`,
+                boxShadow: `0 0 15px ${tc.alpha('#8b5cf6', 0.1)}`,
               }}
             >
-              <Settings className="w-5 h-5" style={{ color: "#8b5cf6" }} />
+              <Settings className="w-5 h-5" style={{ color: '#8b5cf6' }} />
             </div>
             <div>
               <h1
@@ -144,9 +157,9 @@ export function ParameterSettingsPage() {
             <span
               className="ml-2 px-2 py-0.5 rounded-full text-[9px]"
               style={{
-                background: tc.alpha("#8b5cf6", 0.08),
-                color: "#8b5cf6",
-                border: `1px solid ${tc.alpha("#8b5cf6", 0.15)}`,
+                background: tc.alpha('#8b5cf6', 0.08),
+                color: '#8b5cf6',
+                border: `1px solid ${tc.alpha('#8b5cf6', 0.15)}`,
               }}
             >
               平台集成
@@ -176,9 +189,9 @@ export function ParameterSettingsPage() {
                   ? `linear-gradient(135deg, ${tc.primary}, ${tc.secondary})`
                   : tc.alpha(tc.muted, 0.1),
                 border: `1px solid ${modified ? tc.alpha(tc.primary, 0.3) : tc.alpha(tc.muted, 0.2)}`,
-                color: modified ? "#fff" : tc.mutedForeground,
+                color: modified ? '#fff' : tc.mutedForeground,
                 opacity: modified ? 1 : 0.5,
-                cursor: modified ? "pointer" : "not-allowed",
+                cursor: modified ? 'pointer' : 'not-allowed',
               }}
             >
               <Save className="w-3 h-3" />
@@ -192,25 +205,27 @@ export function ParameterSettingsPage() {
       <div className="px-6 pb-5">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: "配置项", value: "128", trend: "+3 本周", trendUp: true },
-            { label: "安全评分", value: "96分", trend: "优秀", trendUp: true },
-            { label: "配置版本", value: "v2.8", trend: "最新" },
-            { label: "最近变更", value: "2h前", trend: "张运维" },
+            { label: '配置项', value: '128', trend: '+3 本周', trendUp: true },
+            { label: '安全评分', value: '96分', trend: '优秀', trendUp: true },
+            { label: '配置版本', value: 'v2.8', trend: '最新' },
+            { label: '最近变更', value: '2h前', trend: '张运维' },
           ].map((stat, idx) => (
             <NeonCard key={idx} color="#8b5cf6">
-              <div style={{ animation: `spring-in 0.35s var(--spring-easing) ${idx * 0.05}s both` }}>
+              <div
+                style={{ animation: `spring-in 0.35s var(--spring-easing) ${idx * 0.05}s both` }}
+              >
                 <p className="text-[10px] text-white/30 mb-1">{stat.label}</p>
                 <p
                   className="text-xl mb-0.5"
                   style={{
-                    color: "#8b5cf6",
-                    textShadow: `0 0 12px ${tc.alpha("#8b5cf6", 0.3)}`,
+                    color: '#8b5cf6',
+                    textShadow: `0 0 12px ${tc.alpha('#8b5cf6', 0.3)}`,
                   }}
                 >
                   {stat.value}
                 </p>
                 {stat.trend && (
-                  <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.2)" }}>
+                  <span className="text-[9px]" style={{ color: 'rgba(255,255,255,0.2)' }}>
                     {stat.trend}
                   </span>
                 )}
@@ -222,10 +237,10 @@ export function ParameterSettingsPage() {
 
       {/* Section Tabs */}
       <div className="px-6 pb-4">
-        <div className="flex items-center gap-2 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+        <div className="flex items-center gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
           {sections.map((section) => {
-            const Icon = section.icon;
-            const isActive = activeSection === section.id;
+            const Icon = section.icon
+            const isActive = activeSection === section.id
             return (
               <button
                 key={section.id}
@@ -235,13 +250,13 @@ export function ParameterSettingsPage() {
                   background: isActive ? tc.alpha(section.color, 0.15) : tc.alpha(tc.card, 0.5),
                   border: `1px solid ${isActive ? tc.alpha(section.color, 0.3) : tc.alpha(tc.border, 0.1)}`,
                   color: isActive ? section.color : tc.mutedForeground,
-                  boxShadow: isActive ? `0 0 15px ${tc.alpha(section.color, 0.2)}` : "none",
+                  boxShadow: isActive ? `0 0 15px ${tc.alpha(section.color, 0.2)}` : 'none',
                 }}
               >
                 <Icon className="w-3.5 h-3.5" />
                 {section.label}
               </button>
-            );
+            )
           })}
         </div>
       </div>
@@ -249,7 +264,7 @@ export function ParameterSettingsPage() {
       {/* Configuration Forms */}
       <div className="px-6 pb-8">
         {/* System Configuration */}
-        {activeSection === "system" && (
+        {activeSection === 'system' && (
           <NeonCard color={tc.primary}>
             <div className="space-y-4">
               <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
@@ -264,8 +279,8 @@ export function ParameterSettingsPage() {
                     type="text"
                     value={systemConfig.siteName}
                     onChange={(e) => {
-                      setSystemConfig({ ...systemConfig, siteName: e.target.value });
-                      setModified(true);
+                      setSystemConfig({ ...systemConfig, siteName: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px] transition-all"
                     style={{
@@ -282,8 +297,8 @@ export function ParameterSettingsPage() {
                     type="url"
                     value={systemConfig.siteUrl}
                     onChange={(e) => {
-                      setSystemConfig({ ...systemConfig, siteUrl: e.target.value });
-                      setModified(true);
+                      setSystemConfig({ ...systemConfig, siteUrl: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px] transition-all"
                     style={{
@@ -300,8 +315,8 @@ export function ParameterSettingsPage() {
                     type="email"
                     value={systemConfig.adminEmail}
                     onChange={(e) => {
-                      setSystemConfig({ ...systemConfig, adminEmail: e.target.value });
-                      setModified(true);
+                      setSystemConfig({ ...systemConfig, adminEmail: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px] transition-all"
                     style={{
@@ -320,8 +335,8 @@ export function ParameterSettingsPage() {
                   <select
                     value={systemConfig.timezone}
                     onChange={(e) => {
-                      setSystemConfig({ ...systemConfig, timezone: e.target.value });
-                      setModified(true);
+                      setSystemConfig({ ...systemConfig, timezone: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px] transition-all"
                     style={{
@@ -342,8 +357,8 @@ export function ParameterSettingsPage() {
                   <select
                     value={systemConfig.language}
                     onChange={(e) => {
-                      setSystemConfig({ ...systemConfig, language: e.target.value });
-                      setModified(true);
+                      setSystemConfig({ ...systemConfig, language: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px] transition-all"
                     style={{
@@ -363,8 +378,8 @@ export function ParameterSettingsPage() {
                   <select
                     value={systemConfig.currency}
                     onChange={(e) => {
-                      setSystemConfig({ ...systemConfig, currency: e.target.value });
-                      setModified(true);
+                      setSystemConfig({ ...systemConfig, currency: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px] transition-all"
                     style={{
@@ -384,13 +399,13 @@ export function ParameterSettingsPage() {
         )}
 
         {/* Platform Connections */}
-        {activeSection === "platform" && (
+        {activeSection === 'platform' && (
           <div className="space-y-4">
             {[
-              { name: "微信公众号", platform: "WeChat", enabled: true, status: "connected" },
-              { name: "钉钉应用", platform: "DingTalk", enabled: true, status: "connected" },
-              { name: "飞书应用", platform: "Feishu", enabled: false, status: "disconnected" },
-              { name: "抖音开放平台", platform: "Douyin", enabled: false, status: "disconnected" },
+              { name: '微信公众号', platform: 'WeChat', enabled: true, status: 'connected' },
+              { name: '钉钉应用', platform: 'DingTalk', enabled: true, status: 'connected' },
+              { name: '飞书应用', platform: 'Feishu', enabled: false, status: 'disconnected' },
+              { name: '抖音开放平台', platform: 'Douyin', enabled: false, status: 'disconnected' },
             ].map((platform, idx) => (
               <NeonCard key={idx} color={tc.secondary}>
                 <div className="flex items-center justify-between">
@@ -414,22 +429,22 @@ export function ParameterSettingsPage() {
                       className="px-2 py-1 rounded-md text-[9px] flex items-center gap-1"
                       style={{
                         background: tc.alpha(
-                          platform.status === "connected" ? tc.success : tc.muted,
-                          0.1
+                          platform.status === 'connected' ? tc.success : tc.muted,
+                          0.1,
                         ),
-                        color: platform.status === "connected" ? tc.success : tc.mutedForeground,
+                        color: platform.status === 'connected' ? tc.success : tc.mutedForeground,
                         border: `1px solid ${tc.alpha(
-                          platform.status === "connected" ? tc.success : tc.muted,
-                          0.2
+                          platform.status === 'connected' ? tc.success : tc.muted,
+                          0.2,
                         )}`,
                       }}
                     >
-                      {platform.status === "connected" ? (
+                      {platform.status === 'connected' ? (
                         <CheckCircle2 className="w-2.5 h-2.5" />
                       ) : (
                         <AlertCircle className="w-2.5 h-2.5" />
                       )}
-                      {platform.status === "connected" ? "已连接" : "未连接"}
+                      {platform.status === 'connected' ? '已连接' : '未连接'}
                     </span>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
@@ -449,7 +464,7 @@ export function ParameterSettingsPage() {
         )}
 
         {/* Email Configuration */}
-        {activeSection === "email" && (
+        {activeSection === 'email' && (
           <NeonCard color={tc.success}>
             <div className="space-y-4">
               <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
@@ -464,8 +479,8 @@ export function ParameterSettingsPage() {
                     type="text"
                     value={emailConfig.smtpHost}
                     onChange={(e) => {
-                      setEmailConfig({ ...emailConfig, smtpHost: e.target.value });
-                      setModified(true);
+                      setEmailConfig({ ...emailConfig, smtpHost: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px]"
                     style={{
@@ -482,8 +497,8 @@ export function ParameterSettingsPage() {
                     type="text"
                     value={emailConfig.smtpPort}
                     onChange={(e) => {
-                      setEmailConfig({ ...emailConfig, smtpPort: e.target.value });
-                      setModified(true);
+                      setEmailConfig({ ...emailConfig, smtpPort: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px]"
                     style={{
@@ -500,8 +515,8 @@ export function ParameterSettingsPage() {
                     type="text"
                     value={emailConfig.smtpUser}
                     onChange={(e) => {
-                      setEmailConfig({ ...emailConfig, smtpUser: e.target.value });
-                      setModified(true);
+                      setEmailConfig({ ...emailConfig, smtpUser: e.target.value })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px]"
                     style={{
@@ -516,11 +531,11 @@ export function ParameterSettingsPage() {
                   <label className="block text-[10px] text-white/40 mb-1.5">SMTP 密码</label>
                   <div className="relative">
                     <input
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       value={emailConfig.smtpPassword}
                       onChange={(e) => {
-                        setEmailConfig({ ...emailConfig, smtpPassword: e.target.value });
-                        setModified(true);
+                        setEmailConfig({ ...emailConfig, smtpPassword: e.target.value })
+                        setModified(true)
                       }}
                       className="w-full px-3 py-2 pr-10 rounded-lg text-[12px]"
                       style={{
@@ -547,9 +562,9 @@ export function ParameterSettingsPage() {
                     onChange={(e) => {
                       setEmailConfig({
                         ...emailConfig,
-                        smtpEncryption: e.target.value as "none" | "ssl" | "tls",
-                      });
-                      setModified(true);
+                        smtpEncryption: e.target.value as 'none' | 'ssl' | 'tls',
+                      })
+                      setModified(true)
                     }}
                     className="w-full px-3 py-2 rounded-lg text-[12px]"
                     style={{
@@ -569,7 +584,7 @@ export function ParameterSettingsPage() {
         )}
 
         {/* Security Configuration */}
-        {activeSection === "security" && (
+        {activeSection === 'security' && (
           <NeonCard color={tc.destructive}>
             <div className="space-y-4">
               <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
@@ -589,8 +604,8 @@ export function ParameterSettingsPage() {
                       setSecurityConfig({
                         ...securityConfig,
                         passwordMinLength: parseInt(e.target.value),
-                      });
-                      setModified(true);
+                      })
+                      setModified(true)
                     }}
                     className="w-full"
                   />
@@ -604,24 +619,24 @@ export function ParameterSettingsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
                     {
-                      label: "要求特殊字符",
+                      label: '要求特殊字符',
                       value: securityConfig.passwordRequireSpecial,
-                      key: "passwordRequireSpecial" as const,
+                      key: 'passwordRequireSpecial' as const,
                     },
                     {
-                      label: "要求数字",
+                      label: '要求数字',
                       value: securityConfig.passwordRequireNumber,
-                      key: "passwordRequireNumber" as const,
+                      key: 'passwordRequireNumber' as const,
                     },
                     {
-                      label: "要求大写字母",
+                      label: '要求大写字母',
                       value: securityConfig.passwordRequireUpper,
-                      key: "passwordRequireUpper" as const,
+                      key: 'passwordRequireUpper' as const,
                     },
                     {
-                      label: "启用双因素认证",
+                      label: '启用双因素认证',
                       value: securityConfig.twoFactorAuth,
-                      key: "twoFactorAuth" as const,
+                      key: 'twoFactorAuth' as const,
                     },
                   ].map((item, idx) => (
                     <label
@@ -637,8 +652,8 @@ export function ParameterSettingsPage() {
                         type="checkbox"
                         checked={item.value}
                         onChange={(e) => {
-                          setSecurityConfig({ ...securityConfig, [item.key]: e.target.checked });
-                          setModified(true);
+                          setSecurityConfig({ ...securityConfig, [item.key]: e.target.checked })
+                          setModified(true)
                         }}
                         className="w-4 h-4 rounded"
                         style={{ accentColor: tc.destructive }}
@@ -659,8 +674,8 @@ export function ParameterSettingsPage() {
                         setSecurityConfig({
                           ...securityConfig,
                           sessionTimeout: parseInt(e.target.value) || 0,
-                        });
-                        setModified(true);
+                        })
+                        setModified(true)
                       }}
                       className="w-full px-3 py-2 rounded-lg text-[12px]"
                       style={{
@@ -682,8 +697,8 @@ export function ParameterSettingsPage() {
                         setSecurityConfig({
                           ...securityConfig,
                           maxLoginAttempts: parseInt(e.target.value) || 0,
-                        });
-                        setModified(true);
+                        })
+                        setModified(true)
                       }}
                       className="w-full px-3 py-2 rounded-lg text-[12px]"
                       style={{
@@ -709,12 +724,12 @@ export function ParameterSettingsPage() {
               <h4 className="text-[11px] text-white/60 mb-2">AI 智能特性</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                 {[
-                  "基于地理位置的时区自动推荐",
-                  "API密钥强度检测与安全评分",
-                  "连接配置智能验证与错误诊断",
-                  "密码强度AI评估与改进建议",
-                  "异常登录行为AI检测与预警",
-                  "配置漂移自动检测",
+                  '基于地理位置的时区自动推荐',
+                  'API密钥强度检测与安全评分',
+                  '连接配置智能验证与错误诊断',
+                  '密码强度AI评估与改进建议',
+                  '异常登录行为AI检测与预警',
+                  '配置漂移自动检测',
                 ].map((cap, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <div
@@ -733,5 +748,5 @@ export function ParameterSettingsPage() {
         </NeonCard>
       </div>
     </div>
-  );
+  )
 }

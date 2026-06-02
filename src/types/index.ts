@@ -3,14 +3,14 @@
  * YYC³ 言语智能 - TypeScript 类型定义系统
  * YYC³ AI Marketing Automation Terminal - Type Definitions
  * ==========================================
- * 
+ *
  * 完整的类型安全系统，涵盖：
  * - 组件Props接口
  * - 数据模型和状态类型
  * - API请求/响应类型
  * - 枚举和联合类型
  * - 工具类型和泛型
- * 
+ *
  * @version 2.0.0
  * @author YYC³ Team
  */
@@ -23,105 +23,105 @@
  * 页面标识符
  */
 export type PageId =
-  | "dashboard"     // 数据驾驶舱
-  | "chat"          // AI对话
-  | "clm"           // 客户生命周期
-  | "aicall"        // AI呼叫中心
-  | "tools"         // 智能工具箱
-  | "workflow"      // 自动化工作流
-  | "insights"      // 数据洞察
-  | "settings"      // 系统设置
-  | "logs"          // 活动日志
-  | "forms"         // 智能表单
-  | "contacts"      // 通讯录
-  | "customerCare"; // 客户关怀
+  | 'dashboard' // 数据驾驶舱
+  | 'chat' // AI对话
+  | 'clm' // 客户生命周期
+  | 'aicall' // AI呼叫中心
+  | 'tools' // 智能工具箱
+  | 'workflow' // 自动化工作流
+  | 'insights' // 数据洞察
+  | 'settings' // 系统设置
+  | 'logs' // 活动日志
+  | 'forms' // 智能表单
+  | 'contacts' // 通讯录
+  | 'customerCare' // 客户关怀
 
 /**
  * 应用模式
  */
-export type AppMode = "standalone" | "widget";
+export type AppMode = 'standalone' | 'widget'
 
 /**
  * 主题模式
  */
-export type ThemeMode = "cyberpunk" | "liquidGlass";
+export type ThemeMode = 'cyberpunk' | 'liquidGlass'
 
 /**
  * 语言代码
  */
-export type LanguageCode = "zh-CN" | "en-US";
+export type LanguageCode = 'zh-CN' | 'en-US'
 
 /**
  * 通知类型
  */
-export type NotificationType = "info" | "success" | "warning" | "error";
+export type NotificationType = 'info' | 'success' | 'warning' | 'error'
 
 /**
  * 活动类型
  */
-export type ActivityType = "customer" | "call" | "system" | "ai";
+export type ActivityType = 'customer' | 'call' | 'system' | 'ai'
 
 /**
  * 客户生命周期阶段
  */
-export type CustomerStage = "获客" | "转化" | "成交" | "服务" | "忠诚";
-export type CustomerStageEN = "acquisition" | "conversion" | "closing" | "service" | "loyalty";
+export type CustomerStage = '获客' | '转化' | '成交' | '服务' | '忠诚'
+export type CustomerStageEN = 'acquisition' | 'conversion' | 'closing' | 'service' | 'loyalty'
 
 /**
  * 风险等级
  */
-export type RiskLevel = "low" | "medium" | "high";
+export type RiskLevel = 'low' | 'medium' | 'high'
 
 /**
  * 客户关怀状态
  */
-export type CareStatus = "pending" | "inProgress" | "completed" | "archived";
+export type CareStatus = 'pending' | 'inProgress' | 'completed' | 'archived'
 
 /**
  * 客户等级
  */
-export type CustomerLevel = "vip" | "high" | "normal" | "low";
+export type CustomerLevel = 'vip' | 'high' | 'normal' | 'low'
 
 /**
  * AI模型类型
  */
 export type AIModelType =
-  | "gpt-4"
-  | "gpt-3.5-turbo"
-  | "claude-3-opus"
-  | "claude-3-sonnet"
-  | "gemini-pro"
-  | "deepseek-v3"
-  | "qwen-max"
-  | "moonshot-v1";
+  | 'gpt-4'
+  | 'gpt-3.5-turbo'
+  | 'claude-3-opus'
+  | 'claude-3-sonnet'
+  | 'gemini-pro'
+  | 'deepseek-v3'
+  | 'qwen-max'
+  | 'moonshot-v1'
 
 /**
  * 表单字段类型
  */
 export type FormFieldType =
-  | "text"
-  | "textarea"
-  | "number"
-  | "email"
-  | "phone"
-  | "date"
-  | "select"
-  | "radio"
-  | "checkbox"
-  | "file"
-  | "rating"
-  | "slider";
+  | 'text'
+  | 'textarea'
+  | 'number'
+  | 'email'
+  | 'phone'
+  | 'date'
+  | 'select'
+  | 'radio'
+  | 'checkbox'
+  | 'file'
+  | 'rating'
+  | 'slider'
 
 /**
  * 表单模板类别
  */
 export type FormCategory =
-  | "客户调研"
-  | "满意度评价"
-  | "需求收集"
-  | "反馈建议"
-  | "订单信息"
-  | "预约登记";
+  | '客户调研'
+  | '满意度评价'
+  | '需求收集'
+  | '反馈建议'
+  | '订单信息'
+  | '预约登记'
 
 // ==========================================
 // 2. 数据模型
@@ -132,19 +132,19 @@ export type FormCategory =
  */
 export interface ThemeConfig {
   /** 霓虹光强度 (0-100) */
-  neonIntensity: number;
+  neonIntensity: number
   /** 启用扫描线效果 */
-  scanlineEnabled: boolean;
+  scanlineEnabled: boolean
   /** 启用故障效果 */
-  glitchEnabled: boolean;
+  glitchEnabled: boolean
   /** 启用电路网格 */
-  circuitGridEnabled: boolean;
+  circuitGridEnabled: boolean
   /** 启用数据流动画 */
-  dataFlowEnabled: boolean;
+  dataFlowEnabled: boolean
   /** 启用弹簧动画 */
-  springAnimEnabled: boolean;
+  springAnimEnabled: boolean
   /** 启用模糊效果 */
-  blurEnabled: boolean;
+  blurEnabled: boolean
 }
 
 /**
@@ -152,19 +152,19 @@ export interface ThemeConfig {
  */
 export interface NotificationItem {
   /** 唯一标识 */
-  id: string;
+  id: string
   /** 标题 */
-  title: string;
+  title: string
   /** 消息内容 */
-  message: string;
+  message: string
   /** 通知类型 */
-  type: NotificationType;
+  type: NotificationType
   /** 主题色 */
-  color: string;
+  color: string
   /** 时间戳 */
-  timestamp: Date;
+  timestamp: Date
   /** 是否已读 */
-  read: boolean;
+  read: boolean
 }
 
 /**
@@ -172,17 +172,17 @@ export interface NotificationItem {
  */
 export interface ActivityItem {
   /** 唯一标识 */
-  id: string;
+  id: string
   /** 操作描述 */
-  action: string;
+  action: string
   /** 目标对象 */
-  target: string;
+  target: string
   /** 时间戳 */
-  timestamp: Date;
+  timestamp: Date
   /** 活动类型 */
-  type: ActivityType;
+  type: ActivityType
   /** 主题色 */
-  color: string;
+  color: string
 }
 
 /**
@@ -190,45 +190,45 @@ export interface ActivityItem {
  */
 export interface SharedContact {
   /** 唯一标识 */
-  id: string;
+  id: string
   /** 姓名 */
-  name: string;
+  name: string
   /** 电话 */
-  phone: string;
+  phone: string
   /** 邮箱 */
-  email: string;
+  email: string
   /** 公司 */
-  company: string;
+  company: string
   /** 职位 */
-  position: string;
+  position: string
   /** 生命周期阶段 */
-  stage: CustomerStage;
+  stage: CustomerStage
   /** 标签 */
-  tags: string[];
+  tags: string[]
   /** AI评分 (0-100) */
-  aiScore: number;
+  aiScore: number
   /** AI洞察 */
-  aiInsights: string[];
+  aiInsights: string[]
   /** 是否星标 */
-  starred: boolean;
+  starred: boolean
   /** 头像URL */
-  avatar?: string;
+  avatar?: string
   /** 地址 */
-  address: string;
+  address: string
   /** 来源渠道 */
-  source: string;
+  source: string
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
   /** 最后联系 */
-  lastContact: string;
+  lastContact: string
   /** 通话次数 */
-  totalCalls: number;
+  totalCalls: number
   /** 总价值 */
-  totalValue: number;
+  totalValue: number
   /** 备注 */
-  notes: string;
+  notes: string
   /** 风险等级 */
-  riskLevel: RiskLevel;
+  riskLevel: RiskLevel
 }
 
 /**
@@ -236,33 +236,33 @@ export interface SharedContact {
  */
 export interface CustomerCareRecord {
   /** 唯一标识 */
-  id: string;
+  id: string
   /** 客户姓名 */
-  name: string;
+  name: string
   /** 公司 */
-  company: string;
+  company: string
   /** 电话 */
-  phone: string;
+  phone: string
   /** 邮箱 */
-  email: string;
+  email: string
   /** 当前状态 */
-  status: CareStatus;
+  status: CareStatus
   /** 客户等级 */
-  level: CustomerLevel;
+  level: CustomerLevel
   /** 最后联系时间 */
-  lastContact: string;
+  lastContact: string
   /** 下次跟进时间 */
-  nextFollowUp: string;
+  nextFollowUp: string
   /** 负责人 */
-  responsible: string;
+  responsible: string
   /** 标签 */
-  tags: string[];
+  tags: string[]
   /** 备注 */
-  notes: string;
+  notes: string
   /** 来源渠道 */
-  source: string;
+  source: string
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
 }
 
 /**
@@ -270,27 +270,27 @@ export interface CustomerCareRecord {
  */
 export interface AIModelConfig {
   /** 模型标识 */
-  id: AIModelType;
+  id: AIModelType
   /** 显示名称 */
-  name: string;
+  name: string
   /** 描述 */
-  description: string;
+  description: string
   /** 提供商 */
-  provider: string;
+  provider: string
   /** 是否可用 */
-  available: boolean;
+  available: boolean
   /** 温度 (0-2) */
-  temperature: number;
+  temperature: number
   /** 最大令牌数 */
-  maxTokens: number;
+  maxTokens: number
   /** Top P (0-1) */
-  topP: number;
+  topP: number
   /** 频率惩罚 (-2 to 2) */
-  frequencyPenalty: number;
+  frequencyPenalty: number
   /** 存在惩罚 (-2 to 2) */
-  presencePenalty: number;
+  presencePenalty: number
   /** 自定义系统提示 */
-  systemPrompt?: string;
+  systemPrompt?: string
 }
 
 /**
@@ -298,26 +298,26 @@ export interface AIModelConfig {
  */
 export interface FormField {
   /** 字段ID */
-  id: string;
+  id: string
   /** 字段类型 */
-  type: FormFieldType;
+  type: FormFieldType
   /** 标签 */
-  label: string;
+  label: string
   /** 占位符 */
-  placeholder?: string;
+  placeholder?: string
   /** 是否必填 */
-  required: boolean;
+  required: boolean
   /** 选项（用于select/radio/checkbox） */
-  options?: string[];
+  options?: string[]
   /** 验证规则 */
   validation?: {
-    min?: number;
-    max?: number;
-    pattern?: string;
-    message?: string;
-  };
+    min?: number
+    max?: number
+    pattern?: string
+    message?: string
+  }
   /** 默认值 */
-  defaultValue?: any;
+  defaultValue?: any
 }
 
 /**
@@ -325,23 +325,23 @@ export interface FormField {
  */
 export interface FormTemplate {
   /** 模板ID */
-  id: string;
+  id: string
   /** 模板名称 */
-  name: string;
+  name: string
   /** 模板描述 */
-  description: string;
+  description: string
   /** 分类 */
-  category: FormCategory;
+  category: FormCategory
   /** 图标 */
-  icon: string;
+  icon: string
   /** 字段列表 */
-  fields: FormField[];
+  fields: FormField[]
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
   /** 提交次数 */
-  submissions: number;
+  submissions: number
   /** 是否为系统模板 */
-  isSystem: boolean;
+  isSystem: boolean
 }
 
 /**
@@ -349,19 +349,19 @@ export interface FormTemplate {
  */
 export interface FormSubmission {
   /** 提交ID */
-  id: string;
+  id: string
   /** 表单模板ID */
-  formId: string;
+  formId: string
   /** 表单名称 */
-  formName: string;
+  formName: string
   /** 提交数据 */
-  data: Record<string, any>;
+  data: Record<string, any>
   /** 提交时间 */
-  timestamp: string;
+  timestamp: string
   /** 提交者IP */
-  ip?: string;
+  ip?: string
   /** 设备信息 */
-  device?: string;
+  device?: string
 }
 
 /**
@@ -369,31 +369,31 @@ export interface FormSubmission {
  */
 export interface CallRecord {
   /** 记录ID */
-  id: string;
+  id: string
   /** 联系人ID */
-  contactId: string;
+  contactId: string
   /** 客户姓名 */
-  customerName: string;
+  customerName: string
   /** 电话号码 */
-  phoneNumber: string;
+  phoneNumber: string
   /** 通话时长（秒） */
-  duration: number;
+  duration: number
   /** 通话类型 */
-  type: "inbound" | "outbound";
+  type: 'inbound' | 'outbound'
   /** 通话状态 */
-  status: "completed" | "missed" | "cancelled";
+  status: 'completed' | 'missed' | 'cancelled'
   /** 通话时间 */
-  timestamp: string;
+  timestamp: string
   /** AI转录文本 */
-  transcript?: string;
+  transcript?: string
   /** 情感分析 */
-  sentiment?: "positive" | "neutral" | "negative";
+  sentiment?: 'positive' | 'neutral' | 'negative'
   /** 关键词 */
-  keywords?: string[];
+  keywords?: string[]
   /** 录音URL */
-  recordingUrl?: string;
+  recordingUrl?: string
   /** 备注 */
-  notes?: string;
+  notes?: string
 }
 
 /**
@@ -401,27 +401,27 @@ export interface CallRecord {
  */
 export interface NumberRecord {
   /** 号码ID */
-  id: string;
+  id: string
   /** 电话号码 */
-  number: string;
+  number: string
   /** 归属地 */
-  location: string;
+  location: string
   /** 运营商 */
-  carrier: string;
+  carrier: string
   /** 标签 */
-  tags: string[];
+  tags: string[]
   /** 备注 */
-  notes: string;
+  notes: string
   /** 信任评分 (0-100) */
-  trustScore: number;
+  trustScore: number
   /** 呼叫次数 */
-  callCount: number;
+  callCount: number
   /** 最后呼叫 */
-  lastCall: string;
+  lastCall: string
   /** 是否加入黑名单 */
-  blacklisted: boolean;
+  blacklisted: boolean
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
 }
 
 /**
@@ -429,17 +429,17 @@ export interface NumberRecord {
  */
 export interface WorkflowNode {
   /** 节点ID */
-  id: string;
+  id: string
   /** 节点类型 */
-  type: "trigger" | "condition" | "action" | "delay";
+  type: 'trigger' | 'condition' | 'action' | 'delay'
   /** 节点标题 */
-  title: string;
+  title: string
   /** 节点配置 */
-  config: Record<string, any>;
+  config: Record<string, any>
   /** 位置坐标 */
-  position: { x: number; y: number };
+  position: { x: number; y: number }
   /** 连接的下一个节点 */
-  nextNodes?: string[];
+  nextNodes?: string[]
 }
 
 /**
@@ -447,21 +447,21 @@ export interface WorkflowNode {
  */
 export interface Workflow {
   /** 工作流ID */
-  id: string;
+  id: string
   /** 工作流名称 */
-  name: string;
+  name: string
   /** 描述 */
-  description: string;
+  description: string
   /** 节点列表 */
-  nodes: WorkflowNode[];
+  nodes: WorkflowNode[]
   /** 是否启用 */
-  enabled: boolean;
+  enabled: boolean
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
   /** 最后执行时间 */
-  lastRun?: string;
+  lastRun?: string
   /** 执行次数 */
-  runCount: number;
+  runCount: number
 }
 
 // ==========================================
@@ -473,21 +473,21 @@ export interface Workflow {
  */
 export interface AppState {
   /** 当前页面 */
-  activePage: PageId;
+  activePage: PageId
   /** 应用模式 */
-  appMode: AppMode;
+  appMode: AppMode
   /** 侧边栏是否固定 */
-  sidebarPinned: boolean;
+  sidebarPinned: boolean
   /** 通知列表 */
-  notifications: NotificationItem[];
+  notifications: NotificationItem[]
   /** 最近活动 */
-  recentActivities: ActivityItem[];
+  recentActivities: ActivityItem[]
   /** 主题配置 */
-  theme: ThemeConfig;
+  theme: ThemeConfig
   /** 引导是否完成 */
-  onboardingDone: boolean;
+  onboardingDone: boolean
   /** 移动端侧边栏是否打开 */
-  mobileSidebarOpen: boolean;
+  mobileSidebarOpen: boolean
 }
 
 /**
@@ -495,19 +495,19 @@ export interface AppState {
  */
 export interface ContactsState {
   /** 联系人列表 */
-  contacts: SharedContact[];
+  contacts: SharedContact[]
   /** 搜索查询 */
-  searchQuery: string;
+  searchQuery: string
   /** 筛选标签 */
-  selectedTags: string[];
+  selectedTags: string[]
   /** 筛选阶段 */
-  selectedStages: CustomerStage[];
+  selectedStages: CustomerStage[]
   /** 排序方式 */
-  sortBy: "name" | "company" | "aiScore" | "createdAt" | "lastContact";
+  sortBy: 'name' | 'company' | 'aiScore' | 'createdAt' | 'lastContact'
   /** 排序方向 */
-  sortOrder: "asc" | "desc";
+  sortOrder: 'asc' | 'desc'
   /** 仅显示星标 */
-  showStarredOnly: boolean;
+  showStarredOnly: boolean
 }
 
 /**
@@ -515,15 +515,15 @@ export interface ContactsState {
  */
 export interface LiveKPIData {
   /** 客户总数 */
-  customers: number;
+  customers: number
   /** 今日呼叫数 */
-  calls: number;
+  calls: number
   /** AI任务数 */
-  aiTasks: number;
+  aiTasks: number
   /** 响应时间（毫秒） */
-  responseMs: number;
+  responseMs: number
   /** 刷新键（用于触发更新） */
-  refreshKey: number;
+  refreshKey: number
 }
 
 // ==========================================
@@ -535,31 +535,31 @@ export interface LiveKPIData {
  */
 export interface AppContextType extends AppState {
   /** 设置当前页面 */
-  setActivePage: (page: PageId) => void;
+  setActivePage: (page: PageId) => void
   /** 设置应用模式 */
-  setAppMode: (mode: AppMode) => void;
+  setAppMode: (mode: AppMode) => void
   /** 设置侧边栏固定状态 */
-  setSidebarPinned: (pinned: boolean) => void;
+  setSidebarPinned: (pinned: boolean) => void
   /** 添加通知 */
-  addNotification: (n: Omit<NotificationItem, "id" | "timestamp" | "read">) => void;
+  addNotification: (n: Omit<NotificationItem, 'id' | 'timestamp' | 'read'>) => void
   /** 标记通知为已读 */
-  markNotificationRead: (id: string) => void;
+  markNotificationRead: (id: string) => void
   /** 清空所有通知 */
-  clearNotifications: () => void;
+  clearNotifications: () => void
   /** 添加活动记录 */
-  addActivity: (a: Omit<ActivityItem, "id" | "timestamp">) => void;
+  addActivity: (a: Omit<ActivityItem, 'id' | 'timestamp'>) => void
   /** 未读通知数量 */
-  unreadCount: number;
+  unreadCount: number
   /** 更新主题配置 */
-  updateTheme: (partial: Partial<ThemeConfig>) => void;
+  updateTheme: (partial: Partial<ThemeConfig>) => void
   /** 重置主题配置 */
-  resetTheme: () => void;
+  resetTheme: () => void
   /** 设置引导完成状态 */
-  setOnboardingDone: (done: boolean) => void;
+  setOnboardingDone: (done: boolean) => void
   /** 设置移动端侧边栏状态 */
-  setMobileSidebarOpen: (open: boolean) => void;
+  setMobileSidebarOpen: (open: boolean) => void
   /** 计算霓虹透明度 */
-  neonAlpha: (base: number) => number;
+  neonAlpha: (base: number) => number
 }
 
 /**
@@ -567,25 +567,25 @@ export interface AppContextType extends AppState {
  */
 export interface ContactsContextType {
   /** 联系人列表 */
-  contacts: SharedContact[];
+  contacts: SharedContact[]
   /** 添加联系人 */
-  addContact: (contact: Omit<SharedContact, "id" | "createdAt">) => void;
+  addContact: (contact: Omit<SharedContact, 'id' | 'createdAt'>) => void
   /** 更新联系人 */
-  updateContact: (id: string, updates: Partial<SharedContact>) => void;
+  updateContact: (id: string, updates: Partial<SharedContact>) => void
   /** 删除联系人 */
-  deleteContact: (id: string) => void;
+  deleteContact: (id: string) => void
   /** 批量删除联系人 */
-  bulkDelete: (ids: string[]) => void;
+  bulkDelete: (ids: string[]) => void
   /** 恢复已删除联系人 */
-  restoreContact: (id: string) => void;
+  restoreContact: (id: string) => void
   /** 切换星标状态 */
-  toggleStar: (id: string) => void;
+  toggleStar: (id: string) => void
   /** 导出为CSV */
-  exportToCSV: () => void;
+  exportToCSV: () => void
   /** 导入CSV */
-  importFromCSV: (csv: string) => void;
+  importFromCSV: (csv: string) => void
   /** 已删除联系人列表 */
-  deletedContacts: SharedContact[];
+  deletedContacts: SharedContact[]
 }
 
 /**
@@ -593,15 +593,15 @@ export interface ContactsContextType {
  */
 export interface AIModelContextType {
   /** 当前选中的模型 */
-  selectedModel: AIModelType;
+  selectedModel: AIModelType
   /** 设置模型 */
-  setSelectedModel: (model: AIModelType) => void;
+  setSelectedModel: (model: AIModelType) => void
   /** 模型配置 */
-  modelConfig: AIModelConfig;
+  modelConfig: AIModelConfig
   /** 更新模型配置 */
-  updateModelConfig: (config: Partial<AIModelConfig>) => void;
+  updateModelConfig: (config: Partial<AIModelConfig>) => void
   /** 可用模型列表 */
-  availableModels: AIModelConfig[];
+  availableModels: AIModelConfig[]
 }
 
 /**
@@ -609,11 +609,11 @@ export interface AIModelContextType {
  */
 export interface ThemeSwitcherContextType {
   /** 当前主题 */
-  theme: ThemeMode;
+  theme: ThemeMode
   /** 切换主题 */
-  toggleTheme: () => void;
+  toggleTheme: () => void
   /** 设置主题 */
-  setTheme: (theme: ThemeMode) => void;
+  setTheme: (theme: ThemeMode) => void
 }
 
 /**
@@ -621,11 +621,11 @@ export interface ThemeSwitcherContextType {
  */
 export interface I18nContextType {
   /** 当前语言 */
-  locale: LanguageCode;
+  locale: LanguageCode
   /** 切换语言 */
-  setLocale: (locale: LanguageCode) => void;
+  setLocale: (locale: LanguageCode) => void
   /** 翻译函数 */
-  t: (key: string, params?: Record<string, any>) => string;
+  t: (key: string, params?: Record<string, any>) => string
 }
 
 // ==========================================
@@ -637,13 +637,13 @@ export interface I18nContextType {
  */
 export interface PageProps {
   /** 页面标题（可选） */
-  title?: string;
+  title?: string
   /** 页面副标题（可选） */
-  subtitle?: string;
+  subtitle?: string
   /** 子元素 */
-  children?: React.ReactNode;
+  children?: React.ReactNode
   /** 自定义类名 */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -651,15 +651,15 @@ export interface PageProps {
  */
 export interface NeonCardProps {
   /** 子元素 */
-  children: React.ReactNode;
+  children: React.ReactNode
   /** 霓虹主题色 */
-  color?: string;
+  color?: string
   /** 是否可悬停 */
-  hoverable?: boolean;
+  hoverable?: boolean
   /** 自定义类名 */
-  className?: string;
+  className?: string
   /** 点击事件 */
-  onClick?: () => void;
+  onClick?: () => void
 }
 
 /**
@@ -667,23 +667,23 @@ export interface NeonCardProps {
  */
 export interface ButtonProps {
   /** 按钮文字 */
-  children: React.ReactNode;
+  children: React.ReactNode
   /** 按钮变体 */
-  variant?: "primary" | "secondary" | "danger" | "ghost";
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost'
   /** 按钮尺寸 */
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg'
   /** 是否禁用 */
-  disabled?: boolean;
+  disabled?: boolean
   /** 是否加载中 */
-  loading?: boolean;
+  loading?: boolean
   /** 点击事件 */
-  onClick?: () => void;
+  onClick?: () => void
   /** 自定义类名 */
-  className?: string;
+  className?: string
   /** 图标（左侧） */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode
   /** 图标（右侧） */
-  iconRight?: React.ReactNode;
+  iconRight?: React.ReactNode
 }
 
 /**
@@ -691,29 +691,29 @@ export interface ButtonProps {
  */
 export interface InputProps {
   /** 输入框类型 */
-  type?: "text" | "password" | "email" | "number" | "tel" | "url";
+  type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url'
   /** 当前值 */
-  value: string;
+  value: string
   /** 值变化回调 */
-  onChange: (value: string) => void;
+  onChange: (value: string) => void
   /** 占位符 */
-  placeholder?: string;
+  placeholder?: string
   /** 是否禁用 */
-  disabled?: boolean;
+  disabled?: boolean
   /** 是否只读 */
-  readOnly?: boolean;
+  readOnly?: boolean
   /** 是否必填 */
-  required?: boolean;
+  required?: boolean
   /** 错误信息 */
-  error?: string;
+  error?: string
   /** 图标 */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode
   /** 自定义类名 */
-  className?: string;
+  className?: string
   /** 最大长度 */
-  maxLength?: number;
+  maxLength?: number
   /** 自动聚焦 */
-  autoFocus?: boolean;
+  autoFocus?: boolean
 }
 
 /**
@@ -721,21 +721,21 @@ export interface InputProps {
  */
 export interface ModalProps {
   /** 是否显示 */
-  open: boolean;
+  open: boolean
   /** 关闭回调 */
-  onClose: () => void;
+  onClose: () => void
   /** 模态框标题 */
-  title: string;
+  title: string
   /** 子元素 */
-  children: React.ReactNode;
+  children: React.ReactNode
   /** 自定义类名 */
-  className?: string;
+  className?: string
   /** 尺寸 */
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: 'sm' | 'md' | 'lg' | 'xl'
   /** 是否显示关闭按钮 */
-  showCloseButton?: boolean;
+  showCloseButton?: boolean
   /** 点击遮罩是否关闭 */
-  closeOnOverlayClick?: boolean;
+  closeOnOverlayClick?: boolean
 }
 
 /**
@@ -743,17 +743,17 @@ export interface ModalProps {
  */
 export interface ChatMessageProps {
   /** 消息ID */
-  id: string;
+  id: string
   /** 消息内容 */
-  content: string;
+  content: string
   /** 发送者角色 */
-  role: "user" | "assistant" | "system";
+  role: 'user' | 'assistant' | 'system'
   /** 时间戳 */
-  timestamp: Date;
+  timestamp: Date
   /** 是否正在输入 */
-  isTyping?: boolean;
+  isTyping?: boolean
   /** 头像URL */
-  avatar?: string;
+  avatar?: string
 }
 
 /**
@@ -761,15 +761,15 @@ export interface ChatMessageProps {
  */
 export interface FormBuilderProps {
   /** 表单模板 */
-  template: FormTemplate;
+  template: FormTemplate
   /** 提交回调 */
-  onSubmit: (data: Record<string, any>) => void;
+  onSubmit: (data: Record<string, any>) => void
   /** 取消回调 */
-  onCancel?: () => void;
+  onCancel?: () => void
   /** 初始数据 */
-  initialData?: Record<string, any>;
+  initialData?: Record<string, any>
   /** 是否只读 */
-  readOnly?: boolean;
+  readOnly?: boolean
 }
 
 /**
@@ -777,21 +777,21 @@ export interface FormBuilderProps {
  */
 export interface DataTableProps<T = any> {
   /** 数据列表 */
-  data: T[];
+  data: T[]
   /** 列定义 */
-  columns: TableColumn<T>[];
+  columns: TableColumn<T>[]
   /** 是否加载中 */
-  loading?: boolean;
+  loading?: boolean
   /** 空数据提示 */
-  emptyText?: string;
+  emptyText?: string
   /** 行点击事件 */
-  onRowClick?: (row: T) => void;
+  onRowClick?: (row: T) => void
   /** 自定义类名 */
-  className?: string;
+  className?: string
   /** 是否显示分页 */
-  pagination?: boolean;
+  pagination?: boolean
   /** 每页数量 */
-  pageSize?: number;
+  pageSize?: number
 }
 
 /**
@@ -799,17 +799,17 @@ export interface DataTableProps<T = any> {
  */
 export interface TableColumn<T = any> {
   /** 列标题 */
-  title: string;
+  title: string
   /** 数据键 */
-  key: keyof T | string;
+  key: keyof T | string
   /** 自定义渲染 */
-  render?: (value: any, row: T, index: number) => React.ReactNode;
+  render?: (value: any, row: T, index: number) => React.ReactNode
   /** 列宽 */
-  width?: number | string;
+  width?: number | string
   /** 是否可排序 */
-  sortable?: boolean;
+  sortable?: boolean
   /** 对齐方式 */
-  align?: "left" | "center" | "right";
+  align?: 'left' | 'center' | 'right'
 }
 
 /**
@@ -817,15 +817,15 @@ export interface TableColumn<T = any> {
  */
 export interface ChartProps {
   /** 图表数据 */
-  data: any[];
+  data: any[]
   /** 图表类型 */
-  type?: "line" | "bar" | "pie" | "area" | "radial";
+  type?: 'line' | 'bar' | 'pie' | 'area' | 'radial'
   /** 图表高度 */
-  height?: number;
+  height?: number
   /** 图表颜色 */
-  colors?: string[];
+  colors?: string[]
   /** 自定义类名 */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -833,15 +833,15 @@ export interface ChartProps {
  */
 export interface NotificationDrawerProps {
   /** 是否打开 */
-  open: boolean;
+  open: boolean
   /** 关闭回调 */
-  onClose: () => void;
+  onClose: () => void
   /** 通知列表 */
-  notifications: NotificationItem[];
+  notifications: NotificationItem[]
   /** 标记已读回调 */
-  onMarkRead: (id: string) => void;
+  onMarkRead: (id: string) => void
   /** 清空所有回调 */
-  onClearAll: () => void;
+  onClearAll: () => void
 }
 
 /**
@@ -849,11 +849,11 @@ export interface NotificationDrawerProps {
  */
 export interface CommandPaletteProps {
   /** 是否打开 */
-  open: boolean;
+  open: boolean
   /** 关闭回调 */
-  onClose: () => void;
+  onClose: () => void
   /** 命令列表 */
-  commands?: Command[];
+  commands?: Command[]
 }
 
 /**
@@ -861,19 +861,19 @@ export interface CommandPaletteProps {
  */
 export interface Command {
   /** 命令ID */
-  id: string;
+  id: string
   /** 命令标题 */
-  title: string;
+  title: string
   /** 命令描述 */
-  description?: string;
+  description?: string
   /** 图标 */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode
   /** 快捷键 */
-  shortcut?: string[];
+  shortcut?: string[]
   /** 执行回调 */
-  onExecute: () => void;
+  onExecute: () => void
   /** 分类 */
-  category?: string;
+  category?: string
 }
 
 /**
@@ -881,7 +881,7 @@ export interface Command {
  */
 export interface DashboardPageProps {
   /** 打开导出模态框回调 */
-  onOpenExport?: () => void;
+  onOpenExport?: () => void
 }
 
 /**
@@ -889,7 +889,7 @@ export interface DashboardPageProps {
  */
 export interface CustomerCarePageProps {
   /** 自定义类名 */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -897,15 +897,15 @@ export interface CustomerCarePageProps {
  */
 export interface ContactCardProps {
   /** 联系人数据 */
-  contact: SharedContact;
+  contact: SharedContact
   /** 点击回调 */
-  onClick?: () => void;
+  onClick?: () => void
   /** 星标切换回调 */
-  onToggleStar?: (id: string) => void;
+  onToggleStar?: (id: string) => void
   /** 删除回调 */
-  onDelete?: (id: string) => void;
+  onDelete?: (id: string) => void
   /** 编辑回调 */
-  onEdit?: (id: string) => void;
+  onEdit?: (id: string) => void
 }
 
 // ==========================================
@@ -917,15 +917,15 @@ export interface ContactCardProps {
  */
 export interface ApiResponse<T = any> {
   /** 是否成功 */
-  success: boolean;
+  success: boolean
   /** 响应数据 */
-  data: T;
+  data: T
   /** 错误信息 */
-  error?: ErrorType;
+  error?: ErrorType
   /** 响应消息 */
-  message?: string;
+  message?: string
   /** 时间戳 */
-  timestamp?: string;
+  timestamp?: string
 }
 
 /**
@@ -933,19 +933,19 @@ export interface ApiResponse<T = any> {
  */
 export interface PaginatedResponse<T = any> {
   /** 数据列表 */
-  items: T[];
+  items: T[]
   /** 总数 */
-  total: number;
+  total: number
   /** 当前页 */
-  page: number;
+  page: number
   /** 每页数量 */
-  pageSize: number;
+  pageSize: number
   /** 总页数 */
-  totalPages: number;
+  totalPages: number
   /** 是否有下一页 */
-  hasNext: boolean;
+  hasNext: boolean
   /** 是否有上一页 */
-  hasPrev: boolean;
+  hasPrev: boolean
 }
 
 /**
@@ -953,13 +953,13 @@ export interface PaginatedResponse<T = any> {
  */
 export interface ErrorType {
   /** 错误代码 */
-  code: string;
+  code: string
   /** 错误消息 */
-  message: string;
+  message: string
   /** 错误详情 */
-  details?: Record<string, any>;
+  details?: Record<string, any>
   /** 堆栈信息（仅开发环境） */
-  stack?: string;
+  stack?: string
 }
 
 /**
@@ -967,11 +967,11 @@ export interface ErrorType {
  */
 export interface LoginRequest {
   /** 用户名或邮箱 */
-  username: string;
+  username: string
   /** 密码 */
-  password: string;
+  password: string
   /** 记住我 */
-  rememberMe?: boolean;
+  rememberMe?: boolean
 }
 
 /**
@@ -979,13 +979,13 @@ export interface LoginRequest {
  */
 export interface LoginResponse {
   /** 访问令牌 */
-  accessToken: string;
+  accessToken: string
   /** 刷新令牌 */
-  refreshToken: string;
+  refreshToken: string
   /** 用户信息 */
-  user: UserProfile;
+  user: UserProfile
   /** 过期时间（秒） */
-  expiresIn: number;
+  expiresIn: number
 }
 
 /**
@@ -993,23 +993,23 @@ export interface LoginResponse {
  */
 export interface UserProfile {
   /** 用户ID */
-  id: string;
+  id: string
   /** 用户名 */
-  username: string;
+  username: string
   /** 邮箱 */
-  email: string;
+  email: string
   /** 显示名称 */
-  displayName: string;
+  displayName: string
   /** 头像URL */
-  avatar?: string;
+  avatar?: string
   /** 角色 */
-  role: "admin" | "manager" | "agent" | "viewer";
+  role: 'admin' | 'manager' | 'agent' | 'viewer'
   /** 权限列表 */
-  permissions: string[];
+  permissions: string[]
   /** 创建时间 */
-  createdAt: string;
+  createdAt: string
   /** 最后登录时间 */
-  lastLoginAt?: string;
+  lastLoginAt?: string
 }
 
 /**
@@ -1017,15 +1017,15 @@ export interface UserProfile {
  */
 export interface ChatRequest {
   /** 消息内容 */
-  message: string;
+  message: string
   /** 对话ID */
-  conversationId?: string;
+  conversationId?: string
   /** 模型类型 */
-  model?: AIModelType;
+  model?: AIModelType
   /** 流式响应 */
-  stream?: boolean;
+  stream?: boolean
   /** 上下文 */
-  context?: Record<string, any>;
+  context?: Record<string, any>
 }
 
 /**
@@ -1033,21 +1033,21 @@ export interface ChatRequest {
  */
 export interface ChatResponse {
   /** 响应ID */
-  id: string;
+  id: string
   /** 对话ID */
-  conversationId: string;
+  conversationId: string
   /** 响应内容 */
-  content: string;
+  content: string
   /** 使用的模型 */
-  model: AIModelType;
+  model: AIModelType
   /** 令牌使用情况 */
   usage: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-  };
+    promptTokens: number
+    completionTokens: number
+    totalTokens: number
+  }
   /** 完成原因 */
-  finishReason: "stop" | "length" | "content_filter";
+  finishReason: 'stop' | 'length' | 'content_filter'
 }
 
 /**
@@ -1055,13 +1055,13 @@ export interface ChatResponse {
  */
 export interface CallRequest {
   /** 目标号码 */
-  phoneNumber: string;
+  phoneNumber: string
   /** 联系人ID（可选） */
-  contactId?: string;
+  contactId?: string
   /** 呼叫脚本 */
-  script?: string;
+  script?: string
   /** 录音设置 */
-  record?: boolean;
+  record?: boolean
 }
 
 /**
@@ -1069,15 +1069,15 @@ export interface CallRequest {
  */
 export interface CallResponse {
   /** 呼叫ID */
-  callId: string;
+  callId: string
   /** 状态 */
-  status: "initiated" | "ringing" | "connected" | "completed" | "failed";
+  status: 'initiated' | 'ringing' | 'connected' | 'completed' | 'failed'
   /** 开始时间 */
-  startTime: string;
+  startTime: string
   /** 结束时间 */
-  endTime?: string;
+  endTime?: string
   /** 通话时长（秒） */
-  duration?: number;
+  duration?: number
 }
 
 /**
@@ -1085,16 +1085,16 @@ export interface CallResponse {
  */
 export interface ExportRequest {
   /** 数据类型 */
-  dataType: "contacts" | "calls" | "forms" | "analytics";
+  dataType: 'contacts' | 'calls' | 'forms' | 'analytics'
   /** 导出格式 */
-  format: "csv" | "xlsx" | "json" | "pdf";
+  format: 'csv' | 'xlsx' | 'json' | 'pdf'
   /** 筛选条件 */
-  filters?: Record<string, any>;
+  filters?: Record<string, any>
   /** 日期范围 */
   dateRange?: {
-    from: string;
-    to: string;
-  };
+    from: string
+    to: string
+  }
 }
 
 /**
@@ -1102,15 +1102,15 @@ export interface ExportRequest {
  */
 export interface ExportResponse {
   /** 导出ID */
-  exportId: string;
+  exportId: string
   /** 文件URL */
-  fileUrl: string;
+  fileUrl: string
   /** 文件大小（字节） */
-  fileSize: number;
+  fileSize: number
   /** 导出时间 */
-  exportedAt: string;
+  exportedAt: string
   /** 过期时间 */
-  expiresAt: string;
+  expiresAt: string
 }
 
 // ==========================================
@@ -1120,76 +1120,76 @@ export interface ExportResponse {
 /**
  * 使ID可选
  */
-export type WithOptionalId<T extends { id: string }> = Omit<T, "id"> & { id?: string };
+export type WithOptionalId<T extends { id: string }> = Omit<T, 'id'> & { id?: string }
 
 /**
  * 使时间戳可选
  */
-export type WithOptionalTimestamp<T extends { createdAt: string }> = Omit<T, "createdAt"> & {
-  createdAt?: string;
-};
+export type WithOptionalTimestamp<T extends { createdAt: string }> = Omit<T, 'createdAt'> & {
+  createdAt?: string
+}
 
 /**
  * 深度只读
  */
 export type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
-};
+  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P]
+}
 
 /**
  * 深度部分
  */
 export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]
+}
 
 /**
  * 提取函数参数类型
  */
-export type ExtractFunctionParams<T> = T extends (...args: infer P) => any ? P : never;
+export type ExtractFunctionParams<T> = T extends (...args: infer P) => any ? P : never
 
 /**
  * 提取函数返回类型
  */
-export type ExtractFunctionReturn<T> = T extends (...args: any[]) => infer R ? R : never;
+export type ExtractFunctionReturn<T> = T extends (...args: any[]) => infer R ? R : never
 
 /**
  * Promise包装类型
  */
-export type PromiseType<T> = T extends Promise<infer U> ? U : T;
+export type PromiseType<T> = T extends Promise<infer U> ? U : T
 
 /**
  * 数组元素类型
  */
-export type ArrayElement<T> = T extends (infer U)[] ? U : never;
+export type ArrayElement<T> = T extends (infer U)[] ? U : never
 
 /**
  * 非空类型
  */
 export type NonNullableFields<T> = {
-  [P in keyof T]: NonNullable<T[P]>;
-};
+  [P in keyof T]: NonNullable<T[P]>
+}
 
 /**
  * 可空字段
  */
 export type NullableFields<T, K extends keyof T> = Omit<T, K> & {
-  [P in K]: T[P] | null;
-};
+  [P in K]: T[P] | null
+}
 
 /**
  * 选择性必填
  */
 export type RequireFields<T, K extends keyof T> = T & {
-  [P in K]-?: T[P];
-};
+  [P in K]-?: T[P]
+}
 
 /**
  * 选择性可选
  */
 export type OptionalFields<T, K extends keyof T> = Omit<T, K> & {
-  [P in K]?: T[P];
-};
+  [P in K]?: T[P]
+}
 
 // ==========================================
 // 8. 事件类型
@@ -1198,27 +1198,27 @@ export type OptionalFields<T, K extends keyof T> = Omit<T, K> & {
 /**
  * 键盘事件类型
  */
-export type KeyboardEventType = React.KeyboardEvent<HTMLElement>;
+export type KeyboardEventType = React.KeyboardEvent<HTMLElement>
 
 /**
  * 鼠标事件类型
  */
-export type MouseEventType = React.MouseEvent<HTMLElement>;
+export type MouseEventType = React.MouseEvent<HTMLElement>
 
 /**
  * 表单事件类型
  */
-export type FormEventType = React.FormEvent<HTMLFormElement>;
+export type FormEventType = React.FormEvent<HTMLFormElement>
 
 /**
  * 输入事件类型
  */
-export type InputEventType = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+export type InputEventType = React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
 /**
  * 选择事件类型
  */
-export type SelectEventType = React.ChangeEvent<HTMLSelectElement>;
+export type SelectEventType = React.ChangeEvent<HTMLSelectElement>
 
 // ==========================================
 // 9. 常量类型
@@ -1228,15 +1228,15 @@ export type SelectEventType = React.ChangeEvent<HTMLSelectElement>;
  * 颜色常量
  */
 export const COLORS = {
-  CYAN: "#00f0ff",
-  MAGENTA: "#ff00ff",
-  YELLOW: "#ffff00",
-  GREEN: "#00ff41",
-  ORANGE: "#ff8c00",
-  RED: "#ff0040",
-  WHITE: "#ffffff",
-  BLACK: "#0a0a0a",
-} as const;
+  CYAN: '#00f0ff',
+  MAGENTA: '#ff00ff',
+  YELLOW: '#ffff00',
+  GREEN: '#00ff41',
+  ORANGE: '#ff8c00',
+  RED: '#ff0040',
+  WHITE: '#ffffff',
+  BLACK: '#0a0a0a',
+} as const
 
 /**
  * 动画时长
@@ -1245,7 +1245,7 @@ export const ANIMATION_DURATION = {
   FAST: 150,
   NORMAL: 300,
   SLOW: 500,
-} as const;
+} as const
 
 /**
  * Z-Index层级
@@ -1255,7 +1255,7 @@ export const Z_INDEX = {
   MODAL: 2000,
   TOAST: 3000,
   TOOLTIP: 4000,
-} as const;
+} as const
 
 // ==========================================
 // 10. 类型导出
@@ -1267,4 +1267,4 @@ export type {
   ReactElement,
   FC,
   PropsWithChildren,
-} from "react";
+} from 'react'

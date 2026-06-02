@@ -33,36 +33,46 @@ import {
   Upload,
   User,
   Zap,
-} from 'lucide-react';
-import { motion } from 'motion/react';
-import { useState } from 'react';
+} from 'lucide-react'
+import { motion } from 'motion/react'
+import { useState } from 'react'
 
-import { useThemeColors } from './hooks/use-theme-colors';
-import { useI18n } from './i18n-context';
-import { useThemeSwitcher } from './theme-switcher-context';
+import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
+import { useThemeSwitcher } from './theme-switcher-context'
 
 /**
  * 独立设置页面 - 无外部状态依赖
  */
 export function SettingsPage() {
-  const tc = useThemeColors();
-  const { theme, setTheme } = useThemeSwitcher();
-  const { locale: language, setLocale: setLanguage } = useI18n();
-  const [activeCategory, setActiveCategory] = useState('general');
-  const [searchQuery, setSearchQuery] = useState('');
+  const tc = useThemeColors()
+  const { theme, setTheme } = useThemeSwitcher()
+  const { locale: language, setLocale: setLanguage } = useI18n()
+  const [activeCategory, setActiveCategory] = useState('general')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const categories = [
     { id: 'account', label: '账号信息', icon: User, description: '管理您的个人信息和头像' },
-    { id: 'general', label: '通用设置', icon: SettingsIcon, description: '主题、语言、编辑器等基础配置' },
+    {
+      id: 'general',
+      label: '通用设置',
+      icon: SettingsIcon,
+      description: '主题、语言、编辑器等基础配置',
+    },
     { id: 'agents', label: '智能体管理', icon: Bot, description: '配置和管理AI智能体' },
     { id: 'mcp', label: 'MCP 连接', icon: Plug, description: '模型上下文协议连接管理' },
     { id: 'models', label: '模型配置', icon: Cpu, description: 'AI 模型和 API 密钥配置' },
     { id: 'context', label: '上下文管理', icon: FolderTree, description: '代码索引和文档集管理' },
-    { id: 'conversation', label: '对话流设置', icon: MessageSquare, description: '对话行为和通知配置' },
+    {
+      id: 'conversation',
+      label: '对话流设置',
+      icon: MessageSquare,
+      description: '对话行为和通知配置',
+    },
     { id: 'rules', label: '规则管理', icon: FileCode, description: '自定义规则和约束' },
     { id: 'skills', label: '技能管理', icon: Zap, description: '自定义技能和能力' },
     { id: 'import-export', label: '导入/导出', icon: Download, description: '备份和迁移设置' },
-  ];
+  ]
 
   // 渲染通用设置面板
   const renderGeneralSettings = () => (
@@ -71,9 +81,7 @@ export function SettingsPage() {
         <h2 className="text-2xl font-bold mb-2" style={{ color: tc.primary }}>
           通用设置
         </h2>
-        <p style={{ color: tc.textSecondary }}>
-          配置主题、语言、编辑器等基础选项
-        </p>
+        <p style={{ color: tc.textSecondary }}>配置主题、语言、编辑器等基础选项</p>
       </div>
 
       {/* 主题设置 */}
@@ -111,7 +119,8 @@ export function SettingsPage() {
             className="text-left p-4 rounded-lg transition-all hover:scale-105"
             style={{
               background: theme === 'cyberpunk' ? tc.alpha(tc.primary, 0.1) : tc.bgInput,
-              border: theme === 'cyberpunk' ? `2px solid ${tc.primary}` : `1px solid ${tc.borderDefault}`,
+              border:
+                theme === 'cyberpunk' ? `2px solid ${tc.primary}` : `1px solid ${tc.borderDefault}`,
               boxShadow: theme === 'cyberpunk' ? tc.neonGlow(tc.primary, 0.3) : 'none',
             }}
           >
@@ -135,7 +144,10 @@ export function SettingsPage() {
             className="text-left p-4 rounded-lg transition-all hover:scale-105"
             style={{
               background: theme === 'liquidGlass' ? tc.alpha(tc.primary, 0.1) : tc.bgInput,
-              border: theme === 'liquidGlass' ? `2px solid ${tc.primary}` : `1px solid ${tc.borderDefault}`,
+              border:
+                theme === 'liquidGlass'
+                  ? `2px solid ${tc.primary}`
+                  : `1px solid ${tc.borderDefault}`,
               boxShadow: theme === 'liquidGlass' ? tc.neonGlow(tc.primary, 0.3) : 'none',
             }}
           >
@@ -207,19 +219,17 @@ export function SettingsPage() {
           border: `1px solid ${tc.alpha(tc.accent, 0.3)}`,
         }}
       >
-        <p style={{ color: tc.accent }}>
-          💡 更多设置功能正在开发中...
-        </p>
+        <p style={{ color: tc.accent }}>💡 更多设置功能正在开发中...</p>
       </div>
     </div>
-  );
+  )
 
   // 渲染占位面板
   const renderPlaceholderPanel = (categoryId: string) => {
-    const category = categories.find(c => c.id === categoryId);
-    if (!category) return null;
+    const category = categories.find((c) => c.id === categoryId)
+    if (!category) return null
 
-    const Icon = category.icon;
+    const Icon = category.icon
 
     return (
       <div className="space-y-6">
@@ -227,9 +237,7 @@ export function SettingsPage() {
           <h2 className="text-2xl font-bold mb-2" style={{ color: tc.primary }}>
             {category.label}
           </h2>
-          <p style={{ color: tc.textSecondary }}>
-            {category.description}
-          </p>
+          <p style={{ color: tc.textSecondary }}>{category.description}</p>
         </div>
         <div
           className="p-12 rounded-xl text-center"
@@ -239,24 +247,22 @@ export function SettingsPage() {
           }}
         >
           <Icon size={48} style={{ color: tc.textMuted }} className="mx-auto mb-4" />
-          <p style={{ color: tc.textMuted }}>
-            {category.label}功能面板
-          </p>
+          <p style={{ color: tc.textMuted }}>{category.label}功能面板</p>
           <p className="text-sm mt-2" style={{ color: tc.textMuted }}>
             完整功能即将上线
           </p>
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   // 渲染当前面板
   const renderCurrentPanel = () => {
     if (activeCategory === 'general') {
-      return renderGeneralSettings();
+      return renderGeneralSettings()
     }
-    return renderPlaceholderPanel(activeCategory);
-  };
+    return renderPlaceholderPanel(activeCategory)
+  }
 
   return (
     <div
@@ -267,11 +273,7 @@ export function SettingsPage() {
       }}
     >
       {/* 页面头部 */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
-      >
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
         <h1 className="text-4xl font-bold mb-2" style={{ color: tc.primary }}>
           ⚙️ 系统设置
         </h1>
@@ -281,11 +283,7 @@ export function SettingsPage() {
       </motion.div>
 
       {/* 搜索栏 */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-6"
-      >
+      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <div
           className="relative rounded-xl overflow-hidden"
           style={{
@@ -324,8 +322,8 @@ export function SettingsPage() {
           >
             <div className="space-y-1">
               {categories.map((category) => {
-                const Icon = category.icon;
-                const isActive = activeCategory === category.id;
+                const Icon = category.icon
+                const isActive = activeCategory === category.id
 
                 return (
                   <button
@@ -335,7 +333,9 @@ export function SettingsPage() {
                     style={{
                       background: isActive ? tc.alpha(tc.primary, 0.1) : 'transparent',
                       color: isActive ? tc.primary : tc.textSecondary,
-                      border: isActive ? `1px solid ${tc.alpha(tc.primary, 0.3)}` : '1px solid transparent',
+                      border: isActive
+                        ? `1px solid ${tc.alpha(tc.primary, 0.3)}`
+                        : '1px solid transparent',
                       boxShadow: isActive ? tc.neonGlow(tc.primary, 0.3) : 'none',
                     }}
                   >
@@ -343,7 +343,7 @@ export function SettingsPage() {
                     <span className="flex-1 text-sm font-medium">{category.label}</span>
                     {isActive && <ChevronRight size={16} />}
                   </button>
-                );
+                )
               })}
             </div>
           </div>
@@ -371,5 +371,5 @@ export function SettingsPage() {
         </motion.div>
       </div>
     </div>
-  );
+  )
 }

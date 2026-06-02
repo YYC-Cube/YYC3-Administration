@@ -3,31 +3,31 @@
  * Renders with Cyberpunk neon or Liquid Glass styling
  * depending on the active UI theme.
  */
-import { useThemeColors } from "./hooks/use-theme-colors";
+import { useThemeColors } from './hooks/use-theme-colors'
 
 /** Recharts tooltip payload entry */
 export interface CyberTooltipPayload {
-  name: string;
-  value: number | string;
-  color: string;
+  name: string
+  value: number | string
+  color: string
 }
 
 interface CyberTooltipProps {
-  active?: boolean;
-  payload?: CyberTooltipPayload[];
-  label?: string;
+  active?: boolean
+  payload?: CyberTooltipPayload[]
+  label?: string
 }
 
 export function CyberTooltip({ active, payload, label }: CyberTooltipProps) {
-  const tc = useThemeColors();
+  const tc = useThemeColors()
 
-  if (!active || !payload?.length) return null;
+  if (!active || !payload?.length) return null
 
   return (
     <div
       className="rounded-xl px-3 py-2 border"
       style={{
-        background: tc.isCyberpunk ? "rgba(10,10,10,0.95)" : "rgba(10,15,10,0.92)",
+        background: tc.isCyberpunk ? 'rgba(10,10,10,0.95)' : 'rgba(10,15,10,0.92)',
         borderColor: tc.alpha(tc.primary, 0.3),
         backdropFilter: tc.backdropFilter,
         boxShadow: tc.isCyberpunk
@@ -42,5 +42,5 @@ export function CyberTooltip({ active, payload, label }: CyberTooltipProps) {
         </p>
       ))}
     </div>
-  );
+  )
 }

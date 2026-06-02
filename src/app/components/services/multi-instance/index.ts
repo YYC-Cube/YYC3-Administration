@@ -7,8 +7,8 @@
  * @tags P2,multi-instance,export
  */
 
-export type * from "./types";
-export { useWindowStore } from "./window-manager";
-export { useWorkspaceStore } from "./workspace-manager";
-export { useSessionStore } from "./session-manager";
-export { IPCManager, ipcManager } from "./ipc-manager";
+export type * from './types'
+export { useWindowStore } from './window-manager'
+export { useWorkspaceStore } from './workspace-manager'
+export { useSessionStore } from './session-manager'
+export { IPCManager, ipcManager } from './ipc-manager'

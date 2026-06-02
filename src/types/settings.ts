@@ -14,55 +14,55 @@
 /**
  * 主题类型
  */
-export type Theme = 'cyberpunk' | 'liquidGlass' | 'auto';
+export type Theme = 'cyberpunk' | 'liquidGlass' | 'auto'
 
 /**
  * 语言类型
  */
-export type Language = 'zh-CN' | 'en-US' | 'ja-JP';
+export type Language = 'zh-CN' | 'en-US' | 'ja-JP'
 
 /**
  * 通知类型
  */
-export type NotificationType = 'banner' | 'sound' | 'menu';
+export type NotificationType = 'banner' | 'sound' | 'menu'
 
 /**
  * 提示音类型
  */
-export type SoundType = 'complete' | 'waiting' | 'interrupt';
+export type SoundType = 'complete' | 'waiting' | 'interrupt'
 
 /**
  * 代码审查范围
  */
-export type CodeReviewScope = 'none' | 'all' | 'changed';
+export type CodeReviewScope = 'none' | 'all' | 'changed'
 
 /**
  * 命令运行方式
  */
-export type CommandRunMode = 'sandbox' | 'direct';
+export type CommandRunMode = 'sandbox' | 'direct'
 
 /**
  * 技能范围类型
  */
-export type SkillScope = 'global' | 'project';
+export type SkillScope = 'global' | 'project'
 
 /**
  * 规则范围类型
  */
-export type RuleScope = 'personal' | 'project';
+export type RuleScope = 'personal' | 'project'
 
 /**
  * 用户信息
  */
 export interface UserProfile {
-  id: string;
-  username: string;
-  email: string;
-  avatar?: string;
-  bio?: string;
-  role?: string;
-  location?: string;
-  website?: string;
+  id: string
+  username: string
+  email: string
+  avatar?: string
+  bio?: string
+  role?: string
+  location?: string
+  website?: string
 }
 
 /**
@@ -70,77 +70,77 @@ export interface UserProfile {
  */
 export interface GeneralSettings {
   /** 主题 */
-  theme: Theme;
+  theme: Theme
   /** 语言 */
-  language: Language;
+  language: Language
   /** 编辑器字体 */
-  editorFont: string;
+  editorFont: string
   /** 编辑器字体大小 */
-  editorFontSize: number;
+  editorFontSize: number
   /** Word wrap */
-  wordWrap: boolean;
+  wordWrap: boolean
   /** 快捷键方案 */
-  keybindingScheme: 'vscode' | 'vim' | 'emacs' | 'custom';
+  keybindingScheme: 'vscode' | 'vim' | 'emacs' | 'custom'
   /** 自定义快捷键 */
-  customKeybindings: Record<string, string>;
+  customKeybindings: Record<string, string>
   /** 本地链接默认打开方式 */
-  localLinkOpenMode: 'system' | 'builtin';
+  localLinkOpenMode: 'system' | 'builtin'
   /** Markdown 文件默认打开方式 */
-  markdownOpenMode: 'editor' | 'preview';
+  markdownOpenMode: 'editor' | 'preview'
   /** Node.js 版本 */
-  nodeVersion: string;
+  nodeVersion: string
   /** 启用动画效果 */
-  enableAnimations: boolean;
+  enableAnimations: boolean
   /** 启用音效 */
-  enableSounds: boolean;
+  enableSounds: boolean
 }
 
 /**
  * 智能体配置
  */
 export interface AgentConfig {
-  id: string;
-  name: string;
-  description?: string;
-  systemPrompt: string;
-  model: string;
-  temperature: number;
-  maxTokens: number;
-  isBuiltIn: boolean;
-  isCustom: boolean;
-  enabled: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string
+  name: string
+  description?: string
+  systemPrompt: string
+  model: string
+  temperature: number
+  maxTokens: number
+  isBuiltIn: boolean
+  isCustom: boolean
+  enabled: boolean
+  createdAt?: string
+  updatedAt?: string
 }
 
 /**
  * MCP 配置
  */
 export interface MCPConfig {
-  id: string;
-  name: string;
-  type: 'market' | 'manual';
-  endpoint?: string;
-  enabled: boolean;
-  projectLevel: boolean;
-  description?: string;
-  version?: string;
-  createdAt?: string;
+  id: string
+  name: string
+  type: 'market' | 'manual'
+  endpoint?: string
+  enabled: boolean
+  projectLevel: boolean
+  description?: string
+  version?: string
+  createdAt?: string
 }
 
 /**
  * 模型配置
  */
 export interface ModelConfig {
-  id: string;
-  provider: string;
-  model: string;
-  apiKey: string;
-  enabled: boolean;
-  baseUrl?: string;
-  maxTokens?: number;
-  temperature?: number;
-  createdAt?: string;
+  id: string
+  provider: string
+  model: string
+  apiKey: string
+  enabled: boolean
+  baseUrl?: string
+  maxTokens?: number
+  temperature?: number
+  createdAt?: string
 }
 
 /**
@@ -148,29 +148,29 @@ export interface ModelConfig {
  */
 export interface ContextSettings {
   /** 代码索引状态 */
-  indexStatus: 'idle' | 'indexing' | 'completed' | 'error';
+  indexStatus: 'idle' | 'indexing' | 'completed' | 'error'
   /** 忽略文件规则 */
-  ignoreRules: string[];
+  ignoreRules: string[]
   /** 文档集列表 */
-  documentSets: DocumentSet[];
+  documentSets: DocumentSet[]
   /** 自动索引 */
-  autoIndex: boolean;
+  autoIndex: boolean
   /** 索引深度 */
-  indexDepth: number;
+  indexDepth: number
 }
 
 /**
  * 文档集
  */
 export interface DocumentSet {
-  id: string;
-  name: string;
-  source: 'url' | 'local';
-  url?: string;
-  localPath?: string;
-  enabled: boolean;
-  description?: string;
-  lastSync?: string;
+  id: string
+  name: string
+  source: 'url' | 'local'
+  url?: string
+  localPath?: string
+  enabled: boolean
+  description?: string
+  lastSync?: string
 }
 
 /**
@@ -178,61 +178,61 @@ export interface DocumentSet {
  */
 export interface ConversationSettings {
   /** 使用待办清单 */
-  useTodoList: boolean;
+  useTodoList: boolean
   /** 自动折叠对话节点 */
-  autoCollapseNodes: boolean;
+  autoCollapseNodes: boolean
   /** 自动修复代码规范问题 */
-  autoFixCodeIssues: boolean;
+  autoFixCodeIssues: boolean
   /** 智能体主动提问 */
-  agentProactiveQuestion: boolean;
+  agentProactiveQuestion: boolean
   /** 代码审查范围 */
-  codeReviewScope: CodeReviewScope;
+  codeReviewScope: CodeReviewScope
   /** 审查后跳转 */
-  jumpAfterReview: boolean;
+  jumpAfterReview: boolean
   /** 自动运行 MCP */
-  autoRunMCP: boolean;
+  autoRunMCP: boolean
   /** 命令运行方式 */
-  commandRunMode: CommandRunMode;
+  commandRunMode: CommandRunMode
   /** 白名单命令 */
-  whitelistCommands: string[];
+  whitelistCommands: string[]
   /** 通知方式 */
-  notificationTypes: NotificationType[];
+  notificationTypes: NotificationType[]
   /** 音量 */
-  volume: number;
+  volume: number
   /** 提示音配置 */
-  soundConfig: Record<SoundType, string>;
+  soundConfig: Record<SoundType, string>
   /** 自动保存 */
-  autoSave: boolean;
+  autoSave: boolean
   /** 保存间隔（秒） */
-  saveInterval: number;
+  saveInterval: number
 }
 
 /**
  * 规则配置
  */
 export interface RuleConfig {
-  id: string;
-  name: string;
-  content: string;
-  scope: RuleScope;
-  enabled: boolean;
-  description?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string
+  name: string
+  content: string
+  scope: RuleScope
+  enabled: boolean
+  description?: string
+  createdAt?: string
+  updatedAt?: string
 }
 
 /**
  * 技能配置
  */
 export interface SkillConfig {
-  id: string;
-  name: string;
-  description?: string;
-  content: string;
-  scope: SkillScope;
-  enabled: boolean;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string
+  name: string
+  description?: string
+  content: string
+  scope: SkillScope
+  enabled: boolean
+  createdAt?: string
+  updatedAt?: string
 }
 
 /**
@@ -240,13 +240,13 @@ export interface SkillConfig {
  */
 export interface ImportSettings {
   /** 包含 AGENTS.md */
-  includeAgentsMD: boolean;
+  includeAgentsMD: boolean
   /** 包含 CLAUDE.md */
-  includeClaudeMD: boolean;
+  includeClaudeMD: boolean
   /** 包含项目配置 */
-  includeProjectConfig: boolean;
+  includeProjectConfig: boolean
   /** 包含用户数据 */
-  includeUserData: boolean;
+  includeUserData: boolean
 }
 
 /**
@@ -254,25 +254,25 @@ export interface ImportSettings {
  */
 export interface Settings {
   /** 用户信息 */
-  userProfile: UserProfile;
+  userProfile: UserProfile
   /** 通用设置 */
-  general: GeneralSettings;
+  general: GeneralSettings
   /** 智能体列表 */
-  agents: AgentConfig[];
+  agents: AgentConfig[]
   /** MCP 列表 */
-  mcpConfigs: MCPConfig[];
+  mcpConfigs: MCPConfig[]
   /** 模型列表 */
-  models: ModelConfig[];
+  models: ModelConfig[]
   /** 上下文设置 */
-  context: ContextSettings;
+  context: ContextSettings
   /** 对话流设置 */
-  conversation: ConversationSettings;
+  conversation: ConversationSettings
   /** 规则列表 */
-  rules: RuleConfig[];
+  rules: RuleConfig[]
   /** 技能列表 */
-  skills: SkillConfig[];
+  skills: SkillConfig[]
   /** 导入设置 */
-  importSettings: ImportSettings;
+  importSettings: ImportSettings
 }
 
 /**
@@ -288,14 +288,14 @@ export type SettingsCategory =
   | 'conversation'
   | 'rules'
   | 'skills'
-  | 'import-export';
+  | 'import-export'
 
 /**
  * 设置分类元数据
  */
 export interface SettingsCategoryMeta {
-  id: SettingsCategory;
-  label: string;
-  icon: string;
-  description: string;
+  id: SettingsCategory
+  label: string
+  icon: string
+  description: string
 }

@@ -1,17 +1,45 @@
 import {
-  Activity, ArrowDownRight, ArrowUpRight, BarChart3, Bookmark, Bot,
-  Brain, Calendar, CheckCircle, ChevronDown, ClipboardCheck, Clock,
-  Edit3, Eye, FileText, FolderKanban, Lightbulb,
-  LineChart as LineChartIcon, MessageCircle, MessageSquare,
-  Palette, PenTool, Plus, Rocket, Search,
-  Send, Share2, Sparkles, Star, Target,
-  ThumbsUp, TrendingUp, Type, Users,
-  Wand2, Zap,
-} from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+  Activity,
+  ArrowDownRight,
+  ArrowUpRight,
+  BarChart3,
+  Bookmark,
+  Bot,
+  Brain,
+  Calendar,
+  CheckCircle,
+  ChevronDown,
+  ClipboardCheck,
+  Clock,
+  Edit3,
+  Eye,
+  FileText,
+  FolderKanban,
+  Lightbulb,
+  LineChart as LineChartIcon,
+  MessageCircle,
+  MessageSquare,
+  Palette,
+  PenTool,
+  Plus,
+  Rocket,
+  Search,
+  Send,
+  Share2,
+  Sparkles,
+  Star,
+  Target,
+  ThumbsUp,
+  TrendingUp,
+  Type,
+  Users,
+  Wand2,
+  Zap,
+} from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { useThemeColors } from "./hooks/use-theme-colors";
-import { NeonCard } from "./neon-card";
+import { useThemeColors } from './hooks/use-theme-colors'
+import { NeonCard } from './neon-card'
 
 // ==========================================
 // YYC³ 智创协同 — Creative Collaboration Platform
@@ -21,28 +49,36 @@ import { NeonCard } from "./neon-card";
 
 // ---------- Animated counter ----------
 function AnimatedNumber({ value, duration = 800 }: { value: number; duration?: number }) {
-  const [display, setDisplay] = useState(0);
-  const ref = useRef<number>(0);
+  const [display, setDisplay] = useState(0)
+  const ref = useRef<number>(0)
   useEffect(() => {
-    const start = ref.current;
-    const diff = value - start;
-    const startTime = performance.now();
+    const start = ref.current
+    const diff = value - start
+    const startTime = performance.now()
     const animate = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(start + diff * eased);
-      setDisplay(current);
-      if (progress < 1) requestAnimationFrame(animate);
-      else ref.current = value;
-    };
-    requestAnimationFrame(animate);
-  }, [value, duration]);
-  return <>{display.toLocaleString()}</>;
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      const current = Math.round(start + diff * eased)
+      setDisplay(current)
+      if (progress < 1) requestAnimationFrame(animate)
+      else ref.current = value
+    }
+    requestAnimationFrame(animate)
+  }, [value, duration])
+  return <>{display.toLocaleString()}</>
 }
 
 // ---------- Progress bar ----------
-function ProgressBar({ value, color, tc }: { value: number; color: string; tc: ReturnType<typeof useThemeColors> }) {
+function ProgressBar({
+  value,
+  color,
+  tc,
+}: {
+  value: number
+  color: string
+  tc: ReturnType<typeof useThemeColors>
+}) {
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1 h-1.5 rounded-full" style={{ background: tc.alpha(color, 0.1) }}>
@@ -55,13 +91,25 @@ function ProgressBar({ value, color, tc }: { value: number; color: string; tc: R
           }}
         />
       </div>
-      <span className="text-[11px] w-8 text-right" style={{ color }}>{value}%</span>
+      <span className="text-[11px] w-8 text-right" style={{ color }}>
+        {value}%
+      </span>
     </div>
-  );
+  )
 }
 
 // ---------- Avatar circle ----------
-function AvatarCircle({ name, color, size = 32, online }: { name: string; color: string; size?: number; online?: boolean }) {
+function AvatarCircle({
+  name,
+  color,
+  size = 32,
+  online,
+}: {
+  name: string
+  color: string
+  size?: number
+  online?: boolean
+}) {
   return (
     <div className="relative inline-flex" style={{ width: size, height: size }}>
       <div
@@ -80,18 +128,26 @@ function AvatarCircle({ name, color, size = 32, online }: { name: string; color:
           style={{
             width: Math.round(size * 0.3),
             height: Math.round(size * 0.3),
-            background: online ? "#22c55e" : "#6b7280",
-            borderColor: "rgba(10,15,10,0.9)",
-            boxShadow: online ? "0 0 4px #22c55e" : "none",
+            background: online ? '#22c55e' : '#6b7280',
+            borderColor: 'rgba(10,15,10,0.9)',
+            boxShadow: online ? '0 0 4px #22c55e' : 'none',
           }}
         />
       )}
     </div>
-  );
+  )
 }
 
 // ---------- Tag badge ----------
-function Tag({ label, color, tc }: { label: string; color: string; tc: ReturnType<typeof useThemeColors> }) {
+function Tag({
+  label,
+  color,
+  tc,
+}: {
+  label: string
+  color: string
+  tc: ReturnType<typeof useThemeColors>
+}) {
   return (
     <span
       className="inline-flex px-2 py-0.5 rounded-md text-[10px]"
@@ -103,7 +159,7 @@ function Tag({ label, color, tc }: { label: string; color: string; tc: ReturnTyp
     >
       {label}
     </span>
-  );
+  )
 }
 
 // ==========================================
@@ -111,198 +167,203 @@ function Tag({ label, color, tc }: { label: string; color: string; tc: ReturnTyp
 // ==========================================
 const MOCK_PROJECTS = [
   {
-    id: "p1",
-    title: "春季家居营销方案",
-    desc: "结合AI分析用户偏好，制定个性化营销策略",
-    status: "进行中" as const,
-    statusColor: "#22c55e",
+    id: 'p1',
+    title: '春季家居营销方案',
+    desc: '结合AI分析用户偏好，制定个性化营销策略',
+    status: '进行中' as const,
+    statusColor: '#22c55e',
     aiAssisted: true,
     progress: 75,
-    deadline: "2024-01-15",
+    deadline: '2024-01-15',
     team: [
-      { name: "张", color: "#8b5cf6" },
-      { name: "李", color: "#ec4899" },
-      { name: "王", color: "#06b6d4" },
+      { name: '张', color: '#8b5cf6' },
+      { name: '李', color: '#ec4899' },
+      { name: '王', color: '#06b6d4' },
     ],
-    tags: ["营销", "AI辅助", "家居"],
+    tags: ['营销', 'AI辅助', '家居'],
   },
   {
-    id: "p2",
-    title: "品牌视觉升级项目",
-    desc: "全新品牌形象设计与VI系统建设",
-    status: "评审中" as const,
-    statusColor: "#eab308",
+    id: 'p2',
+    title: '品牌视觉升级项目',
+    desc: '全新品牌形象设计与VI系统建设',
+    status: '评审中' as const,
+    statusColor: '#eab308',
     aiAssisted: false,
     progress: 90,
-    deadline: "2024-01-20",
+    deadline: '2024-01-20',
     team: [
-      { name: "陈", color: "#f97316" },
-      { name: "刘", color: "#14b8a6" },
+      { name: '陈', color: '#f97316' },
+      { name: '刘', color: '#14b8a6' },
     ],
-    tags: ["设计", "品牌", "视觉"],
+    tags: ['设计', '品牌', '视觉'],
   },
   {
-    id: "p3",
-    title: "智能客服话术优化",
-    desc: "基于AI对话分析，优化客服响应效率",
-    status: "规划中" as const,
-    statusColor: "#3b82f6",
+    id: 'p3',
+    title: '智能客服话术优化',
+    desc: '基于AI对话分析，优化客服响应效率',
+    status: '规划中' as const,
+    statusColor: '#3b82f6',
     aiAssisted: true,
     progress: 25,
-    deadline: "2024-01-25",
+    deadline: '2024-01-25',
     team: [
-      { name: "王", color: "#8b5cf6" },
-      { name: "李", color: "#ef4444" },
+      { name: '王', color: '#8b5cf6' },
+      { name: '李', color: '#ef4444' },
     ],
-    tags: ["AI", "客服", "优化"],
+    tags: ['AI', '客服', '优化'],
   },
-];
+]
 
 const MOCK_IDEAS = [
   {
-    id: "i1",
-    title: "AR家具试放功能",
-    desc: "让客户通过手机AR技术在家中预览家具摆放效果",
-    author: "张创新",
-    authorColor: "#8b5cf6",
-    category: "技术创新",
-    categoryColor: "#22c55e",
-    time: "2小时前",
+    id: 'i1',
+    title: 'AR家具试放功能',
+    desc: '让客户通过手机AR技术在家中预览家具摆放效果',
+    author: '张创新',
+    authorColor: '#8b5cf6',
+    category: '技术创新',
+    categoryColor: '#22c55e',
+    time: '2小时前',
     likes: 24,
     comments: 8,
     aiGenerated: false,
   },
   {
-    id: "i2",
-    title: "智能家居搭配推荐",
-    desc: "基于用户喜好和空间特点，AI推荐最佳家具搭配方案",
-    author: "AI助手",
-    authorColor: "#3b82f6",
-    category: "AI应用",
-    categoryColor: "#8b5cf6",
-    time: "4小时前",
+    id: 'i2',
+    title: '智能家居搭配推荐',
+    desc: '基于用户喜好和空间特点，AI推荐最佳家具搭配方案',
+    author: 'AI助手',
+    authorColor: '#3b82f6',
+    category: 'AI应用',
+    categoryColor: '#8b5cf6',
+    time: '4小时前',
     likes: 18,
     comments: 5,
     aiGenerated: true,
   },
   {
-    id: "i3",
-    title: "用户体验积分系统",
-    desc: "设计游戏化积分系统，提升用户参与度和留存率",
-    author: "李运营",
-    authorColor: "#ec4899",
-    category: "运营策略",
-    categoryColor: "#f97316",
-    time: "昨天",
+    id: 'i3',
+    title: '用户体验积分系统',
+    desc: '设计游戏化积分系统，提升用户参与度和留存率',
+    author: '李运营',
+    authorColor: '#ec4899',
+    category: '运营策略',
+    categoryColor: '#f97316',
+    time: '昨天',
     likes: 31,
     comments: 12,
     aiGenerated: false,
   },
   {
-    id: "i4",
-    title: "多语言智能翻译",
-    desc: "AI实时翻译系统，支持全球化运营和多语种客服",
-    author: "AI助手",
-    authorColor: "#3b82f6",
-    category: "AI应用",
-    categoryColor: "#8b5cf6",
-    time: "昨天",
+    id: 'i4',
+    title: '多语言智能翻译',
+    desc: 'AI实时翻译系统，支持全球化运营和多语种客服',
+    author: 'AI助手',
+    authorColor: '#3b82f6',
+    category: 'AI应用',
+    categoryColor: '#8b5cf6',
+    time: '昨天',
     likes: 15,
     comments: 3,
     aiGenerated: true,
   },
-];
+]
 
 const MOCK_TEAM = [
-  { name: "张设计师", role: "UI设计", color: "#8b5cf6", online: true },
-  { name: "李文案", role: "内容策划", color: "#ec4899", online: true },
-  { name: "王策划", role: "市场策划", color: "#06b6d4", online: true },
-  { name: "陈美工", role: "视觉设计", color: "#f97316", online: true },
-  { name: "刘总监", role: "创意总监", color: "#14b8a6", online: true },
-];
+  { name: '张设计师', role: 'UI设计', color: '#8b5cf6', online: true },
+  { name: '李文案', role: '内容策划', color: '#ec4899', online: true },
+  { name: '王策划', role: '市场策划', color: '#06b6d4', online: true },
+  { name: '陈美工', role: '视觉设计', color: '#f97316', online: true },
+  { name: '刘总监', role: '创意总监', color: '#14b8a6', online: true },
+]
 
 const MOCK_ACTIVITIES = [
-  { actor: "张设计师", actorColor: "#8b5cf6", action: "更新了春季营销方案的设计稿", time: "2分钟前" },
-  { actor: "李文案", actorColor: "#ec4899", action: "提交了新的创意想法", time: "5分钟前" },
-  { actor: "AI助手", actorColor: "#3b82f6", action: "生成了3个新的营销创意", time: "10分钟前" },
-  { actor: "王策划", actorColor: "#06b6d4", action: "完成了市场调研报告", time: "15分钟前" },
-  { actor: "陈美工", actorColor: "#f97316", action: "上传了品牌VI手册初稿", time: "30分钟前" },
-];
+  {
+    actor: '张设计师',
+    actorColor: '#8b5cf6',
+    action: '更新了春季营销方案的设计稿',
+    time: '2分钟前',
+  },
+  { actor: '李文案', actorColor: '#ec4899', action: '提交了新的创意想法', time: '5分钟前' },
+  { actor: 'AI助手', actorColor: '#3b82f6', action: '生成了3个新的营销创意', time: '10分钟前' },
+  { actor: '王策划', actorColor: '#06b6d4', action: '完成了市场调研报告', time: '15分钟前' },
+  { actor: '陈美工', actorColor: '#f97316', action: '上传了品牌VI手册初稿', time: '30分钟前' },
+]
 
 const MOCK_AI_TOOLS = [
   {
-    id: "t1",
-    title: "AI创意生成器",
-    desc: "基于行业趋势和用户数据，智能生成创意方案",
+    id: 't1',
+    title: 'AI创意生成器',
+    desc: '基于行业趋势和用户数据，智能生成创意方案',
     icon: Sparkles,
-    stat: "今日使用次数",
-    statValue: "15次",
-    statColor: "#8b5cf6",
-    btnLabel: "开始创作",
+    stat: '今日使用次数',
+    statValue: '15次',
+    statColor: '#8b5cf6',
+    btnLabel: '开始创作',
     btnIcon: Sparkles,
-    gradient: ["#8b5cf6", "#a855f7"],
+    gradient: ['#8b5cf6', '#a855f7'],
   },
   {
-    id: "t2",
-    title: "智能设计助手",
-    desc: "AI辅助设计，自动生成配色方案和布局建议",
+    id: 't2',
+    title: '智能设计助手',
+    desc: 'AI辅助设计，自动生成配色方案和布局建议',
     icon: Palette,
-    stat: "设计模板",
-    statValue: "200+",
-    statColor: "#ec4899",
-    btnLabel: "开始设计",
+    stat: '设计模板',
+    statValue: '200+',
+    statColor: '#ec4899',
+    btnLabel: '开始设计',
     btnIcon: PenTool,
-    gradient: ["#ec4899", "#f43f5e"],
+    gradient: ['#ec4899', '#f43f5e'],
   },
   {
-    id: "t3",
-    title: "智能文案生成",
-    desc: "根据产品特点和目标用户，生成吸引人的营销文案",
+    id: 't3',
+    title: '智能文案生成',
+    desc: '根据产品特点和目标用户，生成吸引人的营销文案',
     icon: Type,
-    stat: "文案风格",
-    statValue: "12种",
-    statColor: "#3b82f6",
-    btnLabel: "生成文案",
+    stat: '文案风格',
+    statValue: '12种',
+    statColor: '#3b82f6',
+    btnLabel: '生成文案',
     btnIcon: FileText,
-    gradient: ["#3b82f6", "#6366f1"],
+    gradient: ['#3b82f6', '#6366f1'],
   },
   {
-    id: "t4",
-    title: "市场趋势分析",
-    desc: "AI分析市场数据，预测行业趋势和用户需求",
+    id: 't4',
+    title: '市场趋势分析',
+    desc: 'AI分析市场数据，预测行业趋势和用户需求',
     icon: TrendingUp,
-    stat: "数据源",
-    statValue: "实时更新",
-    statColor: "#22c55e",
-    btnLabel: "查看趋势",
+    stat: '数据源',
+    statValue: '实时更新',
+    statColor: '#22c55e',
+    btnLabel: '查看趋势',
     btnIcon: TrendingUp,
-    gradient: ["#22c55e", "#10b981"],
+    gradient: ['#22c55e', '#10b981'],
   },
   {
-    id: "t5",
-    title: "创意评估器",
-    desc: "AI评估创意可行性，提供改进建议和风险分析",
+    id: 't5',
+    title: '创意评估器',
+    desc: 'AI评估创意可行性，提供改进建议和风险分析',
     icon: ClipboardCheck,
-    stat: "评估维度",
-    statValue: "8个",
-    statColor: "#f97316",
-    btnLabel: "开始评估",
+    stat: '评估维度',
+    statValue: '8个',
+    statColor: '#f97316',
+    btnLabel: '开始评估',
     btnIcon: CheckCircle,
-    gradient: ["#f97316", "#ef4444"],
+    gradient: ['#f97316', '#ef4444'],
   },
   {
-    id: "t6",
-    title: "项目智能规划",
-    desc: "AI制定项目计划，优化资源配置和时间安排",
+    id: 't6',
+    title: '项目智能规划',
+    desc: 'AI制定项目计划，优化资源配置和时间安排',
     icon: FolderKanban,
-    stat: "成功率",
-    statValue: "92%",
-    statColor: "#06b6d4",
-    btnLabel: "智能规划",
+    stat: '成功率',
+    statValue: '92%',
+    statColor: '#06b6d4',
+    btnLabel: '智能规划',
     btnIcon: Target,
-    gradient: ["#06b6d4", "#0ea5e9"],
+    gradient: ['#06b6d4', '#0ea5e9'],
   },
-];
+]
 
 // ==========================================
 // TAB CONTENT COMPONENTS
@@ -310,31 +371,31 @@ const MOCK_AI_TOOLS = [
 
 // ---------- Tab 1: 创意项目 ----------
 function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("全部状态");
+  const [search, setSearch] = useState('')
+  const [statusFilter, setStatusFilter] = useState('全部状态')
 
   return (
-    <div style={{ animation: "spring-in 0.4s var(--spring-easing) both" }}>
+    <div style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}>
       {/* Search & Filter Bar */}
       <div className="flex items-center gap-3 mb-5">
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20" />
           <input
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="搜索项目..."
             className="w-full pl-9 pr-4 py-2 rounded-xl text-[12px] text-white/70 placeholder-white/20 outline-none transition-all"
             style={{
               background: tc.alpha(tc.primary, 0.03),
               border: `1px solid ${tc.alpha(tc.primary, 0.08)}`,
             }}
-            onFocus={e => {
-              e.currentTarget.style.borderColor = tc.alpha(tc.primary, 0.3);
-              e.currentTarget.style.boxShadow = `0 0 0 3px ${tc.alpha(tc.primary, 0.06)}`;
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = tc.alpha(tc.primary, 0.3)
+              e.currentTarget.style.boxShadow = `0 0 0 3px ${tc.alpha(tc.primary, 0.06)}`
             }}
-            onBlur={e => {
-              e.currentTarget.style.borderColor = tc.alpha(tc.primary, 0.08);
-              e.currentTarget.style.boxShadow = "none";
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = tc.alpha(tc.primary, 0.08)
+              e.currentTarget.style.boxShadow = 'none'
             }}
           />
         </div>
@@ -344,7 +405,17 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
             background: tc.alpha(tc.primary, 0.03),
             border: `1px solid ${tc.alpha(tc.primary, 0.08)}`,
           }}
-          onClick={() => setStatusFilter(s => s === "全部状态" ? "进行中" : s === "进行中" ? "评审中" : s === "评审中" ? "规划中" : "全部状态")}
+          onClick={() =>
+            setStatusFilter((s) =>
+              s === '全部状态'
+                ? '进行中'
+                : s === '进行中'
+                  ? '评审中'
+                  : s === '评审中'
+                    ? '规划中'
+                    : '全部状态',
+            )
+          }
         >
           {statusFilter} <ChevronDown className="w-3 h-3" />
         </button>
@@ -352,7 +423,7 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
           className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[11px] transition-all hover:-translate-y-0.5"
           style={{
             background: `linear-gradient(135deg, ${tc.primary}, ${tc.secondary})`,
-            color: "#fff",
+            color: '#fff',
             boxShadow: `0 4px 12px ${tc.alpha(tc.primary, 0.25)}`,
           }}
         >
@@ -373,7 +444,9 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                     {project.aiAssisted && <Tag label="AI辅助" color={tc.primary} tc={tc} />}
                     <Tag label={project.status} color={project.statusColor} tc={tc} />
                   </div>
-                  <p className="text-[11px] text-white/25 leading-relaxed line-clamp-2">{project.desc}</p>
+                  <p className="text-[11px] text-white/25 leading-relaxed line-clamp-2">
+                    {project.desc}
+                  </p>
                 </div>
               </div>
 
@@ -405,8 +478,8 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                     key={i}
                     className="px-2 py-0.5 rounded-md text-[9px] text-white/25"
                     style={{
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.06)",
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.06)',
                     }}
                   >
                     {tag}
@@ -415,10 +488,13 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-3 pt-2" style={{ borderTop: `1px solid rgba(255,255,255,0.04)` }}>
+              <div
+                className="flex items-center gap-3 pt-2"
+                style={{ borderTop: `1px solid rgba(255,255,255,0.04)` }}
+              >
                 {[
-                  { icon: Eye, label: "查看" },
-                  { icon: Edit3, label: "编辑" },
+                  { icon: Eye, label: '查看' },
+                  { icon: Edit3, label: '编辑' },
                 ].map(({ icon: Icon, label }) => (
                   <button
                     key={label}
@@ -436,13 +512,13 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 // ---------- Tab 2: 创意库 ----------
 function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   return (
-    <div style={{ animation: "spring-in 0.4s var(--spring-easing) both" }}>
+    <div style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}>
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-[14px] text-white/60 flex items-center gap-2">
@@ -453,7 +529,7 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
           className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[11px] transition-all hover:-translate-y-0.5"
           style={{
             background: `linear-gradient(135deg, ${tc.accent}, ${tc.primary})`,
-            color: "#fff",
+            color: '#fff',
             boxShadow: `0 4px 12px ${tc.alpha(tc.accent, 0.25)}`,
           }}
         >
@@ -470,11 +546,14 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <h4 className="text-[13px] text-white/80">{idea.title}</h4>
                 {idea.aiGenerated && (
-                  <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px]" style={{
-                    background: tc.alpha(tc.primary, 0.08),
-                    color: tc.primary,
-                    border: `1px solid ${tc.alpha(tc.primary, 0.15)}`,
-                  }}>
+                  <span
+                    className="flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px]"
+                    style={{
+                      background: tc.alpha(tc.primary, 0.08),
+                      color: tc.primary,
+                      border: `1px solid ${tc.alpha(tc.primary, 0.15)}`,
+                    }}
+                  >
                     <Sparkles className="w-2.5 h-2.5" /> AI生成
                   </span>
                 )}
@@ -492,7 +571,10 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-4 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+              <div
+                className="flex items-center gap-4 pt-2"
+                style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
+              >
                 <button className="flex items-center gap-1 text-[10px] text-white/25 hover:text-white/50 transition-colors">
                   <ThumbsUp className="w-3 h-3" style={{ color: tc.primary }} />
                   <span style={{ color: tc.primary }}>{idea.likes}</span>
@@ -514,13 +596,16 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 // ---------- Tab 3: 团队协作 ----------
 function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ animation: "spring-in 0.4s var(--spring-easing) both" }}>
+    <div
+      className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}
+    >
       {/* Online Team Members */}
       <NeonCard color={tc.secondary} hoverable={false}>
         <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
@@ -536,22 +621,32 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 animation: `spring-in 0.3s var(--spring-easing) ${idx * 0.04}s both`,
                 border: `1px solid transparent`,
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = tc.alpha(member.color, 0.1);
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = tc.alpha(member.color, 0.1)
               }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = "transparent";
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'transparent'
               }}
             >
-              <AvatarCircle name={member.name} color={member.color} size={36} online={member.online} />
+              <AvatarCircle
+                name={member.name}
+                color={member.color}
+                size={36}
+                online={member.online}
+              />
               <div className="flex-1 min-w-0">
                 <p className="text-[12px] text-white/65 truncate">{member.name}</p>
-                <p className="text-[10px]" style={{ color: "#22c55e" }}>在线</p>
+                <p className="text-[10px]" style={{ color: '#22c55e' }}>
+                  在线
+                </p>
               </div>
               <button className="text-white/15 hover:text-white/30 transition-colors p-1.5 rounded-lg hover:bg-white/[0.03]">
                 <MessageSquare className="w-3.5 h-3.5" />
               </button>
-              <div className="w-2 h-2 rounded-full" style={{ background: "#22c55e", boxShadow: "0 0 4px #22c55e" }} />
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ background: '#22c55e', boxShadow: '0 0 4px #22c55e' }}
+              />
             </div>
           ))}
         </div>
@@ -573,8 +668,7 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               <AvatarCircle name={activity.actor} color={activity.actorColor} size={32} />
               <div className="flex-1 min-w-0">
                 <p className="text-[11px] text-white/45 leading-relaxed">
-                  <span className="text-white/65">{activity.actor}</span>
-                  {" "}{activity.action}
+                  <span className="text-white/65">{activity.actor}</span> {activity.action}
                 </p>
                 <p className="text-[9px] text-white/15 mt-0.5">{activity.time}</p>
               </div>
@@ -583,25 +677,31 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         </div>
       </NeonCard>
     </div>
-  );
+  )
 }
 
 // ---------- Tab 4: AI工具 ----------
 function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" style={{ animation: "spring-in 0.4s var(--spring-easing) both" }}>
+    <div
+      className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+      style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}
+    >
       {MOCK_AI_TOOLS.map((tool, idx) => {
-        const Icon = tool.icon;
-        const BtnIcon = tool.btnIcon;
+        const Icon = tool.icon
+        const BtnIcon = tool.btnIcon
         return (
           <NeonCard key={tool.id} color={tool.gradient[0]}>
             <div style={{ animation: `spring-in 0.35s var(--spring-easing) ${idx * 0.05}s both` }}>
               {/* Icon + Title */}
               <div className="flex items-center gap-2.5 mb-2">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{
-                  background: `linear-gradient(135deg, ${tc.alpha(tool.gradient[0], 0.15)}, ${tc.alpha(tool.gradient[1], 0.08)})`,
-                  border: `1px solid ${tc.alpha(tool.gradient[0], 0.2)}`,
-                }}>
+                <div
+                  className="w-8 h-8 rounded-xl flex items-center justify-center"
+                  style={{
+                    background: `linear-gradient(135deg, ${tc.alpha(tool.gradient[0], 0.15)}, ${tc.alpha(tool.gradient[1], 0.08)})`,
+                    border: `1px solid ${tc.alpha(tool.gradient[0], 0.2)}`,
+                  }}
+                >
                   <Icon className="w-4 h-4" style={{ color: tool.gradient[0] }} />
                 </div>
                 <h4 className="text-[13px] text-white/75">{tool.title}</h4>
@@ -613,11 +713,14 @@ function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               {/* Stat */}
               <div className="flex items-center justify-between mb-4">
                 <span className="text-[10px] text-white/20">{tool.stat}</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-full" style={{
-                  background: tc.alpha(tool.statColor, 0.08),
-                  color: tool.statColor,
-                  border: `1px solid ${tc.alpha(tool.statColor, 0.15)}`,
-                }}>
+                <span
+                  className="text-[11px] px-2 py-0.5 rounded-full"
+                  style={{
+                    background: tc.alpha(tool.statColor, 0.08),
+                    color: tool.statColor,
+                    border: `1px solid ${tc.alpha(tool.statColor, 0.15)}`,
+                  }}
+                >
                   {tool.statValue}
                 </span>
               </div>
@@ -635,32 +738,32 @@ function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               </button>
             </div>
           </NeonCard>
-        );
+        )
       })}
     </div>
-  );
+  )
 }
 
 // ---------- Tab 5: 数据分析 ----------
 function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const metrics1 = [
-    { label: "创意采用率", value: 78, color: tc.primary },
-    { label: "平均评分", value: 92, display: "4.6/5.0", color: tc.secondary },
-    { label: "实施成功率", value: 85, color: tc.accent },
-  ];
+    { label: '创意采用率', value: 78, color: tc.primary },
+    { label: '平均评分', value: 92, display: '4.6/5.0', color: tc.secondary },
+    { label: '实施成功率', value: 85, color: tc.accent },
+  ]
   const metrics2 = [
-    { label: "项目按时完成率", value: 91, color: "#22c55e" },
-    { label: "团队满意度", value: 96, display: "4.8/5.0", color: "#3b82f6" },
-    { label: "沟通效率提升", value: 45, display: "+45%", color: "#8b5cf6" },
-  ];
+    { label: '项目按时完成率', value: 91, color: '#22c55e' },
+    { label: '团队满意度', value: 96, display: '4.8/5.0', color: '#3b82f6' },
+    { label: '沟通效率提升', value: 45, display: '+45%', color: '#8b5cf6' },
+  ]
   const aiStats = [
-    { label: "创意生成效率提升", value: "40%", color: "#22c55e" },
-    { label: "设计时间节省", value: "65%", color: "#3b82f6" },
-    { label: "用户满意度", value: "85%", color: "#8b5cf6" },
-  ];
+    { label: '创意生成效率提升', value: '40%', color: '#22c55e' },
+    { label: '设计时间节省', value: '65%', color: '#3b82f6' },
+    { label: '用户满意度', value: '85%', color: '#8b5cf6' },
+  ]
 
   return (
-    <div className="space-y-4" style={{ animation: "spring-in 0.4s var(--spring-easing) both" }}>
+    <div className="space-y-4" style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}>
       {/* Two analytics panels side by side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Creative Performance */}
@@ -674,7 +777,9 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               <div key={i}>
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] text-white/30">{m.label}</span>
-                  <span className="text-[12px]" style={{ color: m.color }}>{m.display || `${m.value}%`}</span>
+                  <span className="text-[12px]" style={{ color: m.color }}>
+                    {m.display || `${m.value}%`}
+                  </span>
                 </div>
                 <ProgressBar value={m.value} color={m.color} tc={tc} />
               </div>
@@ -693,7 +798,9 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               <div key={i}>
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] text-white/30">{m.label}</span>
-                  <span className="text-[12px]" style={{ color: m.color }}>{m.display || `${m.value}%`}</span>
+                  <span className="text-[12px]" style={{ color: m.color }}>
+                    {m.display || `${m.value}%`}
+                  </span>
                 </div>
                 <ProgressBar value={m.value} color={m.color} tc={tc} />
               </div>
@@ -710,11 +817,18 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {aiStats.map((stat, i) => (
-            <div key={i} className="text-center" style={{ animation: `spring-in 0.4s var(--spring-easing) ${i * 0.08}s both` }}>
-              <p className="text-3xl mb-2" style={{
-                color: stat.color,
-                textShadow: `0 0 20px ${tc.alpha(stat.color, 0.4)}`,
-              }}>
+            <div
+              key={i}
+              className="text-center"
+              style={{ animation: `spring-in 0.4s var(--spring-easing) ${i * 0.08}s both` }}
+            >
+              <p
+                className="text-3xl mb-2"
+                style={{
+                  color: stat.color,
+                  textShadow: `0 0 20px ${tc.alpha(stat.color, 0.4)}`,
+                }}
+              >
                 {stat.value}
               </p>
               <p className="text-[11px] text-white/25">{stat.label}</p>
@@ -723,87 +837,99 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         </div>
       </NeonCard>
     </div>
-  );
+  )
 }
 
 // ==========================================
 // Main Page
 // ==========================================
 
-type TabKey = "projects" | "ideas" | "team" | "tools" | "analytics";
+type TabKey = 'projects' | 'ideas' | 'team' | 'tools' | 'analytics'
 
 const TAB_CONFIG: { key: TabKey; label: string }[] = [
-  { key: "projects", label: "创意项目" },
-  { key: "ideas", label: "创意库" },
-  { key: "team", label: "团队协作" },
-  { key: "tools", label: "AI工具" },
-  { key: "analytics", label: "数据分析" },
-];
+  { key: 'projects', label: '创意项目' },
+  { key: 'ideas', label: '创意库' },
+  { key: 'team', label: '团队协作' },
+  { key: 'tools', label: 'AI工具' },
+  { key: 'analytics', label: '数据分析' },
+]
 
 export function CollabCreationPage() {
-  const tc = useThemeColors();
-  const [activeTab, setActiveTab] = useState<TabKey>("projects");
+  const tc = useThemeColors()
+  const [activeTab, setActiveTab] = useState<TabKey>('projects')
 
   // Overview cards data
-  const overviewCards = useMemo(() => [
-    {
-      title: "活跃项目",
-      value: 12,
-      trend: "+15% 本月",
-      trendUp: true,
-      icon: Rocket,
-      color: "#8b5cf6",
-    },
-    {
-      title: "创意想法",
-      value: 156,
-      trend: "+8 今日新增",
-      trendUp: true,
-      icon: Lightbulb,
-      color: "#22c55e",
-    },
-    {
-      title: "协作成员",
-      value: 28,
-      trend: "15人在线",
-      trendUp: null,
-      icon: Users,
-      color: "#3b82f6",
-    },
-    {
-      title: "AI辅助率",
-      value: 85,
-      isPercent: true,
-      trend: "效率提升40%",
-      trendUp: true,
-      icon: Brain,
-      color: "#22c55e",
-    },
-  ], []);
+  const overviewCards = useMemo(
+    () => [
+      {
+        title: '活跃项目',
+        value: 12,
+        trend: '+15% 本月',
+        trendUp: true,
+        icon: Rocket,
+        color: '#8b5cf6',
+      },
+      {
+        title: '创意想法',
+        value: 156,
+        trend: '+8 今日新增',
+        trendUp: true,
+        icon: Lightbulb,
+        color: '#22c55e',
+      },
+      {
+        title: '协作成员',
+        value: 28,
+        trend: '15人在线',
+        trendUp: null,
+        icon: Users,
+        color: '#3b82f6',
+      },
+      {
+        title: 'AI辅助率',
+        value: 85,
+        isPercent: true,
+        trend: '效率提升40%',
+        trendUp: true,
+        icon: Brain,
+        color: '#22c55e',
+      },
+    ],
+    [],
+  )
 
   return (
-    <div className="h-full overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+    <div className="h-full overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
       {/* ===== HEADER ===== */}
       <div className="px-6 pt-6 pb-4">
         {/* Top gradient accent */}
-        <div className="absolute top-0 left-0 right-0 h-1" style={{
-          background: `linear-gradient(90deg, ${tc.primary}, #8b5cf6, ${tc.accent}, ${tc.secondary})`,
-          opacity: 0.6,
-        }} />
+        <div
+          className="absolute top-0 left-0 right-0 h-1"
+          style={{
+            background: `linear-gradient(90deg, ${tc.primary}, #8b5cf6, ${tc.accent}, ${tc.secondary})`,
+            opacity: 0.6,
+          }}
+        />
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{
-              background: tc.alpha("#8b5cf6", 0.1),
-              border: `1px solid ${tc.alpha("#8b5cf6", 0.2)}`,
-            }}>
-              <Lightbulb className="w-4.5 h-4.5" style={{ color: "#8b5cf6" }} />
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center"
+              style={{
+                background: tc.alpha('#8b5cf6', 0.1),
+                border: `1px solid ${tc.alpha('#8b5cf6', 0.2)}`,
+              }}
+            >
+              <Lightbulb className="w-4.5 h-4.5" style={{ color: '#8b5cf6' }} />
             </div>
             <div>
-              <h1 className="tracking-wider flex items-center gap-2" style={{
-                color: tc.primary,
-                textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.4)}`,
-              }}>
+              <h1
+                className="tracking-wider flex items-center gap-2"
+                style={{
+                  color: tc.primary,
+                  textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.4)}`,
+                }}
+              >
                 智创协同
               </h1>
               <p className="text-[10px] text-white/20 tracking-wider">
@@ -840,88 +966,109 @@ export function CollabCreationPage() {
       <div className="px-6 pb-5">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {overviewCards.map((card, idx) => {
-            const Icon = card.icon;
+            const Icon = card.icon
             return (
               <NeonCard key={idx} color={card.color}>
-                <div style={{ animation: `spring-in 0.4s var(--spring-easing) ${idx * 0.06}s both` }}>
+                <div
+                  style={{ animation: `spring-in 0.4s var(--spring-easing) ${idx * 0.06}s both` }}
+                >
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[11px] text-white/35">{card.title}</span>
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{
-                      background: tc.alpha(card.color, 0.08),
-                    }}>
+                    <div
+                      className="w-8 h-8 rounded-xl flex items-center justify-center"
+                      style={{
+                        background: tc.alpha(card.color, 0.08),
+                      }}
+                    >
                       <Icon className="w-4 h-4" style={{ color: card.color, opacity: 0.7 }} />
                     </div>
                   </div>
-                  <p className="text-2xl mb-1" style={{
-                    color: card.color,
-                    textShadow: `0 0 15px ${tc.alpha(card.color, 0.4)}`,
-                  }}>
+                  <p
+                    className="text-2xl mb-1"
+                    style={{
+                      color: card.color,
+                      textShadow: `0 0 15px ${tc.alpha(card.color, 0.4)}`,
+                    }}
+                  >
                     <AnimatedNumber value={card.value} />
                     {(card as any).isPercent && <span className="text-lg">%</span>}
                   </p>
                   <div className="flex items-center gap-1">
-                    {card.trendUp !== null && (
-                      card.trendUp
-                        ? <ArrowUpRight className="w-3 h-3" style={{ color: "#22c55e" }} />
-                        : <ArrowDownRight className="w-3 h-3" style={{ color: "#ef4444" }} />
-                    )}
-                    {card.trendUp === null && (
-                      <Users className="w-3 h-3 text-white/15" />
-                    )}
-                    <span className="text-[10px]" style={{
-                      color: card.trendUp === true ? "#22c55e" : card.trendUp === false ? "#ef4444" : "rgba(255,255,255,0.2)",
-                    }}>
+                    {card.trendUp !== null &&
+                      (card.trendUp ? (
+                        <ArrowUpRight className="w-3 h-3" style={{ color: '#22c55e' }} />
+                      ) : (
+                        <ArrowDownRight className="w-3 h-3" style={{ color: '#ef4444' }} />
+                      ))}
+                    {card.trendUp === null && <Users className="w-3 h-3 text-white/15" />}
+                    <span
+                      className="text-[10px]"
+                      style={{
+                        color:
+                          card.trendUp === true
+                            ? '#22c55e'
+                            : card.trendUp === false
+                              ? '#ef4444'
+                              : 'rgba(255,255,255,0.2)',
+                      }}
+                    >
                       {card.trend}
                     </span>
                   </div>
                 </div>
               </NeonCard>
-            );
+            )
           })}
         </div>
       </div>
 
       {/* ===== TAB NAVIGATION ===== */}
       <div className="px-6 mb-5">
-        <div className="flex items-center gap-0 rounded-2xl p-1" style={{
-          background: tc.alpha(tc.primary, 0.03),
-          border: `1px solid ${tc.alpha(tc.primary, 0.06)}`,
-        }}>
-          {TAB_CONFIG.map(tab => {
-            const isActive = activeTab === tab.key;
+        <div
+          className="flex items-center gap-0 rounded-2xl p-1"
+          style={{
+            background: tc.alpha(tc.primary, 0.03),
+            border: `1px solid ${tc.alpha(tc.primary, 0.06)}`,
+          }}
+        >
+          {TAB_CONFIG.map((tab) => {
+            const isActive = activeTab === tab.key
             return (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 className="flex-1 py-2 rounded-xl text-[12px] transition-all duration-300 relative"
                 style={{
-                  background: isActive ? tc.alpha(tc.primary, 0.08) : "transparent",
-                  color: isActive ? tc.primary : "rgba(255,255,255,0.3)",
+                  background: isActive ? tc.alpha(tc.primary, 0.08) : 'transparent',
+                  color: isActive ? tc.primary : 'rgba(255,255,255,0.3)',
                   fontWeight: isActive ? 500 : 400,
-                  boxShadow: isActive ? `0 0 12px ${tc.alpha(tc.primary, 0.08)}` : "none",
+                  boxShadow: isActive ? `0 0 12px ${tc.alpha(tc.primary, 0.08)}` : 'none',
                 }}
               >
                 {tab.label}
                 {isActive && (
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full" style={{
-                    background: tc.primary,
-                    boxShadow: `0 0 6px ${tc.alpha(tc.primary, 0.5)}`,
-                  }} />
+                  <div
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full"
+                    style={{
+                      background: tc.primary,
+                      boxShadow: `0 0 6px ${tc.alpha(tc.primary, 0.5)}`,
+                    }}
+                  />
                 )}
               </button>
-            );
+            )
           })}
         </div>
       </div>
 
       {/* ===== TAB CONTENT ===== */}
       <div className="px-6 pb-8">
-        {activeTab === "projects" && <TabProjects tc={tc} />}
-        {activeTab === "ideas" && <TabIdeas tc={tc} />}
-        {activeTab === "team" && <TabTeam tc={tc} />}
-        {activeTab === "tools" && <TabAITools tc={tc} />}
-        {activeTab === "analytics" && <TabAnalytics tc={tc} />}
+        {activeTab === 'projects' && <TabProjects tc={tc} />}
+        {activeTab === 'ideas' && <TabIdeas tc={tc} />}
+        {activeTab === 'team' && <TabTeam tc={tc} />}
+        {activeTab === 'tools' && <TabAITools tc={tc} />}
+        {activeTab === 'analytics' && <TabAnalytics tc={tc} />}
       </div>
     </div>
-  );
+  )
 }

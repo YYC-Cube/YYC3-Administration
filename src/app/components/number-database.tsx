@@ -1,4 +1,3 @@
-import { memo, useCallback, useMemo, useState } from 'react'
 import {
   Activity,
   AlertTriangle,
@@ -50,7 +49,7 @@ import {
   X,
   Zap,
 } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
 import {
   Area,
   AreaChart,
@@ -71,9 +70,11 @@ import {
   YAxis,
 } from 'recharts'
 
-import type { SharedContact } from './contacts-context'
 import { useContacts } from './contacts-context'
 import { useI18n } from './i18n-context'
+
+import type { SharedContact } from './contacts-context'
+import type { ReactNode } from 'react'
 
 // ==========================================
 // YYC³ 号码库 — Number Database Hub

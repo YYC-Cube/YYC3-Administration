@@ -108,18 +108,123 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
 
   const commands: CommandItem[] = [
     // Navigation
-    { id: 'nav-dashboard', label: t('nav.dashboard'), sublabel: t('cmd.navDashSub'), icon: LayoutDashboard, color: '#00f0ff', action: () => navigate('dashboard'), category: 'navigation', keywords: ['home', 'main', 'overview'] },
-    { id: 'nav-chat', label: t('nav.chat'), sublabel: t('cmd.navChatSub'), icon: MessageCircle, color: '#a855f7', action: () => navigate('chat'), category: 'navigation', keywords: ['ai', 'assistant', 'talk'] },
-    { id: 'nav-clm', label: t('nav.clm'), sublabel: t('cmd.navClmSub'), icon: Users, color: '#8b5cf6', action: () => navigate('clm'), category: 'navigation', keywords: ['customer', 'crm'] },
-    { id: 'nav-aicall', label: t('nav.aicall'), sublabel: t('cmd.navAicallSub'), icon: Phone, color: '#ef4444', action: () => navigate('aicall'), category: 'navigation', keywords: ['call', 'ai', 'phone'] },
-    { id: 'nav-tools', label: t('nav.tools'), sublabel: t('cmd.navToolsSub'), icon: Wrench, color: '#f59e0b', action: () => navigate('tools'), category: 'navigation', keywords: ['utility', 'settings'] },
-    { id: 'nav-workflow', label: t('nav.workflow'), sublabel: t('cmd.navWorkflowSub'), icon: GitBranch, color: '#10b981', action: () => navigate('workflow'), category: 'navigation', keywords: ['automation', 'flow'] },
-    { id: 'nav-insights', label: t('nav.insights'), sublabel: t('cmd.navInsightsSub'), icon: BarChart3, color: '#22d3ee', action: () => navigate('marketingAnalytics'), category: 'navigation', keywords: ['analytics', 'reports'] },
-    { id: 'nav-quickActions', label: t('nav.quickActions'), sublabel: t('cmd.navQuickSub'), icon: Zap, color: '#facc15', action: () => navigate('quickActions'), category: 'navigation' },
-    { id: 'nav-taskBoard', label: t('nav.taskBoard'), sublabel: t('cmd.navTaskSub'), icon: Target, color: '#f472b6', action: () => navigate('taskBoard'), category: 'navigation' },
-    { id: 'nav-devWorkspace', label: t('nav.devWorkspace'), sublabel: t('cmd.navDevSub'), icon: Code, color: '#38bdf8', action: () => navigate('devWorkspace'), category: 'navigation', keywords: ['dev', 'code', 'terminal'] },
-    { id: 'nav-logs', label: t('nav.logs'), sublabel: t('cmd.navLogsSub'), icon: History, color: '#64748b', action: () => navigate('logs'), category: 'navigation', keywords: ['history', 'audit'] },
-    { id: 'nav-settings', label: t('nav.settings'), icon: Settings, color: '#94a3b8', action: () => navigate('settings'), category: 'navigation', keywords: ['preferences', 'config'] },
+    {
+      id: 'nav-dashboard',
+      label: t('nav.dashboard'),
+      sublabel: t('cmd.navDashSub'),
+      icon: LayoutDashboard,
+      color: '#00f0ff',
+      action: () => navigate('dashboard'),
+      category: 'navigation',
+      keywords: ['home', 'main', 'overview'],
+    },
+    {
+      id: 'nav-chat',
+      label: t('nav.chat'),
+      sublabel: t('cmd.navChatSub'),
+      icon: MessageCircle,
+      color: '#a855f7',
+      action: () => navigate('chat'),
+      category: 'navigation',
+      keywords: ['ai', 'assistant', 'talk'],
+    },
+    {
+      id: 'nav-clm',
+      label: t('nav.clm'),
+      sublabel: t('cmd.navClmSub'),
+      icon: Users,
+      color: '#8b5cf6',
+      action: () => navigate('clm'),
+      category: 'navigation',
+      keywords: ['customer', 'crm'],
+    },
+    {
+      id: 'nav-aicall',
+      label: t('nav.aicall'),
+      sublabel: t('cmd.navAicallSub'),
+      icon: Phone,
+      color: '#ef4444',
+      action: () => navigate('aicall'),
+      category: 'navigation',
+      keywords: ['call', 'ai', 'phone'],
+    },
+    {
+      id: 'nav-tools',
+      label: t('nav.tools'),
+      sublabel: t('cmd.navToolsSub'),
+      icon: Wrench,
+      color: '#f59e0b',
+      action: () => navigate('tools'),
+      category: 'navigation',
+      keywords: ['utility', 'settings'],
+    },
+    {
+      id: 'nav-workflow',
+      label: t('nav.workflow'),
+      sublabel: t('cmd.navWorkflowSub'),
+      icon: GitBranch,
+      color: '#10b981',
+      action: () => navigate('workflow'),
+      category: 'navigation',
+      keywords: ['automation', 'flow'],
+    },
+    {
+      id: 'nav-insights',
+      label: t('nav.insights'),
+      sublabel: t('cmd.navInsightsSub'),
+      icon: BarChart3,
+      color: '#22d3ee',
+      action: () => navigate('marketingAnalytics'),
+      category: 'navigation',
+      keywords: ['analytics', 'reports'],
+    },
+    {
+      id: 'nav-quickActions',
+      label: t('nav.quickActions'),
+      sublabel: t('cmd.navQuickSub'),
+      icon: Zap,
+      color: '#facc15',
+      action: () => navigate('quickActions'),
+      category: 'navigation',
+    },
+    {
+      id: 'nav-taskBoard',
+      label: t('nav.taskBoard'),
+      sublabel: t('cmd.navTaskSub'),
+      icon: Target,
+      color: '#f472b6',
+      action: () => navigate('taskBoard'),
+      category: 'navigation',
+    },
+    {
+      id: 'nav-devWorkspace',
+      label: t('nav.devWorkspace'),
+      sublabel: t('cmd.navDevSub'),
+      icon: Code,
+      color: '#38bdf8',
+      action: () => navigate('devWorkspace'),
+      category: 'navigation',
+      keywords: ['dev', 'code', 'terminal'],
+    },
+    {
+      id: 'nav-logs',
+      label: t('nav.logs'),
+      sublabel: t('cmd.navLogsSub'),
+      icon: History,
+      color: '#64748b',
+      action: () => navigate('logs'),
+      category: 'navigation',
+      keywords: ['history', 'audit'],
+    },
+    {
+      id: 'nav-settings',
+      label: t('nav.settings'),
+      icon: Settings,
+      color: '#94a3b8',
+      action: () => navigate('settings'),
+      category: 'navigation',
+      keywords: ['preferences', 'config'],
+    },
   ]
 
   return open ? (
@@ -138,7 +243,10 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
         }}
       >
         <Command label="Command Palette" shouldFilter={true}>
-          <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ borderColor: 'rgba(139,92,246,0.1)' }}>
+          <div
+            className="flex items-center gap-3 px-4 py-3 border-b"
+            style={{ borderColor: 'rgba(139,92,246,0.1)' }}
+          >
             <Search className="w-4 h-4 shrink-0" style={{ color: 'rgba(139,92,246,0.6)' }} />
             <Command.Input
               ref={inputRef}
@@ -183,7 +291,10 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                       <div className="text-[10px] opacity-40 truncate">{cmd.sublabel}</div>
                     )}
                   </div>
-                  <ArrowRight className="w-3 h-3 shrink-0 opacity-0 group-hover:opacity-40 transition-opacity" style={{ color: cmd.color }} />
+                  <ArrowRight
+                    className="w-3 h-3 shrink-0 opacity-0 group-hover:opacity-40 transition-opacity"
+                    style={{ color: cmd.color }}
+                  />
                 </Command.Item>
               ))}
           </Command.List>

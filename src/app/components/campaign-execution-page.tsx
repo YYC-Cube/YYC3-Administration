@@ -1,12 +1,26 @@
 import {
-  Activity, AlertCircle, BarChart3, Calendar, CheckCircle2, Clock,
-  Eye, MessageSquare, Pause, Play, RefreshCw, Send,
-  Settings, Target, TrendingUp, Users, Zap,
-} from "lucide-react";
-import { useState } from "react";
+  Activity,
+  AlertCircle,
+  BarChart3,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  Eye,
+  MessageSquare,
+  Pause,
+  Play,
+  RefreshCw,
+  Send,
+  Settings,
+  Target,
+  TrendingUp,
+  Users,
+  Zap,
+} from 'lucide-react'
+import { useState } from 'react'
 
-import { useThemeColors } from "./hooks/use-theme-colors";
-import { NeonCard } from "./neon-card";
+import { useThemeColors } from './hooks/use-theme-colors'
+import { NeonCard } from './neon-card'
 
 // ==========================================
 // YYC³ 推广活动执行 - Campaign Execution
@@ -14,131 +28,136 @@ import { NeonCard } from "./neon-card";
 // ==========================================
 
 interface Campaign {
-  id: string;
-  name: string;
-  status: "scheduled" | "running" | "paused" | "completed";
-  channel: string;
-  progress: number;
-  reach: number;
-  engagement: number;
-  conversion: number;
-  startTime: string;
-  endTime: string;
-  budget: number;
-  spent: number;
+  id: string
+  name: string
+  status: 'scheduled' | 'running' | 'paused' | 'completed'
+  channel: string
+  progress: number
+  reach: number
+  engagement: number
+  conversion: number
+  startTime: string
+  endTime: string
+  budget: number
+  spent: number
 }
 
 export function CampaignExecutionPage() {
-  const tc = useThemeColors();
-  const [filter, setFilter] = useState<"all" | "running" | "scheduled">("all");
+  const tc = useThemeColors()
+  const [filter, setFilter] = useState<'all' | 'running' | 'scheduled'>('all')
 
   const campaigns: Campaign[] = [
     {
-      id: "C001",
-      name: "618预热活动 - 抖音直播",
-      status: "running",
-      channel: "抖音",
+      id: 'C001',
+      name: '618预热活动 - 抖音直播',
+      status: 'running',
+      channel: '抖音',
       progress: 67,
       reach: 125000,
       engagement: 8500,
       conversion: 420,
-      startTime: "2024-06-01 10:00",
-      endTime: "2024-06-03 22:00",
+      startTime: '2024-06-01 10:00',
+      endTime: '2024-06-03 22:00',
       budget: 30000,
       spent: 18500,
     },
     {
-      id: "C002",
-      name: "新品上市 - 微信朋友圈",
-      status: "running",
-      channel: "微信",
+      id: 'C002',
+      name: '新品上市 - 微信朋友圈',
+      status: 'running',
+      channel: '微信',
       progress: 42,
       reach: 85000,
       engagement: 3200,
       conversion: 180,
-      startTime: "2024-06-02 08:00",
-      endTime: "2024-06-05 20:00",
+      startTime: '2024-06-02 08:00',
+      endTime: '2024-06-05 20:00',
       budget: 15000,
       spent: 6300,
     },
     {
-      id: "C003",
-      name: "品牌故事传播 - 小红书",
-      status: "scheduled",
-      channel: "小红书",
+      id: 'C003',
+      name: '品牌故事传播 - 小红书',
+      status: 'scheduled',
+      channel: '小红书',
       progress: 0,
       reach: 0,
       engagement: 0,
       conversion: 0,
-      startTime: "2024-06-05 09:00",
-      endTime: "2024-06-10 18:00",
+      startTime: '2024-06-05 09:00',
+      endTime: '2024-06-10 18:00',
       budget: 20000,
       spent: 0,
     },
     {
-      id: "C004",
-      name: "会员专属优惠 - 全渠道",
-      status: "paused",
-      channel: "全渠道",
+      id: 'C004',
+      name: '会员专属优惠 - 全渠道',
+      status: 'paused',
+      channel: '全渠道',
       progress: 28,
       reach: 42000,
       engagement: 1800,
       conversion: 95,
-      startTime: "2024-05-28 00:00",
-      endTime: "2024-06-07 23:59",
+      startTime: '2024-05-28 00:00',
+      endTime: '2024-06-07 23:59',
       budget: 25000,
       spent: 7200,
     },
-  ];
+  ]
 
   const filteredCampaigns = campaigns.filter((c) => {
-    if (filter === "all") return true;
-    return c.status === filter;
-  });
+    if (filter === 'all') return true
+    return c.status === filter
+  })
 
-  const getStatusConfig = (status: Campaign["status"]) => {
+  const getStatusConfig = (status: Campaign['status']) => {
     switch (status) {
-      case "scheduled":
-        return { label: "待执行", color: tc.textMuted, icon: Clock, bgGlow: "none" };
-      case "running":
-        return { label: "执行中", color: tc.primary, icon: Play, bgGlow: tc.neonGlow(tc.primary, 0.3) };
-      case "paused":
-        return { label: "已暂停", color: tc.warning, icon: Pause, bgGlow: "none" };
-      case "completed":
-        return { label: "已完成", color: tc.success, icon: CheckCircle2, bgGlow: "none" };
+      case 'scheduled':
+        return { label: '待执行', color: tc.textMuted, icon: Clock, bgGlow: 'none' }
+      case 'running':
+        return {
+          label: '执行中',
+          color: tc.primary,
+          icon: Play,
+          bgGlow: tc.neonGlow(tc.primary, 0.3),
+        }
+      case 'paused':
+        return { label: '已暂停', color: tc.warning, icon: Pause, bgGlow: 'none' }
+      case 'completed':
+        return { label: '已完成', color: tc.success, icon: CheckCircle2, bgGlow: 'none' }
     }
-  };
+  }
 
   const stats = [
     {
-      label: "进行中活动",
-      value: campaigns.filter((c) => c.status === "running").length,
+      label: '进行中活动',
+      value: campaigns.filter((c) => c.status === 'running').length,
       icon: Activity,
       color: tc.primary,
-      change: "+2",
+      change: '+2',
     },
     {
-      label: "总触达人数",
+      label: '总触达人数',
       value: campaigns.reduce((sum, c) => sum + c.reach, 0).toLocaleString(),
       icon: Users,
       color: tc.secondary,
-      change: "+12.5%",
+      change: '+12.5%',
     },
     {
-      label: "互动总量",
+      label: '互动总量',
       value: campaigns.reduce((sum, c) => sum + c.engagement, 0).toLocaleString(),
       icon: MessageSquare,
       color: tc.accent,
-      change: "+8.3%",
+      change: '+8.3%',
     },
     {
-      label: "转化总数",
+      label: '转化总数',
       value: campaigns.reduce((sum, c) => sum + c.conversion, 0).toLocaleString(),
       icon: Target,
       color: tc.success,
-      change: "+15.2%",
+      change: '+15.2%',
     },
-  ];
+  ]
 
   return (
     <div className="space-y-6">
@@ -206,7 +225,7 @@ export function CampaignExecutionPage() {
 
       {/* 筛选器 */}
       <div className="flex items-center gap-3">
-        {(["all", "running", "scheduled"] as const).map((f) => (
+        {(['all', 'running', 'scheduled'] as const).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
@@ -215,10 +234,10 @@ export function CampaignExecutionPage() {
               background: filter === f ? tc.alpha(tc.primary, 0.15) : tc.bgCard,
               color: filter === f ? tc.primary : tc.textSecondary,
               border: `1px solid ${filter === f ? tc.primary : tc.borderSubtle}`,
-              boxShadow: filter === f ? tc.neonGlow(tc.primary, 0.3) : "none",
+              boxShadow: filter === f ? tc.neonGlow(tc.primary, 0.3) : 'none',
             }}
           >
-            {f === "all" ? "全部活动" : f === "running" ? "进行中" : "待执行"}
+            {f === 'all' ? '全部活动' : f === 'running' ? '进行中' : '待执行'}
           </button>
         ))}
       </div>
@@ -226,9 +245,9 @@ export function CampaignExecutionPage() {
       {/* 活动列表 */}
       <div className="space-y-4">
         {filteredCampaigns.map((campaign) => {
-          const statusConfig = getStatusConfig(campaign.status);
-          const StatusIcon = statusConfig.icon;
-          const budgetUsage = (campaign.spent / campaign.budget) * 100;
+          const statusConfig = getStatusConfig(campaign.status)
+          const StatusIcon = statusConfig.icon
+          const budgetUsage = (campaign.spent / campaign.budget) * 100
 
           return (
             <NeonCard key={campaign.id} className="p-6">
@@ -262,7 +281,9 @@ export function CampaignExecutionPage() {
                   </h3>
                   <div className="flex items-center gap-2 text-sm" style={{ color: tc.textMuted }}>
                     <Calendar className="w-4 h-4" />
-                    <span>{campaign.startTime} - {campaign.endTime}</span>
+                    <span>
+                      {campaign.startTime} - {campaign.endTime}
+                    </span>
                   </div>
                 </div>
 
@@ -384,9 +405,9 @@ export function CampaignExecutionPage() {
                 </div>
               </div>
             </NeonCard>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

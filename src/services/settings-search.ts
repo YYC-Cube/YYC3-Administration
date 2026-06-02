@@ -11,24 +11,24 @@
  * @tags settings,search,service,filter
  */
 
-import type { Settings } from '../types/settings';
+import type { Settings } from '../types/settings'
 
 /**
  * 搜索结果项
  */
 export interface SearchResult {
   /** 设置路径 */
-  path: string;
+  path: string
   /** 设置标题 */
-  title: string;
+  title: string
   /** 设置描述 */
-  description?: string;
+  description?: string
   /** 设置值 */
-  value: any;
+  value: any
   /** 设置类型 */
-  type: 'setting' | 'agent' | 'mcp' | 'model' | 'rule' | 'skill' | 'profile';
+  type: 'setting' | 'agent' | 'mcp' | 'model' | 'rule' | 'skill' | 'profile'
   /** 分类 */
-  category: string;
+  category: string
 }
 
 /**
@@ -39,40 +39,40 @@ export interface SearchResult {
  */
 export function searchSettings(settings: Settings, query: string): SearchResult[] {
   if (!query.trim()) {
-    return [];
+    return []
   }
 
-  const results: SearchResult[] = [];
-  const lowerQuery = query.toLowerCase();
+  const results: SearchResult[] = []
+  const lowerQuery = query.toLowerCase()
 
   // 搜索用户信息
-  searchUserProfile(settings.userProfile, lowerQuery, results);
+  searchUserProfile(settings.userProfile, lowerQuery, results)
 
   // 搜索通用设置
-  searchGeneralSettings(settings.general, lowerQuery, results);
+  searchGeneralSettings(settings.general, lowerQuery, results)
 
   // 搜索智能体
-  searchAgents(settings.agents, lowerQuery, results);
+  searchAgents(settings.agents, lowerQuery, results)
 
   // 搜索 MCP
-  searchMCPs(settings.mcpConfigs, lowerQuery, results);
+  searchMCPs(settings.mcpConfigs, lowerQuery, results)
 
   // 搜索模型
-  searchModels(settings.models, lowerQuery, results);
+  searchModels(settings.models, lowerQuery, results)
 
   // 搜索上下文设置
-  searchContextSettings(settings.context, lowerQuery, results);
+  searchContextSettings(settings.context, lowerQuery, results)
 
   // 搜索对话流设置
-  searchConversationSettings(settings.conversation, lowerQuery, results);
+  searchConversationSettings(settings.conversation, lowerQuery, results)
 
   // 搜索规则
-  searchRules(settings.rules, lowerQuery, results);
+  searchRules(settings.rules, lowerQuery, results)
 
   // 搜索技能
-  searchSkills(settings.skills, lowerQuery, results);
+  searchSkills(settings.skills, lowerQuery, results)
 
-  return results;
+  return results
 }
 
 /**
@@ -81,7 +81,7 @@ export function searchSettings(settings: Settings, query: string): SearchResult[
 function searchUserProfile(
   profile: Settings['userProfile'],
   query: string,
-  results: SearchResult[]
+  results: SearchResult[],
 ): void {
   const fields: Array<{ key: keyof Settings['userProfile']; title: string }> = [
     { key: 'username', title: '用户名' },
@@ -89,10 +89,10 @@ function searchUserProfile(
     { key: 'bio', title: '个人简介' },
     { key: 'role', title: '角色' },
     { key: 'location', title: '位置' },
-  ];
+  ]
 
   fields.forEach(({ key, title }) => {
-    const value = profile[key];
+    const value = profile[key]
     if (value && (title.toLowerCase().includes(query) || value.toLowerCase().includes(query))) {
       results.push({
         path: `userProfile.${key}`,
@@ -100,9 +100,9 @@ function searchUserProfile(
         value,
         type: 'profile',
         category: '账号信息',
-      });
+      })
     }
-  });
+  })
 }
 
 /**
@@ -111,7 +111,7 @@ function searchUserProfile(
 function searchGeneralSettings(
   general: Settings['general'],
   query: string,
-  results: SearchResult[]
+  results: SearchResult[],
 ): void {
   const settingsMap: Record<string, { title: string; value: any; description?: string }> = {
     'general.theme': { title: '主题', value: general.theme, description: '界面主题风格' },
@@ -125,7 +125,7 @@ function searchGeneralSettings(
     'general.nodeVersion': { title: 'Node.js 版本', value: general.nodeVersion },
     'general.enableAnimations': { title: '启用动画', value: general.enableAnimations },
     'general.enableSounds': { title: '启用音效', value: general.enableSounds },
-  };
+  }
 
   for (const [path, info] of Object.entries(settingsMap)) {
     if (
@@ -140,7 +140,7 @@ function searchGeneralSettings(
         value: info.value,
         type: 'setting',
         category: '通用设置',
-      });
+      })
     }
   }
 }
@@ -148,11 +148,7 @@ function searchGeneralSettings(
 /**
  * 搜索智能体
  */
-function searchAgents(
-  agents: Settings['agents'],
-  query: string,
-  results: SearchResult[]
-): void {
+function searchAgents(agents: Settings['agents'], query: string, results: SearchResult[]): void {
   for (const agent of agents) {
     if (
       agent.name.toLowerCase().includes(query) ||
@@ -166,7 +162,7 @@ function searchAgents(
         value: agent,
         type: 'agent',
         category: '智能体',
-      });
+      })
     }
   }
 }
@@ -177,7 +173,7 @@ function searchAgents(
 function searchMCPs(
   mcpConfigs: Settings['mcpConfigs'],
   query: string,
-  results: SearchResult[]
+  results: SearchResult[],
 ): void {
   for (const mcp of mcpConfigs) {
     if (
@@ -192,7 +188,7 @@ function searchMCPs(
         value: mcp,
         type: 'mcp',
         category: 'MCP 连接',
-      });
+      })
     }
   }
 }
@@ -200,11 +196,7 @@ function searchMCPs(
 /**
  * 搜索模型
  */
-function searchModels(
-  models: Settings['models'],
-  query: string,
-  results: SearchResult[]
-): void {
+function searchModels(models: Settings['models'], query: string, results: SearchResult[]): void {
   for (const model of models) {
     if (
       model.provider.toLowerCase().includes(query) ||
@@ -217,7 +209,7 @@ function searchModels(
         value: model,
         type: 'model',
         category: '模型配置',
-      });
+      })
     }
   }
 }
@@ -228,13 +220,13 @@ function searchModels(
 function searchContextSettings(
   context: Settings['context'],
   query: string,
-  results: SearchResult[]
+  results: SearchResult[],
 ): void {
   const settingsMap: Record<string, { title: string; value: any; description?: string }> = {
     'context.indexStatus': { title: '代码索引状态', value: context.indexStatus },
     'context.autoIndex': { title: '自动索引', value: context.autoIndex },
     'context.indexDepth': { title: '索引深度', value: context.indexDepth },
-  };
+  }
 
   for (const [path, info] of Object.entries(settingsMap)) {
     if (info.title.toLowerCase().includes(query)) {
@@ -245,7 +237,7 @@ function searchContextSettings(
         value: info.value,
         type: 'setting',
         category: '上下文管理',
-      });
+      })
     }
   }
 
@@ -262,7 +254,7 @@ function searchContextSettings(
         value: docSet,
         type: 'setting',
         category: '文档集',
-      });
+      })
     }
   }
 }
@@ -273,20 +265,29 @@ function searchContextSettings(
 function searchConversationSettings(
   conversation: Settings['conversation'],
   query: string,
-  results: SearchResult[]
+  results: SearchResult[],
 ): void {
   const settingsMap: Record<string, { title: string; value: any; description?: string }> = {
     'conversation.useTodoList': { title: '使用待办清单', value: conversation.useTodoList },
-    'conversation.autoCollapseNodes': { title: '自动折叠对话节点', value: conversation.autoCollapseNodes },
-    'conversation.autoFixCodeIssues': { title: '自动修复代码规范问题', value: conversation.autoFixCodeIssues },
-    'conversation.agentProactiveQuestion': { title: '智能体主动提问', value: conversation.agentProactiveQuestion },
+    'conversation.autoCollapseNodes': {
+      title: '自动折叠对话节点',
+      value: conversation.autoCollapseNodes,
+    },
+    'conversation.autoFixCodeIssues': {
+      title: '自动修复代码规范问题',
+      value: conversation.autoFixCodeIssues,
+    },
+    'conversation.agentProactiveQuestion': {
+      title: '智能体主动提问',
+      value: conversation.agentProactiveQuestion,
+    },
     'conversation.codeReviewScope': { title: '代码审查范围', value: conversation.codeReviewScope },
     'conversation.jumpAfterReview': { title: '审查后跳转', value: conversation.jumpAfterReview },
     'conversation.autoRunMCP': { title: '自动运行 MCP', value: conversation.autoRunMCP },
     'conversation.commandRunMode': { title: '命令运行方式', value: conversation.commandRunMode },
     'conversation.autoSave': { title: '自动保存', value: conversation.autoSave },
     'conversation.volume': { title: '音量', value: conversation.volume },
-  };
+  }
 
   for (const [path, info] of Object.entries(settingsMap)) {
     if (
@@ -300,7 +301,7 @@ function searchConversationSettings(
         value: info.value,
         type: 'setting',
         category: '对话流设置',
-      });
+      })
     }
   }
 }
@@ -308,11 +309,7 @@ function searchConversationSettings(
 /**
  * 搜索规则
  */
-function searchRules(
-  rules: Settings['rules'],
-  query: string,
-  results: SearchResult[]
-): void {
+function searchRules(rules: Settings['rules'], query: string, results: SearchResult[]): void {
   for (const rule of rules) {
     if (
       rule.name.toLowerCase().includes(query) ||
@@ -326,7 +323,7 @@ function searchRules(
         value: rule,
         type: 'rule',
         category: '规则管理',
-      });
+      })
     }
   }
 }
@@ -334,11 +331,7 @@ function searchRules(
 /**
  * 搜索技能
  */
-function searchSkills(
-  skills: Settings['skills'],
-  query: string,
-  results: SearchResult[]
-): void {
+function searchSkills(skills: Settings['skills'], query: string, results: SearchResult[]): void {
   for (const skill of skills) {
     if (
       skill.name.toLowerCase().includes(query) ||
@@ -352,7 +345,7 @@ function searchSkills(
         value: skill,
         type: 'skill',
         category: '技能管理',
-      });
+      })
     }
   }
 }

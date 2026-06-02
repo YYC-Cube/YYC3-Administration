@@ -1,12 +1,26 @@
 import {
-  AlertTriangle, ArrowRight, BarChart3, Brain, Calendar, CheckCircle2,
-  Clock, FileText, Filter, Lightbulb, PieChart,
-  Plus, Sparkles, Target, TrendingUp, Users, Zap,
-} from "lucide-react";
-import { useState } from "react";
+  AlertTriangle,
+  ArrowRight,
+  BarChart3,
+  Brain,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  FileText,
+  Filter,
+  Lightbulb,
+  PieChart,
+  Plus,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Users,
+  Zap,
+} from 'lucide-react'
+import { useState } from 'react'
 
-import { useThemeColors } from "./hooks/use-theme-colors";
-import { NeonCard } from "./neon-card";
+import { useThemeColors } from './hooks/use-theme-colors'
+import { NeonCard } from './neon-card'
 
 // ==========================================
 // YYC³ 营销方案策划 - Marketing Strategy Planning
@@ -14,91 +28,91 @@ import { NeonCard } from "./neon-card";
 // ==========================================
 
 interface StrategyPlan {
-  id: string;
-  name: string;
-  objective: string;
-  status: "draft" | "approved" | "active" | "completed";
-  budget: number;
-  startDate: string;
-  endDate: string;
-  channels: string[];
-  kpis: { name: string; target: number; current: number }[];
-  aiScore: number;
+  id: string
+  name: string
+  objective: string
+  status: 'draft' | 'approved' | 'active' | 'completed'
+  budget: number
+  startDate: string
+  endDate: string
+  channels: string[]
+  kpis: { name: string; target: number; current: number }[]
+  aiScore: number
 }
 
 export function MarketingStrategyPage() {
-  const tc = useThemeColors();
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const tc = useThemeColors()
+  const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
 
   const strategies: StrategyPlan[] = [
     {
-      id: "S001",
-      name: "Q1新品上市推广方案",
-      objective: "提升新产品市场认知度，首月达成1000+订单",
-      status: "active",
+      id: 'S001',
+      name: 'Q1新品上市推广方案',
+      objective: '提升新产品市场认知度，首月达成1000+订单',
+      status: 'active',
       budget: 50000,
-      startDate: "2024-01-01",
-      endDate: "2024-03-31",
-      channels: ["微信", "抖音", "小红书", "百度"],
+      startDate: '2024-01-01',
+      endDate: '2024-03-31',
+      channels: ['微信', '抖音', '小红书', '百度'],
       kpis: [
-        { name: "品牌曝光", target: 1000000, current: 650000 },
-        { name: "注册用户", target: 5000, current: 3200 },
-        { name: "订单转化", target: 1000, current: 580 },
+        { name: '品牌曝光', target: 1000000, current: 650000 },
+        { name: '注册用户', target: 5000, current: 3200 },
+        { name: '订单转化', target: 1000, current: 580 },
       ],
       aiScore: 87,
     },
     {
-      id: "S002",
-      name: "618大促营销方案",
-      objective: "提升销售额300%，扩大用户基数50%",
-      status: "approved",
+      id: 'S002',
+      name: '618大促营销方案',
+      objective: '提升销售额300%，扩大用户基数50%',
+      status: 'approved',
       budget: 120000,
-      startDate: "2024-06-01",
-      endDate: "2024-06-18",
-      channels: ["全渠道"],
+      startDate: '2024-06-01',
+      endDate: '2024-06-18',
+      channels: ['全渠道'],
       kpis: [
-        { name: "销售额", target: 3000000, current: 0 },
-        { name: "新增用户", target: 10000, current: 0 },
-        { name: "复购率", target: 35, current: 0 },
+        { name: '销售额', target: 3000000, current: 0 },
+        { name: '新增用户', target: 10000, current: 0 },
+        { name: '复购率', target: 35, current: 0 },
       ],
       aiScore: 92,
     },
     {
-      id: "S003",
-      name: "品牌年度传播计划",
-      objective: "建立行业领先品牌形象，提升品牌美誉度",
-      status: "draft",
+      id: 'S003',
+      name: '品牌年度传播计划',
+      objective: '建立行业领先品牌形象，提升品牌美誉度',
+      status: 'draft',
       budget: 200000,
-      startDate: "2024-01-01",
-      endDate: "2024-12-31",
-      channels: ["微信", "微博", "知乎", "B站"],
+      startDate: '2024-01-01',
+      endDate: '2024-12-31',
+      channels: ['微信', '微博', '知乎', 'B站'],
       kpis: [
-        { name: "品牌提及", target: 5000000, current: 0 },
-        { name: "正面评价", target: 90, current: 0 },
-        { name: "粉丝增长", target: 50000, current: 0 },
+        { name: '品牌提及', target: 5000000, current: 0 },
+        { name: '正面评价', target: 90, current: 0 },
+        { name: '粉丝增长', target: 50000, current: 0 },
       ],
       aiScore: 85,
     },
-  ];
+  ]
 
-  const getStatusConfig = (status: StrategyPlan["status"]) => {
+  const getStatusConfig = (status: StrategyPlan['status']) => {
     switch (status) {
-      case "draft":
-        return { label: "草稿", color: tc.textMuted, icon: FileText };
-      case "approved":
-        return { label: "已批准", color: tc.success, icon: CheckCircle2 };
-      case "active":
-        return { label: "执行中", color: tc.primary, icon: Clock };
-      case "completed":
-        return { label: "已完成", color: tc.secondary, icon: CheckCircle2 };
+      case 'draft':
+        return { label: '草稿', color: tc.textMuted, icon: FileText }
+      case 'approved':
+        return { label: '已批准', color: tc.success, icon: CheckCircle2 }
+      case 'active':
+        return { label: '执行中', color: tc.primary, icon: Clock }
+      case 'completed':
+        return { label: '已完成', color: tc.secondary, icon: CheckCircle2 }
     }
-  };
+  }
 
   const aiInsights = [
-    { icon: Brain, text: "基于历史数据，建议提升抖音渠道投放比例至35%", score: 94 },
-    { icon: TrendingUp, text: "周末投放CTR提升23%，建议增加预算配比", score: 88 },
-    { icon: Users, text: "目标人群画像分析完成，精准定向可提升ROI 40%", score: 91 },
-  ];
+    { icon: Brain, text: '基于历史数据，建议提升抖音渠道投放比例至35%', score: 94 },
+    { icon: TrendingUp, text: '周末投放CTR提升23%，建议增加预算配比', score: 88 },
+    { icon: Users, text: '目标人群画像分析完成，精准定向可提升ROI 40%', score: 91 },
+  ]
 
   return (
     <div className="space-y-6">
@@ -120,12 +134,12 @@ export function MarketingStrategyPage() {
             boxShadow: tc.shadowMd,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = tc.hoverTransform;
-            e.currentTarget.style.boxShadow = tc.shadowGlow;
+            e.currentTarget.style.transform = tc.hoverTransform
+            e.currentTarget.style.boxShadow = tc.shadowGlow
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.boxShadow = tc.shadowMd;
+            e.currentTarget.style.transform = 'translateY(0)'
+            e.currentTarget.style.boxShadow = tc.shadowMd
           }}
         >
           <Plus className="w-5 h-5" />
@@ -151,7 +165,10 @@ export function MarketingStrategyPage() {
                 border: `1px solid ${tc.borderSubtle}`,
               }}
             >
-              <insight.icon className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: tc.primary }} />
+              <insight.icon
+                className="w-5 h-5 mt-0.5 flex-shrink-0"
+                style={{ color: tc.primary }}
+              />
               <div className="flex-1">
                 <p style={{ color: tc.textPrimary }}>{insight.text}</p>
               </div>
@@ -173,8 +190,8 @@ export function MarketingStrategyPage() {
       {/* 方案列表 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {strategies.map((plan) => {
-          const statusConfig = getStatusConfig(plan.status);
-          const StatusIcon = statusConfig.icon;
+          const statusConfig = getStatusConfig(plan.status)
+          const StatusIcon = statusConfig.icon
 
           return (
             <NeonCard
@@ -267,7 +284,7 @@ export function MarketingStrategyPage() {
                   KPI达成进度
                 </p>
                 {plan.kpis.slice(0, 2).map((kpi) => {
-                  const progress = plan.status === "draft" ? 0 : (kpi.current / kpi.target) * 100;
+                  const progress = plan.status === 'draft' ? 0 : (kpi.current / kpi.target) * 100
                   return (
                     <div key={kpi.name}>
                       <div className="flex items-center justify-between mb-1">
@@ -292,7 +309,7 @@ export function MarketingStrategyPage() {
                         />
                       </div>
                     </div>
-                  );
+                  )
                 })}
               </div>
 
@@ -305,21 +322,21 @@ export function MarketingStrategyPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = tc.alpha(tc.primary, 0.2);
-                  e.currentTarget.style.borderColor = tc.primary;
+                  e.currentTarget.style.background = tc.alpha(tc.primary, 0.2)
+                  e.currentTarget.style.borderColor = tc.primary
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = tc.alpha(tc.primary, 0.1);
-                  e.currentTarget.style.borderColor = tc.borderSubtle;
+                  e.currentTarget.style.background = tc.alpha(tc.primary, 0.1)
+                  e.currentTarget.style.borderColor = tc.borderSubtle
                 }}
               >
                 查看详情
                 <ArrowRight className="w-4 h-4" />
               </button>
             </NeonCard>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

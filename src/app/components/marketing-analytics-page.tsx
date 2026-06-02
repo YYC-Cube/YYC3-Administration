@@ -1,12 +1,24 @@
 import {
-  Activity, ArrowDown, ArrowUp, BarChart3, Brain,
-  Calendar, DollarSign, Download, Filter, PieChart, ShoppingCart,
-  Sparkles, Target, TrendingUp, Users,
-} from "lucide-react";
-import { useState } from "react";
+  Activity,
+  ArrowDown,
+  ArrowUp,
+  BarChart3,
+  Brain,
+  Calendar,
+  DollarSign,
+  Download,
+  Filter,
+  PieChart,
+  ShoppingCart,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Users,
+} from 'lucide-react'
+import { useState } from 'react'
 
-import { useThemeColors } from "./hooks/use-theme-colors";
-import { NeonCard } from "./neon-card";
+import { useThemeColors } from './hooks/use-theme-colors'
+import { NeonCard } from './neon-card'
 
 // ==========================================
 // YYC³ 营销效果分析 - Marketing Analytics
@@ -14,63 +26,63 @@ import { NeonCard } from "./neon-card";
 // ==========================================
 
 interface MetricData {
-  label: string;
-  value: number;
-  change: number;
-  trend: "up" | "down";
-  icon: typeof TrendingUp;
-  color: string;
+  label: string
+  value: number
+  change: number
+  trend: 'up' | 'down'
+  icon: typeof TrendingUp
+  color: string
 }
 
 export function MarketingAnalyticsPage() {
-  const tc = useThemeColors();
-  const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
+  const tc = useThemeColors()
+  const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('30d')
 
   const metrics: MetricData[] = [
     {
-      label: "总投资回报率",
+      label: '总投资回报率',
       value: 3.8,
       change: 12.5,
-      trend: "up",
+      trend: 'up',
       icon: TrendingUp,
       color: tc.success,
     },
     {
-      label: "转化率",
+      label: '转化率',
       value: 4.2,
       change: 0.8,
-      trend: "up",
+      trend: 'up',
       icon: Target,
       color: tc.primary,
     },
     {
-      label: "获客成本",
+      label: '获客成本',
       value: 128,
       change: -8.3,
-      trend: "down",
+      trend: 'down',
       icon: DollarSign,
       color: tc.secondary,
     },
     {
-      label: "客户生命周期价值",
+      label: '客户生命周期价值',
       value: 1580,
       change: 15.2,
-      trend: "up",
+      trend: 'up',
       icon: Users,
       color: tc.accent,
     },
-  ];
+  ]
 
   const channelPerformance = [
-    { channel: "抖音", roi: 4.2, cost: 45000, revenue: 189000, conversion: 5.8 },
-    { channel: "微信", roi: 3.8, cost: 38000, revenue: 144400, conversion: 4.2 },
-    { channel: "小红书", roi: 3.5, cost: 28000, revenue: 98000, conversion: 3.9 },
-    { channel: "百度", roi: 2.9, cost: 35000, revenue: 101500, conversion: 3.1 },
-  ];
+    { channel: '抖音', roi: 4.2, cost: 45000, revenue: 189000, conversion: 5.8 },
+    { channel: '微信', roi: 3.8, cost: 38000, revenue: 144400, conversion: 4.2 },
+    { channel: '小红书', roi: 3.5, cost: 28000, revenue: 98000, conversion: 3.9 },
+    { channel: '百度', roi: 2.9, cost: 35000, revenue: 101500, conversion: 3.1 },
+  ]
 
   const campaignAnalytics = [
     {
-      name: "618预热活动",
+      name: '618预热活动',
       impressions: 1250000,
       clicks: 52000,
       conversions: 2100,
@@ -78,7 +90,7 @@ export function MarketingAnalyticsPage() {
       roi: 4.5,
     },
     {
-      name: "新品上市推广",
+      name: '新品上市推广',
       impressions: 850000,
       clicks: 34000,
       conversions: 1420,
@@ -86,32 +98,32 @@ export function MarketingAnalyticsPage() {
       roi: 3.8,
     },
     {
-      name: "会员专属优惠",
+      name: '会员专属优惠',
       impressions: 420000,
       clicks: 18500,
       conversions: 890,
       revenue: 142000,
       roi: 5.2,
     },
-  ];
+  ]
 
   const aiInsights = [
     {
-      title: "最佳投放时段",
-      content: "晚上20:00-22:00转化率最高，建议增加该时段预算配比30%",
-      impact: "预计提升ROI 15%",
+      title: '最佳投放时段',
+      content: '晚上20:00-22:00转化率最高，建议增加该时段预算配比30%',
+      impact: '预计提升ROI 15%',
     },
     {
-      title: "受众优化建议",
-      content: "25-34岁女性用户转化率高出平均值42%，建议精准定向",
-      impact: "预计降低获客成本 18%",
+      title: '受众优化建议',
+      content: '25-34岁女性用户转化率高出平均值42%，建议精准定向',
+      impact: '预计降低获客成本 18%',
     },
     {
-      title: "渠道组合优化",
-      content: "抖音+小红书组合投放效果提升35%，建议增加联动策略",
-      impact: "预计提升整体转化率 12%",
+      title: '渠道组合优化',
+      content: '抖音+小红书组合投放效果提升35%，建议增加联动策略',
+      impact: '预计提升整体转化率 12%',
     },
-  ];
+  ]
 
   return (
     <div className="space-y-6">
@@ -127,7 +139,7 @@ export function MarketingAnalyticsPage() {
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            {(["7d", "30d", "90d"] as const).map((range) => (
+            {(['7d', '30d', '90d'] as const).map((range) => (
               <button
                 key={range}
                 onClick={() => setTimeRange(range)}
@@ -136,10 +148,10 @@ export function MarketingAnalyticsPage() {
                   background: timeRange === range ? tc.alpha(tc.primary, 0.15) : tc.bgCard,
                   color: timeRange === range ? tc.primary : tc.textSecondary,
                   border: `1px solid ${timeRange === range ? tc.primary : tc.borderSubtle}`,
-                  boxShadow: timeRange === range ? tc.neonGlow(tc.primary, 0.3) : "none",
+                  boxShadow: timeRange === range ? tc.neonGlow(tc.primary, 0.3) : 'none',
                 }}
               >
-                {range === "7d" ? "近7天" : range === "30d" ? "近30天" : "近90天"}
+                {range === '7d' ? '近7天' : range === '30d' ? '近30天' : '近90天'}
               </button>
             ))}
           </div>
@@ -160,8 +172,8 @@ export function MarketingAnalyticsPage() {
       {/* 核心指标 */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {metrics.map((metric) => {
-          const Icon = metric.icon;
-          const TrendIcon = metric.trend === "up" ? ArrowUp : ArrowDown;
+          const Icon = metric.icon
+          const TrendIcon = metric.trend === 'up' ? ArrowUp : ArrowDown
 
           return (
             <NeonCard key={metric.label} className="p-6">
@@ -170,11 +182,8 @@ export function MarketingAnalyticsPage() {
                 <div
                   className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium"
                   style={{
-                    background: tc.alpha(
-                      metric.trend === "up" ? tc.success : tc.danger,
-                      0.1
-                    ),
-                    color: metric.trend === "up" ? tc.success : tc.danger,
+                    background: tc.alpha(metric.trend === 'up' ? tc.success : tc.danger, 0.1),
+                    color: metric.trend === 'up' ? tc.success : tc.danger,
                   }}
                 >
                   <TrendIcon className="w-3 h-3" />
@@ -185,10 +194,14 @@ export function MarketingAnalyticsPage() {
                 {metric.label}
               </p>
               <p className="text-3xl font-bold" style={{ color: tc.textPrimary }}>
-                {metric.label.includes("率") ? `${metric.value}%` : metric.label.includes("成本") ? `¥${metric.value}` : metric.value}
+                {metric.label.includes('率')
+                  ? `${metric.value}%`
+                  : metric.label.includes('成本')
+                    ? `¥${metric.value}`
+                    : metric.value}
               </p>
             </NeonCard>
-          );
+          )
         })}
       </div>
 
@@ -260,19 +273,34 @@ export function MarketingAnalyticsPage() {
           <table className="w-full">
             <thead>
               <tr style={{ borderBottom: `1px solid ${tc.borderSubtle}` }}>
-                <th className="text-left py-3 px-4 text-sm font-medium" style={{ color: tc.textMuted }}>
+                <th
+                  className="text-left py-3 px-4 text-sm font-medium"
+                  style={{ color: tc.textMuted }}
+                >
                   渠道
                 </th>
-                <th className="text-right py-3 px-4 text-sm font-medium" style={{ color: tc.textMuted }}>
+                <th
+                  className="text-right py-3 px-4 text-sm font-medium"
+                  style={{ color: tc.textMuted }}
+                >
                   投入成本
                 </th>
-                <th className="text-right py-3 px-4 text-sm font-medium" style={{ color: tc.textMuted }}>
+                <th
+                  className="text-right py-3 px-4 text-sm font-medium"
+                  style={{ color: tc.textMuted }}
+                >
                   营收
                 </th>
-                <th className="text-right py-3 px-4 text-sm font-medium" style={{ color: tc.textMuted }}>
+                <th
+                  className="text-right py-3 px-4 text-sm font-medium"
+                  style={{ color: tc.textMuted }}
+                >
                   ROI
                 </th>
-                <th className="text-right py-3 px-4 text-sm font-medium" style={{ color: tc.textMuted }}>
+                <th
+                  className="text-right py-3 px-4 text-sm font-medium"
+                  style={{ color: tc.textMuted }}
+                >
                   转化率
                 </th>
               </tr>
@@ -282,7 +310,8 @@ export function MarketingAnalyticsPage() {
                 <tr
                   key={channel.channel}
                   style={{
-                    borderBottom: idx < channelPerformance.length - 1 ? `1px solid ${tc.borderSubtle}` : "none",
+                    borderBottom:
+                      idx < channelPerformance.length - 1 ? `1px solid ${tc.borderSubtle}` : 'none',
                   }}
                 >
                   <td className="py-4 px-4">
@@ -307,7 +336,10 @@ export function MarketingAnalyticsPage() {
                       {channel.roi}x
                     </span>
                   </td>
-                  <td className="py-4 px-4 text-right font-medium" style={{ color: tc.textPrimary }}>
+                  <td
+                    className="py-4 px-4 text-right font-medium"
+                    style={{ color: tc.textPrimary }}
+                  >
                     {channel.conversion}%
                   </td>
                 </tr>
@@ -324,8 +356,8 @@ export function MarketingAnalyticsPage() {
         </h2>
         <div className="space-y-4">
           {campaignAnalytics.map((campaign) => {
-            const ctr = ((campaign.clicks / campaign.impressions) * 100).toFixed(2);
-            const conversionRate = ((campaign.conversions / campaign.clicks) * 100).toFixed(2);
+            const ctr = ((campaign.clicks / campaign.impressions) * 100).toFixed(2)
+            const conversionRate = ((campaign.conversions / campaign.clicks) * 100).toFixed(2)
 
             return (
               <div
@@ -395,10 +427,10 @@ export function MarketingAnalyticsPage() {
                   </div>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </NeonCard>
     </div>
-  );
+  )
 }

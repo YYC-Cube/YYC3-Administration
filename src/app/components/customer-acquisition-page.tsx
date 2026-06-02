@@ -1,12 +1,26 @@
 import {
-  Activity, Award, Brain, Briefcase, Calendar, DollarSign,
-  Filter, Mail, MapPin, MessageSquare, Phone, Search,
-  Target, TrendingUp, UserPlus, Users, Zap,
-} from "lucide-react";
-import { useState } from "react";
+  Activity,
+  Award,
+  Brain,
+  Briefcase,
+  Calendar,
+  DollarSign,
+  Filter,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  Search,
+  Target,
+  TrendingUp,
+  UserPlus,
+  Users,
+  Zap,
+} from 'lucide-react'
+import { useState } from 'react'
 
-import { useThemeColors } from "./hooks/use-theme-colors";
-import { NeonCard } from "./neon-card";
+import { useThemeColors } from './hooks/use-theme-colors'
+import { NeonCard } from './neon-card'
 
 // ==========================================
 // YYC³ 客户获取系统 - Customer Acquisition System
@@ -14,140 +28,140 @@ import { NeonCard } from "./neon-card";
 // ==========================================
 
 interface Lead {
-  id: string;
-  name: string;
-  company: string;
-  position: string;
-  email: string;
-  phone: string;
-  source: string;
-  score: number;
-  status: "new" | "contacted" | "qualified" | "converted";
-  createdAt: string;
-  value: number;
+  id: string
+  name: string
+  company: string
+  position: string
+  email: string
+  phone: string
+  source: string
+  score: number
+  status: 'new' | 'contacted' | 'qualified' | 'converted'
+  createdAt: string
+  value: number
 }
 
 export function CustomerAcquisitionPage() {
-  const tc = useThemeColors();
-  const [selectedStatus, setSelectedStatus] = useState<"all" | Lead["status"]>("all");
+  const tc = useThemeColors()
+  const [selectedStatus, setSelectedStatus] = useState<'all' | Lead['status']>('all')
 
   const leads: Lead[] = [
     {
-      id: "L001",
-      name: "张明",
-      company: "某科技有限公司",
-      position: "市场总监",
-      email: "zhang.ming@example.com",
-      phone: "138****5678",
-      source: "抖音广告",
+      id: 'L001',
+      name: '张明',
+      company: '某科技有限公司',
+      position: '市场总监',
+      email: 'zhang.ming@example.com',
+      phone: '138****5678',
+      source: '抖音广告',
       score: 92,
-      status: "qualified",
-      createdAt: "2024-06-03 14:30",
+      status: 'qualified',
+      createdAt: '2024-06-03 14:30',
       value: 50000,
     },
     {
-      id: "L002",
-      name: "李娜",
-      company: "某电商平台",
-      position: "运营经理",
-      email: "li.na@example.com",
-      phone: "139****8765",
-      source: "微信公众号",
+      id: 'L002',
+      name: '李娜',
+      company: '某电商平台',
+      position: '运营经理',
+      email: 'li.na@example.com',
+      phone: '139****8765',
+      source: '微信公众号',
       score: 88,
-      status: "contacted",
-      createdAt: "2024-06-03 10:15",
+      status: 'contacted',
+      createdAt: '2024-06-03 10:15',
       value: 35000,
     },
     {
-      id: "L003",
-      name: "王强",
-      company: "某零售集团",
-      position: "数字化主管",
-      email: "wang.qiang@example.com",
-      phone: "136****4321",
-      source: "小红书",
+      id: 'L003',
+      name: '王强',
+      company: '某零售集团',
+      position: '数字化主管',
+      email: 'wang.qiang@example.com',
+      phone: '136****4321',
+      source: '小红书',
       score: 85,
-      status: "new",
-      createdAt: "2024-06-03 09:20",
+      status: 'new',
+      createdAt: '2024-06-03 09:20',
       value: 60000,
     },
     {
-      id: "L004",
-      name: "陈静",
-      company: "某连锁品牌",
-      position: "品牌经理",
-      email: "chen.jing@example.com",
-      phone: "137****9012",
-      source: "百度搜索",
+      id: 'L004',
+      name: '陈静',
+      company: '某连锁品牌',
+      position: '品牌经理',
+      email: 'chen.jing@example.com',
+      phone: '137****9012',
+      source: '百度搜索',
       score: 78,
-      status: "new",
-      createdAt: "2024-06-02 16:45",
+      status: 'new',
+      createdAt: '2024-06-02 16:45',
       value: 28000,
     },
-  ];
+  ]
 
   const filteredLeads = leads.filter((lead) => {
-    if (selectedStatus === "all") return true;
-    return lead.status === selectedStatus;
-  });
+    if (selectedStatus === 'all') return true
+    return lead.status === selectedStatus
+  })
 
   const stats = [
     {
-      label: "新增线索",
-      value: "247",
-      change: "+18.5%",
+      label: '新增线索',
+      value: '247',
+      change: '+18.5%',
       icon: UserPlus,
       color: tc.primary,
     },
     {
-      label: "转化率",
-      value: "24.8%",
-      change: "+3.2%",
+      label: '转化率',
+      value: '24.8%',
+      change: '+3.2%',
       icon: Target,
       color: tc.success,
     },
     {
-      label: "获客成本",
-      value: "¥156",
-      change: "-12.3%",
+      label: '获客成本',
+      value: '¥156',
+      change: '-12.3%',
       icon: DollarSign,
       color: tc.secondary,
     },
     {
-      label: "预计价值",
-      value: "¥2.4M",
-      change: "+25.6%",
+      label: '预计价值',
+      value: '¥2.4M',
+      change: '+25.6%',
       icon: TrendingUp,
       color: tc.accent,
     },
-  ];
+  ]
 
   const sourceStats = [
-    { source: "抖音广告", leads: 82, conversion: 28, cost: 145, color: tc.primary },
-    { source: "微信公众号", leads: 65, conversion: 22, cost: 98, color: tc.secondary },
-    { source: "小红书", leads: 48, conversion: 18, cost: 178, color: tc.accent },
-    { source: "百度搜索", leads: 52, conversion: 15, cost: 220, color: tc.warning },
-  ];
+    { source: '抖音广告', leads: 82, conversion: 28, cost: 145, color: tc.primary },
+    { source: '微信公众号', leads: 65, conversion: 22, cost: 98, color: tc.secondary },
+    { source: '小红书', leads: 48, conversion: 18, cost: 178, color: tc.accent },
+    { source: '百度搜索', leads: 52, conversion: 15, cost: 220, color: tc.warning },
+  ]
 
-  const getStatusConfig = (status: Lead["status"]) => {
+  const getStatusConfig = (status: Lead['status']) => {
     switch (status) {
-      case "new":
-        return { label: "新线索", color: tc.primary, bgColor: tc.alpha(tc.primary, 0.15) };
-      case "contacted":
-        return { label: "已联系", color: tc.secondary, bgColor: tc.alpha(tc.secondary, 0.15) };
-      case "qualified":
-        return { label: "已认证", color: tc.success, bgColor: tc.alpha(tc.success, 0.15) };
-      case "converted":
-        return { label: "已转化", color: tc.accent, bgColor: tc.alpha(tc.accent, 0.15) };
+      case 'new':
+        return { label: '新线索', color: tc.primary, bgColor: tc.alpha(tc.primary, 0.15) }
+      case 'contacted':
+        return { label: '已联系', color: tc.secondary, bgColor: tc.alpha(tc.secondary, 0.15) }
+      case 'qualified':
+        return { label: '已认证', color: tc.success, bgColor: tc.alpha(tc.success, 0.15) }
+      case 'converted':
+        return { label: '已转化', color: tc.accent, bgColor: tc.alpha(tc.accent, 0.15) }
     }
-  };
+  }
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return tc.success;
-    if (score >= 80) return tc.primary;
-    if (score >= 70) return tc.secondary;
-    return tc.textMuted;
-  };
+    if (score >= 90) return tc.success
+    if (score >= 80) return tc.primary
+    if (score >= 70) return tc.secondary
+    return tc.textMuted
+  }
 
   return (
     <div className="space-y-6">
@@ -177,7 +191,7 @@ export function CustomerAcquisitionPage() {
       {/* 统计卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {stats.map((stat) => {
-          const Icon = stat.icon;
+          const Icon = stat.icon
           return (
             <NeonCard key={stat.label} className="p-6">
               <div className="flex items-start justify-between mb-4">
@@ -185,10 +199,10 @@ export function CustomerAcquisitionPage() {
                 <div
                   className="px-2 py-1 rounded text-xs font-medium"
                   style={{
-                    background: stat.change.startsWith("+")
+                    background: stat.change.startsWith('+')
                       ? tc.alpha(tc.success, 0.1)
                       : tc.alpha(tc.danger, 0.1),
-                    color: stat.change.startsWith("+") ? tc.success : tc.danger,
+                    color: stat.change.startsWith('+') ? tc.success : tc.danger,
                   }}
                 >
                   {stat.change}
@@ -201,7 +215,7 @@ export function CustomerAcquisitionPage() {
                 {stat.value}
               </p>
             </NeonCard>
-          );
+          )
         })}
       </div>
 
@@ -275,7 +289,7 @@ export function CustomerAcquisitionPage() {
         </h2>
         <div className="space-y-4">
           {sourceStats.map((source) => {
-            const conversionRate = ((source.conversion / source.leads) * 100).toFixed(1);
+            const conversionRate = ((source.conversion / source.leads) * 100).toFixed(1)
             return (
               <div
                 key={source.source}
@@ -326,14 +340,14 @@ export function CustomerAcquisitionPage() {
                   </div>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </NeonCard>
 
       {/* 线索筛选 */}
       <div className="flex items-center gap-3">
-        {(["all", "new", "contacted", "qualified", "converted"] as const).map((status) => (
+        {(['all', 'new', 'contacted', 'qualified', 'converted'] as const).map((status) => (
           <button
             key={status}
             onClick={() => setSelectedStatus(status)}
@@ -342,12 +356,10 @@ export function CustomerAcquisitionPage() {
               background: selectedStatus === status ? tc.alpha(tc.primary, 0.15) : tc.bgCard,
               color: selectedStatus === status ? tc.primary : tc.textSecondary,
               border: `1px solid ${selectedStatus === status ? tc.primary : tc.borderSubtle}`,
-              boxShadow: selectedStatus === status ? tc.neonGlow(tc.primary, 0.3) : "none",
+              boxShadow: selectedStatus === status ? tc.neonGlow(tc.primary, 0.3) : 'none',
             }}
           >
-            {status === "all"
-              ? "全部线索"
-              : getStatusConfig(status as Lead["status"]).label}
+            {status === 'all' ? '全部线索' : getStatusConfig(status as Lead['status']).label}
           </button>
         ))}
       </div>
@@ -356,8 +368,8 @@ export function CustomerAcquisitionPage() {
       <NeonCard className="p-6">
         <div className="space-y-4">
           {filteredLeads.map((lead) => {
-            const statusConfig = getStatusConfig(lead.status);
-            const scoreColor = getScoreColor(lead.score);
+            const statusConfig = getStatusConfig(lead.status)
+            const scoreColor = getScoreColor(lead.score)
 
             return (
               <div
@@ -446,7 +458,10 @@ export function CustomerAcquisitionPage() {
                           AI评分
                         </p>
                         <div className="flex items-center gap-3">
-                          <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: tc.bgInput }}>
+                          <div
+                            className="flex-1 h-2 rounded-full overflow-hidden"
+                            style={{ background: tc.bgInput }}
+                          >
                             <div
                               className="h-full transition-all"
                               style={{
@@ -496,10 +511,10 @@ export function CustomerAcquisitionPage() {
                   </div>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </NeonCard>
     </div>
-  );
+  )
 }

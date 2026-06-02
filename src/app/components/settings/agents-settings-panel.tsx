@@ -11,21 +11,21 @@
  * @tags settings,agents,ai
  */
 
-import { Bot, Copy, Edit, Plus, Trash2 } from 'lucide-react';
-import { motion } from 'motion/react';
-import { useState } from 'react';
+import { Bot, Copy, Edit, Plus, Trash2 } from 'lucide-react'
+import { motion } from 'motion/react'
+import { useState } from 'react'
 
-import { useThemeColors } from '../hooks/use-theme-colors';
+import { useThemeColors } from '../hooks/use-theme-colors'
 
-import { agentService } from '@/services/settings-services';
-import { useSettingsStore } from '@/stores/useSettingsStore';
+import { agentService } from '@/services/settings-services'
+import { useSettingsStore } from '@/stores/useSettingsStore'
 
 export function AgentsSettingsPanel() {
-  const tc = useThemeColors();
-  const { settings } = useSettingsStore();
-  const { agents } = settings;
+  const tc = useThemeColors()
+  const { settings } = useSettingsStore()
+  const { agents } = settings
 
-  const [isCreating, setIsCreating] = useState(false);
+  const [isCreating, setIsCreating] = useState(false)
 
   const handleCreateAgent = async () => {
     await agentService.createAgent({
@@ -38,8 +38,8 @@ export function AgentsSettingsPanel() {
       isBuiltIn: false,
       isCustom: true,
       enabled: true,
-    });
-  };
+    })
+  }
 
   return (
     <div className="space-y-6">
@@ -49,9 +49,7 @@ export function AgentsSettingsPanel() {
           <h2 className="text-2xl font-bold mb-2" style={{ color: tc.primary }}>
             智能体管理
           </h2>
-          <p style={{ color: tc.textSecondary }}>
-            配置和管理AI智能体 ({agents.length} 个)
-          </p>
+          <p style={{ color: tc.textSecondary }}>配置和管理AI智能体 ({agents.length} 个)</p>
         </div>
         <button
           onClick={handleCreateAgent}
@@ -87,24 +85,24 @@ export function AgentsSettingsPanel() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
 // 智能体卡片组件
 function AgentCard({ agent, index, tc }: any) {
   const handleEdit = () => {
     // TODO: 打开编辑对话框
-  };
+  }
 
   const handleDelete = async () => {
     if (confirm(`确定删除智能体 "${agent.name}" 吗？`)) {
-      await agentService.deleteAgent(agent.id);
+      await agentService.deleteAgent(agent.id)
     }
-  };
+  }
 
   const handleDuplicate = async () => {
-    await agentService.duplicateAgent(agent.id);
-  };
+    await agentService.duplicateAgent(agent.id)
+  }
 
   return (
     <motion.div
@@ -187,5 +185,5 @@ function AgentCard({ agent, index, tc }: any) {
         </div>
       </div>
     </motion.div>
-  );
+  )
 }

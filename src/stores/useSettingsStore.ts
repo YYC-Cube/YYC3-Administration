@@ -11,8 +11,8 @@
  * @tags settings,zustand,state-management,persistence
  */
 
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 import type {
   AgentConfig,
@@ -26,72 +26,72 @@ import type {
   Settings,
   SkillConfig,
   UserProfile,
-} from '../types/settings';
+} from '../types/settings'
 
 interface SettingsState {
   /** 设置数据 */
-  settings: Settings;
+  settings: Settings
   /** 搜索查询 */
-  searchQuery: string;
+  searchQuery: string
   /** 加载状态 */
-  loading: boolean;
+  loading: boolean
   /** 错误信息 */
-  error: string | null;
+  error: string | null
 }
 
 interface SettingsActions {
   /** 更新用户信息 */
-  updateUserProfile: (profile: Partial<UserProfile>) => void;
+  updateUserProfile: (profile: Partial<UserProfile>) => void
   /** 更新通用设置 */
-  updateGeneralSettings: (settings: Partial<GeneralSettings>) => void;
+  updateGeneralSettings: (settings: Partial<GeneralSettings>) => void
   /** 添加智能体 */
-  addAgent: (agent: AgentConfig) => void;
+  addAgent: (agent: AgentConfig) => void
   /** 更新智能体 */
-  updateAgent: (id: string, agent: Partial<AgentConfig>) => void;
+  updateAgent: (id: string, agent: Partial<AgentConfig>) => void
   /** 删除智能体 */
-  removeAgent: (id: string) => void;
+  removeAgent: (id: string) => void
   /** 添加 MCP */
-  addMCP: (mcp: MCPConfig) => void;
+  addMCP: (mcp: MCPConfig) => void
   /** 更新 MCP */
-  updateMCP: (id: string, mcp: Partial<MCPConfig>) => void;
+  updateMCP: (id: string, mcp: Partial<MCPConfig>) => void
   /** 删除 MCP */
-  removeMCP: (id: string) => void;
+  removeMCP: (id: string) => void
   /** 添加模型 */
-  addModel: (model: ModelConfig) => void;
+  addModel: (model: ModelConfig) => void
   /** 更新模型 */
-  updateModel: (id: string, model: Partial<ModelConfig>) => void;
+  updateModel: (id: string, model: Partial<ModelConfig>) => void
   /** 删除模型 */
-  removeModel: (id: string) => void;
+  removeModel: (id: string) => void
   /** 更新上下文设置 */
-  updateContextSettings: (settings: Partial<ContextSettings>) => void;
+  updateContextSettings: (settings: Partial<ContextSettings>) => void
   /** 更新对话流设置 */
-  updateConversationSettings: (settings: Partial<ConversationSettings>) => void;
+  updateConversationSettings: (settings: Partial<ConversationSettings>) => void
   /** 添加规则 */
-  addRule: (rule: RuleConfig) => void;
+  addRule: (rule: RuleConfig) => void
   /** 更新规则 */
-  updateRule: (id: string, rule: Partial<RuleConfig>) => void;
+  updateRule: (id: string, rule: Partial<RuleConfig>) => void
   /** 删除规则 */
-  removeRule: (id: string) => void;
+  removeRule: (id: string) => void
   /** 添加技能 */
-  addSkill: (skill: SkillConfig) => void;
+  addSkill: (skill: SkillConfig) => void
   /** 更新技能 */
-  updateSkill: (id: string, skill: Partial<SkillConfig>) => void;
+  updateSkill: (id: string, skill: Partial<SkillConfig>) => void
   /** 删除技能 */
-  removeSkill: (id: string) => void;
+  removeSkill: (id: string) => void
   /** 更新导入设置 */
-  updateImportSettings: (settings: Partial<ImportSettings>) => void;
+  updateImportSettings: (settings: Partial<ImportSettings>) => void
   /** 设置搜索查询 */
-  setSearchQuery: (query: string) => void;
+  setSearchQuery: (query: string) => void
   /** 导入配置 */
-  importConfig: (config: Partial<Settings>) => void;
+  importConfig: (config: Partial<Settings>) => void
   /** 导出配置 */
-  exportConfig: () => Settings;
+  exportConfig: () => Settings
   /** 重置设置 */
-  resetSettings: () => void;
+  resetSettings: () => void
   /** 设置加载状态 */
-  setLoading: (loading: boolean) => void;
+  setLoading: (loading: boolean) => void
   /** 设置错误 */
-  setError: (error: string | null) => void;
+  setError: (error: string | null) => void
 }
 
 const defaultSettings: Settings = {
@@ -154,7 +154,7 @@ const defaultSettings: Settings = {
     includeProjectConfig: true,
     includeUserData: false,
   },
-};
+}
 
 export const useSettingsStore = create<SettingsState & SettingsActions>()(
   persist(
@@ -170,7 +170,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             userProfile: { ...state.settings.userProfile, ...profile },
           },
-        }));
+        }))
       },
 
       updateGeneralSettings: (settings) => {
@@ -179,7 +179,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             general: { ...state.settings.general, ...settings },
           },
-        }));
+        }))
       },
 
       addAgent: (agent) => {
@@ -188,7 +188,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             agents: [...state.settings.agents, agent],
           },
-        }));
+        }))
       },
 
       updateAgent: (id, agent) => {
@@ -196,10 +196,10 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
           settings: {
             ...state.settings,
             agents: state.settings.agents.map((a) =>
-              a.id === id ? { ...a, ...agent, updatedAt: new Date().toISOString() } : a
+              a.id === id ? { ...a, ...agent, updatedAt: new Date().toISOString() } : a,
             ),
           },
-        }));
+        }))
       },
 
       removeAgent: (id) => {
@@ -208,7 +208,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             agents: state.settings.agents.filter((a) => a.id !== id),
           },
-        }));
+        }))
       },
 
       addMCP: (mcp) => {
@@ -217,18 +217,16 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             mcpConfigs: [...state.settings.mcpConfigs, mcp],
           },
-        }));
+        }))
       },
 
       updateMCP: (id, mcp) => {
         set((state) => ({
           settings: {
             ...state.settings,
-            mcpConfigs: state.settings.mcpConfigs.map((m) =>
-              m.id === id ? { ...m, ...mcp } : m
-            ),
+            mcpConfigs: state.settings.mcpConfigs.map((m) => (m.id === id ? { ...m, ...mcp } : m)),
           },
-        }));
+        }))
       },
 
       removeMCP: (id) => {
@@ -237,7 +235,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             mcpConfigs: state.settings.mcpConfigs.filter((m) => m.id !== id),
           },
-        }));
+        }))
       },
 
       addModel: (model) => {
@@ -246,18 +244,16 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             models: [...state.settings.models, model],
           },
-        }));
+        }))
       },
 
       updateModel: (id, model) => {
         set((state) => ({
           settings: {
             ...state.settings,
-            models: state.settings.models.map((m) =>
-              m.id === id ? { ...m, ...model } : m
-            ),
+            models: state.settings.models.map((m) => (m.id === id ? { ...m, ...model } : m)),
           },
-        }));
+        }))
       },
 
       removeModel: (id) => {
@@ -266,7 +262,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             models: state.settings.models.filter((m) => m.id !== id),
           },
-        }));
+        }))
       },
 
       updateContextSettings: (settings) => {
@@ -275,7 +271,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             context: { ...state.settings.context, ...settings },
           },
-        }));
+        }))
       },
 
       updateConversationSettings: (settings) => {
@@ -284,7 +280,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             conversation: { ...state.settings.conversation, ...settings },
           },
-        }));
+        }))
       },
 
       addRule: (rule) => {
@@ -293,7 +289,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             rules: [...state.settings.rules, rule],
           },
-        }));
+        }))
       },
 
       updateRule: (id, rule) => {
@@ -301,10 +297,10 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
           settings: {
             ...state.settings,
             rules: state.settings.rules.map((r) =>
-              r.id === id ? { ...r, ...rule, updatedAt: new Date().toISOString() } : r
+              r.id === id ? { ...r, ...rule, updatedAt: new Date().toISOString() } : r,
             ),
           },
-        }));
+        }))
       },
 
       removeRule: (id) => {
@@ -313,7 +309,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             rules: state.settings.rules.filter((r) => r.id !== id),
           },
-        }));
+        }))
       },
 
       addSkill: (skill) => {
@@ -322,7 +318,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             skills: [...state.settings.skills, skill],
           },
-        }));
+        }))
       },
 
       updateSkill: (id, skill) => {
@@ -330,10 +326,10 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
           settings: {
             ...state.settings,
             skills: state.settings.skills.map((s) =>
-              s.id === id ? { ...s, ...skill, updatedAt: new Date().toISOString() } : s
+              s.id === id ? { ...s, ...skill, updatedAt: new Date().toISOString() } : s,
             ),
           },
-        }));
+        }))
       },
 
       removeSkill: (id) => {
@@ -342,7 +338,7 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             skills: state.settings.skills.filter((s) => s.id !== id),
           },
-        }));
+        }))
       },
 
       updateImportSettings: (settings) => {
@@ -351,31 +347,31 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
             ...state.settings,
             importSettings: { ...state.settings.importSettings, ...settings },
           },
-        }));
+        }))
       },
 
       setSearchQuery: (query) => {
-        set({ searchQuery: query });
+        set({ searchQuery: query })
       },
 
       importConfig: (config) => {
-        set({ settings: { ...defaultSettings, ...config } });
+        set({ settings: { ...defaultSettings, ...config } })
       },
 
       exportConfig: () => {
-        return get().settings;
+        return get().settings
       },
 
       resetSettings: () => {
-        set({ settings: defaultSettings, searchQuery: '', error: null });
+        set({ settings: defaultSettings, searchQuery: '', error: null })
       },
 
       setLoading: (loading) => {
-        set({ loading });
+        set({ loading })
       },
 
       setError: (error) => {
-        set({ error });
+        set({ error })
       },
     }),
     {
@@ -383,6 +379,6 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
       partialize: (state) => ({
         settings: state.settings,
       }),
-    }
-  )
-);
+    },
+  ),
+)

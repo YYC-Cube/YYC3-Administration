@@ -11,16 +11,16 @@
  * @tags settings,mcp,protocol
  */
 
-import { Plug } from 'lucide-react';
+import { Plug } from 'lucide-react'
 
-import { useThemeColors } from '../hooks/use-theme-colors';
+import { useThemeColors } from '../hooks/use-theme-colors'
 
-import { useSettingsStore } from '@/stores/useSettingsStore';
+import { useSettingsStore } from '@/stores/useSettingsStore'
 
 export function MCPSettingsPanel() {
-  const tc = useThemeColors();
-  const { settings } = useSettingsStore();
-  
+  const tc = useThemeColors()
+  const { settings } = useSettingsStore()
+
   return (
     <div className="space-y-6">
       <div>
@@ -31,10 +31,13 @@ export function MCPSettingsPanel() {
           配置模型上下文协议连接 ({settings.mcpConfigs.length} 个)
         </p>
       </div>
-      <div className="p-12 rounded-xl text-center" style={{ background: tc.bgElevated, border: `1px solid ${tc.borderSubtle}` }}>
+      <div
+        className="p-12 rounded-xl text-center"
+        style={{ background: tc.bgElevated, border: `1px solid ${tc.borderSubtle}` }}
+      >
         <Plug size={48} style={{ color: tc.textMuted }} className="mx-auto mb-4" />
         <p style={{ color: tc.textMuted }}>MCP 连接管理面板</p>
       </div>
     </div>
-  );
+  )
 }
