@@ -1,0 +1,439 @@
+/* ============================================
+   YYC³ Cyberpunk Design System
+   ============================================ */
+
+:root {
+  /* Unified Cyan Color System - YYC³ 统一青色调系统 */
+  --cyber-cyan: #00f0ff;           /* Primary Cyan - 主青色 */
+  --cyber-cyan-light: #00ffff;     /* Light Cyan - 浅青色 */
+  --cyber-cyan-dark: #00d0df;      /* Dark Cyan - 深青色 (hover) */
+  --cyber-secondary: #00d4ff;      /* Secondary - 浅蓝青 (替代品红) */
+  --cyber-accent: #00ffcc;         /* Accent - 青绿色 (替代黄色) */
+  --cyber-success: #00ffc8;        /* Success - 成功青绿 (替代绿色) */
+  --cyber-highlight: #41ffdd;      /* Highlight - 高亮青绿 (替代橙色) */
+  --cyber-muted: #008b9d;          /* Muted - 暗青色 (次要元素) */
+  --cyber-red: #ff0040;            /* Warning/Danger - 保留红色用于警告 */
+  --cyber-dark: #0a0a0a;
+  --cyber-dark-alt: #111111;
+  --spring-easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --spring-duration: 0.4s;
+}
+
+/* ---- Scanline Animation ---- */
+@keyframes scanline-move {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100vh; }
+}
+
+/* ---- Data Scroll ---- */
+@keyframes data-scroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 200px; }
+}
+
+/* ---- Neon Pulse ---- */
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ---- Shimmer Move ---- */
+@keyframes shimmer-move {
+  0% { left: -100%; }
+  50%, 100% { left: 200%; }
+}
+
+/* ---- Spring In ---- */
+@keyframes spring-in {
+  0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ---- Float ---- */
+@keyframes float-rotate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(3deg); }
+  50% { transform: translateY(-3px) rotate(0deg); }
+  75% { transform: translateY(-6px) rotate(-3deg); }
+}
+
+/* ---- Typing Cursor ---- */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ---- Glitch ---- */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+  20% { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 2px); }
+  40% { clip-path: inset(60% 0 10% 0); transform: translate(3px, -1px); }
+  60% { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 1px); }
+  80% { clip-path: inset(80% 0 5% 0); transform: translate(1px, -2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+  20% { clip-path: inset(50% 0 30% 0); transform: translate(3px, -2px); }
+  40% { clip-path: inset(10% 0 70% 0); transform: translate(-3px, 1px); }
+  60% { clip-path: inset(70% 0 10% 0); transform: translate(2px, -1px); }
+  80% { clip-path: inset(30% 0 50% 0); transform: translate(-1px, 2px); }
+}
+
+/* ---- Thinking Pulse ---- */
+@keyframes thinking-pulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ---- Message Bubble Scale ---- */
+@keyframes bubble-in {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ---- Icon Spin ---- */
+@keyframes icon-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ---- Border Glow Pulse ---- */
+@keyframes border-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--cyber-cyan), 0 0 10px rgba(0,240,255,0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px var(--cyber-cyan), 0 0 30px rgba(0,240,255,0.5), 0 0 45px rgba(0,240,255,0.2);
+  }
+}
+
+/* ---- Horizontal Data Flow ---- */
+@keyframes data-flow-h {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+/* ============================================
+   CMDK Command Palette Styles
+   ============================================ */
+
+[cmdk-root] {
+  width: 100%;
+}
+
+[cmdk-input] {
+  font-family: inherit;
+}
+
+[cmdk-list] {
+  overflow: auto;
+}
+
+[cmdk-item] {
+  content-visibility: auto;
+  border: 1px solid transparent;
+}
+
+[cmdk-item][data-selected="true"] {
+  background: rgba(0, 240, 255, 0.08) !important;
+  border-color: rgba(0, 240, 255, 0.2) !important;
+}
+
+[cmdk-group-heading] {
+  user-select: none;
+}
+
+[cmdk-empty] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Line Clamp ---- */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- Tutorial Animations ---- */
+@keyframes tutorial-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes tutorial-fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ---- Mobile Sidebar Slide ---- */
+@keyframes slide-in-left {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes slide-out-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ============================================
+   Phase 4 — Advanced Feature Animations
+   ============================================ */
+
+/* ---- Card Refresh Flash ---- */
+@keyframes card-refresh-flash {
+  0% { border-color: rgba(0,240,255,0.15); box-shadow: none; }
+  15% { border-color: rgba(0,240,255,0.8); box-shadow: 0 0 20px rgba(0,240,255,0.5), inset 0 0 15px rgba(0,240,255,0.1); }
+  100% { border-color: rgba(0,240,255,0.15); box-shadow: none; }
+}
+
+/* ---- CountUp Value Pulse ---- */
+@keyframes value-pulse {
+  0% { transform: scale(1); filter: brightness(1); }
+  30% { transform: scale(1.08); filter: brightness(1.4); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* ---- Timeline Dot Ping ---- */
+@keyframes timeline-ping {
+  0% { transform: scale(1); opacity: 1; }
+  75% { transform: scale(2.5); opacity: 0; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* ---- Timeline Line Grow ---- */
+@keyframes timeline-grow {
+  0% { height: 0; opacity: 0; }
+  100% { height: 100%; opacity: 1; }
+}
+
+/* ---- Export Progress Bar ---- */
+@keyframes export-progress {
+  0% { width: 0%; }
+  60% { width: 85%; }
+  100% { width: 100%; }
+}
+
+/* ---- Data Pulse Ring ---- */
+@keyframes data-pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(0,240,255,0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(0,240,255,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,240,255,0); }
+}
+
+/* ---- Slide In Right ---- */
+@keyframes slide-in-right {
+  0% { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+/* ---- Number Tick ---- */
+@keyframes number-tick {
+  0% { transform: translateY(0); opacity: 1; }
+  40% { transform: translateY(-6px); opacity: 0.5; }
+  60% { transform: translateY(3px); opacity: 0.8; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ---- Download Complete Check ---- */
+@keyframes download-check {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* ============================================
+   Phase 5 — Visual & Performance Enhancements
+   ============================================ */
+
+/* ---- Glitch Text Layers ---- */
+@keyframes glitch-text-1 {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+  5% { clip-path: inset(15% 0 60% 0); transform: translate(-4px, 2px); }
+  10% { clip-path: inset(0 0 0 0); transform: translate(0); }
+  15% { clip-path: inset(55% 0 15% 0); transform: translate(3px, -1px); }
+  20% { clip-path: inset(0 0 0 0); transform: translate(0); }
+}
+
+@keyframes glitch-text-2 {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+  3% { clip-path: inset(40% 0 30% 0); transform: translate(4px, -2px); }
+  8% { clip-path: inset(0 0 0 0); transform: translate(0); }
+  12% { clip-path: inset(70% 0 5% 0); transform: translate(-3px, 1px); }
+  17% { clip-path: inset(0 0 0 0); transform: translate(0); }
+}
+
+@keyframes glitch-text-hover {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 1; }
+  8% { clip-path: inset(10% 0 65% 0); transform: translate(-5px, 3px); opacity: 0.9; }
+  16% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 1; }
+  24% { clip-path: inset(50% 0 20% 0); transform: translate(5px, -2px); opacity: 0.85; }
+  32% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 1; }
+  40% { clip-path: inset(75% 0 5% 0); transform: translate(-3px, 1px); opacity: 0.92; }
+  48% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 1; }
+  56% { clip-path: inset(25% 0 45% 0); transform: translate(4px, -3px); opacity: 0.88; }
+  64% { clip-path: inset(0 0 0 0); transform: translate(0); opacity: 1; }
+}
+
+@keyframes glitch-skew {
+  0%, 100% { transform: skewX(0deg); }
+  10% { transform: skewX(-2deg); }
+  20% { transform: skewX(0deg); }
+  30% { transform: skewX(1.5deg); }
+  40% { transform: skewX(0deg); }
+}
+
+@keyframes glitch-color-shift {
+  0%, 100% { text-shadow: 0 0 10px currentColor; }
+  25% { text-shadow: -2px 0 #00f0ff, 2px 0 #00d4ff, 0 0 10px currentColor; }
+  50% { text-shadow: 0 0 10px currentColor; }
+  75% { text-shadow: 2px 0 #00f0ff, -2px 0 #00d4ff, 0 0 10px currentColor; }
+}
+
+/* ---- Page Transition ---- */
+@keyframes page-enter {
+  0% { opacity: 0; transform: translateY(8px) scale(0.99); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes page-exit {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-8px) scale(0.99); }
+}
+
+/* ---- Scroll Reveal ---- */
+@keyframes scroll-reveal {
+  0% { opacity: 0; transform: translateY(24px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---- Stagger Fade ---- */
+@keyframes stagger-fade {
+  0% { opacity: 0; transform: translateX(-12px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ---- Keyboard Focus Ring ---- */
+*:focus-visible {
+  outline: 2px solid var(--cyber-cyan);
+  outline-offset: 2px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.15), 0 0 12px rgba(0, 240, 255, 0.2);
+}
+
+/* Remove focus ring for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ---- Reduced Motion Preferences ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .particle-canvas {
+    display: none !important;
+  }
+}
+
+/* ---- Screen Reader Only ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---- High Contrast Mode ---- */
+@media (forced-colors: active) {
+  :root {
+    --cyber-cyan: CanvasText;
+    --cyber-magenta: CanvasText;
+    --cyber-yellow: CanvasText;
+  }
+}
+
+/* ============================================
+   Phase 7 — Smart Form System Styles
+   ============================================ */
+
+/* ---- Form Submit Ripple ---- */
+@keyframes form-submit-ripple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* ---- Field Focus Glow ---- */
+@keyframes field-focus-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,240,255,0); }
+  50% { box-shadow: 0 0 0 4px rgba(0,240,255,0.1); }
+}
+
+/* ---- Validation Shake ---- */
+@keyframes validation-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 50%, 90% { transform: translateX(-3px); }
+  30%, 70% { transform: translateX(3px); }
+}
+
+/* ---- Star Pop ---- */
+@keyframes star-pop {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* ---- Slider thumb styling (Webkit) ---- */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cyber-cyan);
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.5);
+  box-shadow: 0 0 8px var(--cyber-cyan);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 14px var(--cyber-cyan);
+}
+
+/* ---- Slider thumb styling (Firefox) ---- */
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cyber-cyan);
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.5);
+  box-shadow: 0 0 8px var(--cyber-cyan);
+}
+
+/* ---- Date input icon color fix ---- */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}

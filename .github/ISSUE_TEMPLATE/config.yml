@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Vulnerability
+    url: mailto:admin@0379.email
+    about: Please report security vulnerabilities via email instead of public issues.
+  - name: Documentation
+    url: https://github.com/YanYuCloudCube/My-mgmt/tree/main/docs
+    about: Browse the project documentation for detailed guides and references.

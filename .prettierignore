@@ -1,0 +1,21 @@
+# Prettier ignore patterns
+node_modules
+dist
+build
+coverage
+*.min.js
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Generated files
+auto-imports.d.ts
+components.d.ts
+
+# Config files
+*.config.js
+*.config.ts
+*.config.mjs
+vite.config.ts
+vitest.config.ts
+playwright.config.ts
