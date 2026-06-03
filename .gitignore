@@ -13,6 +13,12 @@ build/
 .eslintcache
 .stylelintcache
 
+# Internal docs (not pushed to remote)
+docs/YYC3-项目闭环-验收系统/
+docs/YYC3-团队通用-标准规范/
+docs/YYC3-团队通用-标规文档/
+docs/YYC3-AI-Family-人机协同新范式/
+
 # Environment
 .env
 .env.local

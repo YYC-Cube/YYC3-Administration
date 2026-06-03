@@ -33,12 +33,14 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://www.docker.com)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=flat-square&logo=pwa)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 
-[![CI](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
-[![Deploy](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/deploy.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/YYC-Cube/YYC3-Administration/ci.yml?branch=main&style=flat-square&label=CI&logo=githubactions&logoColor=white)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
+[![Deploy](https://img.shields.io/github/actions/workflow/status/YYC-Cube/YYC3-Administration/deploy.yml?branch=main&style=flat-square&label=Deploy&logo=githubpages&logoColor=white)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/deploy.yml)
 [![TypeCheck](https://img.shields.io/badge/TypeCheck-passing-00e676?style=flat-square)](https://www.typescriptlang.org)
 [![Code Style](https://img.shields.io/badge/Code_Style-Prettier-ff69b4?style=flat-square)](https://prettier.io)
 [![PRs Welcome](https://img.shields.io/badge/🤝_PRs-Welcome-ff69b4?style=flat-square)](./CONTRIBUTING.md)
 [![Star](https://img.shields.io/badge/⭐_Star-YYC3-ffd700?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration)
+[![Node](https://img.shields.io/badge/Node-18%2B|20-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org)
+[![Stars](https://img.shields.io/github/stars/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Stars)](https://github.com/YYC-Cube/YYC3-Administration)
 
 —— **五高架构** · **五标体系** · **五化转型** · **五维评估** ——
 
@@ -94,19 +96,19 @@ _High Availability · High Performance · High Security · High Scalability · H
 
 #### 核心特性
 
-| 特性                          | 描述                                                                 |
-| :---------------------------- | :------------------------------------------------------------------- |
-| 🤖 **多模型 AI 集成**         | OpenAI / Claude / DeepSeek / Qwen 多模型切换，流式响应，智能体编排  |
-| 🎨 **双主题引擎**             | Cyberpunk 霓虹风格 + Liquid Glass 液态玻璃，支持实时切换与深度定制    |
-| 📊 **全维度数据驾驶舱**       | 实时 KPI 监控、趋势分析、多维度可视化，支持 10+ 图表类型             |
-| 💬 **客户生命周期管理 (CLM)** | 五阶段闭环：获客 → 转化 → 成交 → 服务 → 忠诚                        |
-| 🧑‍🤝‍🧑 **客户关怀系统**           | 智能通知引擎、自动化关怀任务、全渠道触达                             |
-| 📝 **智能表单系统**           | 可视化构建器、条件逻辑引擎、模板库、跨设备适配                       |
-| 💰 **财务管理**               | 收支追踪、发票管理、预算控制、财务报表                               |
-| 💳 **薪资系统**               | 薪资核算、税务计算、社保管理、工资单生成                             |
-| 🔧 **开发者工作区**           | Monaco 编辑器、Git 集成、6 面板拖拽布局、终端模拟器                  |
-| 🌍 **国际化 (i18n)**          | 中文 (zh-CN) / English (en-US) 实时切换，可扩展语言架构               |
-| ⚡ **高性能架构**             | Zustand 轻量状态管理、虚拟滚动、懒加载、memo 优化                     |
+| 特性                          | 描述                                                                         |
+| :---------------------------- | :--------------------------------------------------------------------------- |
+| 🤖 **多模型 AI 集成**         | OpenAI / Claude / DeepSeek / Qwen 多模型切换，流式响应，智能体编排           |
+| 🎨 **双主题引擎**             | Cyberpunk 霓虹风格 + Liquid Glass 液态玻璃，支持实时切换与深度定制           |
+| 📊 **全维度数据驾驶舱**       | 实时 KPI 监控、趋势分析、多维度可视化，支持 10+ 图表类型                     |
+| 💬 **客户生命周期管理 (CLM)** | 五阶段闭环：获客 → 转化 → 成交 → 服务 → 忠诚                                 |
+| 🧑‍🤝‍🧑 **客户关怀系统**           | 智能通知引擎、自动化关怀任务、全渠道触达                                     |
+| 📝 **智能表单系统**           | 可视化构建器、条件逻辑引擎、模板库、跨设备适配                               |
+| 💰 **财务管理**               | 收支追踪、发票管理、预算控制、财务报表                                       |
+| 💳 **薪资系统**               | 薪资核算、税务计算、社保管理、工资单生成                                     |
+| 🔧 **开发者工作区**           | Monaco 编辑器、Git 集成、6 面板拖拽布局、终端模拟器                          |
+| 🌍 **国际化 (i18n)**          | 中文 (zh-CN) / English (en-US) 实时切换，可扩展语言架构                      |
+| ⚡ **高性能架构**             | Zustand 轻量状态管理、虚拟滚动、懒加载、memo 优化                            |
 | 📱 **PWA 全端适配**           | 可安装至桌面/移动端，离线支持，全平台 Logo 适配（Android/iOS/macOS/watchOS） |
 
 ---
@@ -173,20 +175,20 @@ ErrorBoundary
 
 ### 🛠️ 技术栈
 
-| 类别       | 技术                    | 版本       | 说明                               |
-| :--------- | :---------------------- | :--------- | :--------------------------------- |
-| **框架**   | React                   | 18.3.1     | StrictMode + ErrorBoundary 嵌套    |
-| **语言**   | TypeScript              | 5.x        | 严格模式，零 `any` 策略            |
-| **构建**   | Vite                    | 6.3.5      | SWC 编译、缓存哈希、Manifest       |
-| **样式**   | Tailwind CSS v4         | 4.1.12     | @tailwindcss/vite 插件、CSS 变量   |
-| **状态**   | Zustand                 | 5.0.12     | 轻量全局状态、不可变更新           |
-| **UI**     | shadcn/ui + Radix UI    | latest     | 无障碍（WCAG）、全键盘导航          |
-| **动画**   | Framer Motion (motion)  | 12         | 布局动画、手势、过渡              |
-| **AI**     | OpenAI / Anthropic SDK  | latest     | 流式响应、多 Provider 编排         |
-| **图表**   | Recharts                | 2.x        | 响应式、10+ 图表类型                |
-| **编辑器** | Monaco Editor           | latest     | 代码编辑、语法高亮、Diff 视图      |
-| **测试**   | Vitest + Playwright     | latest     | 单元测试 + E2E 测试                |
-| **包管理** | pnpm                    | ≥8         | 高性能依赖管理                     |
+| 类别       | 技术                   | 版本   | 说明                             |
+| :--------- | :--------------------- | :----- | :------------------------------- |
+| **框架**   | React                  | 18.3.1 | StrictMode + ErrorBoundary 嵌套  |
+| **语言**   | TypeScript             | 5.x    | 严格模式，零 `any` 策略          |
+| **构建**   | Vite                   | 6.3.5  | SWC 编译、缓存哈希、Manifest     |
+| **样式**   | Tailwind CSS v4        | 4.1.12 | @tailwindcss/vite 插件、CSS 变量 |
+| **状态**   | Zustand                | 5.0.12 | 轻量全局状态、不可变更新         |
+| **UI**     | shadcn/ui + Radix UI   | latest | 无障碍（WCAG）、全键盘导航       |
+| **动画**   | Framer Motion (motion) | 12     | 布局动画、手势、过渡             |
+| **AI**     | OpenAI / Anthropic SDK | latest | 流式响应、多 Provider 编排       |
+| **图表**   | Recharts               | 2.x    | 响应式、10+ 图表类型             |
+| **编辑器** | Monaco Editor          | latest | 代码编辑、语法高亮、Diff 视图    |
+| **测试**   | Vitest + Playwright    | latest | 单元测试 + E2E 测试              |
+| **包管理** | pnpm                   | ≥8     | 高性能依赖管理                   |
 
 ---
 
@@ -221,17 +223,41 @@ pnpm preview
 
 #### 常用命令速查
 
-| 命令                    | 说明                 |
-| :---------------------- | :------------------- |
-| `pnpm dev`              | 启动开发服务器       |
-| `pnpm build`            | 构建生产版本         |
-| `pnpm preview`          | 预览构建产物         |
-| `pnpm typecheck`        | TypeScript 类型检查  |
-| `pnpm lint`             | ESLint 代码检查      |
-| `pnpm format`           | Prettier 格式化      |
-| `pnpm test`             | 运行单元测试         |
-| `pnpm test:e2e`         | 运行 E2E 测试        |
-| `pnpm clean`            | 清理构建/缓存        |
+| 命令             | 说明                |
+| :--------------- | :------------------ |
+| `pnpm dev`       | 启动开发服务器      |
+| `pnpm build`     | 构建生产版本        |
+| `pnpm preview`   | 预览构建产物        |
+| `pnpm typecheck` | TypeScript 类型检查 |
+| `pnpm lint`      | ESLint 代码检查     |
+| `pnpm format`    | Prettier 格式化     |
+| `pnpm test`      | 运行单元测试        |
+| `pnpm test:e2e`  | 运行 E2E 测试       |
+| `pnpm clean`     | 清理构建/缓存       |
+
+---
+
+### 🔐 环境变量
+
+复制 `.env.example` 为 `.env` 并根据需要调整：
+
+```bash
+cp .env.example .env
+```
+
+| 变量名                     | 说明                                 | 默认值                         |
+| :------------------------- | :----------------------------------- | :----------------------------- |
+| `VITE_APP_TITLE`           | 应用标题                             | YYC³ AI Marketing Terminal     |
+| `VITE_AI_API_BASE_URL`     | AI API 地址                          | `http://localhost:3001/api/ai` |
+| `VITE_GITHUB_API_BASE_URL` | GitHub API 地址                      | `https://api.github.com`       |
+| `VITE_ENABLE_DEV_TOOLS`    | 开发者工具开关                       | `true`                         |
+| `VITE_ENABLE_ANALYTICS`    | 分析统计开关                         | `false`                        |
+| `VITE_DEFAULT_THEME`       | 默认主题（cyberpunk / liquid-glass） | `cyberpunk`                    |
+| `VITE_DEFAULT_LANGUAGE`    | 默认语言（zh-CN / en-US）            | `zh-CN`                        |
+| `VITE_CACHE_TTL`           | 缓存时间（ms）                       | `3600000`                      |
+| `VITE_RATE_LIMIT_RPS`      | 请求限流（次/秒）                    | `10`                           |
+
+> **安全提示**：不要在 `VITE_` 前缀变量中放置敏感信息（API Key、Token 等），它们会在构建时被嵌入前端代码。生产环境应使用后端代理。
 
 ---
 
@@ -265,27 +291,27 @@ src/
 
 #### 模块全景
 
-| 模块                  | 页面数 | 状态   | 说明                               |
-| :-------------------- | :----- | :----- | :--------------------------------- |
-| 📊 数据驾驶舱         | 4      | ✅     | KPI 监控、趋势分析、客户洞察        |
-| 🤖 AI 对话中心        | 2      | ✅     | 多模型对话、智能体编排               |
-| 🧑‍🤝‍🧑 客户生命周期管理 | 5      | ✅     | 获客→转化→成交→服务→忠诚            |
-| 💬 客户关怀系统       | 4      | ✅     | 通知引擎、自动化关怀                  |
-| 📝 智能表单系统       | 4      | 🔧     | 表单构建器、模板库                    |
-| 🌐 客户数据库         | 5      | ✅     | 全维度客户视图、标签管理              |
-| 🔧 开发者工作区       | 6      | ✅     | 编辑器、Git、终端、面板               |
-| 💰 财务管理           | 3      | 🆕     | 收支追踪、预算控制                     |
-| 💳 薪资系统           | 3      | 🆕     | 薪资核算、税务社保                     |
-| ⚙️ 系统设置           | 4      | ✅     | 主题、账户、参数、关于                 |
+| 模块                | 页面数 | 状态 | 说明                         |
+| :------------------ | :----- | :--- | :--------------------------- |
+| 📊 数据驾驶舱       | 4      | ✅   | KPI 监控、趋势分析、客户洞察 |
+| 🤖 AI 对话中心      | 2      | ✅   | 多模型对话、智能体编排       |
+| 🧑‍🤝‍🧑 客户生命周期管理 | 5      | ✅   | 获客→转化→成交→服务→忠诚     |
+| 💬 客户关怀系统     | 4      | ✅   | 通知引擎、自动化关怀         |
+| 📝 智能表单系统     | 4      | 🔧   | 表单构建器、模板库           |
+| 🌐 客户数据库       | 5      | ✅   | 全维度客户视图、标签管理     |
+| 🔧 开发者工作区     | 6      | ✅   | 编辑器、Git、终端、面板      |
+| 💰 财务管理         | 3      | 🆕   | 收支追踪、预算控制           |
+| 💳 薪资系统         | 3      | 🆕   | 薪资核算、税务社保           |
+| ⚙️ 系统设置         | 4      | ✅   | 主题、账户、参数、关于       |
 
 ---
 
 ### 🎨 主题系统
 
-| 主题                  | 风格描述                          | 色彩特征                         |
-| :-------------------- | :-------------------------------- | :------------------------------- |
-| 🌆 **Cyberpunk 霓虹** | 赛博朋克风格，高对比，发光边缘     | 青蓝 `#00e5ff` / 品红 `#ff00ff`  |
-| 💎 **Liquid Glass**   | 液态玻璃风格，毛玻璃效果，柔和     | 渐变透明 / 紫蓝 `#7c3aed`        |
+| 主题                  | 风格描述                       | 色彩特征                        |
+| :-------------------- | :----------------------------- | :------------------------------ |
+| 🌆 **Cyberpunk 霓虹** | 赛博朋克风格，高对比，发光边缘 | 青蓝 `#00e5ff` / 品红 `#ff00ff` |
+| 💎 **Liquid Glass**   | 液态玻璃风格，毛玻璃效果，柔和 | 渐变透明 / 紫蓝 `#7c3aed`       |
 
 - 实时切换，无需刷新
 - 深度定制面板（扫描线、辉光、颗粒感、半透明度等 12+ 可调参数）
@@ -304,13 +330,13 @@ src/
 
 ### 📊 性能指标
 
-| 指标              | 目标    | 说明                     |
-| :---------------- | :------ | :----------------------- |
-| Lighthouse 性能   | ≥90     | 优化目标                  |
-| 首次内容绘制 (FCP) | <1.5s   | 资源预加载 + 代码分割     |
-| 总包体积          | <500KB  | Tree-shaking + 压缩       |
-| 可访问性          | WCAG AA | Radix UI 无障碍原语       |
-| 构建时间          | <30s    | Vite SWC 快速编译          |
+| 指标               | 目标    | 说明                  |
+| :----------------- | :------ | :-------------------- |
+| Lighthouse 性能    | ≥90     | 优化目标              |
+| 首次内容绘制 (FCP) | <1.5s   | 资源预加载 + 代码分割 |
+| 总包体积           | <500KB  | Tree-shaking + 压缩   |
+| 可访问性           | WCAG AA | Radix UI 无障碍原语   |
+| 构建时间           | <30s    | Vite SWC 快速编译     |
 
 ---
 
@@ -365,6 +391,13 @@ docker build -t yyc3-admin .
 docker run -d -p 8080:80 yyc3-admin
 ```
 
+#### Docker Compose
+
+```bash
+docker compose up -d
+# → http://localhost:8080
+```
+
 #### 静态部署
 
 ```bash
@@ -376,11 +409,11 @@ pnpm build
 
 ### 📝 更新日志
 
-| 版本    | 日期        | 说明                               |
-| :------ | :---------- | :--------------------------------- |
-| v1.0.x  | 2026-Q2     | 初始发布：核心模块 + 双主题 + AI   |
-| v1.1.x  | 2026-Q3     | 财务/薪资模块 + 智能表单 2.0       |
-| v2.0.x  | 2026-Q4     | 智能体编排 + 多租户 + 高级分析     |
+| 版本   | 日期    | 说明                             |
+| :----- | :------ | :------------------------------- |
+| v1.0.x | 2026-Q2 | 初始发布：核心模块 + 双主题 + AI |
+| v1.1.x | 2026-Q3 | 财务/薪资模块 + 智能表单 2.0     |
+| v2.0.x | 2026-Q4 | 智能体编排 + 多租户 + 高级分析   |
 
 > 详见 [CHANGELOG](./CHANGELOG.md)（计划中）
 
@@ -410,20 +443,20 @@ The platform follows the **"Five Highs · Five Standards · Five Transformations
 
 #### Core Features
 
-| Feature                          | Description                                                          |
-| :------------------------------- | :------------------------------------------------------------------- |
-| 🤖 **Multi-Model AI**            | OpenAI / Claude / DeepSeek / Qwen, streaming, agent orchestration    |
-| 🎨 **Dual Theme Engine**         | Cyberpunk Neon + Liquid Glass, real-time switching, deep customization |
-| 📊 **Full-Dimension Data Cockpit** | Real-time KPIs, trend analysis, 10+ chart types                     |
-| 💬 **CLM (Customer Lifecycle)**  | 5-stage closed loop: Acquisition → Conversion → Deal → Service → Loyalty |
-| 🧑‍🤝‍🧑 **Customer Care System**    | Smart notification engine, automated care tasks, omnichannel reach   |
-| 📝 **Smart Form System**         | Visual builder, conditional logic, template library                  |
-| 💰 **Finance Management**        | Income/expense tracking, invoice management, budget control          |
-| 💳 **Salary System**             | Payroll, tax calculation, social insurance, pay slip generation      |
-| 🔧 **Developer Workspace**       | Monaco editor, Git integration, 6-panel drag layout, terminal        |
-| 🌍 **i18n**                      | Chinese (zh-CN) / English (en-US) real-time switching                |
-| ⚡ **High Performance**          | Zustand state management, virtual scroll, lazy loading, memo         |
-| 📱 **PWA Ready**                 | Installable, offline support, cross-platform Logo (Android/iOS/macOS/watchOS) |
+| Feature                            | Description                                                                   |
+| :--------------------------------- | :---------------------------------------------------------------------------- |
+| 🤖 **Multi-Model AI**              | OpenAI / Claude / DeepSeek / Qwen, streaming, agent orchestration             |
+| 🎨 **Dual Theme Engine**           | Cyberpunk Neon + Liquid Glass, real-time switching, deep customization        |
+| 📊 **Full-Dimension Data Cockpit** | Real-time KPIs, trend analysis, 10+ chart types                               |
+| 💬 **CLM (Customer Lifecycle)**    | 5-stage closed loop: Acquisition → Conversion → Deal → Service → Loyalty      |
+| 🧑‍🤝‍🧑 **Customer Care System**        | Smart notification engine, automated care tasks, omnichannel reach            |
+| 📝 **Smart Form System**           | Visual builder, conditional logic, template library                           |
+| 💰 **Finance Management**          | Income/expense tracking, invoice management, budget control                   |
+| 💳 **Salary System**               | Payroll, tax calculation, social insurance, pay slip generation               |
+| 🔧 **Developer Workspace**         | Monaco editor, Git integration, 6-panel drag layout, terminal                 |
+| 🌍 **i18n**                        | Chinese (zh-CN) / English (en-US) real-time switching                         |
+| ⚡ **High Performance**            | Zustand state management, virtual scroll, lazy loading, memo                  |
+| 📱 **PWA Ready**                   | Installable, offline support, cross-platform Logo (Android/iOS/macOS/watchOS) |
 
 ---
 
@@ -458,20 +491,20 @@ Each module follows **Unit Autonomy** design:
 
 ### 🛠️ Tech Stack
 
-| Category     | Technology               | Version    | Description                          |
-| :----------- | :----------------------- | :--------- | :----------------------------------- |
-| **Framework**| React                    | 18.3.1     | StrictMode + ErrorBoundary           |
-| **Language** | TypeScript               | 5.x        | Strict mode, zero `any` policy       |
-| **Build**    | Vite                     | 6.3.5      | SWC compile, cache hash, Manifest    |
-| **Styling**  | Tailwind CSS v4          | 4.1.12     | @tailwindcss/vite plugin             |
-| **State**    | Zustand                  | 5.0.12     | Lightweight global state             |
-| **UI**       | shadcn/ui + Radix UI     | latest     | WCAG accessible, full keyboard nav   |
-| **Animation**| Framer Motion (motion)   | 12         | Layout animations, gestures          |
-| **AI**       | OpenAI / Anthropic SDK   | latest     | Streaming, multi-provider            |
-| **Charts**   | Recharts                 | 2.x        | Responsive, 10+ chart types          |
-| **Editor**   | Monaco Editor            | latest     | Code editing, syntax highlight       |
-| **Testing**  | Vitest + Playwright      | latest     | Unit + E2E tests                     |
-| **PM**       | pnpm                     | ≥8         | High-performance dependency manager  |
+| Category      | Technology             | Version | Description                         |
+| :------------ | :--------------------- | :------ | :---------------------------------- |
+| **Framework** | React                  | 18.3.1  | StrictMode + ErrorBoundary          |
+| **Language**  | TypeScript             | 5.x     | Strict mode, zero `any` policy      |
+| **Build**     | Vite                   | 6.3.5   | SWC compile, cache hash, Manifest   |
+| **Styling**   | Tailwind CSS v4        | 4.1.12  | @tailwindcss/vite plugin            |
+| **State**     | Zustand                | 5.0.12  | Lightweight global state            |
+| **UI**        | shadcn/ui + Radix UI   | latest  | WCAG accessible, full keyboard nav  |
+| **Animation** | Framer Motion (motion) | 12      | Layout animations, gestures         |
+| **AI**        | OpenAI / Anthropic SDK | latest  | Streaming, multi-provider           |
+| **Charts**    | Recharts               | 2.x     | Responsive, 10+ chart types         |
+| **Editor**    | Monaco Editor          | latest  | Code editing, syntax highlight      |
+| **Testing**   | Vitest + Playwright    | latest  | Unit + E2E tests                    |
+| **PM**        | pnpm                   | ≥8      | High-performance dependency manager |
 
 ---
 
@@ -498,17 +531,41 @@ pnpm preview
 
 #### Quick Commands
 
-| Command              | Description                |
-| :------------------- | :------------------------- |
-| `pnpm dev`           | Start dev server           |
-| `pnpm build`         | Build for production       |
-| `pnpm preview`       | Preview production build   |
-| `pnpm typecheck`     | TypeScript type check      |
-| `pnpm lint`          | ESLint code check          |
-| `pnpm format`        | Prettier format            |
-| `pnpm test`          | Run unit tests             |
-| `pnpm test:e2e`      | Run E2E tests              |
-| `pnpm clean`         | Clean build/cache          |
+| Command          | Description              |
+| :--------------- | :----------------------- |
+| `pnpm dev`       | Start dev server         |
+| `pnpm build`     | Build for production     |
+| `pnpm preview`   | Preview production build |
+| `pnpm typecheck` | TypeScript type check    |
+| `pnpm lint`      | ESLint code check        |
+| `pnpm format`    | Prettier format          |
+| `pnpm test`      | Run unit tests           |
+| `pnpm test:e2e`  | Run E2E tests            |
+| `pnpm clean`     | Clean build/cache        |
+
+---
+
+### 🔐 Environment Variables
+
+Copy `.env.example` to `.env` and adjust as needed:
+
+```bash
+cp .env.example .env
+```
+
+| Variable                   | Description                                  | Default                        |
+| :------------------------- | :------------------------------------------- | :----------------------------- |
+| `VITE_APP_TITLE`           | Application title                            | YYC³ AI Marketing Terminal     |
+| `VITE_AI_API_BASE_URL`     | AI API endpoint                              | `http://localhost:3001/api/ai` |
+| `VITE_GITHUB_API_BASE_URL` | GitHub API endpoint                          | `https://api.github.com`       |
+| `VITE_ENABLE_DEV_TOOLS`    | Enable dev tools                             | `true`                         |
+| `VITE_ENABLE_ANALYTICS`    | Enable analytics                             | `false`                        |
+| `VITE_DEFAULT_THEME`       | Default theme (`cyberpunk` / `liquid-glass`) | `cyberpunk`                    |
+| `VITE_DEFAULT_LANGUAGE`    | Default language (`zh-CN` / `en-US`)         | `zh-CN`                        |
+| `VITE_CACHE_TTL`           | Cache TTL (ms)                               | `3600000`                      |
+| `VITE_RATE_LIMIT_RPS`      | Rate limit (req/s)                           | `10`                           |
+
+> **Security**: Never place secrets (API keys, tokens) in `VITE_` prefixed variables — they are embedded at build time. Use a backend proxy in production.
 
 ---
 
@@ -539,27 +596,27 @@ src/
 
 ### 🎯 Feature Modules
 
-| Module              | Pages | Status | Description                          |
-| :------------------ | :---- | :----- | :----------------------------------- |
-| 📊 Data Cockpit     | 4     | ✅     | KPIs, trends, customer insights      |
+| Module              | Pages | Status | Description                           |
+| :------------------ | :---- | :----- | :------------------------------------ |
+| 📊 Data Cockpit     | 4     | ✅     | KPIs, trends, customer insights       |
 | 🤖 AI Chat Center   | 2     | ✅     | Multi-model chat, agent orchestration |
-| 🧑‍🤝‍🧑 CLM           | 5     | ✅     | Acquisition → Deal → Loyalty         |
-| 💬 Customer Care    | 4     | ✅     | Notification engine, automation      |
-| 📝 Smart Forms      | 4     | 🔧     | Form builder, templates              |
-| 🌐 Contact Database | 5     | ✅     | Full-dimension customer view         |
-| 🔧 Developer WS     | 6     | ✅     | Editor, Git, terminal, panels        |
-| 💰 Finance          | 3     | 🆕     | Tracking, budgeting                  |
-| 💳 Salary           | 3     | 🆕     | Payroll, tax, insurance              |
-| ⚙️ Settings         | 4     | ✅     | Theme, account, preferences          |
+| 🧑‍🤝‍🧑 CLM              | 5     | ✅     | Acquisition → Deal → Loyalty          |
+| 💬 Customer Care    | 4     | ✅     | Notification engine, automation       |
+| 📝 Smart Forms      | 4     | 🔧     | Form builder, templates               |
+| 🌐 Contact Database | 5     | ✅     | Full-dimension customer view          |
+| 🔧 Developer WS     | 6     | ✅     | Editor, Git, terminal, panels         |
+| 💰 Finance          | 3     | 🆕     | Tracking, budgeting                   |
+| 💳 Salary           | 3     | 🆕     | Payroll, tax, insurance               |
+| ⚙️ Settings         | 4     | ✅     | Theme, account, preferences           |
 
 ---
 
 ### 🎨 Theme System
 
-| Theme                   | Style                              | Colors                       |
-| :---------------------- | :--------------------------------- | :--------------------------- |
-| 🌆 **Cyberpunk Neon**   | High contrast, glow edges          | Cyan `#00e5ff` / Magenta `#ff00ff` |
-| 💎 **Liquid Glass**     | Frosted glass, soft gradients      | Gradient / Purple `#7c3aed`  |
+| Theme                 | Style                         | Colors                             |
+| :-------------------- | :---------------------------- | :--------------------------------- |
+| 🌆 **Cyberpunk Neon** | High contrast, glow edges     | Cyan `#00e5ff` / Magenta `#ff00ff` |
+| 💎 **Liquid Glass**   | Frosted glass, soft gradients | Gradient / Purple `#7c3aed`        |
 
 - Real-time switch, no refresh needed
 - 12+ customizable parameters (scanlines, glow, grain, opacity, etc.)
@@ -577,13 +634,13 @@ src/
 
 ### 📊 Performance
 
-| Metric                  | Target | Description                         |
-| :---------------------- | :----- | :---------------------------------- |
-| Lighthouse Performance  | ≥90    | Optimization target                 |
-| FCP                     | <1.5s  | Preload + code splitting            |
-| Bundle Size             | <500KB | Tree-shaking + compression          |
-| Accessibility           | WCAG AA | Radix UI primitives                |
-| Build Time              | <30s   | Vite SWC fast compilation           |
+| Metric                 | Target  | Description                |
+| :--------------------- | :------ | :------------------------- |
+| Lighthouse Performance | ≥90     | Optimization target        |
+| FCP                    | <1.5s   | Preload + code splitting   |
+| Bundle Size            | <500KB  | Tree-shaking + compression |
+| Accessibility          | WCAG AA | Radix UI primitives        |
+| Build Time             | <30s    | Vite SWC fast compilation  |
 
 ---
 
@@ -635,6 +692,13 @@ docker build -t yyc3-admin .
 docker run -d -p 8080:80 yyc3-admin
 ```
 
+#### Docker Compose
+
+```bash
+docker compose up -d
+# → http://localhost:8080
+```
+
 #### Static Hosting
 
 ```bash
@@ -646,11 +710,11 @@ pnpm build
 
 ### 📝 Changelog
 
-| Version | Date     | Description                        |
-| :------ | :------- | :--------------------------------- |
-| v1.0.x  | 2026-Q2  | Initial: core + dual theme + AI    |
-| v1.1.x  | 2026-Q3  | Finance/Salary + Smart Forms 2.0   |
-| v2.0.x  | 2026-Q4  | Agent orchestration + multi-tenant |
+| Version | Date    | Description                        |
+| :------ | :------ | :--------------------------------- |
+| v1.0.x  | 2026-Q2 | Initial: core + dual theme + AI    |
+| v1.1.x  | 2026-Q3 | Finance/Salary + Smart Forms 2.0   |
+| v2.0.x  | 2026-Q4 | Agent orchestration + multi-tenant |
 
 > See [CHANGELOG.md](./CHANGELOG.md) (planned)
 
@@ -661,6 +725,7 @@ pnpm build
 All contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 **Process:**
+
 1. Fork the repo
 2. Create feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit (`git commit -m 'feat: add amazing feature'`)
