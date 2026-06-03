@@ -99,8 +99,7 @@ temp/
 *.tsbuildinfo
 next-env.d.ts
 
-# Package manager
-pnpm-lock.yaml
+# Package manager (pnpm lockfile must be committed for CI reproducibility)
 package-lock.json
 yarn.lock
 
