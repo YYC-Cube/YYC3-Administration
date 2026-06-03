@@ -1,1 +1,14 @@
-{"semi": false, "singleQuote": true, "tabWidth": 2, "trailingComma": "all", "printWidth": 100, "bracketSpacing": true, "arrowParens": "always", "endOfLine": "lf", "jsxSingleQuote": false, "jsxBracketSameLine": false, "plugins": [], "overrides": [{"files": "*.md", "options": {"printWidth": 80, "tabWidth": 2}}]}
+{
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "jsxSingleQuote": false,
+  "bracketSameLine": false,
+  "plugins": [],
+  "overrides": [{ "files": "*.md", "options": { "printWidth": 80, "tabWidth": 2 } }]
+}
