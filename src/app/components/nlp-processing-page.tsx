@@ -1,12 +1,4 @@
-import {
-  Brain,
-  Heart,
-  MessageSquare,
-  Sparkles,
-  Tag,
-  ThumbsDown,
-  ThumbsUp,
-} from 'lucide-react'
+import { Brain, Heart, MessageSquare, Sparkles, Tag, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'

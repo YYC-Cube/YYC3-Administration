@@ -161,7 +161,7 @@ const analysisRules: AnalysisRule[] = [
     id: 'STYLE-002',
     category: 'style',
     severity: 'info',
-    pattern: /{2,}/g,
+    pattern: /\n{3,}/g,
     message: 'Multiple consecutive blank lines reduce readability',
     suggestion: 'Keep at most one blank line between code blocks',
     fixExample: 'Remove extra blank lines',

@@ -65,14 +65,20 @@ export class PipelineExecutor {
     }
 
     this.runningPipelines.set(runId, abortController)
-    this.emitLog(run, { level: 'info', stage: 'system', message: `Pipeline "${pipeline.name}" started` }, onLog)
+    this.emitLog(
+      run,
+      { level: 'info', stage: 'system', message: `Pipeline "${pipeline.name}" started` },
+      onLog,
+    )
 
     try {
       // Topological sort: execute stages in dependency order
-      const executionOrder = this.topologicalSort(pipeline.stages.map((s) => ({
-        id: s.id,
-        dependsOn: s.dependsOn,
-      })))
+      const executionOrder = this.topologicalSort(
+        pipeline.stages.map((s) => ({
+          id: s.id,
+          dependsOn: s.dependsOn,
+        })),
+      )
 
       const stageMap = new Map(pipeline.stages.map((s) => [s.id, s]))
 
@@ -88,14 +94,22 @@ export class PipelineExecutor {
         const stageRun = run.stages.find((s) => s.stageId === stageId)!
         stageRun.status = 'running'
         stageRun.startedAt = Date.now()
-        this.emitLog(run, { level: 'info', stage: stageDef.name, message: `Stage "${stageDef.name}" started` }, onLog)
+        this.emitLog(
+          run,
+          { level: 'info', stage: stageDef.name, message: `Stage "${stageDef.name}" started` },
+          onLog,
+        )
         onStageChange?.({ ...stageRun })
 
         // Simulate execution time (100-800ms per stage)
-        const executionTime = stageDef.type === 'deploy' ? 800 + Math.random() * 400 :
-                              stageDef.type === 'test' ? 400 + Math.random() * 300 :
-                              stageDef.type === 'build' ? 500 + Math.random() * 300 :
-                              200 + Math.random() * 200
+        const executionTime =
+          stageDef.type === 'deploy'
+            ? 800 + Math.random() * 400
+            : stageDef.type === 'test'
+              ? 400 + Math.random() * 300
+              : stageDef.type === 'build'
+                ? 500 + Math.random() * 300
+                : 200 + Math.random() * 200
 
         await this.sleep(executionTime, abortController.signal)
 
@@ -109,38 +123,50 @@ export class PipelineExecutor {
 
         if (isSuccess) {
           stageRun.status = 'success'
-          stageRun.output = `✓ ${stageDef.name} completed successfully\n` +
+          stageRun.output =
+            `✓ ${stageDef.name} completed successfully\n` +
             `  - Type: ${stageDef.type}\n` +
             `  - Duration: ${executionTime.toFixed(0)}ms\n` +
             `  - Warnings: ${Math.floor(Math.random() * 3)}\n`
           stageRun.duration = Math.round(executionTime)
 
-          this.emitLog(run, {
-            level: 'info',
-            stage: stageDef.name,
-            message: `Stage "${stageDef.name}" completed (${executionTime.toFixed(0)}ms)`,
-          }, onLog)
+          this.emitLog(
+            run,
+            {
+              level: 'info',
+              stage: stageDef.name,
+              message: `Stage "${stageDef.name}" completed (${executionTime.toFixed(0)}ms)`,
+            },
+            onLog,
+          )
         } else {
           stageRun.status = 'failed'
           stageRun.error = `Error: ${stageDef.name} failed at step ${Math.floor(Math.random() * 3) + 1}`
-          stageRun.output = `✗ ${stageDef.name} failed\n` +
-            `  - Error: ${stageRun.error}\n`
+          stageRun.output = `✗ ${stageDef.name} failed\n` + `  - Error: ${stageRun.error}\n`
 
-          this.emitLog(run, {
-            level: 'error',
-            stage: stageDef.name,
-            message: `Stage "${stageDef.name}" failed: ${stageRun.error}`,
-          }, onLog)
+          this.emitLog(
+            run,
+            {
+              level: 'error',
+              stage: stageDef.name,
+              message: `Stage "${stageDef.name}" failed: ${stageRun.error}`,
+            },
+            onLog,
+          )
 
           // Retry logic
           if (stageDef.retryCount > 0 && stageRun.retryAttempt < stageDef.retryCount) {
             stageRun.retryAttempt++
             stageRun.status = 'running'
-            this.emitLog(run, {
-              level: 'warn',
-              stage: stageDef.name,
-              message: `Retrying "${stageDef.name}" (attempt ${stageRun.retryAttempt}/${stageDef.retryCount})...`,
-            }, onLog)
+            this.emitLog(
+              run,
+              {
+                level: 'warn',
+                stage: stageDef.name,
+                message: `Retrying "${stageDef.name}" (attempt ${stageRun.retryAttempt}/${stageDef.retryCount})...`,
+              },
+              onLog,
+            )
 
             await this.sleep(stageDef.retryDelay * 1000, abortController.signal)
 
@@ -148,11 +174,15 @@ export class PipelineExecutor {
             stageRun.status = 'success'
             stageRun.error = undefined
             stageRun.output = `✓ ${stageDef.name} completed on retry ${stageRun.retryAttempt}\n`
-            this.emitLog(run, {
-              level: 'info',
-              stage: stageDef.name,
-              message: `Stage "${stageDef.name}" succeeded on retry`,
-            }, onLog)
+            this.emitLog(
+              run,
+              {
+                level: 'info',
+                stage: stageDef.name,
+                message: `Stage "${stageDef.name}" succeeded on retry`,
+              },
+              onLog,
+            )
           } else {
             run.status = 'failed'
             break
@@ -166,15 +196,27 @@ export class PipelineExecutor {
       // If all stages completed, mark as success
       if (run.status === 'running') {
         run.status = 'success'
-        this.emitLog(run, { level: 'info', stage: 'system', message: `Pipeline "${pipeline.name}" completed successfully` }, onLog)
+        this.emitLog(
+          run,
+          {
+            level: 'info',
+            stage: 'system',
+            message: `Pipeline "${pipeline.name}" completed successfully`,
+          },
+          onLog,
+        )
       }
     } catch (error) {
       run.status = 'failed'
-      this.emitLog(run, {
-        level: 'error',
-        stage: 'system',
-        message: `Pipeline failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      }, onLog)
+      this.emitLog(
+        run,
+        {
+          level: 'error',
+          stage: 'system',
+          message: `Pipeline failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        },
+        onLog,
+      )
     } finally {
       run.finishedAt = Date.now()
       run.duration = run.finishedAt - run.startedAt
@@ -204,7 +246,11 @@ export class PipelineExecutor {
     return this.runningPipelines.has(runId)
   }
 
-  private emitLog(run: PipelineRun, entry: Omit<LogEntry, 'id' | 'timestamp'>, onLog?: (entry: LogEntry) => void) {
+  private emitLog(
+    run: PipelineRun,
+    entry: Omit<LogEntry, 'id' | 'timestamp'>,
+    onLog?: (entry: LogEntry) => void,
+  ) {
     const logEntry: LogEntry = {
       id: `log-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
       timestamp: Date.now(),
@@ -264,7 +310,8 @@ export function createDemoPipeline(): PipelineDefinition {
   return {
     id: 'demo-pipeline',
     name: 'YYC³ Build & Deploy',
-    description: 'Automated build, test, and deployment pipeline for the YYC³ Administration platform.',
+    description:
+      'Automated build, test, and deployment pipeline for the YYC³ Administration platform.',
     isActive: true,
     createdAt: Date.now(),
     updatedAt: Date.now(),

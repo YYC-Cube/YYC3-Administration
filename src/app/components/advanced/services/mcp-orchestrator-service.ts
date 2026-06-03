@@ -8,13 +8,7 @@
  * @tags advanced,mcp,orchestrator
  */
 
-import type {
-  ChainStep,
-  ExecutionTrace,
-  MCPTool,
-  StepTrace,
-  ToolChain,
-} from '../advanced-types'
+import type { ChainStep, ExecutionTrace, MCPTool, StepTrace, ToolChain } from '../advanced-types'
 
 // ==========================================
 // Default MCP Tools Registry
@@ -30,8 +24,15 @@ export const defaultMCPTools: MCPTool[] = [
     env: {},
     enabled: true,
     capabilities: ['file_access', 'text_analysis'],
-    inputSchema: { type: 'object', properties: { filePath: { type: 'string' } }, required: ['filePath'] },
-    outputSchema: { type: 'object', properties: { content: { type: 'string' }, metadata: { type: 'object' } } },
+    inputSchema: {
+      type: 'object',
+      properties: { filePath: { type: 'string' } },
+      required: ['filePath'],
+    },
+    outputSchema: {
+      type: 'object',
+      properties: { content: { type: 'string' }, metadata: { type: 'object' } },
+    },
     estimatedCost: 'low',
     version: '1.0.0',
   },
@@ -44,8 +45,14 @@ export const defaultMCPTools: MCPTool[] = [
     env: {},
     enabled: true,
     capabilities: ['static_analysis', 'security_scan', 'code_quality'],
-    inputSchema: { type: 'object', properties: { code: { type: 'string' }, language: { type: 'string' } } },
-    outputSchema: { type: 'object', properties: { issues: { type: 'array' }, score: { type: 'number' } } },
+    inputSchema: {
+      type: 'object',
+      properties: { code: { type: 'string' }, language: { type: 'string' } },
+    },
+    outputSchema: {
+      type: 'object',
+      properties: { issues: { type: 'array' }, score: { type: 'number' } },
+    },
     estimatedCost: 'medium',
     version: '1.0.0',
   },
@@ -58,8 +65,17 @@ export const defaultMCPTools: MCPTool[] = [
     env: {},
     enabled: true,
     capabilities: ['test_generation', 'code_analysis'],
-    inputSchema: { type: 'object', properties: { sourcePath: { type: 'string' }, framework: { type: 'string', enum: ['vitest', 'jest', 'playwright'] } } },
-    outputSchema: { type: 'object', properties: { tests: { type: 'array' }, coverage: { type: 'number' } } },
+    inputSchema: {
+      type: 'object',
+      properties: {
+        sourcePath: { type: 'string' },
+        framework: { type: 'string', enum: ['vitest', 'jest', 'playwright'] },
+      },
+    },
+    outputSchema: {
+      type: 'object',
+      properties: { tests: { type: 'array' }, coverage: { type: 'number' } },
+    },
     estimatedCost: 'high',
     version: '1.0.0',
   },
@@ -72,8 +88,17 @@ export const defaultMCPTools: MCPTool[] = [
     env: { DEPLOY_KEY: '${secret:DEPLOY_KEY}' },
     enabled: true,
     capabilities: ['deployment', 'container_orchestration'],
-    inputSchema: { type: 'object', properties: { environment: { type: 'string', enum: ['staging', 'production'] }, version: { type: 'string' } } },
-    outputSchema: { type: 'object', properties: { url: { type: 'string' }, status: { type: 'string' } } },
+    inputSchema: {
+      type: 'object',
+      properties: {
+        environment: { type: 'string', enum: ['staging', 'production'] },
+        version: { type: 'string' },
+      },
+    },
+    outputSchema: {
+      type: 'object',
+      properties: { url: { type: 'string' }, status: { type: 'string' } },
+    },
     estimatedCost: 'high',
     version: '1.0.0',
   },
@@ -86,8 +111,18 @@ export const defaultMCPTools: MCPTool[] = [
     env: {},
     enabled: true,
     capabilities: ['documentation', 'code_analysis'],
-    inputSchema: { type: 'object', properties: { inputDir: { type: 'string' }, outputDir: { type: 'string' }, format: { type: 'string', enum: ['markdown', 'openapi'] } } },
-    outputSchema: { type: 'object', properties: { files: { type: 'number' }, topics: { type: 'array' } } },
+    inputSchema: {
+      type: 'object',
+      properties: {
+        inputDir: { type: 'string' },
+        outputDir: { type: 'string' },
+        format: { type: 'string', enum: ['markdown', 'openapi'] },
+      },
+    },
+    outputSchema: {
+      type: 'object',
+      properties: { files: { type: 'number' }, topics: { type: 'array' } },
+    },
     estimatedCost: 'medium',
     version: '1.0.0',
   },
@@ -100,8 +135,18 @@ export const defaultMCPTools: MCPTool[] = [
     env: {},
     enabled: true,
     capabilities: ['profiling', 'performance_analysis'],
-    inputSchema: { type: 'object', properties: { target: { type: 'string' }, duration: { type: 'number' } } },
-    outputSchema: { type: 'object', properties: { bottlenecks: { type: 'array' }, metrics: { type: 'object' }, suggestions: { type: 'array' } } },
+    inputSchema: {
+      type: 'object',
+      properties: { target: { type: 'string' }, duration: { type: 'number' } },
+    },
+    outputSchema: {
+      type: 'object',
+      properties: {
+        bottlenecks: { type: 'array' },
+        metrics: { type: 'object' },
+        suggestions: { type: 'array' },
+      },
+    },
     estimatedCost: 'high',
     version: '1.0.0',
   },
@@ -224,9 +269,12 @@ export class MCPOrchestratorEngine {
         emitLog(`⚙️ Step "${step.toolName}": Starting execution`)
 
         // Simulate execution time
-        const execTime = tool.estimatedCost === 'low' ? 100 + Math.random() * 200 :
-                         tool.estimatedCost === 'medium' ? 300 + Math.random() * 400 :
-                         500 + Math.random() * 800
+        const execTime =
+          tool.estimatedCost === 'low'
+            ? 100 + Math.random() * 200
+            : tool.estimatedCost === 'medium'
+              ? 300 + Math.random() * 400
+              : 500 + Math.random() * 800
 
         await this.sleep(execTime, abortController.signal)
 
@@ -381,11 +429,15 @@ export class MCPOrchestratorEngine {
     return resolved
   }
 
-  private simulateToolOutput(tool: MCPTool, input: Record<string, unknown>): Record<string, unknown> {
+  private simulateToolOutput(
+    tool: MCPTool,
+    input: Record<string, unknown>,
+  ): Record<string, unknown> {
     switch (tool.id) {
       case 'mcp-file-reader':
         return {
-          content: '// Sample React Component\nimport React from "react";\nexport function App() { return <div>Hello</div>; }',
+          content:
+            '// Sample React Component\nimport React from "react";\nexport function App() { return <div>Hello</div>; }',
           metadata: { size: 1024, lines: 5, language: 'typescript' },
         }
       case 'mcp-code-analyzer':

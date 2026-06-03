@@ -35,43 +35,49 @@ export function usePipeline() {
   const onLogRef = useRef<((entry: LogEntry) => void) | null>(null)
   const onStageRef = useRef<((stageRun: StageRun) => void) | null>(null)
 
-  const executePipeline = useCallback(async (pipeline: PipelineDefinition) => {
-    setIsExecuting(true)
-    setActiveRun(null)
+  const executePipeline = useCallback(
+    async (pipeline: PipelineDefinition) => {
+      setIsExecuting(true)
+      setActiveRun(null)
 
-    const onLog = (entry: LogEntry) => {
-      addLogEntry('__pending__', entry)
-      onLogRef.current?.(entry)
-    }
+      const onLog = (entry: LogEntry) => {
+        addLogEntry('__pending__', entry)
+        onLogRef.current?.(entry)
+      }
 
-    const onStageChange = (stageRun: StageRun) => {
-      onStageRef.current?.(stageRun)
-    }
+      const onStageChange = (stageRun: StageRun) => {
+        onStageRef.current?.(stageRun)
+      }
 
-    const run = await pipelineExecutor.execute(
-      pipeline,
-      'manual',
-      'user',
-      undefined,
-      undefined,
-      onLog,
-      onStageChange,
-    )
+      const run = await pipelineExecutor.execute(
+        pipeline,
+        'manual',
+        'user',
+        undefined,
+        undefined,
+        onLog,
+        onStageChange,
+      )
 
-    addRun(run)
-    completeRun(run.id, run.status)
-    setActiveRun(run.id)
+      addRun(run)
+      completeRun(run.id, run.status)
+      setActiveRun(run.id)
 
-    return run
-  }, [addRun, completeRun, setActiveRun, setIsExecuting, addLogEntry])
+      return run
+    },
+    [addRun, completeRun, setActiveRun, setIsExecuting, addLogEntry],
+  )
 
-  const cancelPipeline = useCallback((runId: string) => {
-    const cancelled = pipelineExecutor.cancel(runId)
-    if (cancelled) {
-      completeRun(runId, 'cancelled')
-    }
-    return cancelled
-  }, [completeRun])
+  const cancelPipeline = useCallback(
+    (runId: string) => {
+      const cancelled = pipelineExecutor.cancel(runId)
+      if (cancelled) {
+        completeRun(runId, 'cancelled')
+      }
+      return cancelled
+    },
+    [completeRun],
+  )
 
   const addDemoPipeline = useCallback(() => {
     const demoPipeline = createDemoPipeline()
