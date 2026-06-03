@@ -1,5 +1,4 @@
 import {
-  Award,
   Bot,
   Check,
   Copy,
@@ -41,6 +40,12 @@ export function WechatConfigPage() {
   const [activeTab, setActiveTab] = useState<ConfigTab>('basic')
   const [showSecret, setShowSecret] = useState(false)
   const [copied, setCopied] = useState(false)
+
+  // Read from environment — never hardcode secrets in source
+  const wechatAppId = import.meta.env.VITE_WECHAT_APP_ID || '—'
+  const wechatAppSecret = import.meta.env.VITE_WECHAT_APP_SECRET || '—'
+  const wechatToken = import.meta.env.VITE_WECHAT_TOKEN || '—'
+  const wechatEncodingAesKey = import.meta.env.VITE_WECHAT_ENCODING_AES_KEY || '—'
 
   const fanGrowthData = Array.from({ length: 7 }, (_, i) => ({
     day: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'][i],
@@ -208,7 +213,7 @@ export function WechatConfigPage() {
                   <div className="relative">
                     <input
                       type="text"
-                      value="wx1234567890abcdef"
+                      value={wechatAppId}
                       readOnly
                       className="w-full px-3 py-2 pr-10 rounded-lg text-[12px]"
                       style={{
@@ -218,7 +223,7 @@ export function WechatConfigPage() {
                       }}
                     />
                     <button
-                      onClick={() => handleCopy('wx1234567890abcdef')}
+                      onClick={() => handleCopy(wechatAppId)}
                       className="absolute right-2 top-1/2 -translate-y-1/2"
                       style={{ color: tc.mutedForeground }}
                     >
@@ -232,7 +237,7 @@ export function WechatConfigPage() {
                   <div className="relative">
                     <input
                       type={showSecret ? 'text' : 'password'}
-                      value="1234567890abcdef1234567890abcdef"
+                      value={wechatAppSecret}
                       readOnly
                       className="w-full px-3 py-2 pr-10 rounded-lg text-[12px]"
                       style={{
@@ -255,7 +260,7 @@ export function WechatConfigPage() {
                   <label className="block text-[10px] text-white/40 mb-1.5">Token</label>
                   <input
                     type="text"
-                    value="YYC3CloudPivot2026"
+                    value={wechatToken}
                     className="w-full px-3 py-2 rounded-lg text-[12px]"
                     style={{
                       background: tc.alpha(tc.input, 0.5),
@@ -269,7 +274,7 @@ export function WechatConfigPage() {
                   <label className="block text-[10px] text-white/40 mb-1.5">EncodingAESKey</label>
                   <input
                     type="text"
-                    value="abcdefghijklmnopqrstuvwxyz0123456789ABCD"
+                    value={wechatEncodingAesKey}
                     className="w-full px-3 py-2 rounded-lg text-[12px]"
                     style={{
                       background: tc.alpha(tc.input, 0.5),
