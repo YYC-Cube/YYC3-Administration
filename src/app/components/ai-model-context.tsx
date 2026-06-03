@@ -88,7 +88,7 @@ export function AIModelProvider({ children }: { children: ReactNode }) {
 
   const addAIModel = useCallback((model: Omit<AIModel, 'id'>) => {
     const id = 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)
-    setAiModels((prev) => {
+    setAiModels((prev: AIModel[]) => {
       const next = [...prev, { ...model, id }]
       saveModels(next)
       return next
@@ -96,12 +96,12 @@ export function AIModelProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const removeAIModel = useCallback((id: string) => {
-    setAiModels((prev) => {
-      const next = prev.filter((m) => m.id !== id)
+    setAiModels((prev: AIModel[]) => {
+      const next = prev.filter((m: AIModel) => m.id !== id)
       saveModels(next)
       return next
     })
-    setActiveModelId((prev) => {
+    setActiveModelId((prev: string | null) => {
       if (prev === id) {
         saveActiveId(null)
         return null
@@ -111,16 +111,16 @@ export function AIModelProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const updateAIModel = useCallback((id: string, partial: Partial<AIModel>) => {
-    setAiModels((prev) => {
-      const next = prev.map((m) => (m.id === id ? { ...m, ...partial } : m))
+    setAiModels((prev: AIModel[]) => {
+      const next = prev.map((m: AIModel) => (m.id === id ? { ...m, ...partial } : m))
       saveModels(next)
       return next
     })
   }, [])
 
   const activateAIModel = useCallback((id: string) => {
-    setAiModels((prev) => {
-      const next = prev.map((m) => ({ ...m, isActive: m.id === id }))
+    setAiModels((prev: AIModel[]) => {
+      const next = prev.map((m: AIModel) => ({ ...m, isActive: m.id === id }))
       saveModels(next)
       return next
     })

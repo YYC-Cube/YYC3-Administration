@@ -1,23 +1,10 @@
-import {
-  Activity,
-  ArrowDown,
-  Bot,
-  ChevronDown,
-  Clock,
-  Cpu,
-  Filter,
-  Pause,
-  Phone,
-  Play,
-  Search,
-  Trash2,
-  Users,
-} from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Activity, Bot, Cpu, Pause, Phone, Play, Search, Users } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
-import { type ActivityItem, useApp } from './app-context'
+import { useApp } from './app-context'
 import { useI18n } from './i18n-context'
-import { NeonCard } from './neon-card'
+
+import type { ActivityItem } from './app-context'
 
 // ==========================================
 // YYC³ 操作日志面板 — Activity Log
@@ -92,7 +79,7 @@ export function ActivityLogPage() {
     prevCountRef.current = recentActivities.length
   }, [recentActivities.length, autoScroll])
 
-  const filtered = recentActivities.filter((act) => {
+  const filtered = recentActivities.filter((act: ActivityItem) => {
     if (activeFilter !== 'all' && act.type !== activeFilter) return false
     if (searchQuery) {
       const q = searchQuery.toLowerCase()
@@ -104,10 +91,10 @@ export function ActivityLogPage() {
   // Stats
   const stats = {
     total: recentActivities.length,
-    customer: recentActivities.filter((a) => a.type === 'customer').length,
-    call: recentActivities.filter((a) => a.type === 'call').length,
-    system: recentActivities.filter((a) => a.type === 'system').length,
-    ai: recentActivities.filter((a) => a.type === 'ai').length,
+    customer: recentActivities.filter((a: ActivityItem) => a.type === 'customer').length,
+    call: recentActivities.filter((a: ActivityItem) => a.type === 'call').length,
+    system: recentActivities.filter((a: ActivityItem) => a.type === 'system').length,
+    ai: recentActivities.filter((a: ActivityItem) => a.type === 'ai').length,
   }
 
   return (
@@ -265,7 +252,7 @@ export function ActivityLogPage() {
               }}
             />
 
-            {filtered.map((act, i) => {
+            {filtered.map((act: ActivityItem, i: number) => {
               const Icon = typeIcons[act.type] || Activity
               const isNew = i === 0 && autoScroll
 
