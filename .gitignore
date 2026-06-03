@@ -18,6 +18,8 @@ docs/YYC3-项目闭环-验收系统/
 docs/YYC3-团队通用-标准规范/
 docs/YYC3-团队通用-标规文档/
 docs/YYC3-AI-Family-人机协同新范式/
+docs/YYC3-AI-聊天模块.md
+docs/企业管理平台完整配置包.md
 
 # Environment
 .env
@@ -41,6 +43,9 @@ docs/YYC3-AI-Family-人机协同新范式/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Temp / analysis
+analyze.js
 
 # Logs
 logs/

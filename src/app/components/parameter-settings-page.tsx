@@ -96,6 +96,7 @@ export function ParameterSettingsPage() {
   })
 
   const handleSave = () => {
+    // eslint-disable-next-line no-console
     console.log('Saving configuration...', { systemConfig, emailConfig, securityConfig })
     setModified(false)
     // Simulate save success

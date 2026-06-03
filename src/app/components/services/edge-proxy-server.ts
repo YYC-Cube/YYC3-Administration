@@ -311,6 +311,7 @@ export async function handler(request: Request): Promise<Response> {
     }
 
     // Log for monitoring (use your preferred logging service)
+    // eslint-disable-next-line no-console
     console.log(
       `[YYC³ AI Proxy] ${proxyReq.provider}/${proxyReq.model} - ${result.usage?.totalTokens ?? '?'} tokens - IP: ${clientIP.substring(0, 8)}***`,
     )

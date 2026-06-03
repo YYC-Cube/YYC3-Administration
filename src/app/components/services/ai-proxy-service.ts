@@ -342,7 +342,8 @@ class AIProxyService {
       return MOCK_RESPONSES[0]
     } catch (err: unknown) {
       if (err instanceof Error && err.name === 'AbortError') throw err
-      return `⚠️ API Error: ${err?.message ?? 'Connection failed'}. Check your API key and network.`
+      const errorMessage = err instanceof Error ? err.message : 'Connection failed'
+      return `⚠️ API Error: ${errorMessage}. Check your API key and network.`
     }
   }
 

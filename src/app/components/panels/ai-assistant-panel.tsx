@@ -35,7 +35,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { aiProxyService } from '../services/ai-proxy-service'
 
-import { AI_PROVIDER_MODELS, timeAgo } from './panel-helpers'
+import { AI_PROVIDER_MODELS, AI_SUGGESTIONS_POOL, timeAgo } from './panel-helpers'
 import { usePanelStore } from './panel-store'
 
 import type { AIChatMessage, AIProviderType, AISuggestion } from './panel-types'

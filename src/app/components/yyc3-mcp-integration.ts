@@ -310,6 +310,7 @@ export class Yyc3MCPClient {
 
     try {
       // 实际应用中应通过 WebSocket 发送
+      // eslint-disable-next-line no-console
       console.log('[MCP] Sending collaboration message:', fullMessage)
 
       return messageId

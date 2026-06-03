@@ -17,6 +17,9 @@ import { useState } from 'react'
 
 import { useThemeColors } from '../hooks/use-theme-colors'
 
+import type { ThemeColors } from '../hooks/use-theme-colors'
+import type { AgentConfig } from '@/types/settings'
+
 import { agentService } from '@/services/settings-services'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 
@@ -89,7 +92,7 @@ export function AgentsSettingsPanel() {
 }
 
 // 智能体卡片组件
-function AgentCard({ agent, index, tc }: Record<string, unknown>) {
+function AgentCard({ agent, index, tc }: { agent: AgentConfig; index: number; tc: ThemeColors }) {
   const handleEdit = () => {
     // TODO: 打开编辑对话框
   }
