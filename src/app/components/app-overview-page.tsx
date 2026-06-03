@@ -1,21 +1,4 @@
-import {
-  Activity,
-  Award,
-  BarChart3,
-  Brain,
-  Calendar,
-  DollarSign,
-  Eye,
-  LayoutDashboard,
-  MessageSquare,
-  PieChart,
-  ShoppingCart,
-  Target,
-  TrendingUp,
-  Users,
-  Zap,
-} from 'lucide-react'
-import { useState } from 'react'
+import { Activity, DollarSign, Target, Users } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { NeonCard } from './neon-card'

@@ -5,12 +5,9 @@ import {
   Brain,
   Calculator,
   Calendar,
-  CheckCircle2,
   Clock,
   Download,
-  FileText,
   Percent,
-  Plus,
   ShieldCheck,
   TrendingUp,
   UserCheck,
@@ -19,7 +16,6 @@ import {
 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
-import { useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 

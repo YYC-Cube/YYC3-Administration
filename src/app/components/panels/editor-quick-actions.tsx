@@ -255,7 +255,7 @@ export function EditorQuickActions({
   } | null>(null)
   const [error, setError] = useState<string | null>(null)
   const abortRef = useRef<AbortController | null>(null)
-  const [streamContent, setStreamContent] = useState('')
+  const [_streamContent, setStreamContent] = useState('')
 
   const isRealProvider = aiProviderConfig.provider !== 'mock' && aiProviderConfig.apiKey.length > 0
 
@@ -357,11 +357,12 @@ export function EditorQuickActions({
             content: fullContent,
             timestamp: Date.now(),
           })
-        } catch (err: any) {
-          if (err?.name === 'AbortError') {
+        } catch (err: unknown) {
+          const errorMessage = err instanceof Error ? err.message : 'AI 请求失败。'
+          if (err instanceof Error && err.name === 'AbortError') {
             setError('操作已取消。')
           } else {
-            setError(err?.message ?? 'AI 请求失败。')
+            setError(errorMessage)
             setResult({
               action: action.id,
               content: getMockResponse(action.id, fileName, content.length),

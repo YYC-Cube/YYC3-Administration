@@ -158,6 +158,7 @@ export function useSpringAnimation(initialValue: number = 0) {
     animationFrameId = requestAnimationFrame(animate)
 
     return () => cancelAnimationFrame(animationFrameId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetValue])
 
   const animateTo = useCallback((value: number) => {

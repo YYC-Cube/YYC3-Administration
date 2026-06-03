@@ -9,7 +9,6 @@ import {
   GitBranch,
   Pause,
   Play,
-  Settings,
   TrendingUp,
 } from 'lucide-react'
 import { useState } from 'react'
@@ -153,7 +152,7 @@ export function DataIntegrationPage() {
     }
   }
 
-  const getQualityColor = (quality: number) => {
+  const _getQualityColor = (quality: number) => {
     if (quality >= 95) return tc.success
     if (quality >= 85) return tc.warning
     return tc.destructive

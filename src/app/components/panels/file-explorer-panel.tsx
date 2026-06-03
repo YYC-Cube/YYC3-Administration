@@ -24,7 +24,6 @@ import {
   Plus,
   RefreshCw,
   Trash2,
-  X,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -513,6 +512,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                 key={item.label}
                 onClick={item.action}
                 className="w-full flex items-center gap-2 px-3 py-1.5 text-[11px] transition-colors hover:bg-white/5"
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 style={{ color: (item as any).color ?? tc.textSecondary }}
               >
                 <item.icon className="w-3.5 h-3.5" />

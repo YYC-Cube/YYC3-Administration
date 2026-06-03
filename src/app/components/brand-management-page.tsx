@@ -1,21 +1,4 @@
-import {
-  AlertCircle,
-  Award,
-  BarChart3,
-  Calendar,
-  CheckCircle2,
-  Eye,
-  Globe,
-  Heart,
-  MessageSquare,
-  Shield,
-  Sparkles,
-  Star,
-  Target,
-  TrendingUp,
-  Users,
-} from 'lucide-react'
-import { useState } from 'react'
+import { Eye, Heart, MessageSquare, Shield, Star } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { NeonCard } from './neon-card'

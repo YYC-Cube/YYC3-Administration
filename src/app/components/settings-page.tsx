@@ -124,7 +124,7 @@ const SETTINGS_CATEGORIES: Array<{
  */
 export function SettingsPage() {
   const tc = useThemeColors()
-  const { t } = useI18n()
+  const { t: _t } = useI18n()
   const { settings, searchQuery, setSearchQuery, exportConfig, importConfig, resetSettings } =
     useSettingsStore()
 
@@ -227,6 +227,7 @@ export function SettingsPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         transition={{ duration: 0.6, ease: tc.springEasing as any }}
         className="mb-8"
       >

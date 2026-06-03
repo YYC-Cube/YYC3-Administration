@@ -85,7 +85,7 @@ function saveProfile(profile: UserProfile) {
  * and system preferences with editable profile fields.
  */
 export function ProfilePage() {
-  const { t } = useI18n()
+  const { t: _t } = useI18n()
   const { recentActivities, notifications, setActivePage, theme } = useApp()
   const tc = useThemeColors()
   const [profile, setProfile] = useState<UserProfile>(loadProfile)

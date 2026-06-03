@@ -1,19 +1,11 @@
 import {
-  AlertTriangle,
-  BarChart3,
   Brain,
-  CheckCircle2,
-  Eye,
-  Filter,
   Heart,
   MessageSquare,
-  Search,
   Sparkles,
   Tag,
   ThumbsDown,
   ThumbsUp,
-  TrendingUp,
-  Users,
 } from 'lucide-react'
 import { useState } from 'react'
 

@@ -189,7 +189,7 @@ export function FormTemplateBuilder() {
   )
 
   // Move field up/down
-  const moveField = useCallback((id: string, dir: -1 | 1) => {
+  const _moveField = useCallback((id: string, dir: -1 | 1) => {
     setFields((prev) => {
       const idx = prev.findIndex((f) => f.id === id)
       if (idx === -1) return prev
@@ -803,6 +803,7 @@ export function FormTemplateBuilder() {
                       <select
                         value={editingField.validation || 'none'}
                         onChange={(e) =>
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           updateField(editingField.id, { validation: e.target.value as any })
                         }
                         className="w-full px-3 py-2 text-xs rounded-lg appearance-none"
@@ -855,7 +856,7 @@ export function FormTemplateBuilder() {
                   </p>
                   <p className="text-[9px] text-white/20">{subtitle}</p>
                 </div>
-                {fields.map((f, i) => {
+                {fields.map((f, _i) => {
                   const FIcon = FIELD_PALETTE.find((p) => p.type === f.type)?.icon || Type
                   return (
                     <div

@@ -13,14 +13,12 @@ import {
   Landmark,
   Plus,
   Receipt,
-  RefreshCw,
-  Send,
   ShieldCheck,
   TrendingDown,
   TrendingUp,
   Wallet,
 } from 'lucide-react'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'
@@ -131,7 +129,7 @@ export function FinancePage() {
 // ==========================================
 //  Finance Dashboard
 // ==========================================
-function FinanceDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const kpiCards = useMemo(
     () => [
@@ -355,7 +353,7 @@ function FinanceDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 // ==========================================
 //  Voucher Management
 // ==========================================
-function VoucherManagement({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function VoucherManagement({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const vouchers = useMemo(
     () => [
@@ -475,7 +473,7 @@ function VoucherManagement({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 // ==========================================
 //  Expense Center
 // ==========================================
-function ExpenseCenter({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function ExpenseCenter({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const expenses = useMemo(
     () => [
@@ -623,7 +621,7 @@ function ExpenseCenter({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 // ==========================================
 //  Budget Board
 // ==========================================
-function BudgetBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function BudgetBoard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const budgetItems = useMemo(
     () => [

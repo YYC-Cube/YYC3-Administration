@@ -35,7 +35,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { aiProxyService } from '../services/ai-proxy-service'
 
-import { AI_PROVIDER_MODELS, AI_SUGGESTIONS_POOL, timeAgo } from './panel-helpers'
+import { AI_PROVIDER_MODELS, timeAgo } from './panel-helpers'
 import { usePanelStore } from './panel-store'
 
 import type { AIChatMessage, AIProviderType, AISuggestion } from './panel-types'
@@ -129,7 +129,6 @@ export function AIAssistantPanel({
       timestamp: Date.now(),
     }
     addAIMessage(userMsg)
-    const userInput = input.trim()
     setInput('')
     setProcessing(true)
     setStreamingContent('')
@@ -186,12 +185,12 @@ export function AIAssistantPanel({
         timestamp: Date.now(),
       }
       addAIMessage(aiMsg)
-    } catch (err: any) {
-      if (err?.name !== 'AbortError') {
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name !== 'AbortError') {
         addAIMessage({
           id: crypto.randomUUID(),
           role: 'assistant',
-          content: `⚠️ 错误: ${err?.message ?? '未知错误'}`,
+          content: `⚠️ 错误: ${err.message}`,
           timestamp: Date.now(),
         })
       }

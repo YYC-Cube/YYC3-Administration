@@ -79,6 +79,7 @@ export function GeneralSettingsPanel() {
       <SettingsSection icon={Globe} title="语言" description="选择系统显示语言" tc={tc}>
         <select
           value={language}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onChange={(e) => setLanguage(e.target.value as any)}
           className="w-full px-4 py-3 rounded-lg outline-none"
           style={{

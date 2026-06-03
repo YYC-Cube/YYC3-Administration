@@ -3,19 +3,15 @@ import {
   AlertTriangle,
   ArrowRight,
   Award,
-  BarChart3,
   Brain,
-  Calendar,
   CheckCircle2,
   DollarSign,
   Lightbulb,
-  PieChart,
   Target,
   TrendingUp,
   Users,
   Zap,
 } from 'lucide-react'
-import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { NeonCard } from './neon-card'

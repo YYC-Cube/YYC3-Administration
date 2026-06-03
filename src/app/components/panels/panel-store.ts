@@ -60,7 +60,7 @@ export interface PanelStoreActions {
 
 export const usePanelStore = create<PanelStoreState & PanelStoreActions>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       activePanel: 'file-explorer',
       panelCollapsed: false,
       panelWidth: 300,

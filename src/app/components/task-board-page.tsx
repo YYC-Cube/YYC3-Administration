@@ -41,7 +41,6 @@ import {
   MoreHorizontal,
   Play,
   Plus,
-  RefreshCw,
   Search,
   SortAsc,
   SortDesc,
@@ -638,7 +637,7 @@ const useTaskStore = create<TaskStoreState & TaskStoreActions>()(
       },
 
       seedIfEmpty: () => {
-        const { tasks, reminders } = get()
+        const { tasks, reminders: _reminders } = get()
         if (tasks.length === 0) {
           set({ tasks: INITIAL_TASKS, reminders: INITIAL_REMINDERS, _hydrated: true })
         } else {
@@ -778,7 +777,7 @@ class AIInferenceSimulator {
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 
-  async inferFromConversation(text: string): Promise<TaskInferenceResult[]> {
+  async inferFromConversation(_text: string): Promise<TaskInferenceResult[]> {
     await this.delay(1500 + Math.random() * 1500)
     const count = 1 + Math.floor(Math.random() * 2)
     const results: TaskInferenceResult[] = []
@@ -791,7 +790,7 @@ class AIInferenceSimulator {
     return results
   }
 
-  async inferFromCode(code: string): Promise<TaskInferenceResult[]> {
+  async inferFromCode(_code: string): Promise<TaskInferenceResult[]> {
     await this.delay(2000 + Math.random() * 1000)
     const count = 2 + Math.floor(Math.random() * 2)
     const results: TaskInferenceResult[] = []
@@ -804,7 +803,7 @@ class AIInferenceSimulator {
     return results
   }
 
-  async inferFromDescription(desc: string): Promise<TaskInferenceResult[]> {
+  async inferFromDescription(_desc: string): Promise<TaskInferenceResult[]> {
     await this.delay(1000 + Math.random() * 1000)
     const pool = [...DESCRIPTION_INFERENCE_POOL]
     const count = 1 + Math.floor(Math.random() * pool.length)
@@ -2048,7 +2047,7 @@ function ListView({
         <span className="col-span-1">Source</span>
         <span className="col-span-1"></span>
       </div>
-      {tasks.map((task, idx) => {
+      {tasks.map((task, _idx) => {
         const sCfg = STATUS_CONFIG[task.status]
         const pCfg = PRIORITY_CONFIG[task.priority]
         const tCfg = TYPE_CONFIG[task.type]

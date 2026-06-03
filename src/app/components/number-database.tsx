@@ -586,7 +586,7 @@ function OverviewTab({ contacts }: { contacts: Contact[] }) {
 // ===========================================================
 function ContactsTab({
   contacts,
-  setContacts,
+  setContacts: _setContacts,
   onEdit,
 }: {
   contacts: Contact[]
@@ -1453,7 +1453,7 @@ function CollaborationTab() {
 // ===========================================================
 // Tab: Customer Value (客户价值管理)
 // ===========================================================
-function ValueTab({ contacts }: { contacts: Contact[] }) {
+function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
   return (
     <div className="space-y-6">
       {/* Funnel */}
@@ -2871,8 +2871,8 @@ export function NumberDatabasePage() {
     deletedContacts,
     addContact,
     updateContact,
-    deleteContact,
-    toggleStar,
+    deleteContact: _deleteContact,
+    toggleStar: _toggleStar,
     setContacts,
   } = useContacts()
   const [activeTab, setActiveTab] = useState<TabId>('overview')

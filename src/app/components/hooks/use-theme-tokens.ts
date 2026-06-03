@@ -1,9 +1,11 @@
 import { useMemo } from 'react'
 
-// ==========================================
-// YYC³ 赛博朋克主题 Token Hook
-// 为 ModelSettings 等模态组件提供一致的 Tailwind class token
-// ==========================================
+/**
+ * @file use-theme-tokens.ts
+ * @description YYC³ 赛博朋克主题 Token Hook
+ *   为 ModelSettings 等模态组件提供一致的 Tailwind class token。
+ * @author YanYuCloudCube Team
+ */
 
 /**
  * Typed theme token interface providing consistent CSS class names

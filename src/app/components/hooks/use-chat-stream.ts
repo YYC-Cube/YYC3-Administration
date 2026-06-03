@@ -1,6 +1,12 @@
 /** @file hooks/use-chat-stream.ts — Streaming AI response hook with AbortController */
 import { useCallback, useRef, useState } from 'react'
 
+/**
+ * Represents the current state of a streaming AI response.
+ * @property content - Accumulated text received so far
+ * @property isStreaming - Whether streaming is currently in progress
+ * @property messageId - ID of the message being streamed, if any
+ */
 export interface StreamState {
   content: string
   isStreaming: boolean
@@ -10,6 +16,8 @@ export interface StreamState {
 /**
  * Manages streaming AI response with AbortController for stop support.
  * Provides token-by-token simulation or real SSE streaming.
+ *
+ * @returns Object containing stream state and control methods
  */
 export function useChatStream() {
   const [state, setState] = useState<StreamState>({
@@ -54,7 +62,7 @@ export function useChatStream() {
     [],
   )
 
-  /** Stop the current stream immediately */
+  /** Stop the current stream immediately. Sets isStreaming to false. */
   const stopStream = useCallback(() => {
     abortRef.current?.abort()
     abortRef.current = null

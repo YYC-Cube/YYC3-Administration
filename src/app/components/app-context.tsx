@@ -640,7 +640,7 @@ export interface ExportableDataset {
   color: string
   rowCount: number
   fields: string[]
-  getData: () => Record<string, any>[]
+  getData: () => Record<string, unknown>[]
 }
 
 const mockCustomerExport = () => [
@@ -759,7 +759,7 @@ export const exportableDatasets: ExportableDataset[] = [
  * @param data - Array of flat key-value objects to serialize.
  * @param filename - Download filename without extension (`.csv` is appended).
  */
-export function exportToCSV(data: Record<string, any>[], filename: string): void {
+export function exportToCSV(data: Record<string, unknown>[], filename: string): void {
   if (!data.length) return
   const headers = Object.keys(data[0])
   const csvRows = [
@@ -783,7 +783,7 @@ export function exportToCSV(data: Record<string, any>[], filename: string): void
  * @param data - Array of objects to serialize.
  * @param filename - Download filename without extension (`.json` is appended).
  */
-export function exportToJSON(data: Record<string, any>[], filename: string): void {
+export function exportToJSON(data: Record<string, unknown>[], filename: string): void {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
   downloadBlob(blob, `${filename}.json`)
 }

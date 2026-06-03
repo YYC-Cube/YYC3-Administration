@@ -22,7 +22,6 @@ import {
   Plug,
   Search,
   Settings as SettingsIcon,
-  Upload,
   User,
   Zap,
 } from 'lucide-react'

@@ -175,20 +175,25 @@ class GitAPIService {
       const data = await res.json()
       return {
         success: true,
-        data: data.map((c: any) => ({
-          sha: c.sha.substring(0, 7),
-          message: c.commit.message,
-          author: {
-            name: c.commit.author.name,
-            email: c.commit.author.email,
-            date: c.commit.author.date,
-          },
-          filesChanged: c.stats?.total ?? 0,
-          url: c.html_url,
-        })),
+        data: data.map(
+          (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            c: any,
+          ) => ({
+            sha: c.sha.substring(0, 7),
+            message: c.commit.message,
+            author: {
+              name: c.commit.author.name,
+              email: c.commit.author.email,
+              date: c.commit.author.date,
+            },
+            filesChanged: c.stats?.total ?? 0,
+            url: c.html_url,
+          }),
+        ),
       }
-    } catch (err: any) {
-      return { success: false, error: err.message }
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
     }
   }
 
@@ -212,6 +217,7 @@ class GitAPIService {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const body: any = {
         message,
         content: btoa(unescape(encodeURIComponent(content))),
@@ -241,8 +247,8 @@ class GitAPIService {
           url: data.commit.html_url,
         },
       }
-    } catch (err: any) {
-      return { success: false, error: err.message }
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
     }
   }
 
@@ -261,6 +267,7 @@ class GitAPIService {
       const data = await res.json()
       return {
         success: true,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: data.map((b: any) => ({
           name: b.name,
           sha: b.commit.sha.substring(0, 7),
@@ -268,8 +275,8 @@ class GitAPIService {
           current: b.name === this.config!.branch,
         })),
       }
-    } catch (err: any) {
-      return { success: false, error: err.message }
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
     }
   }
 
@@ -291,8 +298,8 @@ class GitAPIService {
         success: true,
         data: { name, sha: data.object.sha.substring(0, 7), protected: false, current: false },
       }
-    } catch (err: any) {
-      return { success: false, error: err.message }
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
     }
   }
 
@@ -325,8 +332,8 @@ class GitAPIService {
         success: true,
         data: { path: data.path, content, sha: data.sha, size: data.size, encoding: data.encoding },
       }
-    } catch (err: any) {
-      return { success: false, error: err.message }
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
     }
   }
 
@@ -346,8 +353,8 @@ class GitAPIService {
         body: JSON.stringify({ message, sha, branch: this.config!.branch }),
       })
       return { success: true, data: { deleted: true } }
-    } catch (err: any) {
-      return { success: false, error: err.message }
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
     }
   }
 
@@ -374,7 +381,7 @@ class GitAPIService {
           {
             number: 41,
             title: 'feat: task-board Zustand + DnD upgrade',
-            state: 'merged' as any,
+            state: 'merged',
             author: 'YYC3 Dev',
             createdAt: new Date(Date.now() - 86400000).toISOString(),
             url: '#',
@@ -390,6 +397,7 @@ class GitAPIService {
       const data = await res.json()
       return {
         success: true,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: data.map((pr: any) => ({
           number: pr.number,
           title: pr.title,
@@ -399,8 +407,8 @@ class GitAPIService {
           url: pr.html_url,
         })),
       }
-    } catch (err: any) {
-      return { success: false, error: err.message }
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : String(err) }
     }
   }
 

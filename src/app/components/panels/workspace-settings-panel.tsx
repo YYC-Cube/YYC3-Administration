@@ -12,18 +12,7 @@
  * @tags P1,frontend,panels,settings,workspace
  */
 
-import {
-  Check,
-  ChevronRight,
-  Code,
-  Globe,
-  Monitor,
-  Palette,
-  RotateCcw,
-  Settings,
-  Type,
-  Zap,
-} from 'lucide-react'
+import { Check, Code, Monitor, Palette, RotateCcw, Settings, Zap } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
@@ -41,7 +30,12 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
   const { settings, updateGeneralSettings } = useSettingsStore()
   const { theme, setTheme } = useThemeSwitcher()
   const { locale, setLocale } = useI18n()
-  const { aiProviderConfig, setAIProviderConfig, panelWidth, setPanelWidth } = usePanelStore()
+  const {
+    aiProviderConfig,
+    setAIProviderConfig: _setAIProviderConfig,
+    panelWidth,
+    setPanelWidth,
+  } = usePanelStore()
   const [activeSection, setActiveSection] = useState<SettingsSection>('editor')
 
   const { general } = settings
@@ -194,6 +188,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                 <SettingRow label="语言" tc={tc}>
                   <select
                     value={locale}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onChange={(e) => setLocale(e.target.value as any)}
                     className="text-[10px] px-2 py-1 rounded-lg border outline-none w-full"
                     style={{
@@ -215,6 +210,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                   <select
                     value={general.keybindingScheme}
                     onChange={(e) =>
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       updateGeneralSettings({ keybindingScheme: e.target.value as any })
                     }
                     className="text-[10px] px-2 py-1 rounded-lg border outline-none w-full"

@@ -11,7 +11,7 @@
  * @tags settings,import,export,backup
  */
 
-import { Download, Save, Upload } from 'lucide-react'
+import { Download, Upload } from 'lucide-react'
 
 import { useThemeColors } from '../hooks/use-theme-colors'
 

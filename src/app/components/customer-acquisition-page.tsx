@@ -1,20 +1,13 @@
 import {
-  Activity,
   Award,
   Brain,
-  Briefcase,
-  Calendar,
   DollarSign,
-  Filter,
   Mail,
-  MapPin,
   MessageSquare,
   Phone,
-  Search,
   Target,
   TrendingUp,
   UserPlus,
-  Users,
   Zap,
 } from 'lucide-react'
 import { useState } from 'react'

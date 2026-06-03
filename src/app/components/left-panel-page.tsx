@@ -234,7 +234,9 @@ function usePerformanceStats() {
       if (now - lastTime >= 1000) {
         setStats({
           fps: Math.round((frameCount * 1000) / (now - lastTime)),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           memory: (performance as any).memory?.usedJSHeapSize
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ? Math.round((performance as any).memory.usedJSHeapSize / 1048576)
             : 0,
           uptime: Math.floor((Date.now() - start) / 60000),

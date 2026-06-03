@@ -2,41 +2,32 @@ import {
   Activity,
   ArrowDownRight,
   ArrowUpRight,
-  BarChart3,
   Bookmark,
-  Bot,
   Brain,
   Calendar,
   CheckCircle,
   ChevronDown,
   ClipboardCheck,
-  Clock,
   Edit3,
   Eye,
   FileText,
   FolderKanban,
   Lightbulb,
-  LineChart as LineChartIcon,
-  MessageCircle,
   MessageSquare,
   Palette,
   PenTool,
   Plus,
   Rocket,
   Search,
-  Send,
   Share2,
   Sparkles,
-  Star,
   Target,
   ThumbsUp,
   TrendingUp,
   Type,
   Users,
-  Wand2,
-  Zap,
 } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { NeonCard } from './neon-card'
@@ -991,6 +982,7 @@ export function CollabCreationPage() {
                     }}
                   >
                     <AnimatedNumber value={card.value} />
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {(card as any).isPercent && <span className="text-lg">%</span>}
                   </p>
                   <div className="flex items-center gap-1">

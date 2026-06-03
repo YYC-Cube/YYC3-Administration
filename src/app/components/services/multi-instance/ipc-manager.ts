@@ -91,7 +91,7 @@ export class IPCManager {
   }
 
   /** Broadcast a message to all other tabs/instances */
-  async broadcast(type: IPCMessageType, data: any): Promise<void> {
+  async broadcast(type: IPCMessageType, data: unknown): Promise<void> {
     if (this.isDestroyed) return
 
     const message: IPCMessage = {
@@ -117,7 +117,7 @@ export class IPCManager {
   }
 
   /** Send a message to a specific instance */
-  async sendToInstance(receiverId: string, type: IPCMessageType, data: any): Promise<void> {
+  async sendToInstance(receiverId: string, type: IPCMessageType, data: unknown): Promise<void> {
     if (this.isDestroyed) return
 
     const message: IPCMessage = {

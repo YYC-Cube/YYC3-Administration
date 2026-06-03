@@ -1,20 +1,4 @@
-import {
-  Activity,
-  AlertTriangle,
-  BarChart3,
-  CheckCircle2,
-  Clock,
-  Cpu,
-  Database,
-  HardDrive,
-  RefreshCw,
-  Server,
-  Settings,
-  TrendingUp,
-  Wifi,
-  Zap,
-} from 'lucide-react'
-import { useState } from 'react'
+import { CheckCircle2, Cpu, HardDrive, RefreshCw, Settings, Wifi } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { NeonCard } from './neon-card'

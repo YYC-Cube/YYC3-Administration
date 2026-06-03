@@ -340,8 +340,8 @@ class AIProxyService {
       }
 
       return MOCK_RESPONSES[0]
-    } catch (err: any) {
-      if (err?.name === 'AbortError') throw err
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === 'AbortError') throw err
       return `⚠️ API Error: ${err?.message ?? 'Connection failed'}. Check your API key and network.`
     }
   }
@@ -532,9 +532,10 @@ class AIProxyService {
 
       // Unknown provider fallback
       yield { token: '不支持的 AI 提供商', done: true }
-    } catch (err: any) {
-      if (err?.name === 'AbortError') return
-      yield { token: `⚠️ 流式错误: ${err?.message ?? '连接失败'}`, done: true }
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : '连接失败'
+      if (err instanceof Error && err.name === 'AbortError') return
+      yield { token: `⚠️ 流式错误: ${errorMessage}`, done: true }
     }
   }
 }

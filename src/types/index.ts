@@ -317,7 +317,7 @@ export interface FormField {
     message?: string
   }
   /** 默认值 */
-  defaultValue?: any
+  defaultValue?: unknown
 }
 
 /**
@@ -355,7 +355,7 @@ export interface FormSubmission {
   /** 表单名称 */
   formName: string
   /** 提交数据 */
-  data: Record<string, any>
+  data: Record<string, unknown>
   /** 提交时间 */
   timestamp: string
   /** 提交者IP */
@@ -435,7 +435,7 @@ export interface WorkflowNode {
   /** 节点标题 */
   title: string
   /** 节点配置 */
-  config: Record<string, any>
+  config: Record<string, unknown>
   /** 位置坐标 */
   position: { x: number; y: number }
   /** 连接的下一个节点 */
@@ -625,7 +625,7 @@ export interface I18nContextType {
   /** 切换语言 */
   setLocale: (locale: LanguageCode) => void
   /** 翻译函数 */
-  t: (key: string, params?: Record<string, any>) => string
+  t: (key: string, params?: Record<string, unknown>) => string
 }
 
 // ==========================================
@@ -763,11 +763,11 @@ export interface FormBuilderProps {
   /** 表单模板 */
   template: FormTemplate
   /** 提交回调 */
-  onSubmit: (data: Record<string, any>) => void
+  onSubmit: (data: Record<string, unknown>) => void
   /** 取消回调 */
   onCancel?: () => void
   /** 初始数据 */
-  initialData?: Record<string, any>
+  initialData?: Record<string, unknown>
   /** 是否只读 */
   readOnly?: boolean
 }
@@ -775,7 +775,7 @@ export interface FormBuilderProps {
 /**
  * 数据表格Props
  */
-export interface DataTableProps<T = any> {
+export interface DataTableProps<T = unknown> {
   /** 数据列表 */
   data: T[]
   /** 列定义 */
@@ -797,13 +797,13 @@ export interface DataTableProps<T = any> {
 /**
  * 表格列定义
  */
-export interface TableColumn<T = any> {
+export interface TableColumn<T = unknown> {
   /** 列标题 */
   title: string
   /** 数据键 */
   key: keyof T | string
   /** 自定义渲染 */
-  render?: (value: any, row: T, index: number) => React.ReactNode
+  render?: (value: unknown, row: T, index: number) => React.ReactNode
   /** 列宽 */
   width?: number | string
   /** 是否可排序 */
@@ -817,7 +817,7 @@ export interface TableColumn<T = any> {
  */
 export interface ChartProps {
   /** 图表数据 */
-  data: any[]
+  data: unknown[]
   /** 图表类型 */
   type?: 'line' | 'bar' | 'pie' | 'area' | 'radial'
   /** 图表高度 */
@@ -915,7 +915,7 @@ export interface ContactCardProps {
 /**
  * API响应基础类型
  */
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   /** 是否成功 */
   success: boolean
   /** 响应数据 */
@@ -931,7 +931,7 @@ export interface ApiResponse<T = any> {
 /**
  * 分页响应类型
  */
-export interface PaginatedResponse<T = any> {
+export interface PaginatedResponse<T = unknown> {
   /** 数据列表 */
   items: T[]
   /** 总数 */
@@ -957,7 +957,7 @@ export interface ErrorType {
   /** 错误消息 */
   message: string
   /** 错误详情 */
-  details?: Record<string, any>
+  details?: Record<string, unknown>
   /** 堆栈信息（仅开发环境） */
   stack?: string
 }
@@ -1025,7 +1025,7 @@ export interface ChatRequest {
   /** 流式响应 */
   stream?: boolean
   /** 上下文 */
-  context?: Record<string, any>
+  context?: Record<string, unknown>
 }
 
 /**
@@ -1089,7 +1089,7 @@ export interface ExportRequest {
   /** 导出格式 */
   format: 'csv' | 'xlsx' | 'json' | 'pdf'
   /** 筛选条件 */
-  filters?: Record<string, any>
+  filters?: Record<string, unknown>
   /** 日期范围 */
   dateRange?: {
     from: string
@@ -1146,6 +1146,7 @@ export type DeepPartial<T> = {
 /**
  * 提取函数参数类型
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ExtractFunctionParams<T> = T extends (...args: infer P) => any ? P : never
 
 /**
@@ -1262,9 +1263,9 @@ export const Z_INDEX = {
 // ==========================================
 
 export type {
-  // React基础类型
-  ReactNode,
-  ReactElement,
   FC,
   PropsWithChildren,
+  ReactElement,
+  // React基础类型
+  ReactNode,
 } from 'react'

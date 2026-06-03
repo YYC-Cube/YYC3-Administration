@@ -162,7 +162,6 @@ export function ThemeConfigPage() {
   ]
 
   const allEnabled = toggleItems.every((t) => theme[t.key] === true)
-  const allDisabled = toggleItems.every((t) => theme[t.key] === false)
 
   return (
     <div
@@ -394,6 +393,7 @@ export function ThemeConfigPage() {
                 const target = allEnabled ? false : true
                 const partial: Partial<ThemeConfig> = {}
                 toggleItems.forEach((t) => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   ;(partial as any)[t.key] = target
                 })
                 updateTheme(partial)

@@ -1,15 +1,32 @@
 /** @file hooks/use-chat-session.ts — Multi-session management with localStorage */
 import { useCallback, useEffect, useState } from 'react'
 
+/**
+ * Represents a single chat message within a session.
+ * @property id - Unique message identifier
+ * @property role - Whether the message is from the user or AI
+ * @property content - Message text content
+ * @property timestamp - When the message was created
+ * @property isError - Optional flag indicating an error message
+ * @property quoteContent - Optional quoted message content for reply context
+ */
 export interface ChatMessage {
   id: string
   role: 'user' | 'ai'
   content: string
   timestamp: Date
   isError?: boolean
-  quoteContent?: string // quoted message content for reply
+  quoteContent?: string
 }
 
+/**
+ * Represents a named chat session containing a sequence of messages.
+ * @property id - Unique session identifier
+ * @property title - Auto-generated or custom session title
+ * @property messages - Ordered list of messages in the session
+ * @property createdAt - Timestamp of session creation
+ * @property updatedAt - Timestamp of last message/update
+ */
 export interface ChatSession {
   id: string
   title: string
@@ -21,12 +38,18 @@ export interface ChatSession {
 const STORAGE_KEY = 'yyc3_chat_sessions'
 const ACTIVE_KEY = 'yyc3_chat_active_session'
 
+/**
+ * Load chat sessions from localStorage.
+ * Handles JSON parse errors gracefully and restores Date objects.
+ */
 function loadSessions(): ChatSession[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return JSON.parse(raw).map((s: any) => ({
         ...s,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         messages: s.messages.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })),
       }))
   } catch {
@@ -35,6 +58,7 @@ function loadSessions(): ChatSession[] {
   return []
 }
 
+/** Persist sessions array to localStorage. */
 function saveSessions(sessions: ChatSession[]) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions))
@@ -43,6 +67,7 @@ function saveSessions(sessions: ChatSession[]) {
   }
 }
 
+/** Load the active session ID from localStorage. */
 function loadActiveId(): string | null {
   try {
     return localStorage.getItem(ACTIVE_KEY) || null
@@ -51,6 +76,7 @@ function loadActiveId(): string | null {
   }
 }
 
+/** Persist active session ID to localStorage. */
 function saveActiveId(id: string | null) {
   try {
     if (id) localStorage.setItem(ACTIVE_KEY, id)
@@ -66,6 +92,7 @@ function genId() {
   return 'chat_' + idCounter
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function makeTitle(messages: ChatMessage[]): string {
   const firstUser = messages.find((m) => m.role === 'user')
   if (firstUser) return firstUser.content.slice(0, 30) + (firstUser.content.length > 30 ? '…' : '')

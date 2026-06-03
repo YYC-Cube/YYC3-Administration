@@ -12,7 +12,7 @@
  * @tags P1,frontend,panels,global-search
  */
 
-import { File, FolderOpen, Hash, History, Loader2, Search, X, Zap } from 'lucide-react'
+import { File, Hash, History, Loader2, Search, X, Zap } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { getFileIcon, MOCK_FILE_TREE, MOCK_SEARCH_RESULTS } from './panel-helpers'

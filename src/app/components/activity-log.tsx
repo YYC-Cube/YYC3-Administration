@@ -67,7 +67,7 @@ export function ActivityLogPage() {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all')
   const [autoScroll, setAutoScroll] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const [showStats, setShowStats] = useState(true)
+  const [showStats, _setShowStats] = useState(true)
   const scrollRef = useRef<HTMLDivElement>(null)
   const prevCountRef = useRef(recentActivities.length)
 

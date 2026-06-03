@@ -7,13 +7,11 @@ import {
   FileSpreadsheet,
   Loader2,
   Shield,
-  Sparkles,
   X,
 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import {
-  type ExportableDataset,
   exportableDatasets,
   exportToCSV,
   exportToJSON,

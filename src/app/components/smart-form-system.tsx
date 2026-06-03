@@ -520,9 +520,10 @@ export function SmartFormPage() {
               id: ct.id as string,
               title: ct.title as string,
               subtitle: (ct.subtitle as string) || 'Custom Template',
-              icon: Puzzle as any,
+              icon: Puzzle,
               color: (ct.color as string) || '#008b9d',
-              description: (ct.description as string) || '自定义模板',
+              description: (ct.description as string) || 'Custom Template',
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               fields: (ct.fields as any[]) || [],
             })),
           )
@@ -1311,8 +1312,8 @@ const FormField = memo(function FormField({
         <textarea
           value={strValue || ''}
           onChange={(e) => onChange(e.target.value)}
-          onFocus={focusHandler as any}
-          onBlur={blurHandler as any}
+          onFocus={focusHandler}
+          onBlur={blurHandler}
           placeholder={field.placeholder}
           rows={3}
           className="w-full px-4 py-2.5 text-sm resize-none"
@@ -1324,8 +1325,8 @@ const FormField = memo(function FormField({
         <select
           value={strValue || ''}
           onChange={(e) => onChange(e.target.value)}
-          onFocus={focusHandler as any}
-          onBlur={blurHandler as any}
+          onFocus={focusHandler}
+          onBlur={blurHandler}
           className="w-full px-4 py-2.5 text-sm appearance-none cursor-pointer"
           style={{
             ...inputStyle,

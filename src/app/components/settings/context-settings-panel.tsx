@@ -19,7 +19,7 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 
 export function ContextSettingsPanel() {
   const tc = useThemeColors()
-  const { settings } = useSettingsStore()
+  const { settings: _settings } = useSettingsStore()
 
   return (
     <div className="space-y-6">

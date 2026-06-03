@@ -19,7 +19,7 @@ export interface MCPServerConfig {
   type: MCPServerType
   endpoint: string
   apiKey?: string
-  options: Record<string, any>
+  options: Record<string, unknown>
   enabled: boolean
   healthCheckInterval: number // 秒
 }
@@ -54,7 +54,7 @@ export interface CollaborationMessage {
   type: 'task' | 'message' | 'notification' | 'alert'
   source: string
   target: string
-  payload: Record<string, any>
+  payload: Record<string, unknown>
   priority: 'low' | 'medium' | 'high' | 'urgent'
   timestamp: Date
 }
@@ -246,7 +246,7 @@ export class Yyc3MCPClient {
 
   async executeGitOperation(
     operation: string,
-    params: Record<string, any>,
+    params: Record<string, unknown>,
   ): Promise<GitOperationResult> {
     const config = this.servers.get('git-api')
     if (!config || !config.enabled) {
@@ -257,8 +257,6 @@ export class Yyc3MCPClient {
     if (!status?.connected) {
       throw new Error('Git API server is not connected')
     }
-
-    const startTime = performance.now()
 
     try {
       const response = await fetch(`${config.endpoint}/api/git/${operation}`, {

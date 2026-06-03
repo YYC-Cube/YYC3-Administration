@@ -1,38 +1,24 @@
 import {
-  AlertTriangle,
-  ArrowDownRight,
-  ArrowUpRight,
-  BarChart3,
   BookOpen,
   Brain,
   Building2,
   Check,
-  ChevronDown,
-  ChevronRight,
-  Clock,
-  Copy,
   Crown,
   Download,
   Edit3,
-  Eye,
   Filter,
   Handshake,
   HeartHandshake,
   Mail,
   MapPin,
   Megaphone,
-  MessageCircle,
-  MoreHorizontal,
   Phone,
-  PhoneCall,
   Plus,
   RefreshCw,
   Search,
-  Shield,
   Sparkles,
   Star,
   StarOff,
-  Tag,
   Target,
   Trash2,
   TrendingUp,
@@ -40,7 +26,6 @@ import {
   UserPlus,
   Users,
   X,
-  Zap,
 } from 'lucide-react'
 import { memo, useCallback, useMemo, useState } from 'react'
 
@@ -48,7 +33,6 @@ import { useApp } from './app-context'
 import { type SharedContact, useContacts } from './contacts-context'
 import { useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'
-import { NeonCard } from './neon-card'
 
 import type { LucideIcon } from 'lucide-react'
 
@@ -63,7 +47,7 @@ import type { LucideIcon } from 'lucide-react'
 export type Contact = SharedContact
 
 // Theme-aware stage metadata - colors are now token keys
-const STAGE_META_KEYS: Record<
+const _STAGE_META_KEYS: Record<
   string,
   { icon: LucideIcon; colorKey: keyof ReturnType<typeof useThemeColors>; sublabel: string }
 > = {
@@ -1071,7 +1055,9 @@ export function ContactBookPage() {
               value={`${sortBy}-${sortDir}`}
               onChange={(e) => {
                 const [by, dir] = e.target.value.split('-')
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 setSortBy(by as any)
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 setSortDir(dir as any)
               }}
               className="px-3 py-2.5 rounded-xl text-[11px] text-white/40 outline-none"

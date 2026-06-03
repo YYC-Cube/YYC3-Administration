@@ -69,6 +69,7 @@ function checkRateLimit(clientIP: string): boolean {
 // ==========================================
 
 function validateRequest(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any,
 ): { valid: true; request: ProxyRequest } | { valid: false; error: string } {
   if (!body || typeof body !== 'object') {
@@ -87,6 +88,7 @@ function validateRequest(
     return { valid: false, error: 'Too many messages (max 50)' }
   }
   // Limit total content length
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const totalLength = body.messages.reduce((s: number, m: any) => s + (m.content?.length ?? 0), 0)
   if (totalLength > 100000) {
     return { valid: false, error: 'Message content too long (max 100k chars)' }
@@ -270,8 +272,11 @@ export async function handler(request: Request): Promise<Response> {
 
     // Get API key from environment (NEVER from client)
     const apiKeyMap: Record<string, string | undefined> = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       openai: (globalThis as any).process?.env?.OPENAI_API_KEY,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       claude: (globalThis as any).process?.env?.ANTHROPIC_API_KEY,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       deepseek: (globalThis as any).process?.env?.DEEPSEEK_API_KEY,
     }
 
@@ -314,9 +319,10 @@ export async function handler(request: Request): Promise<Response> {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
-  } catch (err: any) {
-    console.error(`[YYC³ AI Proxy] Error:`, err.message)
-    return new Response(JSON.stringify({ error: err.message ?? 'Internal server error' }), {
+  } catch (err: unknown) {
+    const errorMessage = err instanceof Error ? err.message : 'Internal server error'
+    console.error(`[YYC³ AI Proxy] Error:`, errorMessage)
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })

@@ -13,24 +13,17 @@
 
 import {
   Bot,
-  Briefcase,
-  Camera,
   ChevronRight,
   Cpu,
   Download,
   FileCode,
   FolderTree,
   Globe,
-  Link as LinkIcon,
-  Mail,
-  MapPin,
   MessageSquare,
   Palette,
   Plug,
   Search,
   Settings as SettingsIcon,
-  Type,
-  Upload,
   User,
   Zap,
 } from 'lucide-react'
@@ -197,6 +190,7 @@ export function SettingsPage() {
 
         <select
           value={language}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onChange={(e) => setLanguage(e.target.value as any)}
           className="w-full px-4 py-3 rounded-lg outline-none"
           style={{

@@ -1,7 +1,5 @@
 import {
   Activity,
-  AlertCircle,
-  BarChart3,
   Calendar,
   CheckCircle2,
   Clock,
@@ -13,9 +11,7 @@ import {
   Send,
   Settings,
   Target,
-  TrendingUp,
   Users,
-  Zap,
 } from 'lucide-react'
 import { useState } from 'react'
 

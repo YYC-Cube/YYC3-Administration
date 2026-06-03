@@ -17,7 +17,6 @@ import {
   CheckCircle2,
   Download,
   Edit3,
-  Eye,
   File,
   GitBranch,
   GitCommit,
@@ -38,7 +37,7 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
   const [gitToken, setGitToken] = useState('')
   const [gitOwner, setGitOwner] = useState('YanYuCloudCube')
   const [gitRepo, setGitRepo] = useState('yyc3-cloudpivot')
-  const [apiCommits, setApiCommits] = useState<any[] | null>(null)
+  const [apiCommits, setApiCommits] = useState<unknown[] | null>(null)
   const [loading, setLoading] = useState(false)
   const gitStatus = MOCK_GIT_STATUS
   const gitLog = MOCK_GIT_LOG
@@ -214,6 +213,7 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
               </div>
             )}
             {!loading &&
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               displayLog.map((commit: any) => (
                 <div
                   key={commit.sha}

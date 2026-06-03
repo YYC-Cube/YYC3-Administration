@@ -855,6 +855,7 @@ function MCPConfigPanel() {
   }
 
   const handleExportJson = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mcpConfig: Record<string, any> = { mcpServers: {} }
     servers
       .filter((s) => s.enabled)
@@ -875,6 +876,7 @@ function MCPConfigPanel() {
       const parsed = JSON.parse(jsonDraft)
       const mcpServers = parsed.mcpServers || parsed
       const imported: MCPServerConfig[] = Object.entries(mcpServers).map(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ([name, conf]: [string, any]) => ({
           id: 'mcp-' + Date.now() + '-' + name,
           name,
@@ -1088,7 +1090,7 @@ function MCPConfigPanel() {
 
 function SmartDiagnosticsPanel({
   providers,
-  apiKeys,
+  apiKeys: _apiKeys,
   diagnostics,
   onRunDiagnostic,
   onSelectModel,
@@ -1335,7 +1337,7 @@ export function ModelSettings() {
     closeModelSettings,
     aiModels,
     addAIModel,
-    removeAIModel,
+    removeAIModel: _removeAIModel,
     updateAIModel,
     activateAIModel,
     activeModelId,

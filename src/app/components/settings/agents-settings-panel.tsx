@@ -25,7 +25,7 @@ export function AgentsSettingsPanel() {
   const { settings } = useSettingsStore()
   const { agents } = settings
 
-  const [isCreating, setIsCreating] = useState(false)
+  const [_isCreating, _setIsCreating] = useState(false)
 
   const handleCreateAgent = async () => {
     await agentService.createAgent({
@@ -89,7 +89,7 @@ export function AgentsSettingsPanel() {
 }
 
 // 智能体卡片组件
-function AgentCard({ agent, index, tc }: any) {
+function AgentCard({ agent, index, tc }: Record<string, unknown>) {
   const handleEdit = () => {
     // TODO: 打开编辑对话框
   }

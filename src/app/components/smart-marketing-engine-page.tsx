@@ -1,20 +1,4 @@
-import {
-  Activity,
-  AlertCircle,
-  BarChart3,
-  Brain,
-  CheckCircle2,
-  Pause,
-  Play,
-  Rocket,
-  Settings,
-  Sparkles,
-  Target,
-  TrendingUp,
-  Users,
-  Zap,
-} from 'lucide-react'
-import { useState } from 'react'
+import { Brain, Pause, Play, Rocket, Sparkles, TrendingUp, Users, Zap } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { NeonCard } from './neon-card'

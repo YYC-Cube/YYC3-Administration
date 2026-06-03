@@ -77,10 +77,12 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
 
   const insertToEditorRef = useRef<((text: string) => void) | null>(null)
   useEffect(() => {
-    if (onInsertReady)
+    if (onInsertReady) {
       onInsertReady((text: string) => {
-        insertToEditorRef.current = (t: string) => {}
+        setInput(text)
+        inputRef.current?.focus()
       })
+    }
   }, [onInsertReady])
 
   const activeModel = useMemo(
@@ -88,7 +90,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
     [aiModels, activeModelId],
   )
 
-  const messages = activeSession?.messages ?? []
+  const messages = useMemo(() => activeSession?.messages ?? [], [activeSession?.messages])
   const suggestedPrompts = locale === 'zh' ? SUGGESTED_PROMPTS_ZH : SUGGESTED_PROMPTS_EN
 
   useEffect(() => {
@@ -356,6 +358,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight]}
                   components={{
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     code({ className, children, ...props }: any) {
                       const isInline = !className
                       const codeStr = String(children).replace(/\n$/, '')
@@ -406,6 +409,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
                         </div>
                       )
                     },
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     pre({ children }: any) {
                       return <>{children}</>
                     },

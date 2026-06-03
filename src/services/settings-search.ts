@@ -24,7 +24,7 @@ export interface SearchResult {
   /** 设置描述 */
   description?: string
   /** 设置值 */
-  value: any
+  value: unknown
   /** 设置类型 */
   type: 'setting' | 'agent' | 'mcp' | 'model' | 'rule' | 'skill' | 'profile'
   /** 分类 */
@@ -113,7 +113,7 @@ function searchGeneralSettings(
   query: string,
   results: SearchResult[],
 ): void {
-  const settingsMap: Record<string, { title: string; value: any; description?: string }> = {
+  const settingsMap: Record<string, { title: string; value: unknown; description?: string }> = {
     'general.theme': { title: '主题', value: general.theme, description: '界面主题风格' },
     'general.language': { title: '语言', value: general.language, description: '系统语言' },
     'general.editorFont': { title: '编辑器字体', value: general.editorFont },
@@ -222,7 +222,7 @@ function searchContextSettings(
   query: string,
   results: SearchResult[],
 ): void {
-  const settingsMap: Record<string, { title: string; value: any; description?: string }> = {
+  const settingsMap: Record<string, { title: string; value: unknown; description?: string }> = {
     'context.indexStatus': { title: '代码索引状态', value: context.indexStatus },
     'context.autoIndex': { title: '自动索引', value: context.autoIndex },
     'context.indexDepth': { title: '索引深度', value: context.indexDepth },
@@ -267,7 +267,7 @@ function searchConversationSettings(
   query: string,
   results: SearchResult[],
 ): void {
-  const settingsMap: Record<string, { title: string; value: any; description?: string }> = {
+  const settingsMap: Record<string, { title: string; value: unknown; description?: string }> = {
     'conversation.useTodoList': { title: '使用待办清单', value: conversation.useTodoList },
     'conversation.autoCollapseNodes': {
       title: '自动折叠对话节点',

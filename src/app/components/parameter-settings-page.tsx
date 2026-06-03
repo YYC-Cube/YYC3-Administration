@@ -1,7 +1,6 @@
 import {
   AlertCircle,
   CheckCircle2,
-  Clock,
   Eye,
   EyeOff,
   Globe,
@@ -10,7 +9,6 @@ import {
   Mail,
   RotateCcw,
   Save,
-  Server,
   Settings,
   Shield,
   Zap,

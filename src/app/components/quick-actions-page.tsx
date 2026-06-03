@@ -976,7 +976,7 @@ function StatsBar({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
 export function QuickActionsPage() {
   const tc = useThemeColors()
-  const { t } = useI18n()
+  const { t: _t } = useI18n()
   const [activeTab, setActiveTab] = useState<TabId>('code')
   const [searchQuery, setSearchQuery] = useState('')
   const [actionLog, setActionLog] = useState<

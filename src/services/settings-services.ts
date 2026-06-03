@@ -259,7 +259,7 @@ export class ModelService {
   /**
    * 测试模型连接 (Mock)
    */
-  async testConnection(id: string): Promise<{ success: boolean; message: string }> {
+  async testConnection(_id: string): Promise<{ success: boolean; message: string }> {
     // Mock 实现
     await new Promise((resolve) => setTimeout(resolve, 1000))
     return {

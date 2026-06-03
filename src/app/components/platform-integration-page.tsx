@@ -7,15 +7,11 @@ import {
   Globe,
   Link,
   MessageSquare,
-  Pause,
-  Play,
   RefreshCw,
   Settings,
   ShoppingCart,
   Users,
-  Zap,
 } from 'lucide-react'
-import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 import { NeonCard } from './neon-card'

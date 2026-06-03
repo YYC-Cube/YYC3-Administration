@@ -36,7 +36,7 @@ export interface AppInstance {
   size: { width: number; height: number }
   workspaceId?: string
   sessionIds: string[]
-  state: Record<string, any>
+  state: Record<string, unknown>
 }
 
 /** Workspace */
@@ -79,7 +79,7 @@ export interface SessionData {
   aiMessages?: Array<{ role: string; content: string }>
   editedFiles?: Array<{ path: string; content: string }>
   terminalHistory?: Array<{ command: string; output: string }>
-  debugState?: any
+  debugState?: unknown
   previewUrl?: string
 }
 
@@ -103,7 +103,7 @@ export interface IPCMessage {
   type: IPCMessageType
   senderId: string
   receiverId?: string
-  data: any
+  data: unknown
   timestamp: number
 }
 

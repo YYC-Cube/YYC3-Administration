@@ -1,6 +1,5 @@
 import {
   Activity,
-  AlertCircle,
   ArrowDownRight,
   ArrowUpRight,
   Brain,
@@ -17,13 +16,11 @@ import {
   Loader2,
   Lock,
   Network,
-  Pause,
   Play,
   RotateCcw,
   Shield,
   Sparkles,
   Terminal,
-  X,
   Zap,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -411,7 +408,7 @@ export function AIToolsPage() {
 
         {/* Tool Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-          {toolConfigs.map((tool, i) => {
+          {toolConfigs.map((tool, _i) => {
             const Icon = tool.icon
             const status = toolStates[tool.id] || 'idle'
             return (

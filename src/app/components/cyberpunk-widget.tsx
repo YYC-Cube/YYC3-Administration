@@ -47,12 +47,13 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
   const resizeRef = useRef({ startX: 0, startY: 0, startW: 0, startH: 0 })
   const widgetRef = useRef<HTMLDivElement>(null)
 
-  // Initialize position
+  // Initialize position — intentionally runs only once on mount
   useEffect(() => {
     setPosition({
       x: window.innerWidth - size.w - 24,
       y: window.innerHeight - size.h - 24,
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Drag handlers
