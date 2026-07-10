@@ -51,6 +51,20 @@
 
 ## 🧪 单元测试用例
 
+### 0. 多端适配测试 (v1.0.0 新增)
+
+**文件**: `/tests/multi-end/multi-end.test.tsx`
+
+| 测试套件 | 覆盖模块 | 用例数 |
+|---------|---------|--------|
+| Breakpoints | 5 级断点常量 + useBreakpoint/useIsMobile/useIsTablet/useIsDesktop | 13 |
+| Platform Detection | detectPlatform + getPlatformCapabilities + getPlatformLabel | 6 |
+| PlatformAware | PlatformAware + MobileOnly + DesktopOnly + BreakpointAware | 10 |
+| MobileBottomNav | 移动端底部导航栏渲染 | 3 |
+| Integration | 断点 + 平台感知联合测试 | 2 |
+
+**总计**: 34 个测试用例
+
 ### 1. Hooks 测试
 
 #### 1.1 `useThemeColors` Hook

@@ -46,7 +46,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityLogPage } from './activity-log'
 import { useAIModel } from './ai-model-context'
 import { AIToolsPage } from './ai-tools-page'
-import { type PageId, useApp, useRealtimeSimulation } from './app-context'
+import { useApp, useRealtimeSimulation, type PageId } from './app-context'
 import { AppOverviewPage } from './app-overview-page'
 import { BrandManagementPage } from './brand-management-page'
 import { CampaignExecutionPage } from './campaign-execution-page'
@@ -73,7 +73,7 @@ import { MarketingAnalyticsPage } from './marketing-analytics-page'
 import { MarketingAssetsPage } from './marketing-assets-page'
 import { MarketingStrategyPage } from './marketing-strategy-page'
 import { ModelSettings } from './model-settings'
-import { findCategoryByPageId, NAV_CATEGORIES } from './nav-config'
+import { NAV_CATEGORIES, findCategoryByPageId } from './nav-config'
 import { NeonCard } from './neon-card'
 import { NLPProcessingPage } from './nlp-processing-page'
 import { NotificationDrawer } from './notification-drawer'
@@ -95,6 +95,8 @@ import { SmartOperationsPage } from './smart-operations-page'
 import { TaskBoardPage } from './task-board-page'
 import { ThemeSwitcherButtonCompact } from './theme-switcher-button'
 import { WechatConfigPage } from './wechat-config-page'
+
+import { MobileBottomNav } from '@/multi-end'
 
 const NAV_LABEL_KEYS: Record<string, string> = {
   dashboard: 'nav.dashboard',
@@ -1443,6 +1445,9 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
 
       {/* AI Model Settings Modal */}
       <ModelSettings />
+
+      {/* 多端适配：移动端底部导航栏 */}
+      <MobileBottomNav />
     </div>
   )
 }

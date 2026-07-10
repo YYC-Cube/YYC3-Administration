@@ -1,20 +1,7 @@
-import * as React from 'react'
+/**
+ * @file ui/use-mobile.ts
+ * @description 移动端检测 Hook — 重导出自多端适配模块，保持向后兼容
+ * @deprecated 新代码请直接使用 `@/multi-end` 中的 `useIsMobile` / `useBreakpoint`
+ */
 
-const MOBILE_BREAKPOINT = 768
-
-/** Returns `true` when viewport width is below 768 px (mobile breakpoint). */
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
-
-  React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    }
-    mql.addEventListener('change', onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener('change', onChange)
-  }, [])
-
-  return !!isMobile
-}
+export { useIsMobile } from '@/multi-end'

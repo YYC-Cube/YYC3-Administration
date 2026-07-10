@@ -3,3 +3,8 @@
 @import './theme.css';
 @import './cyberpunk.css';
 @import './liquid-glass.css';
+
+/* 多端适配：iOS 安全区域底部内边距 */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}

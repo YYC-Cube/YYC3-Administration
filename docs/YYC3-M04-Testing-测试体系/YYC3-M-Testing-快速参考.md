@@ -23,6 +23,9 @@ pnpm test:coverage
 
 # 运行特定文件
 pnpm test path/to/test.ts
+
+# 多端适配专项测试
+pnpm test tests/multi-end
 ```
 
 ### E2E 测试
