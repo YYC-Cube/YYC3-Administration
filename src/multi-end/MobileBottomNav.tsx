@@ -8,21 +8,15 @@
  * @tags multi-end,mobile,bottom-nav,touch
  */
 
-import {
-  BarChart3,
-  Bot,
-  Code,
-  LayoutDashboard,
-  MessageCircle,
-  Settings,
-  Wrench,
-} from 'lucide-react'
+import { Bot, Code, LayoutDashboard, MessageCircle, Settings } from 'lucide-react'
 import { useCallback } from 'react'
 
-import { type PageId, useApp } from '../app/components/app-context'
+import { useApp } from '../app/components/app-context'
 import { useI18n } from '../app/components/i18n-context'
+
 import { useBreakpoint } from './breakpoints'
 
+import type { PageId } from '../app/components/app-context'
 import type { ReactNode } from 'react'
 
 // ==========================================
@@ -37,9 +31,19 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'dashboard', labelKey: 'nav.dashboard', icon: (p) => <LayoutDashboard {...p} />, color: '#00f0ff' },
+  {
+    id: 'dashboard',
+    labelKey: 'nav.dashboard',
+    icon: (p) => <LayoutDashboard {...p} />,
+    color: '#00f0ff',
+  },
   { id: 'chat', labelKey: 'nav.chat', icon: (p) => <MessageCircle {...p} />, color: '#00ffcc' },
-  { id: 'devWorkspace', labelKey: 'nav.devWorkspace', icon: (p) => <Code {...p} />, color: '#00d4ff' },
+  {
+    id: 'devWorkspace',
+    labelKey: 'nav.devWorkspace',
+    icon: (p) => <Code {...p} />,
+    color: '#00d4ff',
+  },
   { id: 'aiCreativeTools', labelKey: 'nav.aiTools', icon: (p) => <Bot {...p} />, color: '#41ffdd' },
   { id: 'settings', labelKey: 'nav.settings', icon: (p) => <Settings {...p} />, color: '#888888' },
 ]
@@ -57,7 +61,7 @@ export function MobileBottomNav() {
     (pageId: PageId) => {
       setActivePage(pageId)
     },
-    [setActivePage]
+    [setActivePage],
   )
 
   // 仅在 xs/sm 断点显示

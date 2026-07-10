@@ -11,7 +11,7 @@
 import { type ReactNode, useEffect, useState } from 'react'
 
 import { type Breakpoint, useBreakpoint, useIsMobile } from './breakpoints'
-import { type Platform, detectPlatform } from './platform'
+import { detectPlatform, type Platform } from './platform'
 
 // ==========================================
 // PlatformAware — 按平台类型裁剪
