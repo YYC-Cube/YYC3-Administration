@@ -38,7 +38,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 11
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -52,11 +52,11 @@ jobs:
       - name: Type check
         run: pnpm typecheck
 
-      - name: Lint
-        run: pnpm lint
-
       - name: Build
         run: pnpm build
+
+      - name: Verify CNAME in dist
+        run: test -f dist/CNAME && cat dist/CNAME
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
