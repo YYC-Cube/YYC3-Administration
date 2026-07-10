@@ -87,8 +87,15 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id: string) {
-          // React core
-          if (id.includes('node_modules/react') || id.includes('node_modules/scheduler')) {
+          // React core + Recharts (must be in same chunk to avoid forwardRef load-order issues)
+          if (
+            id.includes('node_modules/react/') ||
+            id.includes('node_modules/react-dom/') ||
+            id.includes('node_modules/scheduler/') ||
+            id.includes('node_modules/recharts/') ||
+            id.includes('node_modules/d3-') ||
+            id.includes('node_modules/d3/')
+          ) {
             return 'vendor-react'
           }
           // Motion/animation
@@ -98,10 +105,6 @@ export default defineConfig({
           // Monaco editor
           if (id.includes('node_modules/monaco-editor') || id.includes('node_modules/@monaco-editor')) {
             return 'vendor-monaco'
-          }
-          // Recharts + d3
-          if (id.includes('node_modules/recharts') || id.includes('node_modules/d3-') || id.includes('node_modules/d3')) {
-            return 'vendor-charts'
           }
           // Lucide icons
           if (id.includes('node_modules/lucide-react')) {
