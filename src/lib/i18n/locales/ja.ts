@@ -16,29 +16,29 @@
  */
 export const ja = {
   common: {
-    health: "ヘルス",
-    online: "オンライン",
-    offline: "オフライン",
-    welcome: "ようこそ",
-    save: "保存",
-    cancel: "キャンセル",
-    loading: "読み込み中...",
-    error: "エラー",
-    success: "成功",
-    version: "v2.0.0",
+    health: 'ヘルス',
+    online: 'オンライン',
+    offline: 'オフライン',
+    welcome: 'ようこそ',
+    save: '保存',
+    cancel: 'キャンセル',
+    loading: '読み込み中...',
+    error: 'エラー',
+    success: '成功',
+    version: 'v2.0.0',
   },
   nav: {
-    home: "ホーム",
-    about: "概要",
-    contact: "お問い合わせ",
+    home: 'ホーム',
+    about: '概要',
+    contact: 'お問い合わせ',
   },
   overview: {
     stats: {
-      cronNext: "次回起動 {time}",
+      cronNext: '次回起動 {time}',
     },
   },
   welcome: {
-    message: "こんにちは {name}",
-    title: "YYC³ i18n Core へようこそ",
+    message: 'こんにちは {name}',
+    title: 'YYC³ i18n Core へようこそ',
   },
-} as const;
+} as const

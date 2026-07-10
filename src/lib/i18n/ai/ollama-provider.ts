@@ -14,7 +14,7 @@
  *
  * brief Ollama 认证提供者
  */
-import { logger } from "../infra/logger";
+import { logger } from '../infra/logger'
 
 import type {
   AIProvider,
@@ -22,106 +22,106 @@ import type {
   AIProviderInfo,
   TranslationRequest,
   TranslationResponse,
-} from "./provider";
+} from './provider'
 
 export class OllamaProvider implements AIProvider {
-  readonly type = "ollama" as const;
-  private baseUrl: string;
-  private defaultModel: string;
-  private _isReady = false;
+  readonly type = 'ollama' as const
+  private baseUrl: string
+  private defaultModel: string
+  private _isReady = false
 
   constructor(config?: AIProviderConfig) {
-    this.baseUrl = config?.baseUrl ?? "http://localhost:11434";
-    this.defaultModel = config?.defaultModel ?? "qwen2.5:3b";
+    this.baseUrl = config?.baseUrl ?? 'http://localhost:11434'
+    this.defaultModel = config?.defaultModel ?? 'qwen2.5:3b'
   }
 
   get isReady(): boolean {
-    return this._isReady;
+    return this._isReady
   }
 
   async initialize(): Promise<void> {
-    const available = await this.validate();
+    const available = await this.validate()
     if (!available) {
-      throw new Error(`Ollama not available at ${this.baseUrl}. Start with: ollama serve`);
+      throw new Error(`Ollama not available at ${this.baseUrl}. Start with: ollama serve`)
     }
-    this._isReady = true;
-    logger.info(`Ollama provider initialized (model: ${this.defaultModel})`);
+    this._isReady = true
+    logger.info(`Ollama provider initialized (model: ${this.defaultModel})`)
   }
 
   async validate(): Promise<boolean> {
     try {
       const response = await fetch(`${this.baseUrl}/api/tags`, {
-        method: "GET",
+        method: 'GET',
         signal: AbortSignal.timeout(5000),
-      });
-      return response.ok;
+      })
+      return response.ok
     } catch {
-      return false;
+      return false
     }
   }
 
   async translate(request: TranslationRequest): Promise<TranslationResponse> {
-    if (!this.isReady) await this.initialize();
+    if (!this.isReady) await this.initialize()
 
-    const systemPrompt = `You are a professional translator. Translate from ${request.sourceLocale} to ${request.targetLocale}. Output ONLY the translated text.`;
-    let userPrompt = `Translate: ${request.sourceText}`;
-    if (request.context) userPrompt += `\nContext: ${request.context}`;
+    const systemPrompt = `You are a professional translator. Translate from ${request.sourceLocale} to ${request.targetLocale}. Output ONLY the translated text.`
+    let userPrompt = `Translate: ${request.sourceText}`
+    if (request.context) userPrompt += `\nContext: ${request.context}`
 
     const response = await fetch(`${this.baseUrl}/api/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: this.defaultModel,
         messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
         ],
         stream: false,
         options: { temperature: 0.3 },
       }),
-    });
+    })
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Ollama API error (${response.status}): ${errorText}`);
+      const errorText = await response.text()
+      throw new Error(`Ollama API error (${response.status}): ${errorText}`)
     }
 
     const data = (await response.json()) as {
-      message: { content: string };
-      model: string;
-    };
+      message: { content: string }
+      model: string
+    }
 
-    const translatedText = (data.message?.content ?? "").trim();
+    const translatedText = (data.message?.content ?? '').trim()
 
     return {
       translatedText,
       qualityScore: 75,
-      provider: "ollama",
+      provider: 'ollama',
       model: data.model ?? this.defaultModel,
       cached: false,
-    };
+    }
   }
 
   async batchTranslate(requests: TranslationRequest[]): Promise<TranslationResponse[]> {
-    const results: TranslationResponse[] = [];
+    const results: TranslationResponse[] = []
     for (const req of requests) {
-      results.push(await this.translate(req));
+      results.push(await this.translate(req))
     }
-    return results;
+    return results
   }
 
   getInfo(): AIProviderInfo {
     return {
-      type: "ollama",
-      displayName: "Ollama (Local)",
+      type: 'ollama',
+      displayName: 'Ollama (Local)',
       isAvailable: this.isReady,
       isLocal: true,
       models: [this.defaultModel],
       defaultModel: this.defaultModel,
-    };
+    }
   }
 
   async dispose(): Promise<void> {
-    this._isReady = false;
+    this._isReady = false
   }
 }

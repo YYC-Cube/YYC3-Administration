@@ -16,29 +16,29 @@
  */
 export const ar = {
   common: {
-    health: "الحالة",
-    online: "متصل",
-    offline: "غير متصل",
-    welcome: "مرحباً",
-    save: "حفظ",
-    cancel: "إلغاء",
-    loading: "جارٍ التحميل...",
-    error: "خطأ",
-    success: "نجاح",
-    version: "v2.0.0",
+    health: 'الحالة',
+    online: 'متصل',
+    offline: 'غير متصل',
+    welcome: 'مرحباً',
+    save: 'حفظ',
+    cancel: 'إلغاء',
+    loading: 'جارٍ التحميل...',
+    error: 'خطأ',
+    success: 'نجاح',
+    version: 'v2.0.0',
   },
   nav: {
-    home: "الرئيسية",
-    about: "حول",
-    contact: "اتصل بنا",
+    home: 'الرئيسية',
+    about: 'حول',
+    contact: 'اتصل بنا',
   },
   overview: {
     stats: {
-      cronNext: "التشغيل التالي {time}",
+      cronNext: 'التشغيل التالي {time}',
     },
   },
   welcome: {
-    message: "مرحباً {name}",
-    title: "مرحباً بك في YYC³ i18n Core",
+    message: 'مرحباً {name}',
+    title: 'مرحباً بك في YYC³ i18n Core',
   },
-} as const;
+} as const

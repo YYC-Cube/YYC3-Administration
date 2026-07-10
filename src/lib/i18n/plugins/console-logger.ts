@@ -14,20 +14,20 @@
  *
  * brief 控制台日志插件
  */
-import type { I18nContext, I18nPlugin } from "../plugins";
-import type { Locale } from "../types";
+import type { I18nContext, I18nPlugin } from '../plugins'
+import type { Locale } from '../types'
 
 export interface ConsoleLoggerConfig {
-  logTranslations?: boolean;
-  logMissingKeys?: boolean;
-  logLocaleChanges?: boolean;
-  logPerformance?: boolean;
+  logTranslations?: boolean
+  logMissingKeys?: boolean
+  logLocaleChanges?: boolean
+  logPerformance?: boolean
   colors?: {
-    translate?: string;
-    missing?: string;
-    localeChange?: string;
-    performance?: string;
-  };
+    translate?: string
+    missing?: string
+    localeChange?: string
+    performance?: string
+  }
 }
 
 export function createConsoleLogger(config: ConsoleLoggerConfig = {}): I18nPlugin {
@@ -37,45 +37,43 @@ export function createConsoleLogger(config: ConsoleLoggerConfig = {}): I18nPlugi
     logLocaleChanges = true,
     logPerformance = true,
     colors = {
-      translate: "#0099ff",
-      missing: "#ff9900",
-      localeChange: "#00ff00",
-      performance: "#9966ff",
+      translate: '#0099ff',
+      missing: '#ff9900',
+      localeChange: '#00ff00',
+      performance: '#9966ff',
     },
-  } = config;
+  } = config
 
-  const timingMap = new Map<string, number>();
+  const timingMap = new Map<string, number>()
 
   return {
-    name: "console-logger",
-    version: "1.0.0",
+    name: 'console-logger',
+    version: '1.0.0',
 
     beforeTranslate(key: string) {
       if (logPerformance) {
-        timingMap.set(key, performance.now());
+        timingMap.set(key, performance.now())
       }
 
       if (logTranslations) {
-        console.log(
-          `%c[i18n] → Translating: "${key}"`,
-          `color: ${colors.translate};`
-        );
+        console.log(`%c[i18n] → Translating: "${key}"`, `color: ${colors.translate};`)
       }
     },
 
     afterTranslate(_result: string, key: string) {
       if (logPerformance && timingMap.has(key)) {
-        const start = timingMap.get(key)!;
-        const duration = performance.now() - start;
+        const start = timingMap.get(key)!
+        const duration = performance.now() - start
 
-        if (duration > 10) { // Only log slow translations (>10ms)
+        if (duration > 10) {
+          // Only log slow translations (>10ms)
           console.log(
             `%c⚠️ Slow translation (${duration.toFixed(2)}ms): "${key}"`,
-            `color: ${colors.performance}; font-weight: bold;`
-          );
+            `color: ${colors.performance}; font-weight: bold;`,
+          )
         }
 
-        timingMap.delete(key);
+        timingMap.delete(key)
       }
     },
 
@@ -83,8 +81,8 @@ export function createConsoleLogger(config: ConsoleLoggerConfig = {}): I18nPlugi
       if (logLocaleChanges) {
         console.log(
           `%c🌍 Locale changed: ${oldLocale} → ${newLocale}`,
-          `color: ${colors.localeChange}; font-weight: bold;`
-        );
+          `color: ${colors.localeChange}; font-weight: bold;`,
+        )
       }
     },
 
@@ -92,19 +90,19 @@ export function createConsoleLogger(config: ConsoleLoggerConfig = {}): I18nPlugi
       if (logMissingKeys) {
         console.warn(
           `%c❌ Missing translation [${locale}]: "${key}"`,
-          `color: ${colors.missing}; font-weight: bold;`
-        );
+          `color: ${colors.missing}; font-weight: bold;`,
+        )
       }
 
-      return undefined; // Don't modify behavior, just log
+      return undefined // Don't modify behavior, just log
     },
 
     onError(error: Error, context: I18nContext) {
       console.error(
         `%c💥 Translation error: ${error.message}`,
         `color: #ff0000; font-weight: bold;`,
-        context
-      );
+        context,
+      )
     },
-  };
+  }
 }

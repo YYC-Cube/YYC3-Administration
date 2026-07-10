@@ -15,14 +15,14 @@
  * brief 本地存储持久化
  */
 export function getSafeLocalStorage(): Storage | null {
-  if (typeof window === 'undefined') return null;
-  
+  if (typeof window === 'undefined') return null
+
   try {
-    const testKey = '__yyc3_test__';
-    window.localStorage.setItem(testKey, 'test');
-    window.localStorage.removeItem(testKey);
-    return window.localStorage;
+    const testKey = '__yyc3_test__'
+    window.localStorage.setItem(testKey, 'test')
+    window.localStorage.removeItem(testKey)
+    return window.localStorage
   } catch (e) {
-    return null;
+    return null
   }
 }

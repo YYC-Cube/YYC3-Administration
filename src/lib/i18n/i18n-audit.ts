@@ -14,103 +14,103 @@
  *
  * brief 翻译审计系统
  */
-import { t } from "./engine";
-import { logger } from "./infra/logger";
+import { t } from './engine'
+import { logger } from './infra/logger'
 
 interface I18nAuditEntry {
-  key: string;
-  fallback: string;
-  location: string;
-  timestamp: number;
+  key: string
+  fallback: string
+  location: string
+  timestamp: number
 }
 
 class I18nAuditLogger {
-  private entries: I18nAuditEntry[] = [];
-  private enabled = false;
+  private entries: I18nAuditEntry[] = []
+  private enabled = false
 
   enable() {
-    this.enabled = true;
-    this.entries = [];
-    logger.info("✅ Translation audit ENABLED");
+    this.enabled = true
+    this.entries = []
+    logger.info('✅ Translation audit ENABLED')
   }
 
   disable() {
-    this.enabled = false;
-    logger.info(`❌ Translation audit DISABLED (${this.entries.length} entries)`);
+    this.enabled = false
+    logger.info(`❌ Translation audit DISABLED (${this.entries.length} entries)`)
   }
 
   log(key: string, fallback: string, location: string) {
-    if (!this.enabled) return;
+    if (!this.enabled) return
 
     const entry: I18nAuditEntry = {
       key,
       fallback,
       location,
       timestamp: Date.now(),
-    };
+    }
 
-    this.entries.push(entry);
+    this.entries.push(entry)
 
     logger.warn(
       `Missing translation:\n` +
-      `  🔑 Key: ${key}\n` +
-      `  📝 Fallback: "${fallback}"\n` +
-      `  📍 Location: ${location}`
-    );
+        `  🔑 Key: ${key}\n` +
+        `  📝 Fallback: "${fallback}"\n` +
+        `  📍 Location: ${location}`,
+    )
   }
 
   getReport(): { total: number; uniqueKeys: Set<string>; entries: I18nAuditEntry[] } {
-    const uniqueKeys = new Set(this.entries.map(e => e.key));
+    const uniqueKeys = new Set(this.entries.map((e) => e.key))
     return {
       total: this.entries.length,
       uniqueKeys,
       entries: this.entries,
-    };
+    }
   }
 
   exportReport(): string {
-    const report = this.getReport();
+    const report = this.getReport()
 
-    let output = `\n${"=".repeat(80)}\n`;
-    output += `📊 I18N AUDIT REPORT\n`;
-    output += `${"=".repeat(80)}\n\n`;
-    output += `Total missing translations: ${report.total}\n`;
-    output += `Unique keys missing: ${report.uniqueKeys.size}\n\n`;
+    let output = `\n${'='.repeat(80)}\n`
+    output += `📊 I18N AUDIT REPORT\n`
+    output += `${'='.repeat(80)}\n\n`
+    output += `Total missing translations: ${report.total}\n`
+    output += `Unique keys missing: ${report.uniqueKeys.size}\n\n`
 
-    output += `📋 MISSING TRANSLATION KEYS:\n`;
-    output += `${"-".repeat(80)}\n\n`;
+    output += `📋 MISSING TRANSLATION KEYS:\n`
+    output += `${'-'.repeat(80)}\n\n`
 
     for (const key of Array.from(report.uniqueKeys).sort()) {
-      const examples = report.entries.filter(e => e.key === key).slice(0, 3);
-      output += `❌ ${key}\n`;
+      const examples = report.entries.filter((e) => e.key === key).slice(0, 3)
+      output += `❌ ${key}\n`
       if (examples.length > 0) {
-        output += `   Example fallback: "${examples[0]?.fallback}"\n`;
-        output += `   Found in: ${examples[0]?.location}\n\n`;
+        output += `   Example fallback: "${examples[0]?.fallback}"\n`
+        output += `   Found in: ${examples[0]?.location}\n\n`
       }
     }
 
-    output += `${"=".repeat(80)}\n\n`;
+    output += `${'='.repeat(80)}\n\n`
 
-    return output;
+    return output
   }
 
   clear() {
-    this.entries = [];
+    this.entries = []
   }
 }
 
-export const i18nAudit = new I18nAuditLogger();
+export const i18nAudit = new I18nAuditLogger()
 
 export function createAuditedT(location: string) {
   return (key: string, params?: Record<string, string>): string => {
-    const result = t(key, params);
+    const result = t(key, params)
 
-    if (result === key && !key.startsWith("{") && !key.startsWith("config.")) {
-      i18nAudit.log(key, key, location);
+    if (result === key && !key.startsWith('{') && !key.startsWith('config.')) {
+      i18nAudit.log(key, key, location)
     } else if (result === `${key}.label` || result === `${key}.help`) {
-      i18nAudit.log(key, result.replace(`${key}.`, ""), location);
+      i18nAudit.log(key, result.replace(`${key}.`, ''), location)
     }
 
-    return result;
-  };
+    return result
+  }
 }

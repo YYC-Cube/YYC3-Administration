@@ -14,4 +14,4 @@
  *
  * brief @yyc3/i18n-core lib/translate.ts 模块
  */
-export { i18n, t, SUPPORTED_LOCALES, isSupportedLocale } from "./engine";
+export { i18n, t, SUPPORTED_LOCALES, isSupportedLocale } from './engine'

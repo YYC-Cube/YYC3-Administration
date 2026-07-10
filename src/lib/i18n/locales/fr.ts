@@ -16,29 +16,29 @@
  */
 export const fr = {
   common: {
-    health: "Santé",
-    online: "En ligne",
-    offline: "Hors ligne",
-    welcome: "Bienvenue",
-    save: "Enregistrer",
-    cancel: "Annuler",
-    loading: "Chargement...",
-    error: "Erreur",
-    success: "Succès",
-    version: "v2.0.0",
+    health: 'Santé',
+    online: 'En ligne',
+    offline: 'Hors ligne',
+    welcome: 'Bienvenue',
+    save: 'Enregistrer',
+    cancel: 'Annuler',
+    loading: 'Chargement...',
+    error: 'Erreur',
+    success: 'Succès',
+    version: 'v2.0.0',
   },
   nav: {
-    home: "Accueil",
-    about: "À propos",
-    contact: "Contact",
+    home: 'Accueil',
+    about: 'À propos',
+    contact: 'Contact',
   },
   overview: {
     stats: {
-      cronNext: "Prochain réveil {time}",
+      cronNext: 'Prochain réveil {time}',
     },
   },
   welcome: {
-    message: "Bonjour {name}",
-    title: "Bienvenue sur YYC³ i18n Core",
+    message: 'Bonjour {name}',
+    title: 'Bienvenue sur YYC³ i18n Core',
   },
-} as const;
+} as const

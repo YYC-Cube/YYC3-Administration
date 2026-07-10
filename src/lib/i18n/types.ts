@@ -14,31 +14,21 @@
  *
  * brief @yyc3/i18n-core 类型定义
  */
-export type TranslationMap = { [key: string]: string | TranslationMap };
+export type TranslationMap = { [key: string]: string | TranslationMap }
 
-export type Locale =
-  | "en"
-  | "zh-CN"
-  | "zh-TW"
-  | "ja"
-  | "ko"
-  | "fr"
-  | "de"
-  | "es"
-  | "pt-BR"
-  | "ar";
+export type Locale = 'en' | 'zh-CN' | 'zh-TW' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'pt-BR' | 'ar'
 
-export type RTLLocale = Extract<Locale, "ar">;
+export type RTLLocale = Extract<Locale, 'ar'>
 
-export type TextDirection = "ltr" | "rtl" | "auto";
+export type TextDirection = 'ltr' | 'rtl' | 'auto'
 
-export type HorizontalAlignment = "left" | "right";
+export type HorizontalAlignment = 'left' | 'right'
 
-export type SpacingProperty = "marginLeft" | "marginRight" | "paddingLeft" | "paddingRight";
+export type SpacingProperty = 'marginLeft' | 'marginRight' | 'paddingLeft' | 'paddingRight'
 
 export interface I18nConfig {
-  locale: Locale;
-  fallbackLocale: Locale;
-  translations: Partial<Record<Locale, TranslationMap>>;
-  rtlSupport?: boolean;
+  locale: Locale
+  fallbackLocale: Locale
+  translations: Partial<Record<Locale, TranslationMap>>
+  rtlSupport?: boolean
 }

@@ -14,161 +14,169 @@
  *
  * brief @yyc3/i18n-core lib/plugins.ts 模块
  */
-import { logger } from './infra/logger';
+import { logger } from './infra/logger'
 
-import type { Locale } from './types';
+import type { Locale } from './types'
 
 export type I18nContext = {
-  locale: Locale;
-  key: string;
-  params?: Record<string, string>;
-  result?: string;
-};
+  locale: Locale
+  key: string
+  params?: Record<string, string>
+  result?: string
+}
 
 export type I18nPlugin = {
-  name: string;
-  version?: string;
+  name: string
+  version?: string
 
   // Lifecycle hooks
-  init?: (context: I18nContext) => void | Promise<void>;
-  destroy?: () => void | Promise<void>;
+  init?: (context: I18nContext) => void | Promise<void>
+  destroy?: () => void | Promise<void>
 
   // Translation hooks (executed in order)
-  beforeTranslate?: (key: string, params?: Record<string, string>) => { key: string; params?: Record<string, string> } | void;
-  afterTranslate?: (result: string, key: string, params?: Record<string, string>) => string | void;
+  beforeTranslate?: (
+    key: string,
+    params?: Record<string, string>,
+  ) => { key: string; params?: Record<string, string> } | void
+  afterTranslate?: (result: string, key: string, params?: Record<string, string>) => string | void
 
   // System hooks
-  onLocaleChange?: (newLocale: Locale, oldLocale: Locale) => void;
-  onError?: (error: Error, context: I18nContext) => void;
-  onMissingKey?: (key: string, locale: Locale) => string | void;
-};
+  onLocaleChange?: (newLocale: Locale, oldLocale: Locale) => void
+  onError?: (error: Error, context: I18nContext) => void
+  onMissingKey?: (key: string, locale: Locale) => string | void
+}
 
 export class PluginManager {
-  private plugins = new Map<string, I18nPlugin>();
-  private hookOrder: string[] = [];
+  private plugins = new Map<string, I18nPlugin>()
+  private hookOrder: string[] = []
 
   register(plugin: I18nPlugin): void {
     if (this.plugins.has(plugin.name)) {
-      logger.warn(`Plugin "${plugin.name}" is already registered. Overwriting.`);
+      logger.warn(`Plugin "${plugin.name}" is already registered. Overwriting.`)
     }
 
-    this.plugins.set(plugin.name, plugin);
+    this.plugins.set(plugin.name, plugin)
 
     if (!this.hookOrder.includes(plugin.name)) {
-      this.hookOrder.push(plugin.name);
+      this.hookOrder.push(plugin.name)
     }
 
-    logger.info(`✅ Plugin "${plugin.name}" registered${plugin.version ? ` v${plugin.version}` : ''}`);
+    logger.info(
+      `✅ Plugin "${plugin.name}" registered${plugin.version ? ` v${plugin.version}` : ''}`,
+    )
   }
 
   unregister(name: string): boolean {
-    const plugin = this.plugins.get(name);
-    if (!plugin) return false;
+    const plugin = this.plugins.get(name)
+    if (!plugin) return false
 
     if (plugin.destroy) {
-      plugin.destroy();
+      plugin.destroy()
     }
 
-    this.plugins.delete(name);
-    this.hookOrder = this.hookOrder.filter((n) => n !== name);
+    this.plugins.delete(name)
+    this.hookOrder = this.hookOrder.filter((n) => n !== name)
 
-    logger.info(`🗑️ Plugin "${name}" unregistered`);
-    return true;
+    logger.info(`🗑️ Plugin "${name}" unregistered`)
+    return true
   }
 
   getPlugin(name: string): I18nPlugin | undefined {
-    return this.plugins.get(name);
+    return this.plugins.get(name)
   }
 
   getRegisteredPlugins(): string[] {
-    return [...this.hookOrder];
+    return [...this.hookOrder]
   }
 
   async initAll(context: I18nContext): Promise<void> {
     for (const name of this.hookOrder) {
-      const plugin = this.plugins.get(name);
+      const plugin = this.plugins.get(name)
       if (plugin?.init) {
-        await plugin.init(context);
+        await plugin.init(context)
       }
     }
   }
 
   async destroyAll(): Promise<void> {
     for (const name of this.hookOrder) {
-      const plugin = this.plugins.get(name);
+      const plugin = this.plugins.get(name)
       if (plugin?.destroy) {
-        await plugin.destroy();
+        await plugin.destroy()
       }
     }
-    this.plugins.clear();
-    this.hookOrder = [];
+    this.plugins.clear()
+    this.hookOrder = []
   }
 
-  executeBeforeTranslate(key: string, params?: Record<string, string>): { key: string; params?: Record<string, string> } {
-    let currentKey = key;
-    let currentParams = params;
+  executeBeforeTranslate(
+    key: string,
+    params?: Record<string, string>,
+  ): { key: string; params?: Record<string, string> } {
+    let currentKey = key
+    let currentParams = params
 
     for (const name of this.hookOrder) {
-      const plugin = this.plugins.get(name);
+      const plugin = this.plugins.get(name)
       if (plugin?.beforeTranslate) {
-        const result = plugin.beforeTranslate(currentKey, currentParams);
+        const result = plugin.beforeTranslate(currentKey, currentParams)
         if (result) {
-          currentKey = result.key;
-          currentParams = result.params;
+          currentKey = result.key
+          currentParams = result.params
         }
       }
     }
 
-    return { key: currentKey, params: currentParams };
+    return { key: currentKey, params: currentParams }
   }
 
   executeAfterTranslate(result: string, key: string, params?: Record<string, string>): string {
-    let currentResult = result;
+    let currentResult = result
 
     for (const name of this.hookOrder) {
-      const plugin = this.plugins.get(name);
+      const plugin = this.plugins.get(name)
       if (plugin?.afterTranslate) {
-        const modified = plugin.afterTranslate(currentResult, key, params);
+        const modified = plugin.afterTranslate(currentResult, key, params)
         if (modified !== undefined) {
-          currentResult = modified as string;
+          currentResult = modified as string
         }
       }
     }
 
-    return currentResult;
+    return currentResult
   }
 
   notifyLocaleChange(newLocale: Locale, oldLocale: Locale): void {
     for (const name of this.hookOrder) {
-      const plugin = this.plugins.get(name);
-      plugin?.onLocaleChange?.(newLocale, oldLocale);
+      const plugin = this.plugins.get(name)
+      plugin?.onLocaleChange?.(newLocale, oldLocale)
     }
   }
 
   handleError(error: Error, context: I18nContext): void {
     for (const name of this.hookOrder) {
-      const plugin = this.plugins.get(name);
-      const handler = plugin?.onError;
+      const plugin = this.plugins.get(name)
+      const handler = plugin?.onError
       if (handler) {
-        handler(error, context);
+        handler(error, context)
       }
     }
   }
 
   handleMissingKey(key: string, locale: Locale): string | undefined {
-    let fallback: string | undefined;
+    let fallback: string | undefined
 
     for (const name of this.hookOrder) {
-      const plugin = this.plugins.get(name);
-      const handler = plugin?.onMissingKey;
+      const plugin = this.plugins.get(name)
+      const handler = plugin?.onMissingKey
       if (handler) {
-        const result = handler(key, locale);
+        const result = handler(key, locale)
         if (result !== undefined) {
-          fallback = result as string | undefined;
+          fallback = result as string | undefined
         }
       }
     }
 
-    return fallback;
+    return fallback
   }
 }

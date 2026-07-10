@@ -14,186 +14,200 @@
  *
  * brief AI 翻译质量评估
  */
-import { logger } from "../infra/logger";
+import { logger } from '../infra/logger'
 
-export type QESeverity = "critical" | "warning" | "info";
+export type QESeverity = 'critical' | 'warning' | 'info'
 
 export interface QEIssue {
-  ruleId: string;
-  message: string;
-  severity: QESeverity;
-  position?: { start: number; end: number };
+  ruleId: string
+  message: string
+  severity: QESeverity
+  position?: { start: number; end: number }
 }
 
 export interface QEResult {
-  score: number;
-  issues: QEIssue[];
-  passed: boolean;
+  score: number
+  issues: QEIssue[]
+  passed: boolean
   details: {
-    completeness: number;
-    accuracy: number;
-    fluency: number;
-    consistency: number;
-    glossaryCompliance: number;
-  };
+    completeness: number
+    accuracy: number
+    fluency: number
+    consistency: number
+    glossaryCompliance: number
+  }
 }
 
 export interface QERule {
-  id: string;
-  name: string;
-  description: string;
-  severity: QESeverity;
-  check(ctx: QEContext): QEIssue | null;
+  id: string
+  name: string
+  description: string
+  severity: QESeverity
+  check(ctx: QEContext): QEIssue | null
 }
 
 export interface QEContext {
-  sourceText: string;
-  translatedText: string;
-  sourceLocale: string;
-  targetLocale: string;
-  glossary?: Record<string, string>;
-  previousTranslations?: Map<string, string>;
+  sourceText: string
+  translatedText: string
+  sourceLocale: string
+  targetLocale: string
+  glossary?: Record<string, string>
+  previousTranslations?: Map<string, string>
 }
 
 export class QualityEstimator {
-  private rules: QERule[] = [];
-  private passThreshold: number;
+  private rules: QERule[] = []
+  private passThreshold: number
 
   constructor(config?: { passThreshold?: number }) {
-    this.passThreshold = config?.passThreshold ?? 85;
-    this.registerBuiltinRules();
+    this.passThreshold = config?.passThreshold ?? 85
+    this.registerBuiltinRules()
   }
 
   private registerBuiltinRules(): void {
     this.rules.push(
       {
-        id: "empty-translation",
-        name: "Empty Translation",
-        description: "Translation must not be empty",
-        severity: "critical",
+        id: 'empty-translation',
+        name: 'Empty Translation',
+        description: 'Translation must not be empty',
+        severity: 'critical',
         check: (ctx) => {
           if (!ctx.translatedText || ctx.translatedText.trim().length === 0) {
-            return { ruleId: "empty-translation", message: "Translation is empty", severity: "critical" };
+            return {
+              ruleId: 'empty-translation',
+              message: 'Translation is empty',
+              severity: 'critical',
+            }
           }
-          return null;
+          return null
         },
       },
       {
-        id: "source-leak",
-        name: "Source Language Leak",
-        description: "Translation should not contain untranslated source text",
-        severity: "warning",
+        id: 'source-leak',
+        name: 'Source Language Leak',
+        description: 'Translation should not contain untranslated source text',
+        severity: 'warning',
         check: (ctx) => {
           if (ctx.sourceText === ctx.translatedText && ctx.sourceLocale !== ctx.targetLocale) {
-            return { ruleId: "source-leak", message: "Translation identical to source", severity: "warning" };
+            return {
+              ruleId: 'source-leak',
+              message: 'Translation identical to source',
+              severity: 'warning',
+            }
           }
-          return null;
+          return null
         },
       },
       {
-        id: "placeholder-mismatch",
-        name: "Placeholder Mismatch",
-        description: "All placeholders in source must appear in translation",
-        severity: "critical",
+        id: 'placeholder-mismatch',
+        name: 'Placeholder Mismatch',
+        description: 'All placeholders in source must appear in translation',
+        severity: 'critical',
         check: (ctx) => {
-          const sourcePlaceholders = ctx.sourceText.match(/\{[^}]+\}/g) ?? [];
+          const sourcePlaceholders = ctx.sourceText.match(/\{[^}]+\}/g) ?? []
           for (const ph of sourcePlaceholders) {
             if (!ctx.translatedText.includes(ph)) {
               return {
-                ruleId: "placeholder-mismatch",
+                ruleId: 'placeholder-mismatch',
                 message: `Missing placeholder: ${ph}`,
-                severity: "critical",
-              };
+                severity: 'critical',
+              }
             }
           }
-          return null;
+          return null
         },
       },
       {
-        id: "glossary-violation",
-        name: "Glossary Violation",
-        description: "Translation must comply with glossary terms",
-        severity: "warning",
+        id: 'glossary-violation',
+        name: 'Glossary Violation',
+        description: 'Translation must comply with glossary terms',
+        severity: 'warning',
         check: (ctx) => {
-          if (!ctx.glossary) return null;
+          if (!ctx.glossary) return null
           for (const [term, required] of Object.entries(ctx.glossary)) {
             if (ctx.sourceText.toLowerCase().includes(term.toLowerCase())) {
               if (!ctx.translatedText.includes(required)) {
                 return {
-                  ruleId: "glossary-violation",
+                  ruleId: 'glossary-violation',
                   message: `Glossary term "${term}" should be translated as "${required}"`,
-                  severity: "warning",
-                };
+                  severity: 'warning',
+                }
               }
             }
           }
-          return null;
+          return null
         },
       },
       {
-        id: "length-anomaly",
-        name: "Length Anomaly",
-        description: "Translation length should be reasonably proportional to source",
-        severity: "info",
+        id: 'length-anomaly',
+        name: 'Length Anomaly',
+        description: 'Translation length should be reasonably proportional to source',
+        severity: 'info',
         check: (ctx) => {
-          const ratio = ctx.translatedText.length / Math.max(ctx.sourceText.length, 1);
+          const ratio = ctx.translatedText.length / Math.max(ctx.sourceText.length, 1)
           if (ratio > 3 || ratio < 0.2) {
             return {
-              ruleId: "length-anomaly",
+              ruleId: 'length-anomaly',
               message: `Translation length ratio ${ratio.toFixed(2)} is unusual`,
-              severity: "info",
-            };
+              severity: 'info',
+            }
           }
-          return null;
+          return null
         },
       },
       {
-        id: "html-tag-preservation",
-        name: "HTML Tag Preservation",
-        description: "HTML tags in source must be preserved in translation",
-        severity: "critical",
+        id: 'html-tag-preservation',
+        name: 'HTML Tag Preservation',
+        description: 'HTML tags in source must be preserved in translation',
+        severity: 'critical',
         check: (ctx) => {
-          const sourceTags = ctx.sourceText.match(/<[^>]+>/g) ?? [];
+          const sourceTags = ctx.sourceText.match(/<[^>]+>/g) ?? []
           for (const tag of sourceTags) {
             if (!ctx.translatedText.includes(tag)) {
               return {
-                ruleId: "html-tag-preservation",
+                ruleId: 'html-tag-preservation',
                 message: `Missing HTML tag: ${tag}`,
-                severity: "critical",
-              };
+                severity: 'critical',
+              }
             }
           }
-          return null;
+          return null
         },
-      }
-    );
+      },
+    )
   }
 
   addRule(rule: QERule): void {
-    this.rules.push(rule);
+    this.rules.push(rule)
   }
 
   estimate(ctx: QEContext): QEResult {
-    const issues: QEIssue[] = [];
-    let penalty = 0;
+    const issues: QEIssue[] = []
+    let penalty = 0
 
     for (const rule of this.rules) {
-      const issue = rule.check(ctx);
+      const issue = rule.check(ctx)
       if (issue) {
-        issues.push(issue);
+        issues.push(issue)
         switch (issue.severity) {
-          case "critical": penalty += 25; break;
-          case "warning": penalty += 10; break;
-          case "info": penalty += 2; break;
+          case 'critical':
+            penalty += 25
+            break
+          case 'warning':
+            penalty += 10
+            break
+          case 'info':
+            penalty += 2
+            break
         }
       }
     }
 
-    const score = Math.max(0, 100 - penalty);
-    const passed = score >= this.passThreshold;
+    const score = Math.max(0, 100 - penalty)
+    const passed = score >= this.passThreshold
 
     if (!passed) {
-      logger.warn(`QE failed: score=${score}, threshold=${this.passThreshold}`);
+      logger.warn(`QE failed: score=${score}, threshold=${this.passThreshold}`)
     }
 
     return {
@@ -201,16 +215,16 @@ export class QualityEstimator {
       issues,
       passed,
       details: {
-        completeness: issues.some((i) => i.ruleId === "empty-translation") ? 0 : 100,
-        accuracy: issues.some((i) => i.ruleId === "source-leak") ? 40 : 90,
-        fluency: issues.some((i) => i.ruleId === "length-anomaly") ? 60 : 90,
-        consistency: issues.some((i) => i.ruleId === "glossary-violation") ? 50 : 95,
-        glossaryCompliance: issues.some((i) => i.ruleId === "glossary-violation") ? 0 : 100,
+        completeness: issues.some((i) => i.ruleId === 'empty-translation') ? 0 : 100,
+        accuracy: issues.some((i) => i.ruleId === 'source-leak') ? 40 : 90,
+        fluency: issues.some((i) => i.ruleId === 'length-anomaly') ? 60 : 90,
+        consistency: issues.some((i) => i.ruleId === 'glossary-violation') ? 50 : 95,
+        glossaryCompliance: issues.some((i) => i.ruleId === 'glossary-violation') ? 0 : 100,
       },
-    };
+    }
   }
 
   getRules(): QERule[] {
-    return [...this.rules];
+    return [...this.rules]
   }
 }

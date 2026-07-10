@@ -16,29 +16,29 @@
  */
 export const zh_CN = {
   common: {
-    health: "健康状况",
-    online: "在线",
-    offline: "离线",
-    welcome: "欢迎",
-    save: "保存",
-    cancel: "取消",
-    loading: "加载中...",
-    error: "错误",
-    success: "成功",
-    version: "v2.0.0",
+    health: '健康状况',
+    online: '在线',
+    offline: '离线',
+    welcome: '欢迎',
+    save: '保存',
+    cancel: '取消',
+    loading: '加载中...',
+    error: '错误',
+    success: '成功',
+    version: 'v2.0.0',
   },
   nav: {
-    home: "首页",
-    about: "关于",
-    contact: "联系我们",
+    home: '首页',
+    about: '关于',
+    contact: '联系我们',
   },
   overview: {
     stats: {
-      cronNext: "下次唤醒 {time}",
+      cronNext: '下次唤醒 {time}',
     },
   },
   welcome: {
-    message: "你好 {name}",
-    title: "欢迎使用 YYC³ i18n Core",
+    message: '你好 {name}',
+    title: '欢迎使用 YYC³ i18n Core',
   },
-} as const;
+} as const
