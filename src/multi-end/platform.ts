@@ -59,7 +59,7 @@ export function detectPlatform(): Platform {
 
   // 移动端判断
   const isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
+    navigator.userAgent,
   )
   const isSmallScreen = window.innerWidth < 1024
 

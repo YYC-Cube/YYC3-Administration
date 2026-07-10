@@ -21,23 +21,14 @@ export {
 export type { Breakpoint } from './breakpoints'
 
 // 平台检测
-export {
-  detectPlatform,
-  getPlatformCapabilities,
-  getPlatformLabel,
-} from './platform'
+export { detectPlatform, getPlatformCapabilities, getPlatformLabel } from './platform'
 export type { Platform, PlatformCapabilities } from './platform'
 
 // 离线存储
 export { offlineStorage, OfflineStorage } from './storage'
 
 // 平台感知组件
-export {
-  PlatformAware,
-  MobileOnly,
-  DesktopOnly,
-  BreakpointAware,
-} from './PlatformAware'
+export { PlatformAware, MobileOnly, DesktopOnly, BreakpointAware } from './PlatformAware'
 
 // 移动端底部导航
 export { MobileBottomNav } from './MobileBottomNav'
