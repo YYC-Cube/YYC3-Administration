@@ -474,7 +474,33 @@ console.log(await page.content());
 - [测试代码示例](/TESTING_EXAMPLES.md)
 - [实施总结](/TESTING_IMPLEMENTATION_SUMMARY.md)
 
+## 📊 测试统计（v2.0.0 更新）
+
+| 指标 | 数值 |
+| :--- | :--- |
+| 测试文件数 | 11 |
+| 测试用例总数 | **347** |
+| 通过率 | **347/347 (100%)** |
+| 平均执行时间 | ~45s |
+| 测试框架 | Vitest + Testing Library |
+| E2E 框架 | Playwright |
+
+### 测试文件分布
+
+| 测试文件 | 用例数 | 模块 |
+| :--- | :--- | :--- |
+| `tests/components/panels/workspace-settings-panel.test.ts` | 28 | 工作区设置面板 |
+| `tests/components/panels/panel-components.test.ts` | 39 | 面板组件 |
+| `tests/services/multi-instance.test.ts` | 48 | 多实例服务 |
+| `tests/hooks/use-theme-colors.test.tsx` | 34 | 主题色 Hook |
+| `tests/multi-end/multi-end.test.tsx` | 36 | 多端适配模块 |
+| `tests/components/panels/editor-quick-actions.test.ts` | 25 | 编辑器快捷操作 |
+| `tests/components/neon-card.test.tsx` | 12 | Neon 卡片组件 |
+| `tests/services/test-utils.test.ts` | 37 | 测试工具 |
+| `tests/services/ai-proxy-service.test.ts` | 35 | AI 代理服务 |
+| 其他 | 53 | 核心/组件 |
+
 ---
 
-**快速参考版本**: v1.0.0  
+**快速参考版本**: v2.0.0  
 **打印友好**: 适合打印/贴在墙上 😊

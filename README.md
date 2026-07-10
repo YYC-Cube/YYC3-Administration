@@ -23,23 +23,24 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-6.3.5-646cff?style=flat-square&logo=vite)](https://vitejs.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
-[![pnpm](https://img.shields.io/badge/pnpm-≥8-f69220?style=flat-square&logo=pnpm)](https://pnpm.io)
+[![pnpm](https://img.shields.io/badge/pnpm-≥11-f69220?style=flat-square&logo=pnpm)](https://pnpm.io)
 [![Zustand](https://img.shields.io/badge/Zustand-5.0-orange?style=flat-square)](https://zustand-demo.pmnd.rs)
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-React-000000?style=flat-square)](https://ui.shadcn.com)
 [![Radix UI](https://img.shields.io/badge/Radix_UI-Primitives-8b5cf6?style=flat-square)](https://www.radix-ui.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-ff69b4?style=flat-square&logo=framer)](https://motion.dev)
-[![Vitest](https://img.shields.io/badge/Vitest-Tested-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
+[![Vitest](https://img.shields.io/badge/Vitest-347_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E-2ead33?style=flat-square&logo=playwright)](https://playwright.dev)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://www.docker.com)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=flat-square&logo=pwa)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
 
 [![CI](https://img.shields.io/github/actions/workflow/status/YYC-Cube/YYC3-Administration/ci.yml?branch=main&style=flat-square&label=CI&logo=githubactions&logoColor=white)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
 [![Deploy](https://img.shields.io/github/actions/workflow/status/YYC-Cube/YYC3-Administration/deploy.yml?branch=main&style=flat-square&label=Deploy&logo=githubpages&logoColor=white)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/deploy.yml)
-[![TypeCheck](https://img.shields.io/badge/TypeCheck-passing-00e676?style=flat-square)](https://www.typescriptlang.org)
-[![Code Style](https://img.shields.io/badge/Code_Style-Prettier-ff69b4?style=flat-square)](https://prettier.io)
+[![ESLint](https://img.shields.io/badge/ESLint-0_errors-4b32c3?style=flat-square&logo=eslint)](https://eslint.org)
+[![Prettier](https://img.shields.io/badge/Prettier-formatted-ff69b4?style=flat-square)](https://prettier.io)
+[![TypeCheck](https://img.shields.io/badge/TypeCheck-passing-00e676?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
+[![Test Coverage](https://img.shields.io/badge/Tests-347%2F347-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
+[![Multi-End](https://img.shields.io/badge/Multi_End-PWA%7CH5%7CDesktop-brightgreen?style=flat-square)](./docs/YYC3-M13-MultiEnd-多端适配/)
 [![PRs Welcome](https://img.shields.io/badge/🤝_PRs-Welcome-ff69b4?style=flat-square)](./CONTRIBUTING.md)
-[![Star](https://img.shields.io/badge/⭐_Star-YYC3-ffd700?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration)
-[![Node](https://img.shields.io/badge/Node-18%2B|20-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org)
 [![Stars](https://img.shields.io/github/stars/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Stars)](https://github.com/YYC-Cube/YYC3-Administration)
 
 —— **五高架构** · **五标体系** · **五化转型** · **五维评估** ——
@@ -52,37 +53,69 @@ _High Availability · High Performance · High Security · High Scalability · H
 
 ## 📋 Table of Contents · 目录
 
-- [🇨🇳 中文文档](#-中文文档)
-  - [✨ 项目概述](#-项目概述)
-  - [🧬 架构设计](#-架构设计)
-  - [🛠️ 技术栈](#️-技术栈)
-  - [🚀 快速开始](#-快速开始)
-  - [📁 项目结构](#-项目结构)
-  - [🎯 功能模块](#-功能模块)
-  - [🎨 主题系统](#-主题系统-1)
-  - [🌍 国际化](#-国际化-1)
-  - [📊 性能指标](#-性能指标)
-  - [🔐 安全](#-安全)
-  - [🧪 测试](#-测试)
-  - [🚀 部署](#-部署-1)
-  - [📝 更新日志](#-更新日志)
-  - [🤝 贡献指南](#-贡献指南)
-- [🇬🇧 English](#-english)
-  - [✨ Project Overview](#-project-overview)
-  - [🧬 Architecture](#-architecture)
-  - [🛠️ Tech Stack](#️-tech-stack)
-  - [🚀 Quick Start](#-quick-start-1)
-  - [📁 Project Structure](#-project-structure)
-  - [🎯 Feature Modules](#-feature-modules)
-  - [🎨 Theme System](#-theme-system)
-  - [🌍 Internationalization](#-internationalization)
-  - [📊 Performance](#-performance)
-  - [🔐 Security](#-security)
-  - [🧪 Testing](#-testing)
-  - [🚀 Deployment](#-deployment)
-  - [📝 Changelog](#-changelog)
-  - [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+- [🧊 YYC³ Administration](#-yyc-administration)
+  - [📋 Table of Contents · 目录](#-table-of-contents--目录)
+  - [🇨🇳 中文文档](#-中文文档)
+    - [✨ 项目概述](#-项目概述)
+      - [核心特性](#核心特性)
+    - [🧬 架构设计](#-架构设计)
+      - [五维架构理念](#五维架构理念)
+      - [Provider 层级架构](#provider-层级架构)
+      - [单元自治原则](#单元自治原则)
+      - [CI/CD 流程](#cicd-流程)
+      - [模块依赖关系](#模块依赖关系)
+    - [🛠️ 技术栈](#️-技术栈)
+    - [🚀 快速开始](#-快速开始)
+      - [前置要求](#前置要求)
+      - [安装与启动](#安装与启动)
+      - [常用命令速查](#常用命令速查)
+    - [🔐 环境变量](#-环境变量)
+    - [📁 项目结构](#-项目结构)
+    - [🎯 功能模块](#-功能模块)
+      - [模块全景](#模块全景)
+    - [🎨 主题系统](#-主题系统)
+    - [📱 多端适配](#-多端适配)
+      - [端覆盖矩阵](#端覆盖矩阵)
+      - [响应式断点系统](#响应式断点系统)
+      - [核心模块](#核心模块)
+      - [PWA 配置](#pwa-配置)
+    - [🌍 国际化](#-国际化)
+    - [📊 性能指标](#-性能指标)
+    - [🔐 安全](#-安全)
+    - [🧪 测试](#-测试)
+    - [🚀 部署](#-部署)
+      - [GitHub Pages（当前）](#github-pages当前)
+      - [Docker](#docker)
+      - [Docker Compose](#docker-compose)
+      - [静态部署](#静态部署)
+    - [📝 更新日志](#-更新日志)
+    - [🤝 贡献指南](#-贡献指南)
+  - [🇬🇧 English](#-english)
+    - [✨ Project Overview](#-project-overview)
+      - [Core Features](#core-features)
+    - [🧬 Architecture](#-architecture)
+      - [Provider Hierarchy](#provider-hierarchy)
+      - [Unit Autonomy Principle](#unit-autonomy-principle)
+    - [🛠️ Tech Stack](#️-tech-stack)
+    - [🚀 Quick Start](#-quick-start)
+      - [Quick Commands](#quick-commands)
+    - [🔐 Environment Variables](#-environment-variables)
+    - [📁 Project Structure](#-project-structure)
+    - [🎯 Feature Modules](#-feature-modules)
+    - [🎨 Theme System](#-theme-system)
+    - [📱 Multi-End Adaptation](#-multi-end-adaptation)
+    - [🌍 Internationalization](#-internationalization)
+    - [📊 Performance](#-performance)
+    - [🔐 Security](#-security)
+    - [🧪 Testing](#-testing)
+    - [🚀 Deployment](#-deployment)
+      - [GitHub Pages (Current)](#github-pages-current)
+      - [Docker](#docker-1)
+      - [Docker Compose](#docker-compose-1)
+      - [Static Hosting](#static-hosting)
+    - [📝 Changelog](#-changelog)
+    - [🤝 Contributing](#-contributing)
+  - [📄 License](#-license)
 
 ---
 
@@ -171,6 +204,76 @@ ErrorBoundary
 - **独立生命周期**：按需加载、独立挂载/卸载、不影响其他模块
 - **独立测试**：每个模块可独立测试，不依赖全局环境
 
+#### CI/CD 流程
+
+```mermaid
+flowchart LR
+  A[👨‍💻 Developer Push] --> B[🌿 main branch]
+  B --> C{GitHub Actions}
+  C --> D[CI Quality Gate]
+  C --> E[Deploy Pages]
+  D --> D1[TypeCheck]
+  D --> D2[ESLint]
+  D --> D3[Prettier]
+  D --> D4[Vitest 347 tests]
+  D --> D5[Build]
+  D1 & D2 & D3 & D4 & D5 --> F{All Pass?}
+  F -->|✅| E
+  F -->|❌| G[🚫 Block Merge]
+  E --> E1[Build Production]
+  E --> E2[Upload Artifact]
+  E --> E3[Deploy to GitHub Pages]
+  E3 --> H[🌐 admin.yyc3.vip]
+```
+
+#### 模块依赖关系
+
+```mermaid
+graph TD
+  subgraph Core Layer
+    AC[app-context.tsx]
+    IC[i18n-context.tsx]
+    CC[contacts-context.tsx]
+    AI[ai-model-context.tsx]
+  end
+  subgraph UI Layer
+    CP[cyberpunk-standalone.tsx]
+    NAV[nav-config.tsx]
+    CPalette[command-palette.tsx]
+    EB[error-boundary.tsx]
+  end
+  subgraph Multi-End Layer
+    BP[breakpoints.ts]
+    PF[platform.ts]
+    ST[storage.ts]
+    PA[PlatformAware.tsx]
+    MBN[MobileBottomNav.tsx]
+  end
+  subgraph Infra
+    VT[vite.config.ts - PWA]
+    VS[vitest.config.ts]
+    ESL[eslint.config.js]
+  end
+
+  AC --> CP
+  IC --> CP
+  CC --> CP
+  AI --> CP
+  NAV --> CP
+  CP --> CPalette
+  EB --> CP
+
+  BP --> PA
+  BP --> MBN
+  PF --> PA
+  ST -.-> CP
+  PA --> CP
+  MBN --> CP
+
+  VT --> CP
+  ESL --> CP
+```
+
 ---
 
 ### 🛠️ 技术栈
@@ -188,7 +291,7 @@ ErrorBoundary
 | **图表**   | Recharts               | 2.x    | 响应式、10+ 图表类型             |
 | **编辑器** | Monaco Editor          | latest | 代码编辑、语法高亮、Diff 视图    |
 | **测试**   | Vitest + Playwright    | latest | 单元测试 + E2E 测试              |
-| **包管理** | pnpm                   | ≥8     | 高性能依赖管理                   |
+| **包管理** | pnpm                   | ≥11    | 高性能依赖管理                   |
 
 ---
 
@@ -196,8 +299,8 @@ ErrorBoundary
 
 #### 前置要求
 
-- **Node.js** ≥ 18.x（推荐 20 LTS）
-- **pnpm** ≥ 8.0（`npm install -g pnpm`）
+- **Node.js** ≥ 22.x（pnpm v11 要求 Node ≥22.13）
+- **pnpm** ≥ 11.0（`npm install -g pnpm`）
 - **Git** 任意版本
 
 #### 安装与启动
@@ -277,6 +380,13 @@ src/
 │   └── locales/             # 国际化语言文件
 │       ├── zh.ts            # 中文 500+ 翻译键
 │       └── en.ts            # 英文翻译
+├── multi-end/               # 📱 多端适配模块
+│   ├── breakpoints.ts       # 5 级响应式断点系统
+│   ├── platform.ts          # 平台检测与能力清单
+│   ├── storage.ts           # IndexedDB 离线存储
+│   ├── PlatformAware.tsx    # 条件渲染组件
+│   ├── MobileBottomNav.tsx  # 移动端底部导航栏
+│   └── index.ts             # 统一导出
 ├── types/                   # 全局类型声明
 │   └── lucide-react.d.ts    # Lucide 图标类型
 ├── hooks/                   # 自定义 Hooks
@@ -316,6 +426,48 @@ src/
 - 实时切换，无需刷新
 - 深度定制面板（扫描线、辉光、颗粒感、半透明度等 12+ 可调参数）
 - `Framer Motion` 布局动画支持
+
+---
+
+### 📱 多端适配
+
+> 模块路径: [`src/multi-end/`](./src/multi-end/) · 文档: [`docs/YYC3-M13-MultiEnd-多端适配/`](./docs/YYC3-M13-MultiEnd-多端适配/)
+
+#### 端覆盖矩阵
+
+| 端类型            | 支持方式                 | 断点/场景                   | 状态 |
+| :---------------- | :----------------------- | :-------------------------- | :--- |
+| 🖥️ **PC Web**     | 响应式布局               | `lg ≥1024px` / `xl ≥1280px` | ✅   |
+| 📱 **移动端 H5**  | 响应式 + 底部导航        | `xs <480px` / `sm ≥480px`   | ✅   |
+| 📲 **PWA**        | Service Worker 离线缓存  | 安装至桌面/Home Screen      | ✅   |
+| 💻 **桌面客户端** | PWA 安装 / Electron 桥接 | macOS / Windows / Linux     | ✅   |
+
+#### 响应式断点系统
+
+```typescript
+// src/multi-end/breakpoints.ts
+xs: 0 // 手机竖屏
+sm: 480 // 手机横屏 / 小折叠
+md: 768 // 平板 / 折叠屏展开
+lg: 1024 // 桌面小屏
+xl: 1280 // 桌面大屏
+```
+
+#### 核心模块
+
+| 模块       | 文件                  | 说明                                                             |
+| :--------- | :-------------------- | :--------------------------------------------------------------- |
+| 断点系统   | `breakpoints.ts`      | 5 级断点 + `useBreakpoint` / `useIsMobile` / `useIsTablet` Hooks |
+| 平台检测   | `platform.ts`         | 自动识别 web/pwa/mobile/desktop + 能力清单                       |
+| 离线存储   | `storage.ts`          | IndexedDB 封装，编辑器快照/AI 对话历史持久化                     |
+| 条件渲染   | `PlatformAware.tsx`   | `<PlatformAware>` / `<BreakpointAware>` / `<MobileOnly>`         |
+| 移动端导航 | `MobileBottomNav.tsx` | 触控优化的底部 Tab 栏                                            |
+
+#### PWA 配置
+
+- **Service Worker**: `vite-plugin-pwa` 集成，3 层缓存策略（precache / runtime / offline）
+- **Web App Manifest**: 全平台 Logo 适配（Android/iOS/macOS/watchOS）
+- **离线兜底**: 自动降级至 IndexedDB 缓存数据
 
 ---
 
@@ -585,6 +737,13 @@ src/
 │   └── locales/             # i18n language files
 │       ├── zh.ts            # Chinese (500+ keys)
 │       └── en.ts            # English translation
+├── multi-end/               # 📱 Multi-end adaptation
+│   ├── breakpoints.ts       # 5-level responsive breakpoints
+│   ├── platform.ts          # Platform detection
+│   ├── storage.ts           # IndexedDB offline storage
+│   ├── PlatformAware.tsx    # Conditional render components
+│   ├── MobileBottomNav.tsx  # Mobile bottom navigation
+│   └── index.ts             # Unified exports
 ├── types/                   # Global type declarations
 ├── hooks/                   # Custom hooks
 ├── utils/                   # Utilities
@@ -620,6 +779,23 @@ src/
 
 - Real-time switch, no refresh needed
 - 12+ customizable parameters (scanlines, glow, grain, opacity, etc.)
+
+---
+
+### 📱 Multi-End Adaptation
+
+> Module: [`src/multi-end/`](./src/multi-end/) · Docs: [`docs/YYC3-M13-MultiEnd-多端适配/`](./docs/YYC3-M13-MultiEnd-多端适配/)
+
+| Platform         | Approach                      | Breakpoint                  | Status |
+| :--------------- | :---------------------------- | :-------------------------- | :----- |
+| 🖥️ **PC Web**    | Responsive layout             | `lg ≥1024px` / `xl ≥1280px` | ✅     |
+| 📱 **Mobile H5** | Responsive + bottom nav       | `xs <480px` / `sm ≥480px`   | ✅     |
+| 📲 **PWA**       | Service Worker offline cache  | Installable                 | ✅     |
+| 💻 **Desktop**   | PWA install / Electron bridge | macOS / Windows / Linux     | ✅     |
+
+**Core Modules**: `breakpoints.ts` · `platform.ts` · `storage.ts` (IndexedDB) · `PlatformAware.tsx` · `MobileBottomNav.tsx`
+
+**Tests**: 36 test cases covering all multi-end modules · `pnpm test`
 
 ---
 
