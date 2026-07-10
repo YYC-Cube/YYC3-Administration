@@ -5,15 +5,40 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+import type { Plugin } from 'vite'
+
+// BUILD_ID: 每次部署唯一标识，用于 PWA 缓存失效 & 版本追踪
+// 格式: YYYYMMDDHHmmss（UTC 时间戳）
+const BUILD_ID = new Date()
+  .toISOString()
+  .replace(/[-:T]/g, '')
+  .slice(0, 14)
+
+// 注入 BUILD_ID meta 标签到 HTML，用于运行时版本检测 & 缓存失效
+const buildIdPlugin: Plugin = {
+  name: 'build-id-meta',
+  transformIndexHtml: (html) =>
+    html.replace(
+      '</head>',
+      `  <meta name="yyc3-build-id" content="${BUILD_ID}" />\n  </head>`,
+    ),
+}
+
 export default defineConfig({
   // Custom domain: admin.yyc3.vip — use root-relative paths
   base: '/',
+
+  define: {
+    __BUILD_ID__: JSON.stringify(BUILD_ID),
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
 
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
     react(),
     tailwindcss(),
+    buildIdPlugin,
     // PWA 多端适配 — Service Worker 离线缓存 + 安装引导
     VitePWA({
       registerType: 'autoUpdate',
@@ -35,17 +60,25 @@ export default defineConfig({
         categories: ['business', 'productivity'],
       },
       workbox: {
+        // Clean up old precaches on new SW activation
+        cleanupOutdatedCaches: true,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
         runtimeCaching: [
           {
             urlPattern: /\.(js|css|woff2)$/i,
             handler: 'CacheFirst',
-            options: { cacheName: 'static-assets', expiration: { maxEntries: 200, maxAgeSeconds: 30 * 24 * 60 * 60 } },
+            options: {
+              cacheName: `static-assets-${BUILD_ID}`,
+              expiration: { maxEntries: 200, maxAgeSeconds: 30 * 24 * 60 * 60 },
+            },
           },
           {
             urlPattern: /\.(png|jpg|svg|ico|webp)$/i,
             handler: 'CacheFirst',
-            options: { cacheName: 'image-cache', expiration: { maxEntries: 100, maxAgeSeconds: 60 * 24 * 60 * 60 } },
+            options: {
+              cacheName: `image-cache-${BUILD_ID}`,
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 24 * 60 * 60 },
+            },
           },
           {
             urlPattern: /^\/api\//i,

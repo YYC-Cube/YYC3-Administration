@@ -1,7 +1,24 @@
-// Type declarations for lucide-react v0.487.0
-// The package ships without bundled type definitions, so we declare them here.
-// Based on the dynamic.d.ts shipped with the package.
+/**
+ * YYC³ Administration — 全局类型声明（统一入口）
+ *
+ * 本文件是所有类型声明模块的唯一入口，统一管理：
+ *   1. Vite 客户端类型
+ *   2. lucide-react 图标类型
+ *   3. 全局构建时元数据
+ *   4. 未来扩展的类型声明
+ *
+ * 禁止在项目其他位置使用 declare module / declare global / declare namespace。
+ * 所有声明统一集中于此，确保类型系统的一致性。
+ */
 
+// ── Vite 客户端类型 ──────────────────────────────────────────────
+/// <reference types="vite/client" />
+
+// ── 构建时注入元数据 ─────────────────────────────────────────────
+declare const __BUILD_ID__: string
+declare const __BUILD_TIME__: string
+
+// ── lucide-react 图标类型 ────────────────────────────────────────
 import 'lucide-react'
 
 declare module 'lucide-react' {
@@ -19,7 +36,7 @@ declare module 'lucide-react' {
     Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
   >
 
-  // --- Icons used across the project ---
+  // ── 项目使用的图标 ──────────────────────────────────────────────
   export const Activity: LucideIcon
   export const AlertCircle: LucideIcon
   export const ArrowLeft: LucideIcon
@@ -96,6 +113,5 @@ declare module 'lucide-react' {
   export const XIcon: LucideIcon
   export const Zap: LucideIcon
 
-  // Dynamic icon creation
   export function createLucideIcon(name: string, iconNode: unknown): LucideIcon
 }
