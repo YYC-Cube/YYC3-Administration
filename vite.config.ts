@@ -84,75 +84,15 @@ export default defineConfig({
   build: {
     // Add cache busting
     manifest: true,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
+        // Single vendor chunk — avoids circular dependency issues caused by
+        // fine-grained manualChunks splitting (vendor-other ↔ vendor-react cycle).
+        // Rollup automatically resolves import order within a single chunk.
         manualChunks(id: string) {
-          // React core + Recharts (must be in same chunk to avoid forwardRef load-order issues)
-          if (
-            id.includes('node_modules/react/') ||
-            id.includes('node_modules/react-dom/') ||
-            id.includes('node_modules/scheduler/') ||
-            id.includes('node_modules/recharts/') ||
-            id.includes('node_modules/d3-') ||
-            id.includes('node_modules/d3/')
-          ) {
-            return 'vendor-react'
-          }
-          // Motion/animation
-          if (id.includes('node_modules/motion/') || id.includes('node_modules/framer-motion/')) {
-            return 'vendor-motion'
-          }
-          // Monaco editor
-          if (id.includes('node_modules/monaco-editor') || id.includes('node_modules/@monaco-editor')) {
-            return 'vendor-monaco'
-          }
-          // Lucide icons
-          if (id.includes('node_modules/lucide-react')) {
-            return 'vendor-lucide'
-          }
-          // Markdown / remark / rehype / unified
-          if (id.includes('node_modules/react-markdown') || id.includes('node_modules/remark-') || id.includes('node_modules/rehype-') || id.includes('node_modules/unified') || id.includes('node_modules/hast') || id.includes('node_modules/mdast') || id.includes('node_modules/lowlight') || id.includes('node_modules/highlight')) {
-            return 'vendor-markdown'
-          }
-          // Radix UI primitives
-          if (id.includes('node_modules/@radix-ui/')) {
-            return 'vendor-radix'
-          }
-          // React Router
-          if (id.includes('node_modules/react-router') || id.includes('node_modules/@remix-run')) {
-            return 'vendor-router'
-          }
-          // React DnD
-          if (id.includes('node_modules/react-dnd')) {
-            return 'vendor-dnd'
-          }
-          // Date handling
-          if (id.includes('node_modules/date-fns') || id.includes('node_modules/dayjs')) {
-            return 'vendor-dates'
-          }
-          // Zustand state management
-          if (id.includes('node_modules/zustand')) {
-            return 'vendor-state'
-          }
-          // Forms
-          if (id.includes('node_modules/react-hook-form') || id.includes('node_modules/@hookform')) {
-            return 'vendor-forms'
-          }
-          // UI utility packages
-          if (id.includes('node_modules/cmdk') || id.includes('node_modules/sonner') || id.includes('node_modules/vaul') || id.includes('node_modules/embla-') || id.includes('node_modules/input-otp')) {
-            return 'vendor-ui-utils'
-          }
-          // Popper / positioning
-          if (id.includes('node_modules/react-popper') || id.includes('node_modules/@popperjs')) {
-            return 'vendor-popper'
-          }
-          // Carousel / slider
-          if (id.includes('node_modules/react-slick') || id.includes('node_modules/slick-')) {
-            return 'vendor-slider'
-          }
-          // Other node_modules → shared vendor chunk
           if (id.includes('node_modules')) {
-            return 'vendor-other'
+            return 'vendor'
           }
         },
         // Add hash to filenames for cache busting
