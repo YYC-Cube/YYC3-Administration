@@ -301,9 +301,10 @@ export const YYC3_THEME_PRESETS: Record<YYC3ThemePreset, YYC3ThemeConfig> = {
 
     typography: {
       fontFamily: {
-        sans: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-        mono: "'JetBrains Mono', 'Fira Code', monospace",
-        display: "'Inter', sans-serif",
+        sans: "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Roboto, sans-serif",
+        mono: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace",
+        display:
+          "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
       },
       fontSize: {
         xs: '0.75rem',

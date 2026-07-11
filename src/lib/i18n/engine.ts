@@ -84,8 +84,10 @@ export class I18nEngine {
     this.missingKeyHandler = config.missingKeyHandler
     this.debugMode = config.debug ?? false
 
-    // Load initial locale
-    this.loadInitialLocale()
+    // Load initial locale — only auto-detect if no explicit locale provided
+    if (!config.locale) {
+      this.loadInitialLocale()
+    }
 
     if (this.debugMode) {
       logger.info('🌐 I18n Engine v2.0 Initialized')
