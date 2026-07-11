@@ -78,6 +78,74 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* ============================================
+   YYC³ Cyberpunk Theme CSS Variables
+   ============================================ */
+[data-theme-mode='cyberpunk'] {
+  --background: #0a0a0a;
+  --foreground: rgba(255, 255, 255, 0.9);
+  --card: rgba(10, 10, 10, 0.75);
+  --card-foreground: rgba(255, 255, 255, 0.9);
+  --popover: rgba(10, 10, 10, 0.95);
+  --popover-foreground: rgba(255, 255, 255, 0.9);
+  --primary: #00f0ff;
+  --primary-foreground: #0a0a0a;
+  --secondary: rgba(0, 240, 255, 0.1);
+  --secondary-foreground: rgba(255, 255, 255, 0.9);
+  --muted: rgba(0, 240, 255, 0.08);
+  --muted-foreground: rgba(255, 255, 255, 0.5);
+  --accent: rgba(0, 255, 204, 0.1);
+  --accent-foreground: #00ffcc;
+  --destructive: #ff0040;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 240, 255, 0.15);
+  --input: rgba(10, 10, 10, 0.6);
+  --input-background: rgba(10, 10, 10, 0.6);
+  --ring: #00f0ff;
+  --sidebar: rgba(10, 10, 10, 0.88);
+  --sidebar-foreground: rgba(255, 255, 255, 0.9);
+  --sidebar-primary: #00f0ff;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: rgba(0, 240, 255, 0.1);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.9);
+  --sidebar-border: rgba(0, 240, 255, 0.08);
+  --sidebar-ring: #00f0ff;
+}
+
+/* ============================================
+   YYC³ Liquid Glass Theme CSS Variables
+   ============================================ */
+[data-theme-mode='liquidGlass'] {
+  --background: #0a0f0a;
+  --foreground: rgba(255, 255, 255, 0.95);
+  --card: rgba(255, 255, 255, 0.08);
+  --card-foreground: rgba(255, 255, 255, 0.95);
+  --popover: rgba(255, 255, 255, 0.08);
+  --popover-foreground: rgba(255, 255, 255, 0.95);
+  --primary: #00ff87;
+  --primary-foreground: #0a0f0a;
+  --secondary: rgba(0, 255, 135, 0.1);
+  --secondary-foreground: rgba(255, 255, 255, 0.95);
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: rgba(255, 255, 255, 0.6);
+  --accent: rgba(0, 255, 170, 0.1);
+  --accent-foreground: #00ffaa;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.05);
+  --input-background: rgba(255, 255, 255, 0.05);
+  --ring: #00ff87;
+  --sidebar: rgba(10, 15, 10, 0.75);
+  --sidebar-foreground: rgba(255, 255, 255, 0.95);
+  --sidebar-primary: #00ff87;
+  --sidebar-primary-foreground: #0a0f0a;
+  --sidebar-accent: rgba(255, 255, 255, 0.05);
+  --sidebar-accent-foreground: rgba(255, 255, 255, 0.95);
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  --sidebar-ring: #00ff87;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

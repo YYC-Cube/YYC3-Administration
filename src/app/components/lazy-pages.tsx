@@ -40,10 +40,10 @@ function PageLoadingFallback() {
 // Non-core pages — lazy loaded below
 
 const LazyCLMPage = lazy(() =>
-  import('./contact-book').then((m) => ({ default: m.ContactBookPage })),
+  import('./clm-page').then((m) => ({ default: m.CLMPage })),
 )
 const LazyAICallPage = lazy(() =>
-  import('./customer-care-page').then((m) => ({ default: m.CustomerCarePage })),
+  import('./ai-call-page').then((m) => ({ default: m.AICallPage })),
 )
 const LazyCustomerCarePage = lazy(() =>
   import('./customer-care-page').then((m) => ({ default: m.CustomerCarePage })),
@@ -58,7 +58,7 @@ const LazyAIToolsPage = lazy(() =>
   import('./ai-tools-page').then((m) => ({ default: m.AIToolsPage })),
 )
 const LazyWorkflowPage = lazy(() =>
-  import('./campaign-execution-page').then((m) => ({ default: m.CampaignExecutionPage })),
+  import('./workflow-page').then((m) => ({ default: m.WorkflowPage })),
 )
 const LazyActivityLogPage = lazy(() =>
   import('./activity-log').then((m) => ({ default: m.ActivityLogPage })),

@@ -116,8 +116,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'copy',
     type: 'copy',
     target: 'code',
-    title: 'Copy Code',
-    description: 'Copy selected code to clipboard',
+    title: 'quickActions.copy',
+    description: 'quickActions.copyDesc',
     icon: Copy,
     color: '#00f0ff',
     shortcut: 'Ctrl+C',
@@ -128,8 +128,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'copyMd',
     type: 'copyMarkdown',
     target: 'code',
-    title: 'Copy as Markdown',
-    description: 'Copy code as Markdown code block',
+    title: 'quickActions.copyMd',
+    description: 'quickActions.copyMdDesc',
     icon: Code,
     color: '#00d4ff',
     shortcut: 'Ctrl+Shift+M',
@@ -140,8 +140,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'copyHtml',
     type: 'copyHTML',
     target: 'code',
-    title: 'Copy as HTML',
-    description: 'Copy code as HTML <pre><code>',
+    title: 'quickActions.copyHtml',
+    description: 'quickActions.copyHtmlDesc',
     icon: Braces,
     color: '#00ffcc',
     shortcut: 'Ctrl+Shift+H',
@@ -152,8 +152,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'replace',
     type: 'replace',
     target: 'code',
-    title: 'AI Replace',
-    description: 'AI-powered intelligent code replacement',
+    title: 'quickActions.replace',
+    description: 'quickActions.replaceDesc',
     icon: Replace,
     color: '#8b5cf6',
     requiresAI: true,
@@ -163,8 +163,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'refactor',
     type: 'refactor',
     target: 'code',
-    title: 'Refactor',
-    description: 'AI code refactoring for better quality',
+    title: 'quickActions.refactor',
+    description: 'quickActions.refactorDesc',
     icon: RefreshCw,
     color: '#22c55e',
     requiresAI: true,
@@ -174,8 +174,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'optimize',
     type: 'optimize',
     target: 'code',
-    title: 'Optimize',
-    description: 'Performance & readability optimization',
+    title: 'quickActions.optimize',
+    description: 'quickActions.optimizeDesc',
     icon: Zap,
     color: '#eab308',
     requiresAI: true,
@@ -185,8 +185,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'format',
     type: 'format',
     target: 'code',
-    title: 'Format Code',
-    description: 'Auto-format code with best practices',
+    title: 'quickActions.format',
+    description: 'quickActions.formatDesc',
     icon: AlignLeft,
     color: '#06b6d4',
     shortcut: 'Ctrl+Shift+F',
@@ -197,8 +197,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'testGen',
     type: 'testGenerate',
     target: 'code',
-    title: 'Generate Tests',
-    description: 'Generate comprehensive test cases',
+    title: 'quickActions.testGen',
+    description: 'quickActions.testGenDesc',
     icon: TestTube,
     color: '#f97316',
     requiresAI: true,
@@ -208,8 +208,8 @@ const CODE_ACTIONS: QuickAction[] = [
     id: 'docGen',
     type: 'docGenerate',
     target: 'code',
-    title: 'Generate Docs',
-    description: 'Generate code documentation',
+    title: 'quickActions.docGen',
+    description: 'quickActions.docGenDesc',
     icon: BookOpen,
     color: '#ec4899',
     requiresAI: true,
@@ -222,8 +222,8 @@ const DOCUMENT_ACTIONS: QuickAction[] = [
     id: 'formatDoc',
     type: 'formatDoc',
     target: 'document',
-    title: 'Format Document',
-    description: 'AI-powered document formatting',
+    title: 'quickActions.formatDoc',
+    description: 'quickActions.formatDocDesc',
     icon: AlignLeft,
     color: '#8b5cf6',
     requiresAI: true,
@@ -233,8 +233,8 @@ const DOCUMENT_ACTIONS: QuickAction[] = [
     id: 'convertDoc',
     type: 'convertDoc',
     target: 'document',
-    title: 'Convert Format',
-    description: 'Convert between document formats',
+    title: 'quickActions.convertDoc',
+    description: 'quickActions.convertDocDesc',
     icon: ArrowRightLeft,
     color: '#3b82f6',
     requiresAI: true,
@@ -244,8 +244,8 @@ const DOCUMENT_ACTIONS: QuickAction[] = [
     id: 'exportDoc',
     type: 'exportDoc',
     target: 'document',
-    title: 'Export Document',
-    description: 'Export as PDF, HTML, TXT, Markdown',
+    title: 'quickActions.exportDoc',
+    description: 'quickActions.exportDocDesc',
     icon: FileDown,
     color: '#22c55e',
     requiresAI: false,
@@ -255,8 +255,8 @@ const DOCUMENT_ACTIONS: QuickAction[] = [
     id: 'summarizeDoc',
     type: 'summarizeDoc',
     target: 'document',
-    title: 'Summarize',
-    description: 'AI document summarization',
+    title: 'quickActions.summarize',
+    description: 'quickActions.summarizeDesc',
     icon: ListTree,
     color: '#f97316',
     requiresAI: true,
@@ -269,8 +269,8 @@ const TEXT_ACTIONS: QuickAction[] = [
     id: 'translate',
     type: 'translate',
     target: 'text',
-    title: 'Translate',
-    description: 'AI multi-language translation',
+    title: 'quickActions.translate',
+    description: 'quickActions.translateDesc',
     icon: Languages,
     color: '#14b8a6',
     requiresAI: true,
@@ -280,8 +280,8 @@ const TEXT_ACTIONS: QuickAction[] = [
     id: 'rewrite',
     type: 'rewrite',
     target: 'text',
-    title: 'Rewrite',
-    description: 'AI text rewriting for clarity',
+    title: 'quickActions.rewrite',
+    description: 'quickActions.rewriteDesc',
     icon: PenTool,
     color: '#8b5cf6',
     requiresAI: true,
@@ -291,8 +291,8 @@ const TEXT_ACTIONS: QuickAction[] = [
     id: 'expand',
     type: 'expand',
     target: 'text',
-    title: 'Expand Text',
-    description: 'Expand with details & examples',
+    title: 'quickActions.expand',
+    description: 'quickActions.expandDesc',
     icon: Expand,
     color: '#3b82f6',
     requiresAI: true,
@@ -302,8 +302,8 @@ const TEXT_ACTIONS: QuickAction[] = [
     id: 'correct',
     type: 'correct',
     target: 'text',
-    title: 'Correct Text',
-    description: 'Fix grammar, spelling & punctuation',
+    title: 'quickActions.correct',
+    description: 'quickActions.correctDesc',
     icon: SpellCheck,
     color: '#22c55e',
     requiresAI: true,
@@ -316,8 +316,8 @@ const AI_ACTIONS: QuickAction[] = [
     id: 'explain',
     type: 'explain',
     target: 'ai',
-    title: 'Explain Code',
-    description: 'AI code explanation with examples',
+    title: 'quickActions.explain',
+    description: 'quickActions.explainDesc',
     icon: Eye,
     color: '#00f0ff',
     requiresAI: true,
@@ -327,8 +327,8 @@ const AI_ACTIONS: QuickAction[] = [
     id: 'comment',
     type: 'comment',
     target: 'ai',
-    title: 'Generate Comments',
-    description: 'Add comprehensive code comments',
+    title: 'quickActions.comments',
+    description: 'quickActions.commentsDesc',
     icon: MessageSquare,
     color: '#22c55e',
     requiresAI: true,
@@ -338,8 +338,8 @@ const AI_ACTIONS: QuickAction[] = [
     id: 'findIssues',
     type: 'findIssues',
     target: 'ai',
-    title: 'Find Issues',
-    description: 'Detect bugs, security & performance issues',
+    title: 'quickActions.findIssues',
+    description: 'quickActions.findIssuesDesc',
     icon: AlertTriangle,
     color: '#ef4444',
     requiresAI: true,
@@ -349,13 +349,13 @@ const AI_ACTIONS: QuickAction[] = [
 
 type TabId = 'code' | 'document' | 'text' | 'ai' | 'clipboard' | 'context'
 
-const TABS: { id: TabId; label: string; labelZh: string; icon: typeof Code; color: string }[] = [
-  { id: 'code', label: 'Code Actions', labelZh: 'Code Actions', icon: Terminal, color: '#00f0ff' },
-  { id: 'document', label: 'Document', labelZh: 'Document', icon: FileText, color: '#8b5cf6' },
-  { id: 'text', label: 'Text', labelZh: 'Text', icon: Type, color: '#14b8a6' },
-  { id: 'ai', label: 'AI Assist', labelZh: 'AI Assist', icon: Brain, color: '#f97316' },
-  { id: 'clipboard', label: 'Clipboard', labelZh: 'Clipboard', icon: Clipboard, color: '#22c55e' },
-  { id: 'context', label: 'Context', labelZh: 'Context', icon: Sparkles, color: '#ec4899' },
+const TABS: { id: TabId; labelKey: string; icon: typeof Code; color: string }[] = [
+  { id: 'code', labelKey: 'quickActions.code', icon: Terminal, color: '#00f0ff' },
+  { id: 'document', labelKey: 'quickActions.document', icon: FileText, color: '#8b5cf6' },
+  { id: 'text', labelKey: 'quickActions.text', icon: Type, color: '#14b8a6' },
+  { id: 'ai', labelKey: 'quickActions.aiAssist', icon: Brain, color: '#f97316' },
+  { id: 'clipboard', labelKey: 'quickActions.clipboard', icon: Clipboard, color: '#22c55e' },
+  { id: 'context', labelKey: 'quickActions.context', icon: Sparkles, color: '#ec4899' },
 ]
 
 // ==========================================
@@ -436,36 +436,36 @@ const MOCK_CLIPBOARD: ClipboardItem[] = [
 const CONTEXT_SUGGESTIONS = [
   {
     id: 'cs1',
-    action: 'Refactor to use custom hook',
-    reason: 'Detected repeated state pattern',
+    actionKey: 'quickActions.suggestion1',
+    reasonKey: 'quickActions.suggestion1Reason',
     confidence: 92,
     color: '#22c55e',
   },
   {
     id: 'cs2',
-    action: 'Add error boundary wrapper',
-    reason: 'Component lacks error handling',
+    actionKey: 'quickActions.suggestion2',
+    reasonKey: 'quickActions.suggestion2Reason',
     confidence: 88,
     color: '#f97316',
   },
   {
     id: 'cs3',
-    action: 'Optimize re-renders with memo',
-    reason: 'Props rarely change',
+    actionKey: 'quickActions.suggestion3',
+    reasonKey: 'quickActions.suggestion3Reason',
     confidence: 85,
     color: '#8b5cf6',
   },
   {
     id: 'cs4',
-    action: 'Extract constants to module scope',
-    reason: 'Constants recreated each render',
+    actionKey: 'quickActions.suggestion4',
+    reasonKey: 'quickActions.suggestion4Reason',
     confidence: 78,
     color: '#06b6d4',
   },
   {
     id: 'cs5',
-    action: 'Add TypeScript strict types',
-    reason: "Some implicit 'any' detected",
+    actionKey: 'quickActions.suggestion5',
+    reasonKey: 'quickActions.suggestion5Reason',
     confidence: 95,
     color: '#ef4444',
   },
@@ -484,6 +484,7 @@ function ActionCard({
   tc: ReturnType<typeof useThemeColors>
   onExecute: (action: QuickAction) => void
 }) {
+  const { t } = useI18n()
   const [status, setStatus] = useState<ActionStatus>('idle')
   const Icon = action.icon
 
@@ -559,7 +560,7 @@ function ActionCard({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
               <span className="text-sm" style={{ color: tc.textPrimary }}>
-                {action.title}
+                {t(action.title)}
               </span>
               {action.requiresAI && (
                 <span
@@ -575,7 +576,7 @@ function ActionCard({
               )}
             </div>
             <p className="text-[11px] truncate" style={{ color: tc.textMuted }}>
-              {action.description}
+              {t(action.description)}
             </p>
             {action.shortcut && (
               <span
@@ -600,7 +601,13 @@ function ActionCard({
   )
 }
 
-function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function ClipboardPanel({
+  tc,
+  t,
+}: {
+  tc: ReturnType<typeof useThemeColors>
+  t: ReturnType<typeof useI18n>['t']
+}) {
   const [items, setItems] = useState(MOCK_CLIPBOARD)
   const [filter, setFilter] = useState<'all' | 'code' | 'text' | 'html'>('all')
 
@@ -608,7 +615,7 @@ function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
   const formatTime = (ts: number) => {
     const diff = Date.now() - ts
-    if (diff < 60000) return 'just now'
+    if (diff < 60000) return t('quickActions.justNow')
     if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`
     return `${Math.floor(diff / 3600000)}h ago`
   }
@@ -622,6 +629,13 @@ function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   }, [])
 
   const typeColors: Record<string, string> = { code: '#00f0ff', text: '#22c55e', html: '#f97316' }
+
+  const filterLabels: Record<string, string> = {
+    all: t('quickActions.clipboard.all'),
+    code: t('quickActions.clipboard.code'),
+    text: t('quickActions.clipboard.text'),
+    html: t('quickActions.clipboard.html'),
+  }
 
   return (
     <div className="space-y-4">
@@ -638,7 +652,7 @@ function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               color: filter === f ? tc.textPrimary : tc.textMuted,
             }}
           >
-            {f === 'all' ? 'All' : f.toUpperCase()}
+            {filterLabels[f]}
             <span className="ml-1 opacity-50">
               ({f === 'all' ? items.length : items.filter((i) => i.type === f).length})
             </span>
@@ -672,7 +686,7 @@ function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                       border: `1px solid ${typeColors[item.type]}25`,
                     }}
                   >
-                    {item.type}
+                    {filterLabels[item.type]}
                   </span>
                   {item.language && (
                     <span className="text-[9px]" style={{ color: tc.textMuted }}>
@@ -711,14 +725,14 @@ function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                   className="text-[10px] px-2 py-1 rounded-md border transition-colors"
                   style={{ borderColor: 'rgba(255,255,255,0.08)', color: tc.textMuted }}
                 >
-                  <Copy className="w-3 h-3 inline mr-1" /> Copy
+                  <Copy className="w-3 h-3 inline mr-1" /> {t('quickActions.clipboard.copy')}
                 </button>
                 <button
                   onClick={() => handleDelete(item.id)}
                   className="text-[10px] px-2 py-1 rounded-md border transition-colors"
                   style={{ borderColor: 'rgba(255,255,255,0.08)', color: '#ef4444' }}
                 >
-                  <Trash2 className="w-3 h-3 inline mr-1" /> Remove
+                  <Trash2 className="w-3 h-3 inline mr-1" /> {t('quickActions.clipboard.remove')}
                 </button>
               </div>
             </motion.div>
@@ -727,7 +741,7 @@ function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         {filtered.length === 0 && (
           <div className="text-center py-8" style={{ color: tc.textMuted }}>
             <Clipboard className="w-8 h-8 mx-auto mb-2 opacity-30" />
-            <p className="text-sm">No clipboard items</p>
+            <p className="text-sm">{t('quickActions.clipboard.empty')}</p>
           </div>
         )}
       </div>
@@ -735,7 +749,13 @@ function ClipboardPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   )
 }
 
-function ContextPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function ContextPanel({
+  tc,
+  t,
+}: {
+  tc: ReturnType<typeof useThemeColors>
+  t: ReturnType<typeof useI18n>['t']
+}) {
   return (
     <div className="space-y-4">
       {/* Context-aware header */}
@@ -749,12 +769,11 @@ function ContextPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="w-4 h-4" style={{ color: '#ec4899' }} />
           <span className="text-sm" style={{ color: tc.textPrimary }}>
-            Context Analysis
+            {t('quickActions.context.title')}
           </span>
         </div>
         <p className="text-[11px]" style={{ color: tc.textMuted }}>
-          AI analyzes your current selection and project context to suggest the most relevant
-          actions.
+          {t('quickActions.context.desc')}
         </p>
       </div>
 
@@ -764,31 +783,31 @@ function ContextPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         style={{ background: tc.bgCard, borderColor: tc.borderDefault }}
       >
         <p className="text-[10px] uppercase tracking-wider mb-3" style={{ color: tc.textMuted }}>
-          Current Context
+          {t('quickActions.context.current')}
         </p>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <FileCode className="w-4 h-4" style={{ color: '#00f0ff' }} />
             <span className="text-[12px]" style={{ color: tc.textSecondary }}>
-              UserCard.tsx
+              {t('quickActions.context.file')}
             </span>
             <span
               className="text-[10px] px-1.5 py-0.5 rounded"
               style={{ background: 'rgba(0,240,255,0.1)', color: '#00f0ff' }}
             >
-              TypeScript React
+              {t('quickActions.context.language')}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <Hash className="w-4 h-4" style={{ color: '#22c55e' }} />
             <span className="text-[12px]" style={{ color: tc.textSecondary }}>
-              Lines 1-28 selected (28 lines)
+              {t('quickActions.context.selected')}
             </span>
           </div>
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4" style={{ color: '#8b5cf6' }} />
             <span className="text-[12px]" style={{ color: tc.textSecondary }}>
-              Project: YYC3-AI-Terminal
+              {t('quickActions.context.project')}
             </span>
           </div>
         </div>
@@ -797,7 +816,7 @@ function ContextPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* AI Suggestions */}
       <div>
         <p className="text-[10px] uppercase tracking-wider mb-3" style={{ color: tc.textMuted }}>
-          AI Suggestions
+          {t('quickActions.context.suggestions')}
         </p>
         <div className="space-y-2">
           {CONTEXT_SUGGESTIONS.map((s, idx) => (
@@ -821,11 +840,11 @@ function ContextPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                   <div className="flex items-center gap-2 mb-1">
                     <Play className="w-3 h-3" style={{ color: s.color }} />
                     <span className="text-[12px]" style={{ color: tc.textPrimary }}>
-                      {s.action}
+                      {t(s.actionKey)}
                     </span>
                   </div>
                   <p className="text-[10px]" style={{ color: tc.textMuted }}>
-                    {s.reason}
+                    {t(s.reasonKey)}
                   </p>
                 </div>
                 <div className="flex flex-col items-end gap-1">
@@ -866,7 +885,13 @@ function ContextPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   )
 }
 
-function CodePreviewPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function CodePreviewPanel({
+  tc,
+  t,
+}: {
+  tc: ReturnType<typeof useThemeColors>
+  t: ReturnType<typeof useI18n>['t']
+}) {
   const [selectedLang] = useState('typescript')
 
   return (
@@ -882,7 +907,7 @@ function CodePreviewPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         <div className="flex items-center gap-2">
           <FileCode className="w-4 h-4" style={{ color: '#00f0ff' }} />
           <span className="text-[11px]" style={{ color: tc.textSecondary }}>
-            UserCard.tsx
+            {t('quickActions.context.file')}
           </span>
           <span
             className="text-[9px] px-1.5 py-0.5 rounded"
@@ -892,7 +917,7 @@ function CodePreviewPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
           </span>
         </div>
         <span className="text-[9px]" style={{ color: tc.textMuted }}>
-          28 lines selected
+          {t('quickActions.codePreview.selected')}
         </span>
       </div>
       {/* Code */}
@@ -924,12 +949,23 @@ function CodePreviewPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 // Stats Bar
 // ==========================================
 
-function StatsBar({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+function StatsBar({
+  tc,
+  t,
+}: {
+  tc: ReturnType<typeof useThemeColors>
+  t: ReturnType<typeof useI18n>['t']
+}) {
   const stats = [
-    { label: 'Actions Today', value: '47', icon: Zap, color: '#00f0ff' },
-    { label: 'AI Calls', value: '23', icon: Brain, color: '#8b5cf6' },
-    { label: 'Clipboard Items', value: '12', icon: Clipboard, color: '#22c55e' },
-    { label: 'Time Saved', value: '2.4h', icon: Clock, color: '#f97316' },
+    { label: t('quickActions.stats.actionsToday'), value: '47', icon: Zap, color: '#00f0ff' },
+    { label: t('quickActions.stats.aiCalls'), value: '23', icon: Brain, color: '#8b5cf6' },
+    {
+      label: t('quickActions.stats.clipboardItems'),
+      value: '12',
+      icon: Clipboard,
+      color: '#22c55e',
+    },
+    { label: t('quickActions.stats.timeSaved'), value: '2.4h', icon: Clock, color: '#f97316' },
   ]
 
   return (
@@ -976,7 +1012,7 @@ function StatsBar({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
 export function QuickActionsPage() {
   const tc = useThemeColors()
-  const { t: _t } = useI18n()
+  const { t } = useI18n()
   const [activeTab, setActiveTab] = useState<TabId>('code')
   const [searchQuery, setSearchQuery] = useState('')
   const [actionLog, setActionLog] = useState<
@@ -1037,10 +1073,10 @@ export function QuickActionsPage() {
               </div>
               <div>
                 <h1 className="text-xl" style={{ color: tc.textPrimary }}>
-                  AI Quick Actions
+                  {t('quickActions.headerTitle')}
                 </h1>
                 <p className="text-[11px]" style={{ color: tc.textMuted }}>
-                  Smart one-click operations for code, documents & text
+                  {t('quickActions.headerSubtitle')}
                 </p>
               </div>
             </div>
@@ -1053,7 +1089,7 @@ export function QuickActionsPage() {
             />
             <input
               type="text"
-              placeholder="Search actions..."
+              placeholder={t('quickActions.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-4 py-2 text-[12px] rounded-xl border outline-none transition-all duration-200"
@@ -1076,7 +1112,7 @@ export function QuickActionsPage() {
       </motion.div>
 
       {/* Stats */}
-      <StatsBar tc={tc} />
+      <StatsBar tc={tc} t={t} />
 
       {/* Tab Navigation */}
       <div
@@ -1103,7 +1139,7 @@ export function QuickActionsPage() {
               }}
             >
               <Icon className="w-3.5 h-3.5" />
-              {tab.label}
+              {t(tab.labelKey)}
             </button>
           )
         })}
@@ -1121,7 +1157,7 @@ export function QuickActionsPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
               >
-                <ClipboardPanel tc={tc} />
+                <ClipboardPanel tc={tc} t={t} />
               </motion.div>
             ) : activeTab === 'context' ? (
               <motion.div
@@ -1130,7 +1166,7 @@ export function QuickActionsPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
               >
-                <ContextPanel tc={tc} />
+                <ContextPanel tc={tc} t={t} />
               </motion.div>
             ) : (
               <motion.div
@@ -1147,7 +1183,7 @@ export function QuickActionsPage() {
                 {filteredActions.length === 0 && (
                   <div className="text-center py-12" style={{ color: tc.textMuted }}>
                     <Search className="w-8 h-8 mx-auto mb-2 opacity-30" />
-                    <p className="text-sm">No actions match your search</p>
+                    <p className="text-sm">{t('quickActions.noResults')}</p>
                   </div>
                 )}
               </motion.div>
@@ -1158,7 +1194,7 @@ export function QuickActionsPage() {
         {/* Right: Code Preview + Action Log */}
         <div className="space-y-4">
           {/* Code Preview */}
-          <CodePreviewPanel tc={tc} />
+          <CodePreviewPanel tc={tc} t={t} />
 
           {/* Recent Action Log */}
           <div
@@ -1169,17 +1205,17 @@ export function QuickActionsPage() {
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" style={{ color: tc.textMuted }} />
                 <span className="text-[11px]" style={{ color: tc.textSecondary }}>
-                  Recent Actions
+                  {t('quickActions.actionLog.title')}
                 </span>
               </div>
               <span className="text-[9px]" style={{ color: tc.textMuted }}>
-                {actionLog.length} items
+                {actionLog.length} {t('quickActions.actionLog.items')}
               </span>
             </div>
             <div className="space-y-1.5 max-h-40 overflow-y-auto">
               {actionLog.length === 0 ? (
                 <p className="text-[11px] text-center py-4" style={{ color: tc.textMuted }}>
-                  Execute an action to see history
+                  {t('quickActions.actionLog.empty')}
                 </p>
               ) : (
                 actionLog.map((log) => (
@@ -1191,7 +1227,7 @@ export function QuickActionsPage() {
                     <div className="flex items-center gap-2">
                       <Check className="w-3 h-3" style={{ color: '#22c55e' }} />
                       <span className="text-[11px]" style={{ color: tc.textSecondary }}>
-                        {log.title}
+                        {t(log.title)}
                       </span>
                     </div>
                     <span className="text-[9px]" style={{ color: tc.textMuted }}>
@@ -1218,15 +1254,15 @@ export function QuickActionsPage() {
             <div className="flex items-center gap-2 mb-2">
               <Sparkles className="w-4 h-4" style={{ color: '#00f0ff' }} />
               <span className="text-[11px]" style={{ color: tc.textPrimary }}>
-                Pro Tips
+                {t('quickActions.proTips.title')}
               </span>
             </div>
             <ul className="space-y-1.5">
               {[
-                'Use Ctrl+Shift+A to open Quick Actions',
-                'AI actions analyze context automatically',
-                'Clipboard history stores last 50 items',
-                'Chain multiple actions for batch processing',
+                t('quickActions.proTips.tip1'),
+                t('quickActions.proTips.tip2'),
+                t('quickActions.proTips.tip3'),
+                t('quickActions.proTips.tip4'),
               ].map((tip, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <ChevronRight className="w-3 h-3 mt-0.5 shrink-0" style={{ color: '#00f0ff' }} />

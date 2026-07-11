@@ -10,20 +10,9 @@
  * @tags auth,context,security,ghost-mode
  */
 
-import {
-  Eye,
-  EyeOff,
-  Ghost,
-  KeyRound,
-  Layers,
-  Loader2,
-  LogIn,
-  Sparkles,
-  UserPlus,
-  X,
-} from 'lucide-react'
+import { Eye, EyeOff, Ghost, KeyRound, Loader2, LogIn, UserPlus, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useAuthStore } from '../../stores/useAuthStore'
 
@@ -41,10 +30,10 @@ const GHOST_MODE_ENABLED =
   (import.meta as unknown as Record<string, Record<string, string>>).env?.VITE_GHOST_MODE === 'true'
 
 const GHOST_ACCOUNTS = [
-  { label: '管理员 Admin', username: 'admin', role: 'admin' },
-  { label: '经理 Manager', username: 'manager', role: 'manager' },
-  { label: '客服 Agent', username: 'agent', role: 'agent' },
-  { label: '观察者 Viewer', username: 'viewer', role: 'viewer' },
+  { label: '管理员 Admin', username: 'admin', role: 'admin', password: 'admin123' },
+  { label: '经理 Manager', username: 'manager', role: 'manager', password: 'ghost-manager' },
+  { label: '客服 Agent', username: 'agent', role: 'agent', password: 'ghost-agent' },
+  { label: '观察者 Viewer', username: 'viewer', role: 'viewer', password: 'ghost-viewer' },
 ]
 
 // ==========================================
@@ -59,7 +48,6 @@ function AuthPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
-  const [ghostOpen, setGhostOpen] = useState(false)
   const [ghostLogging, setGhostLogging] = useState<string | null>(null)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -67,18 +55,6 @@ function AuthPage() {
   const [displayName, setDisplayName] = useState('')
   const [rememberMe, setRememberMe] = useState(true)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
-  const ghostPanelRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!ghostOpen) return
-    const handler = (e: MouseEvent) => {
-      if (ghostPanelRef.current && !ghostPanelRef.current.contains(e.target as Node)) {
-        setGhostOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [ghostOpen])
 
   const validate = useCallback((): boolean => {
     const errors: Record<string, string> = {}
@@ -129,19 +105,19 @@ function AuthPage() {
       try {
         let r = await login({
           username: gu.username,
-          password: 'ghost-' + gu.username,
+          password: gu.password,
           rememberMe: false,
         })
         if (!r.success) {
           await register({
             username: gu.username,
             email: gu.username + '@ghost.yyc3',
-            password: 'ghost-' + gu.username,
+            password: gu.password,
             displayName: gu.label,
           })
           r = await login({
             username: gu.username,
-            password: 'ghost-' + gu.username,
+            password: gu.password,
             rememberMe: false,
           })
         }
@@ -149,7 +125,6 @@ function AuthPage() {
         setError('幽灵模式登录失败')
       } finally {
         setGhostLogging(null)
-        setGhostOpen(false)
       }
     },
     [login, register],
@@ -231,24 +206,14 @@ function AuthPage() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4"
-              style={{
-                background: tc.alpha(tc.primary, 0.1),
-                border: '1px solid ' + tc.borderActive,
-                boxShadow: tc.shadowGlow,
-              }}
+              className="inline-flex items-center justify-center w-20 h-20"
             >
-              <Layers className="w-8 h-8" style={{ color: tc.primary }} />
+              <img
+                src="/yyc3-icons/Web App/apple-touch-icon.png"
+                alt="YYC³ Logo"
+                className="w-full h-full object-contain"
+              />
             </motion.div>
-            <h1 className="text-2xl font-bold tracking-tight" style={{ color: tc.primary }}>
-              YYC³ 言语智能
-            </h1>
-            <p className="text-xs mt-1" style={{ color: tc.textMuted }}>
-              YanYu Intelligent AI System
-            </p>
-            <p className="text-sm mt-3" style={{ color: tc.textMuted }}>
-              {mode === 'login' ? '登录到您的账户' : '创建新账户'}
-            </p>
           </div>
 
           <AnimatePresence mode="wait">
@@ -469,80 +434,39 @@ function AuthPage() {
           </div>
 
           {GHOST_MODE_ENABLED && mode === 'login' && (
-            <div className="mt-4 relative" ref={ghostPanelRef}>
+            <div className="mt-4">
               <motion.button
                 type="button"
-                onClick={() => setGhostOpen(!ghostOpen)}
+                onClick={() => handleGhostLogin(GHOST_ACCOUNTS[0])}
+                disabled={ghostLogging !== null}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-2.5 rounded-lg font-medium flex items-center justify-center gap-2 transition-all"
+                className="w-full py-3 rounded-xl font-medium flex items-center justify-center gap-3 transition-all"
                 style={{
-                  background: tc.alpha(tc.accent, 0.08),
-                  border: '1px dashed ' + tc.alpha(tc.accent, 0.3),
-                  color: tc.accent,
+                  background: 'linear-gradient(135deg, rgba(0,240,255,0.05), rgba(0,255,200,0.03))',
+                  border: '1px solid rgba(0,240,255,0.15)',
+                  color: '#00ffc8',
+                  boxShadow: '0 0 20px rgba(0,255,200,0.1), inset 0 0 20px rgba(0,240,255,0.03)',
                 }}
               >
-                <Ghost className="w-4 h-4" />
-                幽灵模式 · 免密开发
-                <Sparkles className="w-3 h-3" />
-              </motion.button>
-
-              <AnimatePresence>
-                {ghostOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -8, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -8, scale: 0.95 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute bottom-full left-0 right-0 mb-2 rounded-xl border p-3 space-y-2 z-10"
-                    style={{
-                      background: tc.bgElevated,
-                      borderColor: tc.alpha(tc.accent, 0.2),
-                      boxShadow: tc.shadowLg,
-                    }}
-                  >
-                    <p className="text-xs font-medium mb-2" style={{ color: tc.textSecondary }}>
-                      选择角色快速进入（开发环境）
-                    </p>
-                    {GHOST_ACCOUNTS.map((account) => (
-                      <button
-                        key={account.username}
-                        type="button"
-                        disabled={ghostLogging !== null}
-                        onClick={() => handleGhostLogin(account)}
-                        className="w-full text-left px-3 py-2 rounded-lg text-sm flex items-center gap-2 transition-all"
-                        style={{
-                          background: tc.alpha(tc.accent, 0.04),
-                          border: '1px solid ' + tc.alpha(tc.accent, 0.1),
-                          color: tc.textPrimary,
-                        }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.background = tc.alpha(tc.accent, 0.1))
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.background = tc.alpha(tc.accent, 0.04))
-                        }
-                      >
-                        {ghostLogging === account.label ? (
-                          <Loader2 className="w-3.5 h-3.5 animate-spin flex-shrink-0" />
-                        ) : (
-                          <Ghost
-                            className="w-3.5 h-3.5 flex-shrink-0"
-                            style={{ color: tc.accent }}
-                          />
-                        )}
-                        <span className="flex-1">{account.label}</span>
-                        <span
-                          className="text-xs px-1.5 py-0.5 rounded"
-                          style={{ background: tc.alpha(tc.primary, 0.1), color: tc.primary }}
-                        >
-                          {account.role}
-                        </span>
-                      </button>
-                    ))}
-                  </motion.div>
+                {ghostLogging !== null ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Ghost className="w-4 h-4" />
                 )}
-              </AnimatePresence>
+                <span className="text-sm tracking-wider">GHOST MODE</span>
+                <span
+                  className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1"
+                  style={{
+                    background: 'rgba(0,255,200,0.15)',
+                    border: '1px solid rgba(0,255,200,0.3)',
+                    color: '#00ffc8',
+                  }}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ffc8] animate-pulse" />
+                  FULL ACCESS
+                </span>
+              </motion.button>
             </div>
           )}
 

@@ -59,10 +59,14 @@ export type PageId =
   | 'taskBoard'
   // Developer Workspace (开发工作台)
   | 'devWorkspace'
+  // API Documentation (API文档)
+  | 'apiDocs'
   // Finance Management (财务管理)
   | 'finance'
   // Salary System (薪资系统)
   | 'salary'
+  // Supply Chain (供应链)
+  | 'smartForm'
 
 /**
  * Application display mode.

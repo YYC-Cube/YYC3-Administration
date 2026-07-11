@@ -1,6 +1,4 @@
 import {
-  ArrowDown,
-  ArrowUp,
   BarChart3,
   Brain,
   DollarSign,
@@ -14,7 +12,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
-import { NeonCard } from './neon-card'
+import { ContentCard, PageHeader, StatCard } from './shared-styles.tsx'
 
 // ==========================================
 // YYC³ 营销效果分析 - Marketing Analytics
@@ -124,179 +122,143 @@ export function MarketingAnalyticsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            营销效果分析
-          </h1>
-          <p className="text-sm" style={{ color: tc.textSecondary }}>
-            实时数据追踪 · AI智能分析 · 可视化报表
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            {(['7d', '30d', '90d'] as const).map((range) => (
-              <button
-                key={range}
-                onClick={() => setTimeRange(range)}
-                className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
-                style={{
-                  background: timeRange === range ? tc.alpha(tc.primary, 0.15) : tc.bgCard,
-                  color: timeRange === range ? tc.primary : tc.textSecondary,
-                  border: `1px solid ${timeRange === range ? tc.primary : tc.borderSubtle}`,
-                  boxShadow: timeRange === range ? tc.neonGlow(tc.primary, 0.3) : 'none',
-                }}
-              >
-                {range === '7d' ? '近7天' : range === '30d' ? '近30天' : '近90天'}
-              </button>
-            ))}
+      <PageHeader
+        title="营销效果分析"
+        subtitle="实时数据追踪 · AI智能分析 · 可视化报表"
+        actions={
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              {(['7d', '30d', '90d'] as const).map((range) => (
+                <button
+                  key={range}
+                  onClick={() => setTimeRange(range)}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+                  style={{
+                    background: timeRange === range ? tc.alpha(tc.primary, 0.15) : tc.bgCard,
+                    color: timeRange === range ? tc.primary : tc.textSecondary,
+                    border: `1px solid ${timeRange === range ? tc.primary : tc.borderSubtle}`,
+                    boxShadow: timeRange === range ? tc.neonGlow(tc.primary, 0.3) : 'none',
+                  }}
+                >
+                  {range === '7d' ? '近7天' : range === '30d' ? '近30天' : '近90天'}
+                </button>
+              ))}
+            </div>
+            <button
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+              style={{
+                background: tc.gradientButton,
+                color: tc.textPrimary,
+                boxShadow: tc.shadowMd,
+              }}
+            >
+              <Download className="w-3.5 h-3.5" />
+              导出报表
+            </button>
           </div>
-          <button
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all"
-            style={{
-              background: tc.gradientButton,
-              color: tc.textPrimary,
-              boxShadow: tc.shadowMd,
-            }}
-          >
-            <Download className="w-4 h-4" />
-            导出报表
-          </button>
-        </div>
-      </div>
+        }
+      />
 
       {/* 核心指标 */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {metrics.map((metric) => {
           const Icon = metric.icon
-          const TrendIcon = metric.trend === 'up' ? ArrowUp : ArrowDown
-
           return (
-            <NeonCard key={metric.label} className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <Icon className="w-8 h-8" style={{ color: metric.color }} />
-                <div
-                  className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium"
-                  style={{
-                    background: tc.alpha(metric.trend === 'up' ? tc.success : tc.danger, 0.1),
-                    color: metric.trend === 'up' ? tc.success : tc.danger,
-                  }}
-                >
-                  <TrendIcon className="w-3 h-3" />
-                  {Math.abs(metric.change)}%
-                </div>
-              </div>
-              <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-                {metric.label}
-              </p>
-              <p className="text-3xl font-bold" style={{ color: tc.textPrimary }}>
-                {metric.label.includes('率')
+            <StatCard
+              key={metric.label}
+              label={metric.label}
+              value={
+                metric.label.includes('率')
                   ? `${metric.value}%`
                   : metric.label.includes('成本')
                     ? `¥${metric.value}`
-                    : metric.value}
-              </p>
-            </NeonCard>
+                    : metric.value
+              }
+              icon={Icon}
+              color={metric.color}
+              change={`${metric.trend === 'up' ? '+' : ''}${metric.change}%`}
+              trend={metric.trend}
+            />
           )
         })}
       </div>
 
       {/* AI智能洞察 */}
-      <NeonCard className="p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <Brain className="w-6 h-6" style={{ color: tc.primary }} />
-          <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
+      <ContentCard>
+        <div className="flex items-center gap-3 mb-4">
+          <Brain className="w-4 h-4" style={{ color: tc.primary }} />
+          <h2 className="text-[10px] text-white/30 uppercase tracking-wider flex items-center gap-2">
             AI智能洞察
+            <span
+              className="ml-auto flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px]"
+              style={{
+                background: tc.alpha(tc.primary, 0.1),
+                color: tc.primary,
+                border: `1px solid ${tc.alpha(tc.primary, 0.2)}`,
+              }}
+            >
+              <Sparkles className="w-3 h-3" />
+              实时分析
+            </span>
           </h2>
-          <div
-            className="ml-auto flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium"
-            style={{
-              background: tc.alpha(tc.primary, 0.1),
-              color: tc.primary,
-            }}
-          >
-            <Sparkles className="w-4 h-4" />
-            实时分析
-          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {aiInsights.map((insight, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-lg transition-all"
+              className="p-4 rounded-xl border transition-all"
               style={{
-                background: tc.bgCard,
-                border: `1px solid ${tc.borderSubtle}`,
+                background: 'rgba(255,255,255,0.02)',
+                borderColor: 'rgba(255,255,255,0.04)',
               }}
             >
-              <h3 className="font-semibold mb-2" style={{ color: tc.textPrimary }}>
-                {insight.title}
-              </h3>
-              <p className="text-sm mb-3" style={{ color: tc.textSecondary }}>
-                {insight.content}
-              </p>
-              <div
-                className="flex items-center gap-2 text-sm font-medium"
-                style={{ color: tc.success }}
-              >
-                <TrendingUp className="w-4 h-4" />
+              <h3 className="text-[11px] text-white/70 font-medium mb-2">{insight.title}</h3>
+              <p className="text-[11px] text-white/40 mb-3">{insight.content}</p>
+              <div className="flex items-center gap-1.5 text-[10px]" style={{ color: '#00ffc8' }}>
+                <TrendingUp className="w-3 h-3" />
                 {insight.impact}
               </div>
             </div>
           ))}
         </div>
-      </NeonCard>
+      </ContentCard>
 
       {/* 渠道表现分析 */}
-      <NeonCard className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
+      <ContentCard>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-[10px] text-white/30 uppercase tracking-wider flex items-center gap-2">
+            <BarChart3 className="w-3.5 h-3.5 text-[#00f0ff]" />
             渠道表现分析
           </h2>
           <button
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
+            className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] transition-all"
             style={{
-              background: tc.bgCard,
-              color: tc.textSecondary,
-              border: `1px solid ${tc.borderSubtle}`,
+              background: 'rgba(255,255,255,0.03)',
+              color: 'rgba(255,255,255,0.4)',
+              border: '1px solid rgba(255,255,255,0.06)',
             }}
           >
-            <Filter className="w-4 h-4" />
+            <Filter className="w-3 h-3" />
             筛选
           </button>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr style={{ borderBottom: `1px solid ${tc.borderSubtle}` }}>
-                <th
-                  className="text-left py-3 px-4 text-sm font-medium"
-                  style={{ color: tc.textMuted }}
-                >
+              <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <th className="text-left py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
                   渠道
                 </th>
-                <th
-                  className="text-right py-3 px-4 text-sm font-medium"
-                  style={{ color: tc.textMuted }}
-                >
+                <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
                   投入成本
                 </th>
-                <th
-                  className="text-right py-3 px-4 text-sm font-medium"
-                  style={{ color: tc.textMuted }}
-                >
+                <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
                   营收
                 </th>
-                <th
-                  className="text-right py-3 px-4 text-sm font-medium"
-                  style={{ color: tc.textMuted }}
-                >
+                <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
                   ROI
                 </th>
-                <th
-                  className="text-right py-3 px-4 text-sm font-medium"
-                  style={{ color: tc.textMuted }}
-                >
+                <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
                   转化率
                 </th>
               </tr>
@@ -307,35 +269,33 @@ export function MarketingAnalyticsPage() {
                   key={channel.channel}
                   style={{
                     borderBottom:
-                      idx < channelPerformance.length - 1 ? `1px solid ${tc.borderSubtle}` : 'none',
+                      idx < channelPerformance.length - 1
+                        ? '1px solid rgba(255,255,255,0.04)'
+                        : 'none',
                   }}
                 >
-                  <td className="py-4 px-4">
-                    <span className="font-medium" style={{ color: tc.textPrimary }}>
-                      {channel.channel}
-                    </span>
+                  <td className="py-3 px-3">
+                    <span className="text-[11px] text-white/60">{channel.channel}</span>
                   </td>
-                  <td className="py-4 px-4 text-right" style={{ color: tc.textSecondary }}>
+                  <td className="py-3 px-3 text-right text-[11px] text-white/40">
                     ¥{channel.cost.toLocaleString()}
                   </td>
-                  <td className="py-4 px-4 text-right font-medium" style={{ color: tc.success }}>
+                  <td className="py-3 px-3 text-right text-[11px]" style={{ color: '#00ffc8' }}>
                     ¥{channel.revenue.toLocaleString()}
                   </td>
-                  <td className="py-4 px-4 text-right">
+                  <td className="py-3 px-3 text-right">
                     <span
-                      className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold"
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px]"
                       style={{
-                        background: tc.alpha(tc.primary, 0.15),
-                        color: tc.primary,
+                        background: 'rgba(0,240,255,0.1)',
+                        color: '#00f0ff',
+                        border: '1px solid rgba(0,240,255,0.2)',
                       }}
                     >
                       {channel.roi}x
                     </span>
                   </td>
-                  <td
-                    className="py-4 px-4 text-right font-medium"
-                    style={{ color: tc.textPrimary }}
-                  >
+                  <td className="py-3 px-3 text-right text-[11px] text-white/60">
                     {channel.conversion}%
                   </td>
                 </tr>
@@ -343,14 +303,15 @@ export function MarketingAnalyticsPage() {
             </tbody>
           </table>
         </div>
-      </NeonCard>
+      </ContentCard>
 
       {/* 活动效果详情 */}
-      <NeonCard className="p-6">
-        <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
+      <ContentCard>
+        <h2 className="text-[10px] text-white/30 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <Target className="w-3.5 h-3.5 text-[#00d4ff]" />
           活动效果详情
         </h2>
-        <div className="space-y-4">
+        <div className="space-y-3">
           {campaignAnalytics.map((campaign) => {
             const ctr = ((campaign.clicks / campaign.impressions) * 100).toFixed(2)
             const conversionRate = ((campaign.conversions / campaign.clicks) * 100).toFixed(2)
@@ -358,66 +319,64 @@ export function MarketingAnalyticsPage() {
             return (
               <div
                 key={campaign.name}
-                className="p-4 rounded-lg transition-all"
+                className="p-4 rounded-xl border transition-all"
                 style={{
-                  background: tc.bgCard,
-                  border: `1px solid ${tc.borderSubtle}`,
+                  background: 'rgba(255,255,255,0.02)',
+                  borderColor: 'rgba(255,255,255,0.04)',
                 }}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                    {campaign.name}
-                  </h3>
-                  <div
-                    className="flex items-center gap-2 px-3 py-1 rounded-full text-sm font-bold"
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="text-[11px] text-white/70 font-medium">{campaign.name}</h3>
+                  <span
+                    className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px]"
                     style={{
-                      background: tc.alpha(tc.primary, 0.15),
-                      color: tc.primary,
-                      boxShadow: tc.neonGlow(tc.primary, 0.3),
+                      background: 'rgba(0,240,255,0.1)',
+                      color: '#00f0ff',
+                      border: '1px solid rgba(0,240,255,0.2)',
                     }}
                   >
-                    <BarChart3 className="w-4 h-4" />
+                    <BarChart3 className="w-3 h-3" />
                     ROI {campaign.roi}x
-                  </div>
+                  </span>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                   <div>
-                    <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
+                    <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
                       曝光量
                     </p>
-                    <p className="font-bold" style={{ color: tc.textPrimary }}>
+                    <p className="text-[11px] text-white/60 tabular-nums">
                       {(campaign.impressions / 1000).toFixed(0)}K
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
+                    <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
                       点击量
                     </p>
-                    <p className="font-bold" style={{ color: tc.textPrimary }}>
+                    <p className="text-[11px] text-white/60 tabular-nums">
                       {(campaign.clicks / 1000).toFixed(1)}K
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
+                    <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
                       点击率
                     </p>
-                    <p className="font-bold" style={{ color: tc.secondary }}>
+                    <p className="text-[11px]" style={{ color: '#00d4ff' }}>
                       {ctr}%
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
+                    <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
                       转化数
                     </p>
-                    <p className="font-bold" style={{ color: tc.success }}>
+                    <p className="text-[11px]" style={{ color: '#00ffc8' }}>
                       {campaign.conversions}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
+                    <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
                       转化率
                     </p>
-                    <p className="font-bold" style={{ color: tc.accent }}>
+                    <p className="text-[11px]" style={{ color: '#00ffcc' }}>
                       {conversionRate}%
                     </p>
                   </div>
@@ -426,7 +385,7 @@ export function MarketingAnalyticsPage() {
             )
           })}
         </div>
-      </NeonCard>
+      </ContentCard>
     </div>
   )
 }

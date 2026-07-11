@@ -35,6 +35,7 @@ export type PageId =
   | 'forms' // 智能表单
   | 'contacts' // 通讯录
   | 'customerCare' // 客户关怀
+  | 'apiDocs' // API文档
 
 /**
  * 应用模式

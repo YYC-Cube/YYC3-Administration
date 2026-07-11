@@ -47,14 +47,17 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { ActivityLogPage } from './activity-log'
+import { AICallPage } from './ai-call-page'
 import { useAIModel } from './ai-model-context'
 import { AIToolsPage } from './ai-tools-page'
-import { useApp, useRealtimeSimulation, type PageId } from './app-context'
+import { ApiDocs } from './api-docs'
+import { type PageId, useApp, useRealtimeSimulation } from './app-context'
 import { AppOverviewPage } from './app-overview-page'
 import { BrandManagementPage } from './brand-management-page'
 import { CampaignExecutionPage } from './campaign-execution-page'
 import { ChannelCenterPage } from './channel-center-page'
 import { ChatInterface } from './chat-interface'
+import { CLMPage } from './clm-page'
 import { CollabCreationPage } from './collab-creation-page'
 import { CommandPalette, useCommandPalette } from './command-palette'
 import { CustomerAcquisitionPage } from './customer-acquisition-page'
@@ -76,8 +79,7 @@ import { MarketingAnalyticsPage } from './marketing-analytics-page'
 import { MarketingAssetsPage } from './marketing-assets-page'
 import { MarketingStrategyPage } from './marketing-strategy-page'
 import { ModelSettings } from './model-settings'
-import { NAV_CATEGORIES, findCategoryByPageId } from './nav-config'
-import { NeonCard } from './neon-card'
+import { findCategoryByPageId, NAV_CATEGORIES } from './nav-config'
 import { NLPProcessingPage } from './nlp-processing-page'
 import { NotificationDrawer } from './notification-drawer'
 import { NumberDatabasePage } from './number-database'
@@ -98,6 +100,7 @@ import { SmartOperationsPage } from './smart-operations-page'
 import { TaskBoardPage } from './task-board-page'
 import { ThemeSwitcherButtonCompact } from './theme-switcher-button'
 import { WechatConfigPage } from './wechat-config-page'
+import { WorkflowPage } from './workflow-page'
 
 import { MobileBottomNav } from '@/multi-end'
 
@@ -138,6 +141,7 @@ const NAV_LABEL_KEYS: Record<string, string> = {
   quickActions: 'nav.quickActions',
   taskBoard: 'nav.taskBoard',
   devWorkspace: 'nav.devWorkspace',
+  apiDocs: 'nav.apiDocs',
   finance: 'nav.finance',
   salary: 'nav.salary',
 }
@@ -436,74 +440,14 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                 : 'none',
             }}
           >
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center"
+            <img
+              src="/yyc3-icons/Web App/apple-touch-icon.png"
+              alt="YYC³ Logo"
+              className="h-10 w-auto object-contain"
               style={{
-                background: tc.gradientPrimary,
-                boxShadow: tc.isCyberpunk
-                  ? '0 0 15px rgba(0,240,255,0.5), 0 0 30px rgba(0,212,255,0.3)'
-                  : '0 0 15px rgba(0,255,135,0.4), 0 4px 12px rgba(0,0,0,0.2)',
+                filter: tc.isCyberpunk ? 'drop-shadow(0 0 10px rgba(0,240,255,0.5))' : 'none',
               }}
-            >
-              <Layers className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                {tc.isCyberpunk ? (
-                  <GlitchText
-                    color="rgba(255,255,255,0.9)"
-                    className="tracking-wider"
-                    style={{ textShadow: '0 0 10px rgba(0,240,255,0.5)' }}
-                    interval={[4000, 10000]}
-                    intensity={1.2}
-                  >
-                    YYC³
-                  </GlitchText>
-                ) : (
-                  <span
-                    className="tracking-wider"
-                    style={{
-                      color: 'rgba(255,255,255,0.95)',
-                      textShadow: '0 0 10px rgba(0,255,135,0.3)',
-                    }}
-                  >
-                    YYC³
-                  </span>
-                )}
-                {tc.isCyberpunk ? (
-                  <GlitchText
-                    color="#00d4ff"
-                    className="text-[10px] px-1.5 py-0.5 rounded border"
-                    style={{
-                      borderColor: 'rgba(0,212,255,0.3)',
-                      background: 'rgba(0,212,255,0.08)',
-                      textShadow: '0 0 8px rgba(0,212,255,0.5)',
-                    }}
-                    interval={[5000, 12000]}
-                    intensity={0.8}
-                  >
-                    {t('brand.subtitle')}
-                  </GlitchText>
-                ) : (
-                  <span
-                    className="text-[10px] px-1.5 py-0.5 rounded"
-                    style={{
-                      border: `1px solid rgba(0,255,135,0.2)`,
-                      background: 'rgba(0,255,135,0.08)',
-                      color: '#00ff87',
-                    }}
-                  >
-                    {t('brand.subtitle')}
-                  </span>
-                )}
-              </div>
-              <span
-                className="text-[9px] hidden sm:block -mt-0.5 tracking-[0.15em]"
-                style={{ color: tc.isCyberpunk ? 'rgba(0,240,255,0.4)' : 'rgba(0,255,135,0.4)' }}
-              >
-                {t('brand.system')}
-              </span>
-            </div>
+            />
           </div>
         </div>
 
@@ -1277,6 +1221,11 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                 <FormsTabPage />
               </ErrorBoundary>
             )}
+            {activePage === 'smartForm' && (
+              <ErrorBoundary name="SmartForm">
+                <SmartFormPage />
+              </ErrorBoundary>
+            )}
             {activePage === 'tools' && (
               <ErrorBoundary name="Tools">
                 <AIToolsPage />
@@ -1315,6 +1264,11 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
             {activePage === 'devWorkspace' && (
               <ErrorBoundary name="DevWorkspace">
                 <LeftPanelPage />
+              </ErrorBoundary>
+            )}
+            {activePage === 'apiDocs' && (
+              <ErrorBoundary name="ApiDocs">
+                <ApiDocs />
               </ErrorBoundary>
             )}
             {activePage === 'finance' && (
@@ -1517,152 +1471,6 @@ function ChatPage() {
   return (
     <div className="h-full flex flex-col">
       <ChatInterface />
-    </div>
-  )
-}
-
-function CLMPage() {
-  const { t } = useI18n()
-  const [activeTab, setActiveTab] = useState<'pipeline' | 'segments' | 'touchpoints' | 'health'>(
-    'pipeline',
-  )
-  const tc = useThemeColors()
-  const tabs = [
-    { id: 'pipeline' as const, label: t('clm.pipeline') },
-    { id: 'segments' as const, label: t('clm.segments') },
-    { id: 'touchpoints' as const, label: t('clm.touchpoints') },
-    { id: 'health' as const, label: t('clm.health') },
-  ]
-  const stages = [
-    { name: t('clm.stage1'), count: 245, pct: 82, color: '#06b6d4' },
-    { name: t('clm.stage2'), count: 183, pct: 61, color: '#8b5cf6' },
-    { name: t('clm.stage3'), count: 156, pct: 52, color: '#10b981' },
-    { name: t('clm.stage4'), count: 128, pct: 43, color: '#f59e0b' },
-    { name: t('clm.stage5'), count: 98, pct: 33, color: '#ef4444' },
-  ]
-  return (
-    <div className="p-6 space-y-6" data-neon-card>
-      <h2 className="text-xl font-bold" style={{ color: tc.primary }}>
-        {t('clm.title')}
-      </h2>
-      <div className="flex gap-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
-            style={{
-              background: activeTab === tab.id ? tc.alpha(tc.primary, 0.15) : 'transparent',
-              color: activeTab === tab.id ? tc.primary : tc.muted,
-              border: `1px solid ${activeTab === tab.id ? tc.primary : 'transparent'}`,
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      <div className="space-y-3">
-        {stages.map((s, i) => (
-          <NeonCard key={i}>
-            <div className="flex items-center justify-between">
-              <span className="font-medium" style={{ color: tc.primary }}>
-                {s.name}
-              </span>
-              <span className="text-sm" style={{ color: tc.muted }}>
-                {s.count} {t('clm.customers')}
-              </span>
-            </div>
-            <div
-              className="mt-2 h-2 rounded-full overflow-hidden"
-              style={{ background: tc.alpha(tc.primary, 0.1) }}
-            >
-              <div
-                className="h-full rounded-full transition-all"
-                style={{ width: `${s.pct}%`, background: s.color }}
-              />
-            </div>
-          </NeonCard>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function AICallPage() {
-  const { t } = useI18n()
-  const tc = useThemeColors()
-  return (
-    <div className="p-6 space-y-6" data-neon-card>
-      <h2 className="text-xl font-bold" style={{ color: tc.primary }}>
-        {t('aicall.title')}
-      </h2>
-      <div className="grid grid-cols-2 gap-4">
-        <NeonCard>
-          <div className="text-sm" style={{ color: tc.muted }}>
-            {t('aicall.totalCalls')}
-          </div>
-          <div className="text-2xl font-bold mt-1" style={{ color: tc.primary }}>
-            1,284
-          </div>
-        </NeonCard>
-        <NeonCard>
-          <div className="text-sm" style={{ color: tc.muted }}>
-            {t('aicall.successRate')}
-          </div>
-          <div className="text-2xl font-bold mt-1" style={{ color: '#10b981' }}>
-            87.3%
-          </div>
-        </NeonCard>
-        <NeonCard>
-          <div className="text-sm" style={{ color: tc.muted }}>
-            {t('aicall.avgDuration')}
-          </div>
-          <div className="text-2xl font-bold mt-1" style={{ color: '#f59e0b' }}>
-            3:42
-          </div>
-        </NeonCard>
-        <NeonCard>
-          <div className="text-sm" style={{ color: tc.muted }}>
-            {t('aicall.activeAgents')}
-          </div>
-          <div className="text-2xl font-bold mt-1" style={{ color: '#8b5cf6' }}>
-            12
-          </div>
-        </NeonCard>
-      </div>
-    </div>
-  )
-}
-
-function WorkflowPage() {
-  const { t } = useI18n()
-  const tc = useThemeColors()
-  return (
-    <div className="p-6 space-y-6" data-neon-card>
-      <h2 className="text-xl font-bold" style={{ color: tc.primary }}>
-        {t('workflow.title')}
-      </h2>
-      <div className="space-y-3">
-        {[
-          { name: t('workflow.wf1'), status: t('status.active'), color: '#10b981' },
-          { name: t('workflow.wf2'), status: t('status.paused'), color: '#f59e0b' },
-          { name: t('workflow.wf3'), status: t('status.draft'), color: tc.muted },
-        ].map((wf, i) => (
-          <NeonCard key={i}>
-            <div className="flex items-center justify-between">
-              <span className="font-medium" style={{ color: tc.primary }}>
-                {wf.name}
-              </span>
-              <span
-                className="text-xs px-2 py-1 rounded-full"
-                style={{ background: wf.color + '20', color: wf.color }}
-              >
-                {wf.status}
-              </span>
-            </div>
-          </NeonCard>
-        ))}
-      </div>
     </div>
   )
 }

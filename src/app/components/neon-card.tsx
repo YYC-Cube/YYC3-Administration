@@ -1,13 +1,17 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+/**
+ * @file neon-card.tsx
+ * @description Cyberpunk-styled card with neon glow border and optional scroll-reveal animation.
+ * @author YanYuCloudCube Team <admin@0379.email>
+ * @version v1.0.0
+ * @created 2025-07-11
+ * @tags neon, card, cyberpunk, liquid-glass
+ */
 
+import * as React from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
+
+import { getThemeNavColor, useThemeColors } from './hooks/use-theme-colors'
 import { useThemeSwitcher } from './theme-switcher-context'
-
-// ==========================================
-// YYC³ NeonCard — Phase 5 Upgrade
-// + React.memo for performance
-// + IntersectionObserver scroll reveal
-// + will-change hints
-// ==========================================
 
 interface NeonCardProps {
   children: React.ReactNode
@@ -25,10 +29,17 @@ interface NeonCardProps {
  * Uses `IntersectionObserver` for performant lazy entrance and `will-change` hints.
  * Memoized with `React.memo` to prevent unnecessary re-renders.
  *
+ * @component
  * @param color - Neon glow color (default `#00f0ff`).
  * @param hoverable - Enable hover lift and glow intensification.
  * @param noReveal - Disable IntersectionObserver scroll-reveal animation.
  * @param ariaLabel - Accessible label for the card container.
+ * @example
+ * ```tsx
+ * <NeonCard color="#00f0ff" hoverable>
+ *   <p>Card content</p>
+ * </NeonCard>
+ * ```
  */
 export const NeonCard = memo(function NeonCard({
   children,
@@ -43,18 +54,9 @@ export const NeonCard = memo(function NeonCard({
   const cardRef = useRef<HTMLDivElement>(null)
   const [revealed, setRevealed] = useState(noReveal)
   const { theme } = useThemeSwitcher()
-  const isLiquid = theme === 'liquidGlass'
-
-  // Remap colors for liquid glass theme
-  const liquidColorMap: Record<string, string> = {
-    '#00f0ff': '#00ff87',
-    '#00d4ff': '#06b6d4',
-    '#00ffcc': '#22d3ee',
-    '#00ffc8': '#00ffaa',
-    '#41ffdd': '#34d399',
-    '#008b9d': '#0891b2',
-  }
-  const effectiveColor = isLiquid ? liquidColorMap[color] || color : color
+  const tc = useThemeColors()
+  const isLiquid = tc.isLiquidGlass
+  const effectiveColor = getThemeNavColor(color, tc.isCyberpunk)
 
   // IntersectionObserver for scroll reveal
   useEffect(() => {
@@ -104,14 +106,14 @@ export const NeonCard = memo(function NeonCard({
         isLiquid
           ? {
               ...style,
-              background: 'rgba(255,255,255,0.06)',
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-              border: `1px solid rgba(255,255,255,0.1)`,
+              background: tc.bgCard,
+              backdropFilter: tc.backdropFilter,
+              WebkitBackdropFilter: tc.backdropFilter,
+              border: `1px solid ${tc.borderDefault}`,
               borderTop: '1px solid rgba(255,255,255,0.18)',
               borderLeft: '1px solid rgba(255,255,255,0.14)',
-              boxShadow: `0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.08)`,
-              transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+              boxShadow: tc.shadowMd,
+              transition: tc.transitionAll,
               willChange: hoverable ? 'transform, box-shadow' : 'auto',
               opacity: revealed ? 1 : 0,
               transform: revealed ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.96)',
@@ -119,12 +121,12 @@ export const NeonCard = memo(function NeonCard({
             }
           : {
               ...style,
-              background: 'rgba(10,10,10,0.75)',
-              backdropFilter: 'blur(20px) saturate(180%)',
+              background: tc.bgCard,
+              backdropFilter: tc.backdropFilter,
               borderColor: `${effectiveColor}33`,
-              border: `1px solid ${effectiveColor}33`,
-              boxShadow: `0 0 10px ${effectiveColor}33, inset 0 0 15px ${effectiveColor}0d`,
-              transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+              border: `1px solid ${tc.borderDefault}`,
+              boxShadow: tc.shadowMd,
+              transition: tc.transitionAll,
               willChange: hoverable ? 'transform, box-shadow' : 'auto',
               opacity: revealed ? 1 : 0,
               transform: revealed ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.96)',
@@ -133,22 +135,22 @@ export const NeonCard = memo(function NeonCard({
       onMouseEnter={(e) => {
         if (hoverable) {
           if (isLiquid) {
-            e.currentTarget.style.background = 'rgba(255,255,255,0.10)'
-            e.currentTarget.style.boxShadow = `0 16px 40px rgba(0,0,0,0.12), 0 0 30px rgba(0,255,135,0.1), inset 0 1px 0 rgba(255,255,255,0.12)`
+            e.currentTarget.style.background = tc.bgCardHover
+            e.currentTarget.style.boxShadow = tc.shadowCardHover
           } else {
-            e.currentTarget.style.borderColor = `${effectiveColor}80`
-            e.currentTarget.style.boxShadow = `0 0 20px ${effectiveColor}66, 0 0 40px ${effectiveColor}33, inset 0 0 20px ${effectiveColor}1a`
+            e.currentTarget.style.borderColor = tc.borderActive
+            e.currentTarget.style.boxShadow = tc.shadowCardHover
           }
         }
       }}
       onMouseLeave={(e) => {
         if (hoverable) {
           if (isLiquid) {
-            e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
-            e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.08)`
+            e.currentTarget.style.background = tc.bgCard
+            e.currentTarget.style.boxShadow = tc.shadowMd
           } else {
-            e.currentTarget.style.borderColor = `${effectiveColor}33`
-            e.currentTarget.style.boxShadow = `0 0 10px ${effectiveColor}33, inset 0 0 15px ${effectiveColor}0d`
+            e.currentTarget.style.borderColor = tc.borderDefault
+            e.currentTarget.style.boxShadow = tc.shadowMd
           }
         }
       }}

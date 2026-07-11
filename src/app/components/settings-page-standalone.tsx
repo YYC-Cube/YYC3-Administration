@@ -409,10 +409,10 @@ export function SettingsPage() {
     >
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-        <h1 className="text-3xl lg:text-4xl font-bold mb-2" style={{ color: tc.primary }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
           系统设置
         </h1>
-        <p style={{ color: tc.textSecondary }}>
+        <p className="text-sm" style={{ color: tc.textSecondary }}>
           配置和管理 YYC³ CloudPivot Intelli-Matrix 的各项功能
         </p>
       </motion.div>

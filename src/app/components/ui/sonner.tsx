@@ -7,16 +7,18 @@ import type { CSSProperties } from 'react'
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme()
+  const isDark = theme === 'dark' || theme === 'cyberpunk' || theme === 'liquidGlass'
 
   return (
     <Sonner
-      theme={theme as ToasterProps['theme']}
+      theme={isDark ? 'dark' : 'light'}
       className="toaster group"
       style={
         {
           '--normal-bg': 'var(--popover)',
           '--normal-text': 'var(--popover-foreground)',
           '--normal-border': 'var(--border)',
+          '--normal-border-radius': 'var(--radius)',
         } as CSSProperties
       }
       {...props}

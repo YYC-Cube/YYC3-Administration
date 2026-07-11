@@ -41,7 +41,9 @@ import {
 } from 'react'
 
 import { useApp } from './app-context'
-import { NeonCard } from './neon-card'
+import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
+import { ContentCard, PageHeader, StatCard, TYPOGRAPHY } from './shared-styles'
 
 // ==========================================
 // YYC³ 智能表单系统 — Smart Form Engine
@@ -497,6 +499,8 @@ const aiSuggestions: Record<string, string[]> = {
  */
 export function SmartFormPage() {
   const { addNotification, addActivity } = useApp()
+  const { t } = useI18n()
+  const tc = useThemeColors()
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
   const [formValues, setFormValues] = useState<Record<string, FormFieldValue>>({})
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -684,26 +688,28 @@ export function SmartFormPage() {
           <div
             className="w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6"
             style={{
-              background: `linear-gradient(135deg, ${template.color}25, rgba(0,212,255,0.15))`,
+              background: `linear-gradient(135deg, ${template.color}25, ${tc.alpha(tc.secondary, 0.15)})`,
               border: `2px solid ${template.color}60`,
               boxShadow: `0 0 40px ${template.color}30, inset 0 0 20px ${template.color}10`,
               animation: 'border-glow 2s ease-in-out infinite',
             }}
           >
             <CheckCircle2
-              className="w-10 h-10 text-[#00ffc8]"
-              style={{ filter: 'drop-shadow(0 0 8px #00ffc8)' }}
+              className="w-10 h-10"
+              style={{ color: tc.success, filter: `drop-shadow(0 0 8px ${tc.success})` }}
             />
           </div>
           <h2
-            className="text-xl text-white/90 mb-2"
-            style={{ textShadow: '0 0 15px rgba(0,255,200,0.3)' }}
+            className="text-xl mb-2"
+            style={{ color: tc.textPrimary, textShadow: `0 0 15px ${tc.alpha(tc.success, 0.3)}` }}
           >
-            提交成功
+            {t('form.submitSuccess')}
           </h2>
-          <p className="text-sm text-white/40 mb-2">「{template.title}」数据已保存并加密传输</p>
-          <p className="text-xs text-white/20 mb-8">
-            AI 正在分析表单数据，智能建议将在数据洞察面板中呈现
+          <p className="text-sm mb-2" style={{ color: tc.textMuted }}>
+            「{template.title}」{t('form.dataSaved')}
+          </p>
+          <p className="text-xs mb-8" style={{ color: tc.muted }}>
+            {t('form.aiAnalyzing')}
           </p>
 
           <div className="flex gap-3 justify-center">
@@ -719,19 +725,19 @@ export function SmartFormPage() {
               }}
             >
               <RefreshCw className="w-4 h-4" />
-              再填一份
+              {t('form.fillAgain')}
             </button>
             <button
               onClick={resetForm}
               className="px-5 py-2.5 rounded-xl text-sm flex items-center gap-2 transition-all duration-300"
               style={{
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: 'rgba(255,255,255,0.5)',
+                background: tc.alpha(tc.borderDefault, 0.04),
+                border: `1px solid ${tc.borderDefault}`,
+                color: tc.textMuted,
               }}
             >
               <ChevronRight className="w-4 h-4" />
-              返回模板列表
+              {t('form.backToList')}
             </button>
           </div>
         </div>
@@ -747,93 +753,53 @@ export function SmartFormPage() {
         style={{ scrollbarWidth: 'none', animation: 'spring-in 0.4s var(--spring-easing) both' }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2
-              className="text-[#00ffcc] tracking-wider flex items-center gap-3"
-              style={{ textShadow: '0 0 15px rgba(0,255,204,0.5)' }}
-            >
-              <ClipboardList className="w-6 h-6" />
-              智能表单系统
-            </h2>
-            <p className="text-xs text-white/25 mt-1 tracking-wider">
-              Smart Form Engine — AI 辅助动态表单
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
+        <PageHeader
+          title={t('nav.smartForm')}
+          subtitle="Smart Form Engine — AI 辅助动态表单"
+          actions={
             <div
               className="px-3 py-1.5 rounded-xl text-[10px] flex items-center gap-1.5"
               style={{
-                background: 'rgba(0,240,255,0.06)',
-                border: '1px solid rgba(0,240,255,0.15)',
-                color: '#00f0ff',
+                background: tc.alpha(tc.primary, 0.06),
+                border: `1px solid ${tc.alpha(tc.primary, 0.15)}`,
+                color: tc.primary,
               }}
             >
               <FileText className="w-3 h-3" />
-              已提交 {submissionCount} 份
+              {t('form.submittedCount', { count: submissionCount })}
             </div>
-          </div>
-        </div>
+          }
+        />
 
         {/* Stats Row */}
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
           {[
             {
-              label: '表单模板',
+              label: t('form.templateCount'),
               value: `${allTemplates.length}`,
               icon: ClipboardList,
-              color: '#41ffdd',
-              sub: `${formTemplates.length} 内置 · ${customTemplates.length} 自定义`,
+              color: tc.primary,
             },
             {
-              label: '累计提交',
+              label: t('form.submissionCount'),
               value: `${submissionCount}`,
               icon: Send,
-              color: '#00ffc8',
-              sub: '已保存',
+              color: tc.success,
             },
-            { label: 'AI 辅助率', value: '94.2%', icon: Brain, color: '#00d4ff', sub: '智能补全' },
+            { label: t('form.aiAssistRate'), value: '94.2%', icon: Brain, color: tc.secondary },
             {
-              label: '校验通过',
+              label: t('form.validationRate'),
               value: '99.8%',
               icon: CheckCircle2,
-              color: '#00f0ff',
-              sub: '数据质量',
+              color: tc.primary,
             },
-          ].map((m, i) => {
-            const Icon = m.icon
-            return (
-              <NeonCard key={i} color={m.color}>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">
-                      {m.label}
-                    </p>
-                    <p
-                      className="text-xl"
-                      style={{ color: m.color, textShadow: `0 0 10px ${m.color}50` }}
-                    >
-                      {m.value}
-                    </p>
-                  </div>
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center"
-                    style={{ background: `${m.color}10`, border: `1px solid ${m.color}20` }}
-                  >
-                    <Icon className="w-4 h-4" style={{ color: `${m.color}80` }} />
-                  </div>
-                </div>
-                <p className="text-[10px] mt-2 text-white/20">{m.sub}</p>
-              </NeonCard>
-            )
-          })}
+          ].map((m, i) => (
+            <StatCard key={i} label={m.label} value={m.value} icon={m.icon} color={m.color} />
+          ))}
         </div>
 
         {/* Template Grid */}
-        <NeonCard color="#41ffdd" hoverable={false}>
-          <h3 className="text-xs text-white/40 mb-5 uppercase tracking-wider">
-            选择表单模板 · Form Templates
-          </h3>
+        <ContentCard title={t('form.selectTemplate')} color={tc.primary}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {allTemplates.map((tpl, i) => {
               const Icon = tpl.icon
@@ -843,7 +809,7 @@ export function SmartFormPage() {
                   onClick={() => setSelectedTemplate(tpl.id)}
                   className="text-left rounded-2xl p-5 border transition-all duration-400 group relative overflow-hidden hover:-translate-y-1"
                   style={{
-                    background: 'rgba(10,10,10,0.5)',
+                    background: tc.bgCard,
                     borderColor: `${tpl.color}20`,
                     animation: `spring-in 0.4s var(--spring-easing) ${i * 0.08}s both`,
                   }}
@@ -856,7 +822,6 @@ export function SmartFormPage() {
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  {/* Glow bg */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{
@@ -876,12 +841,19 @@ export function SmartFormPage() {
                         <Icon className="w-6 h-6" style={{ color: tpl.color }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm text-white/80 mb-0.5">{tpl.title}</h4>
-                        <p className="text-[10px] text-white/20">{tpl.subtitle}</p>
+                        <h4 className="text-sm" style={{ color: tc.textPrimary }}>
+                          {tpl.title}
+                        </h4>
+                        <p className={TYPOGRAPHY.bodyMuted}>{tpl.subtitle}</p>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-white/10 group-hover:text-white/40 transition-colors shrink-0 mt-1" />
+                      <ChevronRight
+                        className="w-4 h-4 transition-colors shrink-0 mt-1"
+                        style={{ color: tc.muted }}
+                      />
                     </div>
-                    <p className="text-xs text-white/30 leading-relaxed mb-3">{tpl.description}</p>
+                    <p className="text-xs" style={{ color: tc.textMuted }}>
+                      {tpl.description}
+                    </p>
                     <div className="flex items-center gap-3">
                       <span
                         className="text-[9px] px-2 py-0.5 rounded-full"
@@ -896,17 +868,17 @@ export function SmartFormPage() {
                       <span
                         className="text-[9px] px-2 py-0.5 rounded-full"
                         style={{
-                          background: 'rgba(0,212,255,0.08)',
-                          color: '#00d4ff',
-                          border: '1px solid rgba(0,212,255,0.2)',
+                          background: tc.alpha(tc.secondary, 0.08),
+                          color: tc.secondary,
+                          border: `1px solid ${tc.alpha(tc.secondary, 0.2)}`,
                         }}
                       >
                         <Sparkles className="w-2.5 h-2.5 inline mr-0.5" />
-                        AI 辅助
+                        {t('form.aiAssist')}
                       </span>
                       {tpl.fields.some((f) => f.required) && (
-                        <span className="text-[9px] text-white/15">
-                          {tpl.fields.filter((f) => f.required).length} 必填
+                        <span className="text-[9px]" style={{ color: tc.muted }}>
+                          {tpl.fields.filter((f) => f.required).length} {t('form.required')}
                         </span>
                       )}
                     </div>
@@ -915,7 +887,7 @@ export function SmartFormPage() {
               )
             })}
           </div>
-        </NeonCard>
+        </ContentCard>
       </div>
     )
   }
@@ -935,9 +907,9 @@ export function SmartFormPage() {
           <button
             onClick={resetForm}
             className="p-2 rounded-xl transition-colors hover:bg-white/5"
-            style={{ border: '1px solid rgba(255,255,255,0.06)' }}
+            style={{ border: `1px solid ${tc.alpha(tc.border, 0.06)}` }}
           >
-            <ChevronRight className="w-4 h-4 text-white/30 rotate-180" />
+            <ChevronRight className="w-4 h-4" style={{ color: tc.muted }} />
           </button>
           <div>
             <h2
@@ -947,27 +919,28 @@ export function SmartFormPage() {
               <TemplateIcon className="w-5 h-5" />
               {template.title}
             </h2>
-            <p className="text-xs text-white/25 mt-0.5 tracking-wider">
-              {template.subtitle} — AI-Powered Smart Form
-            </p>
+            <p className={TYPOGRAPHY.bodyMuted}>{template.subtitle} — AI-Powered Smart Form</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {/* Completion indicator */}
           <div className="hidden sm:flex items-center gap-2 mr-2">
-            <div className="w-24 h-1.5 rounded-full bg-white/5 overflow-hidden">
+            <div
+              className="w-24 h-1.5 rounded-full"
+              style={{ background: tc.alpha(tc.border, 0.05) }}
+            >
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{
                   width: `${completionPct}%`,
-                  background: `linear-gradient(90deg, ${template.color}, #00ffc8)`,
+                  background: `linear-gradient(90deg, ${template.color}, ${tc.primary})`,
                   boxShadow: `0 0 8px ${template.color}50`,
                 }}
               />
             </div>
             <span
               className="text-[10px]"
-              style={{ color: completionPct === 100 ? '#00ffc8' : template.color }}
+              style={{ color: completionPct === 100 ? tc.primary : template.color }}
             >
               {filledCount}/{totalFields}
             </span>
@@ -977,13 +950,13 @@ export function SmartFormPage() {
             onClick={() => setShowPreview((p) => !p)}
             className="px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 transition-all duration-300"
             style={{
-              background: showPreview ? `${template.color}15` : 'rgba(255,255,255,0.03)',
-              border: `1px solid ${showPreview ? `${template.color}40` : 'rgba(255,255,255,0.08)'}`,
-              color: showPreview ? template.color : 'rgba(255,255,255,0.4)',
+              background: showPreview ? `${template.color}15` : tc.alpha(tc.border, 0.03),
+              border: `1px solid ${showPreview ? `${template.color}40` : tc.alpha(tc.border, 0.08)}`,
+              color: showPreview ? template.color : tc.muted,
             }}
           >
             {showPreview ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-            预览
+            {t('form.preview')}
           </button>
         </div>
       </div>
@@ -991,7 +964,7 @@ export function SmartFormPage() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
         {/* Main Form */}
         <div className={showPreview ? 'xl:col-span-2' : 'xl:col-span-3'}>
-          <NeonCard color={template.color} hoverable={false}>
+          <ContentCard color={template.color}>
             <div className="space-y-5">
               {template.fields.map((field, idx) => (
                 <FormField
@@ -1018,7 +991,10 @@ export function SmartFormPage() {
             </div>
 
             {/* Submit Area */}
-            <div className="mt-8 pt-5 border-t" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+            <div
+              className="mt-8 pt-5 border-t"
+              style={{ borderColor: tc.alpha(tc.borderDefault, 0.04) }}
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
@@ -1026,19 +1002,24 @@ export function SmartFormPage() {
                     style={{
                       background:
                         Object.keys(errors).length > 0
-                          ? 'rgba(0,95,115,0.08)'
-                          : 'rgba(0,255,200,0.06)',
-                      border: `1px solid ${Object.keys(errors).length > 0 ? 'rgba(0,95,115,0.2)' : 'rgba(0,255,200,0.15)'}`,
-                      color: Object.keys(errors).length > 0 ? '#005f73' : '#00ffc8',
+                          ? tc.alpha(tc.danger, 0.08)
+                          : tc.alpha(tc.success, 0.06),
+                      border: `1px solid ${
+                        Object.keys(errors).length > 0
+                          ? tc.alpha(tc.danger, 0.2)
+                          : tc.alpha(tc.success, 0.15)
+                      }`,
+                      color: Object.keys(errors).length > 0 ? tc.danger : tc.success,
                     }}
                   >
                     {Object.keys(errors).length > 0 ? (
                       <>
-                        <AlertCircle className="w-3 h-3" /> {Object.keys(errors).length} 个错误
+                        <AlertCircle className="w-3 h-3" /> {Object.keys(errors).length}{' '}
+                        {t('form.errors')}
                       </>
                     ) : (
                       <>
-                        <CheckCircle2 className="w-3 h-3" /> 校验通过
+                        <CheckCircle2 className="w-3 h-3" /> {t('form.validated')}
                       </>
                     )}
                   </div>
@@ -1048,7 +1029,7 @@ export function SmartFormPage() {
                   disabled={isSubmitting}
                   className="px-6 py-2.5 rounded-xl text-sm flex items-center gap-2 transition-all duration-400 relative overflow-hidden disabled:opacity-60"
                   style={{
-                    background: `linear-gradient(135deg, ${template.color}25, rgba(0,212,255,0.15))`,
+                    background: `linear-gradient(135deg, ${template.color}25, ${tc.alpha(tc.secondary, 0.15)})`,
                     border: `1px solid ${template.color}60`,
                     color: template.color,
                     boxShadow: `0 0 20px ${template.color}20`,
@@ -1060,8 +1041,7 @@ export function SmartFormPage() {
                         className="w-4 h-4"
                         style={{ animation: 'icon-spin 1s linear infinite' }}
                       />
-                      AI 处理中…
-                      {/* Progress bar inside button */}
+                      {t('form.processing')}
                       <div
                         className="absolute bottom-0 left-0 h-0.5 rounded-full"
                         style={{
@@ -1073,13 +1053,13 @@ export function SmartFormPage() {
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      提交表单
+                      {t('form.submit')}
                     </>
                   )}
                 </button>
               </div>
             </div>
-          </NeonCard>
+          </ContentCard>
         </div>
 
         {/* Preview Panel */}
@@ -1088,22 +1068,18 @@ export function SmartFormPage() {
             className="xl:col-span-1"
             style={{ animation: 'spring-in 0.3s var(--spring-easing) both' }}
           >
-            <NeonCard color="#00f0ff" hoverable={false}>
-              <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider flex items-center gap-2">
-                <Eye className="w-3 h-3" />
-                数据预览 · JSON Preview
-              </h3>
+            <ContentCard title={t('form.dataPreview')} color={tc.primary}>
               <div
                 className="rounded-xl p-3 overflow-auto max-h-[60vh]"
                 style={{
-                  background: 'rgba(0,0,0,0.4)',
-                  border: '1px solid rgba(0,240,255,0.1)',
+                  background: tc.alpha(tc.bgCard, 0.4),
+                  border: `1px solid ${tc.alpha(tc.primary, 0.1)}`,
                   scrollbarWidth: 'none',
                 }}
               >
                 <pre
-                  className="text-[10px] text-[#00f0ff]/60 whitespace-pre-wrap break-all"
-                  style={{ fontFamily: 'monospace' }}
+                  className="text-[10px] whitespace-pre-wrap break-all"
+                  style={{ fontFamily: 'monospace', color: tc.alpha(tc.primary, 0.6) }}
                 >
                   {JSON.stringify(
                     {
@@ -1119,24 +1095,24 @@ export function SmartFormPage() {
               {/* Field stats */}
               <div className="mt-4 space-y-2">
                 <div className="flex justify-between text-[10px]">
-                  <span className="text-white/20">填写进度</span>
+                  <span style={{ color: tc.muted }}>{t('form.completion')}</span>
                   <span style={{ color: template.color }}>{completionPct}%</span>
                 </div>
                 <div className="flex justify-between text-[10px]">
-                  <span className="text-white/20">必填项</span>
-                  <span className="text-[#00ffc8]">
+                  <span style={{ color: tc.muted }}>{t('form.requiredFields')}</span>
+                  <span style={{ color: tc.primary }}>
                     {template.fields.filter((f) => f.required && formValues[f.id]).length}/
                     {template.fields.filter((f) => f.required).length}
                   </span>
                 </div>
                 <div className="flex justify-between text-[10px]">
-                  <span className="text-white/20">数据大小</span>
-                  <span className="text-white/30">
+                  <span style={{ color: tc.muted }}>{t('form.dataSize')}</span>
+                  <span style={{ color: tc.alpha(tc.textPrimary, 0.3) }}>
                     {new Blob([JSON.stringify(formValues)]).size} bytes
                   </span>
                 </div>
               </div>
-            </NeonCard>
+            </ContentCard>
           </div>
         )}
       </div>
@@ -1170,6 +1146,8 @@ const FormField = memo(function FormField({
   index: number
   templateColor: string
 }) {
+  const { t } = useI18n()
+  const tc = useThemeColors()
   const color = field.color || templateColor
   const hasError = !!error
   const suggestions = aiSuggestions[field.id] || []
@@ -1184,9 +1162,9 @@ const FormField = memo(function FormField({
   ) as string | number
 
   const inputStyle: CSSProperties = {
-    background: 'rgba(10,10,10,0.6)',
-    border: `1px solid ${hasError ? 'rgba(0,95,115,0.5)' : `${color}20`}`,
-    color: 'rgba(255,255,255,0.8)',
+    background: tc.bgCard,
+    border: `1px solid ${hasError ? tc.alpha(tc.danger, 0.5) : `${color}20`}`,
+    color: tc.textPrimary,
     borderRadius: 12,
     transition: 'all 0.3s ease',
     outline: 'none',
@@ -1195,14 +1173,14 @@ const FormField = memo(function FormField({
   const focusHandler = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
-    e.currentTarget.style.borderColor = hasError ? 'rgba(0,95,115,0.7)' : `${color}60`
-    e.currentTarget.style.boxShadow = `0 0 15px ${hasError ? 'rgba(0,95,115,0.15)' : `${color}15`}`
+    e.currentTarget.style.borderColor = hasError ? tc.alpha(tc.danger, 0.7) : `${color}60`
+    e.currentTarget.style.boxShadow = `0 0 15px ${hasError ? tc.alpha(tc.danger, 0.15) : `${color}15`}`
   }
 
   const blurHandler = (
     e: FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
-    e.currentTarget.style.borderColor = hasError ? 'rgba(0,95,115,0.5)' : `${color}20`
+    e.currentTarget.style.borderColor = hasError ? tc.alpha(tc.danger, 0.5) : `${color}20`
     e.currentTarget.style.boxShadow = 'none'
     onBlur()
   }
@@ -1211,17 +1189,19 @@ const FormField = memo(function FormField({
     <div style={{ animation: `spring-in 0.3s var(--spring-easing) ${index * 0.04}s both` }}>
       {/* Label Row */}
       <div className="flex items-center gap-2 mb-2">
-        <label className="text-sm text-white/60">{field.label}</label>
+        <label className="text-sm" style={{ color: tc.textMuted }}>
+          {field.label}
+        </label>
         {field.required && (
           <span
             className="text-[9px] px-1.5 py-0.5 rounded"
             style={{
-              background: 'rgba(0,95,115,0.08)',
-              color: '#005f73',
-              border: '1px solid rgba(0,95,115,0.2)',
+              background: tc.alpha(tc.danger, 0.08),
+              color: tc.danger,
+              border: `1px solid ${tc.alpha(tc.danger, 0.2)}`,
             }}
           >
-            必填
+            {t('form.required')}
           </span>
         )}
         {field.aiHint && (
@@ -1229,9 +1209,11 @@ const FormField = memo(function FormField({
             onClick={onToggleAi}
             className="ml-auto flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-lg transition-all duration-300"
             style={{
-              background: showAiSuggestion ? 'rgba(0,212,255,0.12)' : 'rgba(0,212,255,0.04)',
-              border: `1px solid ${showAiSuggestion ? 'rgba(0,212,255,0.4)' : 'rgba(0,212,255,0.12)'}`,
-              color: '#00d4ff',
+              background: showAiSuggestion
+                ? tc.alpha(tc.secondary, 0.12)
+                : tc.alpha(tc.secondary, 0.04),
+              border: `1px solid ${showAiSuggestion ? tc.alpha(tc.secondary, 0.4) : tc.alpha(tc.secondary, 0.12)}`,
+              color: tc.secondary,
             }}
           >
             <Wand2 className="w-2.5 h-2.5" />
@@ -1245,9 +1227,9 @@ const FormField = memo(function FormField({
         <div
           className="mb-2 px-3 py-2 rounded-xl text-[10px]"
           style={{
-            background: 'rgba(0,212,255,0.06)',
-            border: '1px solid rgba(0,212,255,0.15)',
-            color: '#00d4ff',
+            background: tc.alpha(tc.secondary, 0.06),
+            border: `1px solid ${tc.alpha(tc.secondary, 0.15)}`,
+            color: tc.secondary,
             animation: 'spring-in 0.3s var(--spring-easing) both',
           }}
         >
@@ -1256,9 +1238,11 @@ const FormField = memo(function FormField({
               className="w-3 h-3"
               style={{ animation: 'neon-pulse 2s ease-in-out infinite' }}
             />
-            <span className="text-white/40">AI 建议</span>
+            <span style={{ color: tc.muted }}>{t('form.aiSuggestion')}</span>
           </div>
-          <p className="text-white/50 mb-2">{field.aiHint}</p>
+          <p style={{ color: tc.textMuted }} className="mb-2">
+            {field.aiHint}
+          </p>
           {suggestions.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mt-1.5">
               {suggestions.map((s, i) => (
@@ -1267,9 +1251,9 @@ const FormField = memo(function FormField({
                   onClick={() => onApplyAiSuggestion(s)}
                   className="px-2 py-1 rounded-lg text-[9px] transition-all duration-200 hover:scale-105"
                   style={{
-                    background: 'rgba(0,212,255,0.08)',
-                    border: '1px solid rgba(0,212,255,0.25)',
-                    color: 'rgba(255,255,255,0.5)',
+                    background: tc.alpha(tc.secondary, 0.08),
+                    border: `1px solid ${tc.alpha(tc.secondary, 0.25)}`,
+                    color: tc.textMuted,
                   }}
                 >
                   {s}
@@ -1331,20 +1315,16 @@ const FormField = memo(function FormField({
           className="w-full px-4 py-2.5 text-sm appearance-none cursor-pointer"
           style={{
             ...inputStyle,
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23ffffff40' stroke-width='2'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='${encodeURIComponent(tc.muted)}' stroke-width='2'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E")`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'right 12px center',
           }}
         >
-          <option value="" style={{ background: '#0a0a0a', color: 'rgba(255,255,255,0.3)' }}>
-            请选择…
+          <option value="" style={{ background: tc.bgCard, color: tc.muted }}>
+            {t('form.select')}
           </option>
           {field.options?.map((opt) => (
-            <option
-              key={opt}
-              value={opt}
-              style={{ background: '#0a0a0a', color: 'rgba(255,255,255,0.8)' }}
-            >
+            <option key={opt} value={opt} style={{ background: tc.bgCard, color: tc.textPrimary }}>
               {opt}
             </option>
           ))}
@@ -1362,9 +1342,9 @@ const FormField = memo(function FormField({
                 onClick={() => onChange(opt)}
                 className="px-3 py-2 rounded-xl text-xs transition-all duration-300"
                 style={{
-                  background: selected ? `${color}15` : 'rgba(10,10,10,0.5)',
-                  border: `1px solid ${selected ? `${color}50` : 'rgba(255,255,255,0.06)'}`,
-                  color: selected ? color : 'rgba(255,255,255,0.4)',
+                  background: selected ? `${color}15` : tc.bgCard,
+                  border: `1px solid ${selected ? `${color}50` : tc.borderDefault}`,
+                  color: selected ? color : tc.textMuted,
                   boxShadow: selected ? `0 0 10px ${color}20` : 'none',
                 }}
               >
@@ -1391,16 +1371,16 @@ const FormField = memo(function FormField({
                 }}
                 className="px-3 py-2 rounded-xl text-xs transition-all duration-300"
                 style={{
-                  background: checked ? `${color}12` : 'rgba(10,10,10,0.5)',
-                  border: `1px solid ${checked ? `${color}40` : 'rgba(255,255,255,0.06)'}`,
-                  color: checked ? color : 'rgba(255,255,255,0.35)',
+                  background: checked ? `${color}12` : tc.bgCard,
+                  border: `1px solid ${checked ? `${color}40` : tc.borderDefault}`,
+                  color: checked ? color : tc.textMuted,
                   boxShadow: checked ? `0 0 8px ${color}15` : 'none',
                 }}
               >
                 {checked ? (
                   <Check className="w-3 h-3 inline mr-1" />
                 ) : (
-                  <Plus className="w-3 h-3 inline mr-1 opacity-30" />
+                  <Plus className="w-3 h-3 inline mr-1" style={{ color: tc.muted }} />
                 )}
                 {opt}
               </button>
@@ -1415,8 +1395,8 @@ const FormField = memo(function FormField({
           onClick={() => onChange(!value)}
           className="relative w-12 h-7 rounded-full transition-all duration-300"
           style={{
-            background: value ? `${color}30` : 'rgba(255,255,255,0.06)',
-            border: `1px solid ${value ? `${color}60` : 'rgba(255,255,255,0.1)'}`,
+            background: value ? `${color}30` : tc.borderDefault,
+            border: `1px solid ${value ? `${color}60` : tc.borderDefault}`,
             boxShadow: value ? `0 0 12px ${color}25` : 'none',
           }}
         >
@@ -1424,7 +1404,7 @@ const FormField = memo(function FormField({
             className="absolute top-1 w-5 h-5 rounded-full transition-all duration-300"
             style={{
               left: value ? 24 : 4,
-              background: value ? color : 'rgba(255,255,255,0.3)',
+              background: value ? color : tc.muted,
               boxShadow: value ? `0 0 6px ${color}` : 'none',
             }}
           />
@@ -1443,7 +1423,7 @@ const FormField = memo(function FormField({
               onChange={(e) => onChange(Number(e.target.value))}
               className="flex-1 h-1.5 rounded-full appearance-none cursor-pointer"
               style={{
-                background: `linear-gradient(to right, ${color} ${(((Number(value) || 0) - (field.min ?? 0)) / ((field.max ?? 100) - (field.min ?? 0))) * 100}%, rgba(255,255,255,0.08) ${(((Number(value) || 0) - (field.min ?? 0)) / ((field.max ?? 100) - (field.min ?? 0))) * 100}%)`,
+                background: `linear-gradient(to right, ${color} ${(((Number(value) || 0) - (field.min ?? 0)) / ((field.max ?? 100) - (field.min ?? 0))) * 100}%, ${tc.alpha(tc.borderDefault, 0.5)} ${(((Number(value) || 0) - (field.min ?? 0)) / ((field.max ?? 100) - (field.min ?? 0))) * 100}%)`,
                 accentColor: color,
               }}
             />
@@ -1461,8 +1441,12 @@ const FormField = memo(function FormField({
           </div>
           {field.min !== undefined && field.max !== undefined && (
             <div className="flex justify-between mt-1">
-              <span className="text-[9px] text-white/15">{field.min}</span>
-              <span className="text-[9px] text-white/15">{field.max}</span>
+              <span className="text-[9px]" style={{ color: tc.muted }}>
+                {field.min}
+              </span>
+              <span className="text-[9px]" style={{ color: tc.muted }}>
+                {field.max}
+              </span>
             </div>
           )}
         </div>
@@ -1492,18 +1476,20 @@ const FormField = memo(function FormField({
               <Star
                 className="w-7 h-7"
                 style={{
-                  color: star <= (Number(value) || 0) ? '#00ffcc' : 'rgba(255,255,255,0.08)',
-                  fill: star <= (Number(value) || 0) ? '#00ffcc' : 'transparent',
+                  color: star <= (Number(value) || 0) ? color : tc.borderDefault,
+                  fill: star <= (Number(value) || 0) ? color : 'transparent',
                   filter:
                     star <= (Number(value) || 0)
-                      ? 'drop-shadow(0 0 6px rgba(0,255,204,0.5))'
+                      ? `drop-shadow(0 0 6px ${tc.alpha(color, 0.5)})`
                       : 'none',
                   transition: 'all 0.2s ease',
                 }}
               />
             </button>
           ))}
-          <span className="text-xs text-white/20 ml-2">{value || 0}/5</span>
+          <span className="text-xs" style={{ color: tc.muted }}>
+            {value || 0}/5
+          </span>
         </div>
       )}
 
@@ -1511,7 +1497,7 @@ const FormField = memo(function FormField({
       {hasError && (
         <div
           className="flex items-center gap-1.5 mt-1.5 text-[10px]"
-          style={{ color: '#005f73', animation: 'spring-in 0.2s var(--spring-easing) both' }}
+          style={{ color: tc.danger, animation: 'spring-in 0.2s var(--spring-easing) both' }}
         >
           <AlertCircle className="w-3 h-3" />
           {error}

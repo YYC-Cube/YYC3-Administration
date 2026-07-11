@@ -251,7 +251,9 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
             <BarChart3 className="w-6 h-6" />
             {t('dash.title')}
           </h2>
-          <p className="text-xs text-white/25 mt-1 tracking-wider">{t('dash.subtitle')}</p>
+          <p className="text-xs mt-1 tracking-wider" style={{ color: tc.textMuted }}>
+            {t('dash.subtitle')}
+          </p>
         </div>
         <div className="flex items-center gap-3">
           {/* Export button */}
@@ -283,7 +285,9 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
             >
               {timeStr}
             </p>
-            <p className="text-[10px] text-white/20">{dateStr}</p>
+            <p className="text-[10px]" style={{ color: tc.textMuted }}>
+              {dateStr}
+            </p>
           </div>
           <div
             className="flex items-center gap-2 px-3 py-1.5 rounded-xl border"
@@ -317,7 +321,10 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
               <div style={{ animation: isFlashing ? 'value-pulse 0.6s ease-out' : 'none' }}>
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">
+                    <p
+                      className="text-[10px] uppercase tracking-wider mb-1"
+                      style={{ color: tc.textMuted }}
+                    >
                       {m.label}
                     </p>
                     <p
@@ -348,7 +355,9 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                     )}
                     {m.change}
                   </span>
-                  <span className="text-[9px] text-white/15">{m.sublabel}</span>
+                  <span className="text-[9px]" style={{ color: tc.textMuted }}>
+                    {m.sublabel}
+                  </span>
                 </div>
               </div>
             </NeonCard>
@@ -360,9 +369,9 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 mb-6">
         {/* Weekly Trend Area Chart */}
         <div className="xl:col-span-2">
-          <NeonCard color="#00f0ff" hoverable={false}>
+          <NeonCard color={tc.primary} hoverable={false}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs text-white/40 uppercase tracking-wider">
+              <h3 className="text-xs uppercase tracking-wider" style={{ color: tc.textSecondary }}>
                 {t('dash.weeklyTrends')}
               </h3>
               <div className="flex items-center gap-3">
@@ -376,7 +385,9 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                       className="w-2 h-2 rounded-full"
                       style={{ background: l.color, boxShadow: `0 0 4px ${l.color}` }}
                     />
-                    <span className="text-[9px] text-white/30">{l.label}</span>
+                    <span className="text-[9px]" style={{ color: tc.textMuted }}>
+                      {l.label}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -398,15 +409,15 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                       <stop offset="100%" stopColor={tc.secondary} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke={tc.borderSubtle} />
                   <XAxis
                     dataKey="day"
-                    tick={{ fill: 'rgba(255,255,255,0.2)', fontSize: 10 }}
-                    axisLine={{ stroke: 'rgba(255,255,255,0.05)' }}
+                    tick={{ fill: tc.textMuted, fontSize: 10 }}
+                    axisLine={{ stroke: tc.borderSubtle }}
                     tickLine={false}
                   />
                   <YAxis
-                    tick={{ fill: 'rgba(255,255,255,0.15)', fontSize: 10 }}
+                    tick={{ fill: tc.textMuted, fontSize: 10 }}
                     axisLine={false}
                     tickLine={false}
                   />
@@ -442,8 +453,8 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
         </div>
 
         {/* Customer Stage Pie Chart */}
-        <NeonCard color="#00d4ff" hoverable={false}>
-          <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
+        <NeonCard color={tc.secondary} hoverable={false}>
+          <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textSecondary }}>
             {t('dash.stageDist')}
           </h3>
           <div
@@ -478,7 +489,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
             {chartData.customerStage.map((s, i) => (
               <div key={`legend-stage-${i}`} className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />
-                <span className="text-[9px] text-white/30">
+                <span className="text-[9px]" style={{ color: tc.textMuted }}>
                   {s.name} {s.value}
                 </span>
               </div>
@@ -490,22 +501,22 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
       {/* === CHARTS ROW 2: Bar + Radial + Quick Nav === */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-6">
         {/* Hourly Call Volume */}
-        <NeonCard color="#00ffcc" hoverable={false}>
-          <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
+        <NeonCard color={tc.accent} hoverable={false}>
+          <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textSecondary }}>
             {t('dash.hourlyCalls')}
           </h3>
           <div className="h-44 w-full" style={{ minHeight: '176px', minWidth: '200px' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData.hourlyCalls}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
+                <CartesianGrid strokeDasharray="3 3" stroke={tc.borderSubtle} />
                 <XAxis
                   dataKey="hour"
-                  tick={{ fill: 'rgba(255,255,255,0.2)', fontSize: 9 }}
+                  tick={{ fill: tc.textMuted, fontSize: 9 }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <YAxis
-                  tick={{ fill: 'rgba(255,255,255,0.15)', fontSize: 9 }}
+                  tick={{ fill: tc.textMuted, fontSize: 9 }}
                   axisLine={false}
                   tickLine={false}
                 />
@@ -514,8 +525,8 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                   {chartData.hourlyCalls.map((entry, i) => (
                     <Cell
                       key={`bar-cell-${entry.hour}-${i}`}
-                      fill={`rgba(0,255,204,${0.3 + (entry.calls / 60) * 0.7})`}
-                      style={{ filter: 'drop-shadow(0 0 4px rgba(0,255,204,0.3))' }}
+                      fill={tc.alpha(tc.accent, 0.3 + (entry.calls / 60) * 0.7)}
+                      style={{ filter: `drop-shadow(0 0 4px ${tc.alpha(tc.accent, 0.3)})` }}
                     />
                   ))}
                 </Bar>
@@ -525,8 +536,8 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
         </NeonCard>
 
         {/* AI Performance Radial */}
-        <NeonCard color="#00ffc8" hoverable={false}>
-          <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
+        <NeonCard color={tc.success} hoverable={false}>
+          <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textSecondary }}>
             {t('dash.aiMatrix')}
           </h3>
           <div className="h-44 w-full" style={{ minHeight: '176px', minWidth: '200px' }}>
@@ -541,7 +552,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                 endAngle={0}
               >
                 <RadialBar
-                  background={{ fill: 'rgba(255,255,255,0.03)' }}
+                  background={{ fill: tc.alpha(tc.textSecondary, 0.05) }}
                   dataKey="value"
                   cornerRadius={6}
                 />
@@ -553,7 +564,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
             {chartData.aiPerformance.map((d, i) => (
               <div key={i} className="flex items-center gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full" style={{ background: d.fill }} />
-                <span className="text-[9px] text-white/30">
+                <span className="text-[9px]" style={{ color: tc.textMuted }}>
                   {d.name} {d.value}%
                 </span>
               </div>
@@ -562,8 +573,8 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
         </NeonCard>
 
         {/* Quick Navigation */}
-        <NeonCard color="#00f0ff" hoverable={false}>
-          <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
+        <NeonCard color={tc.primary} hoverable={false}>
+          <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textSecondary }}>
             {t('dash.quickNav')}
           </h3>
           <div className="space-y-2">
@@ -575,7 +586,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                   onClick={() => setActivePage(item.page)}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-300 group"
                   style={{
-                    background: 'rgba(10,10,10,0.4)',
+                    background: tc.bgElevated,
                     borderColor: `${item.color}15`,
                   }}
                   onMouseEnter={(e) => {
@@ -586,7 +597,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = `${item.color}15`
                     e.currentTarget.style.boxShadow = 'none'
-                    e.currentTarget.style.background = 'rgba(10,10,10,0.4)'
+                    e.currentTarget.style.background = tc.bgElevated
                   }}
                 >
                   <div
@@ -596,12 +607,17 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                     <Icon className="w-4 h-4" style={{ color: item.color }} />
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-xs text-white/60 group-hover:text-white/80 transition-colors">
+                    <p className="text-xs transition-colors" style={{ color: tc.textSecondary }}>
                       {item.label}
                     </p>
-                    <p className="text-[9px] text-white/20">{item.desc}</p>
+                    <p className="text-[9px]" style={{ color: tc.textMuted }}>
+                      {item.desc}
+                    </p>
                   </div>
-                  <ChevronRight className="w-3.5 h-3.5 text-white/10 group-hover:text-white/30 transition-colors" />
+                  <ChevronRight
+                    className="w-3.5 h-3.5 transition-colors"
+                    style={{ color: tc.textMuted }}
+                  />
                 </button>
               )
             })}
@@ -613,12 +629,12 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
         {/* Activity Feed */}
         <div className="xl:col-span-2">
-          <NeonCard color="#00d4ff" hoverable={false}>
+          <NeonCard color={tc.secondary} hoverable={false}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xs text-white/40 uppercase tracking-wider">
+              <h3 className="text-xs uppercase tracking-wider" style={{ color: tc.textSecondary }}>
                 {t('dash.activityFeed')}
               </h3>
-              <span className="text-[9px] text-white/15">
+              <span className="text-[9px]" style={{ color: tc.textMuted }}>
                 {t('dash.recentCount', { count: recentActivities.length })}
               </span>
             </div>
@@ -648,13 +664,13 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                       <Icon className="w-3.5 h-3.5" style={{ color: `${act.color}80` }} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-white/50 truncate">
+                      <p className="text-xs truncate" style={{ color: tc.textSecondary }}>
                         <span style={{ color: `${act.color}90` }}>{act.action}</span>
-                        <span className="text-white/20"> · </span>
+                        <span style={{ color: tc.textMuted }}> · </span>
                         {act.target}
                       </p>
                     </div>
-                    <span className="text-[9px] text-white/15 shrink-0">
+                    <span className="text-[9px] shrink-0" style={{ color: tc.textMuted }}>
                       {formatTimeAgo(act.timestamp)}
                     </span>
                   </div>
@@ -665,8 +681,8 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
         </div>
 
         {/* System Health */}
-        <NeonCard color="#00ffc8" hoverable={false}>
-          <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
+        <NeonCard color={tc.success} hoverable={false}>
+          <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textSecondary }}>
             {t('dash.systemHealth')}
           </h3>
           <div className="space-y-4">
@@ -690,14 +706,19 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
                       <Icon className="w-3 h-3" style={{ color: `${sys.color}70` }} />
-                      <span className="text-[10px] text-white/30">{sys.label}</span>
+                      <span className="text-[10px]" style={{ color: tc.textMuted }}>
+                        {sys.label}
+                      </span>
                     </div>
                     <span className="text-xs tabular-nums" style={{ color: sys.color }}>
                       {sys.value}
                       {sys.unit || '%'}
                     </span>
                   </div>
-                  <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
+                  <div
+                    className="w-full h-1.5 rounded-full overflow-hidden"
+                    style={{ background: tc.borderSubtle }}
+                  >
                     <div
                       className="h-full rounded-full transition-all duration-1000"
                       style={{
@@ -712,17 +733,17 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
             })}
 
             {/* Uptime & Version */}
-            <div className="mt-4 pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+            <div className="mt-4 pt-3" style={{ borderTop: `1px solid ${tc.borderSubtle}` }}>
               <div className="flex justify-between text-[10px] mb-1.5">
-                <span className="text-white/20">{t('dash.uptime')}</span>
+                <span style={{ color: tc.textMuted }}>{t('dash.uptime')}</span>
                 <span style={{ color: tc.success }}>99.97% SLA</span>
               </div>
               <div className="flex justify-between text-[10px] mb-1.5">
-                <span className="text-white/20">{t('dash.aiEngine')}</span>
+                <span style={{ color: tc.textMuted }}>{t('dash.aiEngine')}</span>
                 <span style={{ color: tc.primary }}>{t('dash.aiEngineVer')}</span>
               </div>
               <div className="flex justify-between text-[10px]">
-                <span className="text-white/20">{t('dash.dataSync')}</span>
+                <span style={{ color: tc.textMuted }}>{t('dash.dataSync')}</span>
                 <span style={{ color: tc.secondary }}>{t('dash.dataSyncStatus')}</span>
               </div>
             </div>
@@ -739,6 +760,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
 // Phase 8: Form submission mini-dashboard card
 function FormDashboardCard({ onGoToForms }: { onGoToForms: () => void }) {
   const { t } = useI18n()
+  const tc = useThemeColors()
   const [count, setCount] = useState(0)
   useEffect(() => {
     try {
@@ -752,30 +774,34 @@ function FormDashboardCard({ onGoToForms }: { onGoToForms: () => void }) {
 
   return (
     <div className="mt-6">
-      <NeonCard color="#008b9d" hoverable={false}>
+      <NeonCard color={tc.muted} hoverable={false}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{
-                background: 'rgba(0,139,157,0.1)',
-                border: '1px solid rgba(0,139,157,0.25)',
+                background: tc.alpha(tc.muted, 0.1),
+                border: `1px solid ${tc.alpha(tc.muted, 0.25)}`,
               }}
             >
-              <ClipboardList className="w-5 h-5 text-[#008b9d]" />
+              <ClipboardList className="w-5 h-5" style={{ color: tc.muted }} />
             </div>
             <div>
-              <h3 className="text-xs text-white/50">{t('dash.smartFormSystem')}</h3>
-              <p className="text-[10px] text-white/20">{t('dash.formStats', { count })}</p>
+              <h3 className="text-xs" style={{ color: tc.textSecondary }}>
+                {t('dash.smartFormSystem')}
+              </h3>
+              <p className="text-[10px]" style={{ color: tc.textMuted }}>
+                {t('dash.formStats', { count })}
+              </p>
             </div>
           </div>
           <button
             onClick={onGoToForms}
             className="px-3 py-1.5 rounded-xl text-[10px] flex items-center gap-1 transition-all duration-300"
             style={{
-              background: 'rgba(0,139,157,0.08)',
-              border: '1px solid rgba(0,139,157,0.2)',
-              color: '#008b9d',
+              background: tc.alpha(tc.muted, 0.08),
+              border: `1px solid ${tc.alpha(tc.muted, 0.2)}`,
+              color: tc.muted,
             }}
           >
             {t('dash.goTo')}
