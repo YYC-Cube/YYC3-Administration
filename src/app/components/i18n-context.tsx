@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import type { ReactNode } from 'react'
 
 import { enMessages } from '../locales/en'
 import { zhMessages } from '../locales/zh'
 
 import type { Locale as CoreLocale, TranslationMap } from '@/lib/i18n/types'
+import type { ReactNode } from 'react'
 
 import { I18nEngine } from '@/lib/i18n/engine'
 import { MissingKeyReporter } from '@/lib/i18n/plugins/index'
@@ -83,7 +83,6 @@ function flatToNested(flat: Record<string, string>): TranslationMap {
 // Singleton engine instance — created once for the app lifetime
 const engine = new I18nEngine({
   locale: 'zh-CN',
-  fallbackLocale: 'en',
   cache: { enabled: true, maxSize: 2000, ttl: 10 * 60 * 1000 },
   debug: false,
 })

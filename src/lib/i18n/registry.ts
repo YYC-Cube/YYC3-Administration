@@ -16,7 +16,7 @@
  */
 import type { Locale, TranslationMap } from './types'
 
-type LazyLocale = Exclude<Locale, 'en'>
+type LazyLocale = Exclude<Locale, 'zh-CN'>
 type LocaleModule = Record<string, TranslationMap>
 
 type LazyLocaleRegistration = {
@@ -24,10 +24,10 @@ type LazyLocaleRegistration = {
   loader: () => Promise<LocaleModule>
 }
 
-export const DEFAULT_LOCALE: Locale = 'en'
+export const DEFAULT_LOCALE: Locale = 'zh-CN'
 
 const LAZY_LOCALES: readonly LazyLocale[] = [
-  'zh-CN',
+  'en',
   'zh-TW',
   'ja',
   'ko',
@@ -39,9 +39,9 @@ const LAZY_LOCALES: readonly LazyLocale[] = [
 ]
 
 const LAZY_LOCALE_REGISTRY: Record<LazyLocale, LazyLocaleRegistration> = {
-  'zh-CN': {
-    exportName: 'zh_CN',
-    loader: () => import('./locales/zh-CN'),
+  en: {
+    exportName: 'en',
+    loader: () => import('./locales/en'),
   },
   'zh-TW': {
     exportName: 'zh_TW',

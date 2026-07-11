@@ -44,8 +44,8 @@ describe('SUPPORTED_LOCALES — 支持的语言列表', () => {
 })
 
 describe('DEFAULT_LOCALE — 默认语言', () => {
-  it('默认语言为英语', () => {
-    expect(DEFAULT_LOCALE).toBe('en')
+  it('默认语言为中文', () => {
+    expect(DEFAULT_LOCALE).toBe('zh-CN')
   })
 })
 

@@ -19,7 +19,7 @@ import { ICUCompiler } from './icu/compiler'
 import { ICUParser } from './icu/parser'
 import { logger } from './infra/logger'
 import { getSafeLocalStorage } from './local-storage'
-import { en } from './locales/en'
+import { zh_CN } from './locales/zh-CN'
 import { PluginManager } from './plugins'
 import {
   DEFAULT_LOCALE,
@@ -66,7 +66,7 @@ export class I18nEngine {
     // Initialize state
     this.state = {
       locale: config.locale ?? DEFAULT_LOCALE,
-      translations: { [DEFAULT_LOCALE]: en },
+      translations: { [DEFAULT_LOCALE]: zh_CN },
     }
 
     // Initialize cache
@@ -155,7 +155,7 @@ export class I18nEngine {
 
     if (needsTranslationLoad) {
       try {
-        const translation = await loadLazyLocaleTranslation(locale as Exclude<Locale, 'en'>)
+        const translation = await loadLazyLocaleTranslation(locale as Exclude<Locale, 'zh-CN'>)
         if (!translation) {
           const error = new Error(`Failed to load translation for locale: ${locale}`)
           this.handleError(error, { key: '', locale })
@@ -430,4 +430,4 @@ export const i18n = new I18nEngine()
 // Convenience export
 export const t = (key: string, params?: Record<string, string>) => i18n.t(key, params)
 
-export { SUPPORTED_LOCALES, isSupportedLocale }
+export { isSupportedLocale, SUPPORTED_LOCALES }
