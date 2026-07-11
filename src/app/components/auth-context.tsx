@@ -23,13 +23,13 @@ import {
   X,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useAuthStore } from '../../stores/useAuthStore'
 
 import { useThemeColors } from './hooks/use-theme-colors'
 
-import type { LoginCredentials, RegisterInfo } from '../../types/auth'
+import type { FormEvent } from 'react'
 
 // ==========================================
 // Constants
@@ -59,20 +59,14 @@ function AuthPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [ghostOpen, setGhostOpen] = useState(false)
   const [ghostLogging, setGhostLogging] = useState<string | null>(null)
-
-  // Form fields
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [rememberMe, setRememberMe] = useState(true)
-
-  // Validation
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
-
   const ghostPanelRef = useRef<HTMLDivElement>(null)
 
-  // Close ghost panel on outside click
   useEffect(() => {
     if (!ghostOpen) return
     const handler = (e: MouseEvent) => {
@@ -92,11 +86,8 @@ function AuthPage() {
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = '邮箱格式不正确'
       if (!displayName.trim()) errors.displayName = '请输入显示名称'
     }
-    if (!password) {
-      errors.password = '请输入密码'
-    } else if (mode === 'register' && password.length < 6) {
-      errors.password = '密码至少 6 位'
-    }
+    if (!password) errors.password = '请输入密码'
+    else if (mode === 'register' && password.length < 6) errors.password = '密码至少 6 位'
     setFieldErrors(errors)
     return Object.keys(errors).length === 0
   }, [mode, username, email, password, displayName])
@@ -107,28 +98,21 @@ function AuthPage() {
       if (!validate()) return
       setError(null)
       setLoading(true)
-
       try {
         if (mode === 'login') {
-          const creds: LoginCredentials = { username: username.trim(), password, rememberMe }
-          const result = await login(creds)
-          if (!result.success) {
-            setError(result.error || '登录失败 / Login failed')
-          }
+          const result = await login({ username: username.trim(), password, rememberMe })
+          if (!result.success) setError(result.error || '登录失败 / Login failed')
         } else {
-          const info: RegisterInfo = {
+          const result = await register({
             username: username.trim(),
             email: email.trim(),
             password,
             displayName: displayName.trim() || username.trim(),
-          }
-          const result = await register(info)
-          if (!result.success) {
-            setError(result.error || '注册失败 / Registration failed')
-          }
+          })
+          if (!result.success) setError(result.error || '注册失败 / Registration failed')
         }
       } catch {
-        setError('网络错误，请重试 / Network error. Please try again.')
+        setError('网络错误，请重试 / Network error.')
       } finally {
         setLoading(false)
       }
@@ -137,31 +121,27 @@ function AuthPage() {
   )
 
   const handleGhostLogin = useCallback(
-    async (ghostUser: (typeof GHOST_ACCOUNTS)[number]) => {
-      setGhostLogging(ghostUser.label)
+    async (gu: (typeof GHOST_ACCOUNTS)[number]) => {
+      setGhostLogging(gu.label)
       setError(null)
       try {
-        const result = await login({
-          username: ghostUser.username,
-          password: 'ghost-' + ghostUser.username,
+        let r = await login({
+          username: gu.username,
+          password: 'ghost-' + gu.username,
           rememberMe: false,
         })
-        if (!result.success) {
-          // Create ghost user on the fly
-          const regResult = await register({
-            username: ghostUser.username,
-            email: `${ghostUser.username}@ghost.yyc3`,
-            password: 'ghost-' + ghostUser.username,
-            displayName: ghostUser.label,
+        if (!r.success) {
+          await register({
+            username: gu.username,
+            email: gu.username + '@ghost.yyc3',
+            password: 'ghost-' + gu.username,
+            displayName: gu.label,
           })
-          if (!regResult.success) {
-            // Try login again after creation
-            await login({
-              username: ghostUser.username,
-              password: 'ghost-' + ghostUser.username,
-              rememberMe: false,
-            })
-          }
+          r = await login({
+            username: gu.username,
+            password: 'ghost-' + gu.username,
+            rememberMe: false,
+          })
         }
       } catch {
         setError('幽灵模式登录失败')
@@ -184,17 +164,15 @@ function AuthPage() {
       background: tc.bgInput,
       border: '1px solid ' + tc.borderDefault,
       color: tc.textPrimary,
-      '::placeholder': { color: tc.textMuted },
     }),
     [tc],
-  ) as React.CSSProperties & { '::placeholder': React.CSSProperties }
+  )
 
   return (
     <div
       className="fixed inset-0 flex items-center justify-center p-4 overflow-auto"
       style={{ background: tc.bgBase }}
     >
-      {/* Animated grid background */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -207,8 +185,6 @@ function AuthPage() {
           WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)',
         }}
       />
-
-      {/* Glow orbs */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -248,7 +224,6 @@ function AuthPage() {
             boxShadow: tc.shadowLg,
           }}
         >
-          {/* ── Header ── */}
           <div className="text-center mb-8">
             <motion.div
               initial={{ scale: 0 }}
@@ -271,7 +246,6 @@ function AuthPage() {
             </p>
           </div>
 
-          {/* ── Error ── */}
           <AnimatePresence mode="wait">
             {error && (
               <motion.div
@@ -291,44 +265,34 @@ function AuthPage() {
             )}
           </AnimatePresence>
 
-          {/* ── Form ── */}
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-            {/* Display Name (register only) */}
-            <AnimatePresence>
-              {mode === 'register' && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
+            {mode === 'register' && (
+              <div>
+                <label
+                  className="block text-sm mb-1.5 font-medium"
+                  style={{ color: tc.textSecondary }}
                 >
-                  <label
-                    className="block text-sm mb-1.5 font-medium"
-                    style={{ color: tc.textSecondary }}
-                  >
-                    显示名称
-                  </label>
-                  <input
-                    type="text"
-                    value={displayName}
-                    onChange={(e) => setDisplayName(e.target.value)}
-                    onFocus={() => setFieldErrors((p) => ({ ...p, displayName: '' }))}
-                    className="w-full px-4 py-2.5 rounded-lg outline-none transition-all duration-200"
-                    style={{
-                      ...inputStyle,
-                      borderColor: fieldErrors.displayName ? tc.danger : tc.borderDefault,
-                    }}
-                    placeholder="您的显示名称"
-                  />
-                  {fieldErrors.displayName && (
-                    <p className="text-xs mt-1" style={{ color: tc.danger }}>
-                      {fieldErrors.displayName}
-                    </p>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  显示名称
+                </label>
+                <input
+                  type="text"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg outline-none transition-all duration-200"
+                  style={{
+                    ...inputStyle,
+                    borderColor: fieldErrors.displayName ? tc.danger : tc.borderDefault,
+                  }}
+                  placeholder="您的显示名称"
+                />
+                {fieldErrors.displayName && (
+                  <p className="text-xs mt-1" style={{ color: tc.danger }}>
+                    {fieldErrors.displayName}
+                  </p>
+                )}
+              </div>
+            )}
 
-            {/* Username */}
             <div>
               <label
                 className="block text-sm mb-1.5 font-medium"
@@ -359,46 +323,38 @@ function AuthPage() {
               )}
             </div>
 
-            {/* Email (register only) */}
-            <AnimatePresence>
-              {mode === 'register' && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
+            {mode === 'register' && (
+              <div>
+                <label
+                  className="block text-sm mb-1.5 font-medium"
+                  style={{ color: tc.textSecondary }}
                 >
-                  <label
-                    className="block text-sm mb-1.5 font-medium"
-                    style={{ color: tc.textSecondary }}
-                  >
-                    邮箱
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      setFieldErrors((p) => ({ ...p, email: '' }))
-                    }}
-                    required
-                    autoComplete="email"
-                    className="w-full px-4 py-2.5 rounded-lg outline-none transition-all duration-200"
-                    style={{
-                      ...inputStyle,
-                      borderColor: fieldErrors.email ? tc.danger : tc.borderDefault,
-                    }}
-                    placeholder="you@example.com"
-                  />
-                  {fieldErrors.email && (
-                    <p className="text-xs mt-1" style={{ color: tc.danger }}>
-                      {fieldErrors.email}
-                    </p>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  邮箱
+                </label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    setFieldErrors((p) => ({ ...p, email: '' }))
+                  }}
+                  required
+                  autoComplete="email"
+                  className="w-full px-4 py-2.5 rounded-lg outline-none transition-all duration-200"
+                  style={{
+                    ...inputStyle,
+                    borderColor: fieldErrors.email ? tc.danger : tc.borderDefault,
+                  }}
+                  placeholder="you@example.com"
+                />
+                {fieldErrors.email && (
+                  <p className="text-xs mt-1" style={{ color: tc.danger }}>
+                    {fieldErrors.email}
+                  </p>
+                )}
+              </div>
+            )}
 
-            {/* Password */}
             <div>
               <label
                 className="block text-sm mb-1.5 font-medium"
@@ -426,7 +382,7 @@ function AuthPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2"
                   style={{ color: tc.textMuted }}
                   tabIndex={-1}
                 >
@@ -440,7 +396,6 @@ function AuthPage() {
               )}
             </div>
 
-            {/* Remember Me (login only) */}
             {mode === 'login' && (
               <label className="flex items-center gap-2 text-sm cursor-pointer select-none group">
                 <div
@@ -466,7 +421,6 @@ function AuthPage() {
               </label>
             )}
 
-            {/* Submit */}
             <motion.button
               type="submit"
               disabled={loading}
@@ -496,21 +450,19 @@ function AuthPage() {
             </motion.button>
           </form>
 
-          {/* ── Mode Switch ── */}
           <div className="mt-6 text-center text-sm">
             <span style={{ color: tc.textMuted }}>
               {mode === 'login' ? '没有账户？' : '已有账户？'}
             </span>
             <button
               onClick={switchMode}
-              className="ml-2 hover:underline font-medium transition-colors"
+              className="ml-2 hover:underline font-medium"
               style={{ color: tc.primary }}
             >
               {mode === 'login' ? '注册新账户' : '登录'}
             </button>
           </div>
 
-          {/* ── Ghost Mode ── */}
           {GHOST_MODE_ENABLED && mode === 'login' && (
             <div className="mt-4 relative" ref={ghostPanelRef}>
               <motion.button
@@ -577,10 +529,7 @@ function AuthPage() {
                         <span className="flex-1">{account.label}</span>
                         <span
                           className="text-xs px-1.5 py-0.5 rounded"
-                          style={{
-                            background: tc.alpha(tc.primary, 0.1),
-                            color: tc.primary,
-                          }}
+                          style={{ background: tc.alpha(tc.primary, 0.1), color: tc.primary }}
                         >
                           {account.role}
                         </span>
@@ -592,7 +541,6 @@ function AuthPage() {
             </div>
           )}
 
-          {/* ── Default Credentials Hint ── */}
           {mode === 'login' && (
             <div
               className="mt-4 px-3 py-2 rounded-lg text-xs flex items-center gap-2"
@@ -607,8 +555,6 @@ function AuthPage() {
             </div>
           )}
         </div>
-
-        {/* Footer */}
         <p className="text-center text-xs mt-6" style={{ color: tc.textMuted }}>
           言启千行代码 · 语枢万物智能
         </p>
@@ -617,13 +563,8 @@ function AuthPage() {
   )
 }
 
-// ==========================================
-// Loading Screen
-// ==========================================
-
 function AuthLoading() {
   const tc = useThemeColors()
-
   return (
     <div
       className="fixed inset-0 flex items-center justify-center"
@@ -639,28 +580,12 @@ function AuthLoading() {
   )
 }
 
-// ==========================================
-// Auth Provider
-// ==========================================
-
-/**
- * Auth provider that gates the entire app behind authentication.
- * Shows login/register screen when not authenticated.
- */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { status, checkSession } = useAuthStore()
-
   useEffect(() => {
     void checkSession()
   }, [checkSession])
-
-  if (status === 'loading') {
-    return <AuthLoading />
-  }
-
-  if (status === 'unauthenticated') {
-    return <AuthPage />
-  }
-
+  if (status === 'loading') return <AuthLoading />
+  if (status === 'unauthenticated') return <AuthPage />
   return <>{children}</>
 }
