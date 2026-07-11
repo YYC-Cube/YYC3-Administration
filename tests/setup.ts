@@ -78,6 +78,10 @@ global.requestAnimationFrame = (callback: FrameRequestCallback) => {
   return setTimeout(callback, 0) as unknown as number
 }
 
+// Mock scrollIntoView (needed by cmdk, chat-interface, etc.)
+Element.prototype.scrollIntoView = vi.fn()
+Element.prototype.scrollTo = vi.fn() as unknown as typeof Element.prototype.scrollTo
+
 global.cancelAnimationFrame = (id: number) => {
   clearTimeout(id)
 }

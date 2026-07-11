@@ -9,10 +9,7 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import {
-  FileSyncEngine,
-  MockSyncBackend,
-} from '../../src/app/components/services/sync-service'
+import { FileSyncEngine, MockSyncBackend } from '../../src/app/components/services/sync-service'
 
 // ==========================================
 // Setup

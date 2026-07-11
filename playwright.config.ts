@@ -6,24 +6,24 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests/e2e',
-  
+
   // 最大测试时间
   timeout: 60 * 1000,
-  
+
   // 每个测试的断言超时
   expect: {
     timeout: 10000,
   },
-  
+
   // 并发运行测试
   fullyParallel: true,
-  
+
   // CI 环境下失败时不重试，本地可重试一次
   retries: process.env.CI ? 0 : 1,
-  
+
   // 并发 worker 数量
   workers: process.env.CI ? 2 : undefined,
-  
+
   // 测试报告
   reporter: [
     ['html', { outputFolder: 'playwright-report' }],
@@ -31,27 +31,27 @@ export default defineConfig({
     ['junit', { outputFile: 'test-results/junit.xml' }],
     ['list'],
   ],
-  
+
   // 共享设置
   use: {
-    // 基础 URL
-    baseURL: 'http://localhost:5173',
-    
+    // 基础 URL（与 vite dev server 端口一致）
+    baseURL: 'http://localhost:3173',
+
     // 截图策略
     screenshot: 'only-on-failure',
-    
+
     // 视频录制
     video: 'retain-on-failure',
-    
+
     // 追踪
     trace: 'retain-on-failure',
-    
+
     // 浏览器设置
     viewport: { width: 1280, height: 720 },
-    
+
     // 忽略 HTTPS 错误
     ignoreHTTPSErrors: true,
-    
+
     // 模拟网络条件（可选）
     // launchOptions: {
     //   slowMo: 50, // 减慢操作 50ms，便于观察
@@ -85,8 +85,8 @@ export default defineConfig({
 
   // Web Server 配置（自动启动开发服务器）
   webServer: {
-    command: 'npm run dev',
-    port: 5173,
+    command: 'pnpm dev',
+    port: 3173,
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
   },

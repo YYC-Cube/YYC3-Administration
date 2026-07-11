@@ -37,6 +37,8 @@ export interface ChatSession {
 
 const STORAGE_KEY = 'yyc3_chat_sessions'
 const ACTIVE_KEY = 'yyc3_chat_active_session'
+const MAX_MESSAGES_PER_SESSION = 200
+const MAX_SESSIONS = 50
 
 /**
  * Load chat sessions from localStorage.
@@ -144,7 +146,14 @@ export function useChatSession() {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     }
-    setSessions((prev) => [...prev, session])
+    setSessions((prev) => {
+      // Enforce max sessions cap — trim oldest
+      const next = [...prev, session]
+      if (next.length > MAX_SESSIONS) {
+        return next.slice(next.length - MAX_SESSIONS)
+      }
+      return next
+    })
     setActiveId(id)
   }, [])
 
@@ -180,7 +189,12 @@ export function useChatSession() {
       setSessions((prev) =>
         prev.map((s) => {
           if (s.id !== activeId) return s
-          const next = { ...s, messages: [...s.messages, message], updatedAt: Date.now() }
+          // Enforce message cap — keep most recent messages, trim oldest
+          const updatedMessages = [...s.messages, message]
+          if (updatedMessages.length > MAX_MESSAGES_PER_SESSION) {
+            updatedMessages.splice(0, updatedMessages.length - MAX_MESSAGES_PER_SESSION)
+          }
+          const next = { ...s, messages: updatedMessages, updatedAt: Date.now() }
           // Auto-title from first user message
           if (next.title === '新会话' && message.role === 'user') {
             next.title = message.content.slice(0, 30) + (message.content.length > 30 ? '…' : '')

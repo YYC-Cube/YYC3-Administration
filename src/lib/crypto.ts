@@ -22,10 +22,7 @@ const SALT_LENGTH = 16
  * Derive an AES-GCM key from a password using PBKDF2.
  * Each derivation uses a unique salt for security.
  */
-async function deriveKey(
-  password: string,
-  salt: Uint8Array,
-): Promise<CryptoKey> {
+async function deriveKey(password: string, salt: Uint8Array): Promise<CryptoKey> {
   const enc = new TextEncoder()
   const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, [
     'deriveKey',

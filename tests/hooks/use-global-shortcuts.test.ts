@@ -125,9 +125,7 @@ describe('useGlobalShortcuts Hook', () => {
   it('should respect enabled flag', () => {
     const handler = vi.fn()
     const { unmount } = renderHook(() =>
-      useGlobalShortcuts([
-        { id: 'test', label: 'Test', combo: 'ctrl+s', handler, enabled: false },
-      ]),
+      useGlobalShortcuts([{ id: 'test', label: 'Test', combo: 'ctrl+s', handler, enabled: false }]),
     )
 
     act(() => {

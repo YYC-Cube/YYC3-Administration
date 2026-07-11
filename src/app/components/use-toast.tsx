@@ -86,7 +86,9 @@ export function toastInfo(message: string, description?: string, opts?: ToastOpt
 /** Show a loading toast that can be resolved/rejected */
 export function toastLoading(message: string) {
   return toast.loading(message, {
-    icon: <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />,
+    icon: (
+      <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+    ),
   })
 }
 

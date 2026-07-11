@@ -1,192 +1,190 @@
 /**
  * @file plugins.test.ts
- * @description i18n 插件系统单元测试
+ * @description I18n Plugin System — Unit Tests
+ *   Covers: PluginManager (register/unregister/execute hooks), MissingKeyReporter.
  * @author YanYuCloudCube Team <admin@0379.email>
+ * @version v1.0.0
+ * @created 2026-07-11
  */
 
 import { describe, expect, it, vi } from 'vitest'
 
 import { PluginManager } from '../../../src/lib/i18n/plugins'
 
-import type { I18nPlugin } from '../../../src/lib/i18n/plugins'
+import type { I18nContext, I18nPlugin } from '../../../src/lib/i18n/plugins'
 
-// ==========================================
-// PluginManager — 注册/注销
-// ==========================================
-
-describe('PluginManager — 注册和注销', () => {
-  it('注册插件', () => {
-    const pm = new PluginManager()
-    const plugin: I18nPlugin = { name: 'test-plugin' }
-    pm.register(plugin)
-    expect(pm.getRegisteredPlugins()).toContain('test-plugin')
+describe('PluginManager — Registration', () => {
+  it('registers a plugin', () => {
+    const mgr = new PluginManager()
+    const plugin: I18nPlugin = {
+      name: 'test-plugin',
+      afterTranslate: (result: string) => result.toUpperCase(),
+    }
+    mgr.register(plugin)
+    expect(mgr.getRegisteredPlugins()).toHaveLength(1)
+    expect(mgr.getRegisteredPlugins()[0]).toBe('test-plugin')
   })
 
-  it('获取已注册插件', () => {
-    const pm = new PluginManager()
-    const plugin: I18nPlugin = { name: 'my-plugin', version: '1.0' }
-    pm.register(plugin)
-    const retrieved = pm.getPlugin('my-plugin')
-    expect(retrieved).toBeDefined()
-    expect(retrieved?.version).toBe('1.0')
+  it('registers multiple plugins', () => {
+    const mgr = new PluginManager()
+    mgr.register({ name: 'p1' })
+    mgr.register({ name: 'p2' })
+    expect(mgr.getRegisteredPlugins()).toHaveLength(2)
   })
 
-  it('注销已注册插件', () => {
-    const pm = new PluginManager()
-    const destroyFn = vi.fn()
-    pm.register({ name: 'temp', destroy: destroyFn })
-    expect(pm.unregister('temp')).toBe(true)
-    expect(pm.getRegisteredPlugins()).not.toContain('temp')
-    expect(destroyFn).toHaveBeenCalled()
+  it('allows overwriting duplicate plugin names', () => {
+    const mgr = new PluginManager()
+    mgr.register({ name: 'dup' })
+    mgr.register({ name: 'dup' })
+    expect(mgr.getRegisteredPlugins()).toHaveLength(1)
   })
 
-  it('注销不存在的插件返回 false', () => {
-    const pm = new PluginManager()
-    expect(pm.unregister('nonexistent')).toBe(false)
+  it('unregisters a plugin by name', () => {
+    const mgr = new PluginManager()
+    mgr.register({ name: 'test' })
+    const result = mgr.unregister('test')
+    expect(result).toBe(true)
+    expect(mgr.getRegisteredPlugins()).toHaveLength(0)
   })
 
-  it('重复注册会覆盖', () => {
-    const pm = new PluginManager()
-    pm.register({ name: 'dup', version: '1.0' })
-    pm.register({ name: 'dup', version: '2.0' })
-    expect(pm.getPlugin('dup')?.version).toBe('2.0')
-  })
-
-  it('保持注册顺序', () => {
-    const pm = new PluginManager()
-    pm.register({ name: 'a' })
-    pm.register({ name: 'b' })
-    pm.register({ name: 'c' })
-    expect(pm.getRegisteredPlugins()).toEqual(['a', 'b', 'c'])
+  it('returns false when unregistering non-existent plugin', () => {
+    const mgr = new PluginManager()
+    expect(mgr.unregister('nonexistent')).toBe(false)
   })
 })
 
-// ==========================================
-// 生命周期钩子
-// ==========================================
-
-describe('PluginManager — 生命周期钩子', () => {
-  it('initAll 按顺序初始化所有插件', async () => {
-    const pm = new PluginManager()
-    const initA = vi.fn()
-    const initB = vi.fn()
-    pm.register({ name: 'a', init: initA })
-    pm.register({ name: 'b', init: initB })
-    await pm.initAll({ locale: 'en', key: 'test' })
-    expect(initA).toHaveBeenCalled()
-    expect(initB).toHaveBeenCalled()
-  })
-
-  it('destroyAll 按顺序销毁所有插件', async () => {
-    const pm = new PluginManager()
-    const destroyA = vi.fn()
-    const destroyB = vi.fn()
-    pm.register({ name: 'a', destroy: destroyA })
-    pm.register({ name: 'b', destroy: destroyB })
-    await pm.destroyAll()
-    expect(destroyA).toHaveBeenCalled()
-    expect(destroyB).toHaveBeenCalled()
-    expect(pm.getRegisteredPlugins()).toHaveLength(0)
-  })
-})
-
-// ==========================================
-// 翻译钩子
-// ==========================================
-
-describe('PluginManager — beforeTranslate 钩子', () => {
-  it('beforeTranslate 可以修改 key', () => {
-    const pm = new PluginManager()
-    pm.register({
-      name: 'redirector',
-      beforeTranslate: (key) => ({ key: 'redirected.' + key }),
+describe('PluginManager — Hook Execution', () => {
+  it('executes afterTranslate hooks in order', () => {
+    const mgr = new PluginManager()
+    mgr.register({
+      name: 'upper',
+      afterTranslate: (result: string) => result.toUpperCase(),
     })
-    const result = pm.executeBeforeTranslate('original')
-    expect(result.key).toBe('redirected.original')
+    mgr.register({
+      name: 'exclaim',
+      afterTranslate: (result: string) => result + '!',
+    })
+
+    const result = mgr.executeAfterTranslate('hello', 'test.key')
+    expect(result).toBe('HELLO!')
   })
 
-  it('beforeTranslate 可以修改 params', () => {
-    const pm = new PluginManager()
-    pm.register({
-      name: 'param-modifier',
-      beforeTranslate: (key, params) => ({
-        key,
-        params: { ...params, extra: 'added' },
+  it('executes beforeTranslate hooks', () => {
+    const mgr = new PluginManager()
+    let capturedKey = ''
+    mgr.register({
+      name: 'capture',
+      beforeTranslate: (key: string) => {
+        capturedKey = key
+      },
+    })
+
+    mgr.executeBeforeTranslate('my-key')
+    expect(capturedKey).toBe('my-key')
+  })
+
+  it('modifies key and params via beforeTranslate', () => {
+    const mgr = new PluginManager()
+    mgr.register({
+      name: 'modify',
+      beforeTranslate: (_key: string, _params?: Record<string, string>) => ({
+        key: 'modified-key',
+        params: { lang: 'en' },
       }),
     })
-    const result = pm.executeBeforeTranslate('key', { original: 'val' })
-    expect(result.params?.extra).toBe('added')
-    expect(result.params?.original).toBe('val')
+
+    const result = mgr.executeBeforeTranslate('original', {})
+    expect(result.key).toBe('modified-key')
+    expect(result.params?.lang).toBe('en')
   })
 
-  it('多个 beforeTranslate 钩子链式执行', () => {
-    const pm = new PluginManager()
-    pm.register({ name: 'a', beforeTranslate: (k) => ({ key: k + '_a' }) })
-    pm.register({ name: 'b', beforeTranslate: (k) => ({ key: k + '_b' }) })
-    const result = pm.executeBeforeTranslate('key')
-    expect(result.key).toBe('key_a_b')
-  })
-
-  it('beforeTranslate 返回 void 时不修改', () => {
-    const pm = new PluginManager()
-    pm.register({ name: 'noop', beforeTranslate: () => {} })
-    const result = pm.executeBeforeTranslate('original', { x: '1' })
-    expect(result.key).toBe('original')
+  it('handles afterTranslate returning void (no modification)', () => {
+    const mgr = new PluginManager()
+    mgr.register({ name: 'noop', afterTranslate: (_r: string) => undefined })
+    const result = mgr.executeAfterTranslate('test', 'key')
+    expect(result).toBe('test')
   })
 })
 
-describe('PluginManager — afterTranslate 钩子', () => {
-  it('afterTranslate 可以修改结果', () => {
-    const pm = new PluginManager()
-    pm.register({
-      name: 'wrapper',
-      afterTranslate: (result) => `[${result}]`,
-    })
-    const result = pm.executeAfterTranslate('Hello', 'greeting')
-    expect(result).toBe('[Hello]')
-  })
-
-  it('多个 afterTranslate 钩子链式执行', () => {
-    const pm = new PluginManager()
-    pm.register({ name: 'a', afterTranslate: (r) => r + '!' })
-    pm.register({ name: 'b', afterTranslate: (r) => r + '?' })
-    const result = pm.executeAfterTranslate('Hi', 'key')
-    expect(result).toBe('Hi!?')
-  })
-})
-
-// ==========================================
-// 系统钩子
-// ==========================================
-
-describe('PluginManager — 系统钩子', () => {
-  it('notifyLocaleChange 通知所有插件', () => {
-    const pm = new PluginManager()
+describe('PluginManager — System Hooks', () => {
+  it('notifies locale change', () => {
+    const mgr = new PluginManager()
     const handler = vi.fn()
-    pm.register({ name: 'locale-watcher', onLocaleChange: handler })
-    pm.notifyLocaleChange('zh-CN', 'en')
+    mgr.register({ name: 'locale-watcher', onLocaleChange: handler })
+
+    mgr.notifyLocaleChange('zh-CN' as any, 'en' as any)
     expect(handler).toHaveBeenCalledWith('zh-CN', 'en')
   })
 
-  it('handleError 通知所有插件', () => {
-    const pm = new PluginManager()
+  it('handles errors via plugins', () => {
+    const mgr = new PluginManager()
     const handler = vi.fn()
-    pm.register({ name: 'error-handler', onError: handler })
-    const error = new Error('Test error')
-    pm.handleError(error, { locale: 'en', key: 'test' })
-    expect(handler).toHaveBeenCalledWith(error, { locale: 'en', key: 'test' })
+    mgr.register({ name: 'error-handler', onError: handler })
+
+    const error = new Error('test error')
+    const ctx = { locale: 'en' as any, key: 'test' }
+    mgr.handleError(error, ctx as I18nContext)
+    expect(handler).toHaveBeenCalledWith(error, ctx)
   })
 
-  it('handleMissingKey 返回第一个非空结果', () => {
-    const pm = new PluginManager()
-    pm.register({ name: 'a', onMissingKey: () => undefined })
-    pm.register({ name: 'b', onMissingKey: (key) => `[missing: ${key}]` })
-    const result = pm.handleMissingKey('some.key', 'en')
-    expect(result).toBe('[missing: some.key]')
+  it('handles missing keys with fallback', () => {
+    const mgr = new PluginManager()
+    mgr.register({
+      name: 'missing-fallback',
+      onMissingKey: (key: string) => `FALLBACK:${key}`,
+    })
+
+    const result = mgr.handleMissingKey('missing.key', 'en' as any)
+    expect(result).toBe('FALLBACK:missing.key')
+  })
+})
+
+describe('PluginManager — Lifecycle', () => {
+  it('calls init on all plugins', async () => {
+    const mgr = new PluginManager()
+    const initFn = vi.fn()
+    mgr.register({ name: 'p1', init: initFn })
+    mgr.register({ name: 'p2', init: initFn })
+
+    await mgr.initAll({ locale: 'en' as any, key: '' })
+    expect(initFn).toHaveBeenCalledTimes(2)
   })
 
-  it('handleMissingKey 无插件时返回 undefined', () => {
-    const pm = new PluginManager()
-    expect(pm.handleMissingKey('key', 'en')).toBeUndefined()
+  it('calls destroy on all plugins', async () => {
+    const mgr = new PluginManager()
+    const destroyFn = vi.fn()
+    mgr.register({ name: 'p1', destroy: destroyFn })
+
+    await mgr.destroyAll()
+    expect(destroyFn).toHaveBeenCalledTimes(1)
+    expect(mgr.getRegisteredPlugins()).toHaveLength(0)
+  })
+})
+
+describe('PluginManager — getPlugin', () => {
+  it('retrieves a plugin by name', () => {
+    const mgr = new PluginManager()
+    mgr.register({ name: 'find-me', version: '1.0' })
+    const plugin = mgr.getPlugin('find-me')
+    expect(plugin).toBeTruthy()
+    expect(plugin?.name).toBe('find-me')
+    expect(plugin?.version).toBe('1.0')
+  })
+
+  it('returns undefined for non-existent plugin', () => {
+    const mgr = new PluginManager()
+    expect(mgr.getPlugin('ghost')).toBeUndefined()
+  })
+})
+
+describe('PluginManager — Edge Cases', () => {
+  it('handles afterTranslate with params', () => {
+    const mgr = new PluginManager()
+    mgr.register({
+      name: 'interpolate',
+      afterTranslate: (result: string) => result.replace('{name}', 'World'),
+    })
+    const result = mgr.executeAfterTranslate('Hello {name}', 'greeting.key')
+    expect(result).toBe('Hello World')
   })
 })

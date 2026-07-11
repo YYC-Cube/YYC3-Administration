@@ -22,7 +22,7 @@ import { expect, type Page, test } from '@playwright/test'
 // Test Configuration
 // ==========================================
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:5173'
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3173'
 const _DEV_WORKSPACE_NAV = 'Developer Workspace' // nav item text or PageId
 
 // Helper: navigate to Developer Workspace page

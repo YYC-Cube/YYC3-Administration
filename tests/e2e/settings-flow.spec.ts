@@ -45,7 +45,9 @@ test.describe('E2E-SETTINGS: 面板操作', () => {
     await page.keyboard.press(`${modKey}+k`)
     await page.waitForTimeout(500)
 
-    const commandPalette = page.locator('[data-testid="command-palette"]').or(page.locator('[role="dialog"]'))
+    const commandPalette = page
+      .locator('[data-testid="command-palette"]')
+      .or(page.locator('[role="dialog"]'))
     if (await commandPalette.isVisible({ timeout: 2000 }).catch(() => false)) {
       // 输入搜索
       await page.keyboard.type('dashboard')
@@ -59,7 +61,9 @@ test.describe('E2E-SETTINGS: 面板操作', () => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
 
-    const notifBtn = page.locator('[data-testid="notification-button"]').or(page.locator('[aria-label*="通知"]'))
+    const notifBtn = page
+      .locator('[data-testid="notification-button"]')
+      .or(page.locator('[aria-label*="通知"]'))
     if (await notifBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
       await notifBtn.click()
       await page.waitForTimeout(500)

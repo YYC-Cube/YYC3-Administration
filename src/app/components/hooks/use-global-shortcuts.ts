@@ -101,9 +101,7 @@ export function useGlobalShortcuts(shortcuts: ShortcutDef[]) {
       // Don't intercept if user is typing in an input/textarea (unless it's an escape)
       const target = e.target as HTMLElement
       const isTyping =
-        target.tagName === 'INPUT' ||
-        target.tagName === 'TEXTAREA' ||
-        target.isContentEditable
+        target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable
 
       for (const shortcut of shortcutsRef.current) {
         if (shortcut.enabled === false) continue

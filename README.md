@@ -897,9 +897,10 @@ pnpm test:e2e
 pnpm test:e2e:ui
 ```
 
-- **Vitest**: Unit + component tests
-- **Playwright**: Cross-browser E2E
-- **Coverage**: Target ≥80%
+- **Vitest**: Unit + component tests (47 files / 864 tests / 0 failures)
+- **Playwright**: Cross-browser E2E (Chromium / Firefox / WebKit / Mobile)
+- **Coverage**: `@vitest/coverage-istanbul`, tiered threshold progression (current 22% → target 85%)
+- **CI/CD**: GitHub Actions automated pipeline (TypeCheck → Lint → Unit tests + Coverage → Build → E2E)
 
 ---
 

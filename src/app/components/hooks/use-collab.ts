@@ -195,7 +195,17 @@ export function useCollab({
       restoreSnapshot,
       peerId: peerIdRef.current,
     }),
-    [content, version, peers, isConnected, insert, deleteText, updateCursor, createSnapshot, restoreSnapshot],
+    [
+      content,
+      version,
+      peers,
+      isConnected,
+      insert,
+      deleteText,
+      updateCursor,
+      createSnapshot,
+      restoreSnapshot,
+    ],
   )
 }
 

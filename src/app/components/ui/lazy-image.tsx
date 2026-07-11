@@ -92,10 +92,7 @@ export const LazyImage = memo(function LazyImage({
   const currentSrc = hasError && fallbackSrc ? fallbackSrc : src
 
   return (
-    <div
-      ref={containerRef}
-      className={cn('relative overflow-hidden', aspectClass, className)}
-    >
+    <div ref={containerRef} className={cn('relative overflow-hidden', aspectClass, className)}>
       {/* Skeleton shimmer while loading */}
       {!isLoaded && !hasError && (
         <div

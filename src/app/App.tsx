@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
+import { Toaster } from 'sonner'
 
 import { AIModelProvider } from './components/ai-model-context'
 import { AppProvider, useApp } from './components/app-context'
@@ -92,6 +93,16 @@ function AppContent() {
           <CyberpunkWidget onSwitchMode={() => setAppMode('standalone')} />
         )}
         <PWAInstallPrompt />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: '#1a1a2e',
+              border: '1px solid rgba(0,240,255,0.2)',
+              color: '#e0e0e0',
+            },
+          }}
+        />
       </div>
     </LiquidGlassWrapper>
   )

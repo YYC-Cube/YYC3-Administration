@@ -28,6 +28,7 @@ import {
   GitBranch,
   Keyboard,
   ListTodo,
+  Loader2,
   PanelLeft,
   PanelLeftClose,
   Search,
@@ -41,11 +42,10 @@ import {
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Resizable } from 're-resizable'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
 import { useSettingsStore } from '../../stores/useSettingsStore'
 
-import { CodeEditor } from './code-editor'
 import { useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'
 import {
@@ -63,6 +63,9 @@ import {
   WorkspaceSelector,
   WorkspaceSettingsPanel,
 } from './panels'
+
+// Lazy-load Monaco Editor (~435KB) — only loaded when dev workspace is opened
+const CodeEditor = lazy(() => import('./code-editor').then((m) => ({ default: m.CodeEditor })))
 
 import type { PanelType } from './panels'
 
@@ -784,21 +787,29 @@ export function LeftPanelPage() {
           >
             {selectedFile ? (
               <div className="w-full h-full p-2 overflow-hidden">
-                <CodeEditor
-                  filePath={selectedFile}
-                  initialContent={getEditorContent(selectedFile)}
-                  onSave={(content) => {
-                    // eslint-disable-next-line no-console
-                    console.log('[YYC³ Editor] Saved:', selectedFile, content.length, 'chars')
-                  }}
-                  onChange={() => {}}
-                  onEditorReady={(getter) => {
-                    editorContentGetter.current = getter
-                  }}
-                  onInsertReady={(inserter) => {
-                    editorInsertRef.current = inserter
-                  }}
-                />
+                <Suspense
+                  fallback={
+                    <div className="flex items-center justify-center h-full">
+                      <Loader2 className="w-6 h-6 animate-spin" style={{ color: tc.primary }} />
+                    </div>
+                  }
+                >
+                  <CodeEditor
+                    filePath={selectedFile}
+                    initialContent={getEditorContent(selectedFile)}
+                    onSave={(content) => {
+                      // eslint-disable-next-line no-console
+                      console.log('[YYC³ Editor] Saved:', selectedFile, content.length, 'chars')
+                    }}
+                    onChange={() => {}}
+                    onEditorReady={(getter) => {
+                      editorContentGetter.current = getter
+                    }}
+                    onInsertReady={(inserter) => {
+                      editorInsertRef.current = inserter
+                    }}
+                  />
+                </Suspense>
               </div>
             ) : (
               /* ===== Enhanced Welcome Screen ===== */

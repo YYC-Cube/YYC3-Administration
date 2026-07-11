@@ -78,8 +78,8 @@ function loadLocale(): Locale {
   } catch {
     /* ignore */
   }
-  const nav = navigator.language || 'zh'
-  return nav.startsWith('en') ? 'en' : 'zh'
+  // Default to Chinese (zh) for first-time users globally
+  return 'zh'
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {

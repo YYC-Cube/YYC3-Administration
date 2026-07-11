@@ -9,7 +9,13 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSecure, hasSecure, migrateToSecure, removeSecure, setSecure } from '../../src/lib/secure-storage'
+import {
+  getSecure,
+  hasSecure,
+  migrateToSecure,
+  removeSecure,
+  setSecure,
+} from '../../src/lib/secure-storage'
 
 // ==========================================
 // Setup: Clear localStorage before each test

@@ -1178,7 +1178,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
 
         {/* === MAIN CONTENT with Page Transition === */}
         <main
-          className="flex-1 overflow-hidden relative"
+          className="flex-1 overflow-y-auto overflow-x-hidden relative"
           role="main"
           aria-label={t('ui.mainContent')}
         >

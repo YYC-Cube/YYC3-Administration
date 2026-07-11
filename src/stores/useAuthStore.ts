@@ -14,7 +14,14 @@ import { generateSecureToken, hashPassword, verifyPassword } from '../lib/crypto
 import { getSecure, removeSecure, setSecure } from '../lib/secure-storage'
 import { hasPermission, ROLE_PERMISSIONS } from '../types/auth'
 
-import type { AuthStatus, LoginCredentials, Permission, RegisterInfo, User, UserRole } from '../types/auth'
+import type {
+  AuthStatus,
+  LoginCredentials,
+  Permission,
+  RegisterInfo,
+  User,
+  UserRole,
+} from '../types/auth'
 
 // ==========================================
 // Types
@@ -138,9 +145,7 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
     const publicUser = toPublicUser({ ...found, lastLoginAt: Date.now() })
 
     // Update lastLoginAt in storage
-    const updated = users.map((u) =>
-      u.id === found.id ? { ...u, lastLoginAt: Date.now() } : u,
-    )
+    const updated = users.map((u) => (u.id === found.id ? { ...u, lastLoginAt: Date.now() } : u))
     await saveUsers(updated)
     await saveSession(publicUser, token, credentials.rememberMe ?? true)
 
@@ -204,9 +209,7 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
     if (!user) return
 
     const users = await loadUsers()
-    const updated = users.map((u) =>
-      u.id === user.id ? { ...u, ...partial, id: user.id } : u,
-    )
+    const updated = users.map((u) => (u.id === user.id ? { ...u, ...partial, id: user.id } : u))
     await saveUsers(updated)
 
     const publicUser = { ...user, ...partial }
