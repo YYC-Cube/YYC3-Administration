@@ -1,27 +1,62 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 
 import { enMessages } from '../locales/en'
 import { zhMessages } from '../locales/zh'
 
 import type { Locale as CoreLocale, TranslationMap } from '@/lib/i18n/types'
-import type { ReactNode } from 'react'
 
 import { I18nEngine } from '@/lib/i18n/engine'
 import { MissingKeyReporter } from '@/lib/i18n/plugins/index'
 
-// Backward-compatible locale type (zh | en)
-export type Locale = 'zh' | 'en'
+// All 10 supported UI locales — maps directly to core engine locales
+export type Locale = 'zh' | 'en' | 'zh-TW' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'pt-BR' | 'ar'
 
 const LANG_STORAGE_KEY = 'yyc3_locale'
 
+/** Maps UI locale codes to core engine locale codes (identical here, but explicit for clarity). */
 const UI_TO_CORE: Record<Locale, CoreLocale> = {
   zh: 'zh-CN',
   en: 'en',
+  'zh-TW': 'zh-TW',
+  ja: 'ja',
+  ko: 'ko',
+  fr: 'fr',
+  de: 'de',
+  es: 'es',
+  'pt-BR': 'pt-BR',
+  ar: 'ar',
 }
 
 export interface LocaleMessages {
   [key: string]: string
+}
+
+const LOCALE_FLAGS: Record<Locale, string> = {
+  zh: '🇨🇳',
+  en: '🇺🇸',
+  'zh-TW': '🇹🇼',
+  ja: '🇯🇵',
+  ko: '🇰🇷',
+  fr: '🇫🇷',
+  de: '🇩🇪',
+  es: '🇪🇸',
+  'pt-BR': '🇧🇷',
+  ar: '🇸🇦',
+}
+
+const LOCALE_LABELS: Record<Locale, string> = {
+  zh: '中文',
+  en: 'English',
+  'zh-TW': '繁體中文',
+  ja: '日本語',
+  ko: '한국어',
+  fr: 'Français',
+  de: 'Deutsch',
+  es: 'Español',
+  'pt-BR': 'Português (BR)',
+  ar: 'العربية',
 }
 
 /**
@@ -67,6 +102,8 @@ interface I18nContextType {
   t: (key: string, params?: Record<string, string | number>) => string
   isZh: boolean
   isEn: boolean
+  flags: typeof LOCALE_FLAGS
+  labels: typeof LOCALE_LABELS
 }
 
 const I18nContext = createContext<I18nContextType | null>(null)
@@ -74,7 +111,7 @@ const I18nContext = createContext<I18nContextType | null>(null)
 function loadLocale(): Locale {
   try {
     const saved = localStorage.getItem(LANG_STORAGE_KEY)
-    if (saved === 'en' || saved === 'zh') return saved
+    if (saved && Object.prototype.hasOwnProperty.call(UI_TO_CORE, saved)) return saved as Locale
   } catch {
     /* ignore */
   }
@@ -133,7 +170,15 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   )
 
   const value = useMemo(
-    () => ({ locale, setLocale, t, isZh: locale === 'zh', isEn: locale === 'en' }),
+    () => ({
+      locale,
+      setLocale,
+      t,
+      isZh: locale === 'zh',
+      isEn: locale === 'en',
+      flags: LOCALE_FLAGS,
+      labels: LOCALE_LABELS,
+    }),
     [locale, setLocale, t],
   )
 

@@ -4,12 +4,14 @@ import {
   Bell,
   Bot,
   Brain,
+  Check,
   ChevronDown,
   ClipboardList,
   Code,
   Cpu,
   Database,
   GitBranch,
+  Globe,
   Heart,
   History,
   Image,
@@ -42,11 +44,12 @@ import {
   Zap,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 import { ActivityLogPage } from './activity-log'
 import { useAIModel } from './ai-model-context'
 import { AIToolsPage } from './ai-tools-page'
-import { type PageId, useApp, useRealtimeSimulation } from './app-context'
+import { useApp, useRealtimeSimulation, type PageId } from './app-context'
 import { AppOverviewPage } from './app-overview-page'
 import { BrandManagementPage } from './brand-management-page'
 import { CampaignExecutionPage } from './campaign-execution-page'
@@ -73,7 +76,7 @@ import { MarketingAnalyticsPage } from './marketing-analytics-page'
 import { MarketingAssetsPage } from './marketing-assets-page'
 import { MarketingStrategyPage } from './marketing-strategy-page'
 import { ModelSettings } from './model-settings'
-import { findCategoryByPageId, NAV_CATEGORIES } from './nav-config'
+import { NAV_CATEGORIES, findCategoryByPageId } from './nav-config'
 import { NeonCard } from './neon-card'
 import { NLPProcessingPage } from './nlp-processing-page'
 import { NotificationDrawer } from './notification-drawer'
@@ -240,10 +243,11 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
     mobileSidebarOpen,
     setMobileSidebarOpen,
   } = useApp()
-  const { t } = useI18n()
+  const { t, locale, setLocale, flags: localeFlags, labels: localeLabels } = useI18n()
   const { openModelSettings } = useAIModel()
   const tc = useThemeColors()
   const [sidebarExpanded, setSidebarExpanded] = useState(false)
+  const [langOpen, setLangOpen] = useState(false)
   const [sensorGlow, setSensorGlow] = useState(0)
   const [notifDrawerOpen, setNotifDrawerOpen] = useState(false)
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({
@@ -620,6 +624,61 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
               style={{ color: 'rgba(255,255,255,0.3)' }}
             />
           </button>
+
+          {/* Language Switcher */}
+          <div className="relative">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              className="p-2 rounded-xl hover:bg-white/5 transition-colors group relative"
+              title={t('nav.language')}
+              aria-label={t('nav.language')}
+            >
+              <Globe
+                className="w-4 h-4 transition-colors"
+                style={{ color: langOpen ? tc.primary : 'rgba(255,255,255,0.3)' }}
+              />
+            </button>
+            {langOpen && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setLangOpen(false)} />
+                <div
+                  className="absolute right-0 top-full mt-1 z-50 rounded-xl border p-1 min-w-[170px] backdrop-blur-xl"
+                  style={{
+                    background: tc.bgElevated,
+                    borderColor: tc.borderDefault,
+                    boxShadow: tc.shadowLg,
+                  }}
+                >
+                  {(
+                    ['zh', 'en', 'ja', 'zh-TW', 'ko', 'fr', 'de', 'es', 'pt-BR', 'ar'] as const
+                  ).map((code) => {
+                    const active = locale === code
+                    const flag = localeFlags[code as keyof typeof localeFlags] ?? ''
+                    const label = localeLabels[code as keyof typeof localeLabels] ?? code
+                    return (
+                      <button
+                        key={code}
+                        onClick={() => {
+                          setLocale(code)
+                          setLangOpen(false)
+                          toast.success(`${flag} ${label} ✓`, { duration: 1500 })
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all"
+                        style={{
+                          background: active ? tc.alpha(tc.primary, 0.1) : 'transparent',
+                          color: active ? tc.primary : tc.textSecondary,
+                        }}
+                      >
+                        <span className="text-base">{flag}</span>
+                        <span className="flex-1 text-left">{label}</span>
+                        {active && <Check className="w-3.5 h-3.5" style={{ color: tc.primary }} />}
+                      </button>
+                    )
+                  })}
+                </div>
+              </>
+            )}
+          </div>
 
           {/* AI Model */}
           <button

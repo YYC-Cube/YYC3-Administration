@@ -35,7 +35,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { useThemeColors } from './hooks/use-theme-colors'
-import { useI18n } from './i18n-context'
+import { useI18n, type Locale } from './i18n-context'
 import { useThemeSwitcher } from './theme-switcher-context'
 
 import type { LucideIcon } from 'lucide-react'
@@ -332,19 +332,12 @@ export function SettingsPage() {
         <LanguageSelector
           value={language}
           onChange={(code) => {
-            setLanguage(code as 'zh' | 'en')
+            setLanguage(code as Locale)
             const lang = LANGUAGES.find((l) => l.code === code)
-            if (code !== 'zh' && code !== 'en' && code !== 'ja') {
-              toast.success('语言已在列表中', {
-                description: `${lang?.flag ?? ''} ${lang?.label ?? code}（界面翻译即将上线）`,
-                duration: 3000,
-              })
-            } else {
-              toast.success('语言已切换', {
-                description: lang ? `${lang.flag} ${lang.label}` : code,
-                duration: 2000,
-              })
-            }
+            toast.success('语言已切换', {
+              description: lang ? `${lang.flag} ${lang.label}` : code,
+              duration: 2000,
+            })
           }}
           tc={tc}
         />

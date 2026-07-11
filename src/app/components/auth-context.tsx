@@ -15,9 +15,9 @@ import {
   EyeOff,
   Ghost,
   KeyRound,
+  Layers,
   Loader2,
   LogIn,
-  Shield,
   Sparkles,
   UserPlus,
   X,
@@ -28,6 +28,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useAuthStore } from '../../stores/useAuthStore'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 
 import type { FormEvent } from 'react'
 
@@ -53,6 +54,7 @@ const GHOST_ACCOUNTS = [
 function AuthPage() {
   const { login, register } = useAuthStore()
   const tc = useThemeColors()
+  const { locale, setLocale } = useI18n()
   const [mode, setMode] = useState<'login' | 'register'>('login')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -236,12 +238,15 @@ function AuthPage() {
                 boxShadow: tc.shadowGlow,
               }}
             >
-              <Shield className="w-8 h-8" style={{ color: tc.primary }} />
+              <Layers className="w-8 h-8" style={{ color: tc.primary }} />
             </motion.div>
             <h1 className="text-2xl font-bold tracking-tight" style={{ color: tc.primary }}>
-              YYC³ Administration
+              YYC³ 言语智能
             </h1>
-            <p className="text-sm mt-2" style={{ color: tc.textMuted }}>
+            <p className="text-xs mt-1" style={{ color: tc.textMuted }}>
+              YanYu Intelligent AI System
+            </p>
+            <p className="text-sm mt-3" style={{ color: tc.textMuted }}>
               {mode === 'login' ? '登录到您的账户' : '创建新账户'}
             </p>
           </div>
@@ -558,6 +563,26 @@ function AuthPage() {
         <p className="text-center text-xs mt-6" style={{ color: tc.textMuted }}>
           言启千行代码 · 语枢万物智能
         </p>
+        {/* Language switcher in auth */}
+        <div className="flex items-center justify-center gap-2 mt-3">
+          {(['zh', 'en'] as const).map((code) => {
+            const active = locale === code
+            return (
+              <button
+                key={code}
+                onClick={() => setLocale(code)}
+                className="text-xs px-2 py-1 rounded transition-all"
+                style={{
+                  background: active ? tc.alpha(tc.primary, 0.1) : 'transparent',
+                  color: active ? tc.primary : tc.textMuted,
+                  border: '1px solid ' + (active ? tc.alpha(tc.primary, 0.2) : 'transparent'),
+                }}
+              >
+                {code === 'zh' ? '🇨🇳 中文' : '🇺🇸 English'}
+              </button>
+            )
+          })}
+        </div>
       </motion.div>
     </div>
   )
