@@ -5,7 +5,7 @@
 
 import '@testing-library/jest-dom'
 import { cleanup } from '@testing-library/react'
-import { afterAll, afterEach, beforeAll, vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
 
 // 每个测试后清理 DOM
 afterEach(() => {
@@ -15,7 +15,7 @@ afterEach(() => {
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation((query) => ({
+  value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -36,7 +36,7 @@ global.IntersectionObserver = class IntersectionObserver {
     return []
   }
   unobserve() {}
-} as any
+} as unknown as typeof IntersectionObserver
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
@@ -44,7 +44,7 @@ global.ResizeObserver = class ResizeObserver {
   disconnect() {}
   observe() {}
   unobserve() {}
-} as any
+} as unknown as typeof ResizeObserver
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -75,7 +75,7 @@ Object.defineProperty(window, 'sessionStorage', {
 
 // Mock requestAnimationFrame
 global.requestAnimationFrame = (callback: FrameRequestCallback) => {
-  return setTimeout(callback, 0) as any
+  return setTimeout(callback, 0) as unknown as number
 }
 
 global.cancelAnimationFrame = (id: number) => {
@@ -89,19 +89,5 @@ global.cancelAnimationFrame = (id: number) => {
 //   debug: vi.fn(),
 //   info: vi.fn(),
 //   warn: vi.fn(),
-// };
-
-// 抑制 React 18 的某些警告
-const originalError = console.error
-beforeAll(() => {
-  console.error = (...args: any[]) => {
-    if (typeof args[0] === 'string' && args[0].includes('Warning: ReactDOM.render')) {
-      return
-    }
-    originalError.call(console, ...args)
-  }
-})
-
-afterAll(() => {
-  console.error = originalError
-})
+//   error: vi.fn(),
+// }

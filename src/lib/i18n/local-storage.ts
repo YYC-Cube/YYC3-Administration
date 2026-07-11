@@ -22,7 +22,7 @@ export function getSafeLocalStorage(): Storage | null {
     window.localStorage.setItem(testKey, 'test')
     window.localStorage.removeItem(testKey)
     return window.localStorage
-  } catch (e) {
+  } catch {
     return null
   }
 }

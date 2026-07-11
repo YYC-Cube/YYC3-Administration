@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 /**
  * @file yyc3-motion-integration.ts
  * @description YYC³ 动效系统集成 — 将 @yyc3/motion 1.0.0 集成到 My-mgmt 项目

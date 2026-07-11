@@ -31,6 +31,7 @@ export interface Logger {
   error(message: string, ...args: unknown[]): void
 }
 
+/* eslint-disable no-console -- Logger infrastructure requires console output */
 class ConsoleLogger implements Logger {
   constructor(
     private prefix = '[i18n]',

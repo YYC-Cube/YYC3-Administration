@@ -2,6 +2,7 @@ import { Component, ErrorInfo, ReactNode } from 'react'
 
 import { AIModelProvider } from './components/ai-model-context'
 import { AppProvider, useApp } from './components/app-context'
+import { AuthProvider } from './components/auth-context'
 import { ContactsProvider } from './components/contacts-context'
 import { CyberpunkStandalone } from './components/cyberpunk-standalone'
 import { CyberpunkWidget } from './components/cyberpunk-widget'
@@ -106,13 +107,15 @@ export default function App() {
     <ErrorBoundary>
       <ThemeSwitcherProvider>
         <I18nProvider>
-          <AppProvider>
-            <ContactsProvider>
-              <AIModelProvider>
-                <AppContent />
-              </AIModelProvider>
-            </ContactsProvider>
-          </AppProvider>
+          <AuthProvider>
+            <AppProvider>
+              <ContactsProvider>
+                <AIModelProvider>
+                  <AppContent />
+                </AIModelProvider>
+              </ContactsProvider>
+            </AppProvider>
+          </AuthProvider>
         </I18nProvider>
       </ThemeSwitcherProvider>
     </ErrorBoundary>

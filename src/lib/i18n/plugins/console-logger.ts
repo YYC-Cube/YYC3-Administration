@@ -30,6 +30,7 @@ export interface ConsoleLoggerConfig {
   }
 }
 
+/* eslint-disable no-console -- Console logger plugin requires console output */
 export function createConsoleLogger(config: ConsoleLoggerConfig = {}): I18nPlugin {
   const {
     logTranslations = false,

@@ -54,7 +54,7 @@ describe('GitAPIService — Configuration', () => {
     expect(safe!.repo).toBe('TestRepo')
     expect(safe!.branch).toBe('dev')
     // Token should NOT be present
-    expect((safe as any).token).toBeUndefined()
+    expect((safe as unknown as Record<string, unknown>).token).toBeUndefined()
   })
 
   it('should use default baseUrl when not specified', () => {

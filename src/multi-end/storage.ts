@@ -25,7 +25,7 @@ interface StoreSchema {
   apiCache: { url: string; response: unknown; cachedAt: number }
 }
 
-type StoreName = keyof StoreSchema
+type _StoreName = keyof StoreSchema
 
 /**
  * 打开/初始化 IndexedDB 数据库

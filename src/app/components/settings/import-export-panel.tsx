@@ -45,7 +45,7 @@ export function ImportExportPanel() {
             const config = JSON.parse(event.target?.result as string)
             importConfig(config)
             alert('配置导入成功！')
-          } catch (error) {
+          } catch {
             alert('配置文件格式错误')
           }
         }

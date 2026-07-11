@@ -152,7 +152,7 @@ describe('NeonCard Component', () => {
       )
 
       const cardCyber = container.firstChild as HTMLElement
-      const cyberClasses = cardCyber.className
+      const _cyberClasses = cardCyber.className
 
       // 切换到 Liquid Glass
       rerender(
@@ -164,7 +164,7 @@ describe('NeonCard Component', () => {
       )
 
       const cardLiquid = container.firstChild as HTMLElement
-      const liquidClasses = cardLiquid.className
+      const _liquidClasses = cardLiquid.className
 
       // 验证类名发生了变化（具体取决于实现）
       // 这里假设主题切换会导致类名变化

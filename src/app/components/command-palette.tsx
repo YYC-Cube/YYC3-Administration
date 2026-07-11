@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Command } from 'cmdk'
 import {
   ArrowRight,

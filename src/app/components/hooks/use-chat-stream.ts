@@ -15,7 +15,7 @@ export interface StreamState {
 
 /**
  * Manages streaming AI response with AbortController for stop support.
- * Provides token-by-token simulation or real SSE streaming.
+ * Provides both simulated character-by-character streaming and real SSE streaming.
  *
  * @returns Object containing stream state and control methods
  */
@@ -29,7 +29,7 @@ export function useChatStream() {
 
   /**
    * Stream text character by character (simulated streaming).
-   * Real SSE integration can replace this via `streamSSE`.
+   * Used for mock responses or when SSE is not available.
    */
   const startSimulatedStream = useCallback(
     async (fullText: string, messageId: string, speed = 8) => {
@@ -62,6 +62,53 @@ export function useChatStream() {
     [],
   )
 
+  /**
+   * Start real SSE streaming from an async generator (e.g. aiProxyService.chatStream).
+   * Tokens are received from the provider in real-time and appended to content.
+   *
+   * @param stream - An async generator yielding { token, done } chunks
+   * @param messageId - The ID of the AI message being streamed
+   * @returns The full accumulated text when streaming completes
+   */
+  const startRealStream = useCallback(
+    async (
+      stream: AsyncGenerator<{ token: string; done: boolean }>,
+      messageId: string,
+    ): Promise<string> => {
+      abortRef.current?.abort()
+      const controller = new AbortController()
+      abortRef.current = controller
+
+      setState({ content: '', isStreaming: true, messageId })
+
+      let accumulated = ''
+      try {
+        for await (const chunk of stream) {
+          if (controller.signal.aborted) break
+          if (chunk.token) {
+            accumulated += chunk.token
+            setState({ content: accumulated, isStreaming: true, messageId })
+          }
+          if (chunk.done) break
+        }
+      } catch (err) {
+        if (err instanceof Error && err.name === 'AbortError') {
+          // Aborted by user — keep partial content
+        } else {
+          throw err
+        }
+      }
+
+      if (!controller.signal.aborted) {
+        setState({ content: accumulated, isStreaming: false, messageId })
+      } else {
+        setState((prev) => ({ ...prev, isStreaming: false }))
+      }
+      return accumulated
+    },
+    [],
+  )
+
   /** Stop the current stream immediately. Sets isStreaming to false. */
   const stopStream = useCallback(() => {
     abortRef.current?.abort()
@@ -85,6 +132,7 @@ export function useChatStream() {
   return {
     streamState: state,
     startSimulatedStream,
+    startRealStream,
     stopStream,
     resetStream,
     isStreamingFor,

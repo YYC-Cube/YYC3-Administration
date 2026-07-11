@@ -3,9 +3,9 @@
  * 测试双主题颜色系统的核心 Hook
  */
 
-import { act, renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { ReactNode } from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { getThemeNavColor, LIQUID_GLASS_NAV_COLORS, useThemeColors } from '../../src/app/components/hooks/use-theme-colors';
 import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context';

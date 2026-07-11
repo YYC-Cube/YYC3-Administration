@@ -16,6 +16,15 @@
     <meta name="msapplication-TileColor" content="#0a0a0a" />
     <meta name="msapplication-TileImage" content="/yyc3-icons/Web App/android-chrome-192.png" />
 
+    <!-- CSP: Restrict resource loading for XSS/mixed-content protection -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.openai.com https://api.anthropic.com https://api.deepseek.com http://localhost:* http://127.0.0.1:*; worker-src 'self' blob:; manifest-src 'self';"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="X-Content-Type-Options" content="nosniff" />
+    <meta name="X-Frame-Options" content="DENY" />
+
     <link rel="icon" type="image/png" sizes="16x16" href="/yyc3-icons/Web App/favicon-16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/yyc3-icons/Web App/favicon-32.png" />
     <link

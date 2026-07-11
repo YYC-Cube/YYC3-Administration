@@ -15,6 +15,8 @@
 import { File, Hash, History, Loader2, Search, X, Zap } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { useDebouncedValue } from '../hooks/use-debounce'
+
 import { getFileIcon, MOCK_FILE_TREE, MOCK_SEARCH_RESULTS } from './panel-helpers'
 import { usePanelStore } from './panel-store'
 
@@ -40,6 +42,9 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
   )
   const [results, setResults] = useState<SearchResult[]>([])
   const [searching, setSearching] = useState(false)
+
+  // Debounce search query to avoid excessive filtering on each keystroke
+  const debouncedQuery = useDebouncedValue(query, 300)
 
   // Use real file tree if available
   const activeTree = fileTree.length > 0 ? fileTree : MOCK_FILE_TREE
@@ -103,9 +108,10 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
   )
 
   useEffect(() => {
-    const timer = setTimeout(() => handleSearch(query), 300)
-    return () => clearTimeout(timer)
-  }, [query, handleSearch])
+    if (debouncedQuery !== query) return // Wait for debounce to settle
+    if (debouncedQuery) handleSearch(debouncedQuery)
+    else setResults([])
+  }, [debouncedQuery, query, handleSearch])
 
   const handleOpenResult = useCallback(
     (result: SearchResult) => {
