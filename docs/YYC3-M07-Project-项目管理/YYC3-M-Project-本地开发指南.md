@@ -1,19 +1,18 @@
-# YYC³ CloudPivot Intelli-Matrix — 本地开发衔接指南
+# YYC³ Administration — 本地开发衔接指南
 
 <div align="center">
 
-> **YanYuCloudCube**
-> **言启象限 | 语枢未来**
-> **Words Initiate Quadrants, Language Serves as Core for Future**
-> **万象归元于云枢 | 深栈智启新纪元**
+> **YYC-Cube**
+> **言启千行代码 · 语枢万物智能**
+> **Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All Things**
 
 </div>
 
 ---
 
-**文档版本**: v2.0.0
-**最后更新**: 2026-03-18
-**维护团队**: YanYuCloudCube Team <admin@0379.email>
+**文档版本**: v1.0.2
+**最后更新**: 2026-07-12
+**维护团队**: YYC-Cube Team <admin@0379.email>
 
 ---
 
@@ -33,51 +32,61 @@
 12. [国际化 (i18n)](#12-国际化)
 13. [状态管理](#13-状态管理)
 14. [五点集成规范](#14-五点集成规范)
-15. [部署指南](#15-部署指南)
-16. [常见问题](#16-常见问题)
-17. [下阶段开发建议](#17-下阶段开发建议)
+15. [CI/CD 流水线](#cicd-流水线)
+16. [部署指南](#16-部署指南)
+17. [常见问题](#17-常见问题)
+18. [下阶段开发建议](#18-下阶段开发建议)
 
 ---
 
 ## 1. 项目概述
 
-YYC³ CloudPivot Intelli-Matrix 是一个企业级 AI 营销自动化终端，采用赛博朋克视觉风格，支持双主题切换（Cyberpunk + Liquid Glass）。项目基于 React + TypeScript + Tailwind CSS v4 构建，包含 60+ 组件文件和 13+ 智能营销子模块。
+**YYC³ Administration**（包名：`@yyc3/my-mgmt`）是一款基于 **React 18 + TypeScript + Vite 6** 构建的现代化 **AI 营销自动化终端系统**，专为服务行业设计的 **企业级全维度管理平台**。
+
+平台遵循 **"五高五标五化"** 架构理念（五高架构 · 五标体系 · 五化转型 · 五维评估），集成多模型 AI 能力、双主题引擎、全维度数据驾驶舱和开发者工作区，实现了从客户获取到忠诚管理的全生命周期闭环。
 
 ### 核心特性
 
 - **IDE 风格开发者工作区** — 6 面板切换 + Monaco Editor + AI 助手 + Git 集成
-- **AI 多 Provider 支持** — OpenAI / Claude / DeepSeek / Mock，带代理服务层
+- **AI 多 Provider 支持** — OpenAI / Claude / DeepSeek / Qwen / Mock
 - **完整 CRUD 文件系统** — 新建/重命名/删除 + 右键上下文菜单
 - **GitHub REST API 集成** — Commits / Branches / Files / PRs
 - **AI 上下文增强** — 当前编辑文件内容自动注入 AI 系统提示词
-- **双主题 + 双语** — Cyberpunk/Liquid Glass + 中英文 i18n
+- **双主题引擎** — Cyberpunk 霓虹风格 + Liquid Glass 液态玻璃，实时切换与深度定制
+- **国际化 (i18n)** — 10 种语言（zh/zh-TW/en/ja/ko/ar/de/es/fr/pt-BR），ICU 消息格式
 - **Zustand 持久化** — 所有配置和状态同步 localStorage
-- **Playwright E2E 测试** — 完整用户工作流测试覆盖
+- **PWA 全端适配** — 可安装至桌面/移动端，离线支持
+- **完整测试体系** — 864 单元测试 + 62 E2E 测试
 
 ---
 
 ## 2. 技术栈清单
 
-| 类别           | 技术                      | 版本   |
-| -------------- | ------------------------- | ------ |
-| **框架**       | React                     | 18.3.1 |
-| **语言**       | TypeScript                | 5.x    |
-| **样式**       | Tailwind CSS              | v4.1   |
-| **动画**       | Motion (Framer Motion)    | 12.x   |
-| **状态管理**   | Zustand                   | 5.0.12 |
-| **UI 组件**    | Radix UI                  | Latest |
-| **代码编辑器** | @monaco-editor/react      | 4.7.x  |
-| **图表**       | Recharts                  | 2.15   |
-| **拖拽**       | react-dnd + html5-backend | 16.x   |
-| **面板调整**   | re-resizable              | 6.11.2 |
-| **构建**       | Vite                      | 6.3.x  |
-| **E2E 测试**   | Playwright                | Latest |
-| **MUI**        | @mui/material             | 7.3.5  |
+| 类别           | 技术                      | 版本     |
+| -------------- | ------------------------- | -------- |
+| **框架**       | React                     | 18.3.1   |
+| **语言**       | TypeScript                | 5.x      |
+| **构建**       | Vite                      | 6.3.5    |
+| **样式**       | Tailwind CSS v4           | 4.1.12   |
+| **动画**       | Motion (Framer Motion)    | 12.23.24 |
+| **状态管理**   | Zustand                   | 5.0.12   |
+| **UI 组件库**  | shadcn/ui + Radix UI      | Latest   |
+| **MUI**        | @mui/material             | 7.3.5    |
+| **代码编辑器** | @monaco-editor/react      | 4.7.x    |
+| **图表**       | Recharts                  | 2.15     |
+| **拖拽**       | react-dnd + html5-backend | 16.x     |
+| **面板调整**   | re-resizable              | 6.11.2   |
+| **日期处理**   | date-fns                  | 3.6.0    |
+| **表单**       | react-hook-form           | 7.55.0   |
+| **单元测试**   | Vitest                    | Latest   |
+| **E2E 测试**   | Playwright                | Latest   |
+| **包管理**     | pnpm                      | ≥11      |
+| **PWA**        | vite-plugin-pwa           | Latest   |
+| **图标**       | lucide-react              | 0.487.0  |
 
-### 安装的完整依赖列表
+### 生产依赖（关键项）
 
 ```bash
-# 生产依赖（关键项）
 @monaco-editor/react    # Monaco Editor React 封装
 zustand                  # 轻量级状态管理
 motion                   # 动画库（import from 'motion/react'）
@@ -85,6 +94,12 @@ re-resizable             # 面板拖拽调整
 react-dnd                # 拖拽排序
 recharts                 # 数据可视化
 lucide-react             # 图标库
+@mui/material            # Material UI 组件库
+date-fns                 # 日期工具库
+react-hook-form          # 表单管理
+react-markdown           # Markdown 渲染
+cmdk                     # 命令面板
+embla-carousel-react     # 轮播组件
 ```
 
 ---
@@ -122,64 +137,120 @@ pnpm build
 
 ### 环境变量（可选）
 
-创建 `.env.local` 文件：
+复制 `.env.example` 为 `.env` 并根据需要调整：
+
+```bash
+cp .env.example .env
+```
 
 ```env
-# AI API Keys (开发环境直连模式)
-# 注意：生产环境应使用服务端代理，不要在前端暴露 API Key
-VITE_OPENAI_API_KEY=sk-your-openai-key
-VITE_ANTHROPIC_API_KEY=sk-ant-your-claude-key
-VITE_DEEPSEEK_API_KEY=sk-your-deepseek-key
+# Application
+VITE_APP_TITLE=YYC³ AI Marketing Terminal
+VITE_APP_VERSION=1.0.2
 
-# AI 代理服务 URL（生产环境必须配置）
-VITE_AI_PROXY_URL=https://your-domain.com/api/ai-proxy
+# API Configuration (Development)
+VITE_AI_API_BASE_URL=http://localhost:3001/api/ai
+VITE_GITHUB_API_BASE_URL=https://api.github.com
 
-# GitHub API
-VITE_GITHUB_TOKEN=ghp_your-github-pat
+# Feature Flags
+VITE_ENABLE_DEV_TOOLS=true
+VITE_ENABLE_ANALYTICS=false
+VITE_ENABLE_ERROR_REPORTING=true
+
+# Theme Defaults
+VITE_DEFAULT_THEME=cyberpunk
+VITE_DEFAULT_LANGUAGE=zh-CN
+
+# Performance
+VITE_CACHE_TTL=3600000  # 1 hour in milliseconds
+VITE_RATE_LIMIT_RPS=10  # requests per second
+
+# Development Only
+VITE_DEBUG_MODE=true
+VITE_MOCK_API_DELAY=500  # ms
 ```
+
+> **安全提示**：不要在 `VITE_` 前缀变量中放置敏感信息（API Key、Token 等），它们会在构建时被嵌入前端代码。生产环境应使用后端代理。
 
 ---
 
 ## 4. 项目架构
 
 ```
-yyc3-cloudpivot/
-├── docs/                               # 项目文档
-│   ├── YYC3-Local-Development-Guide.md  # 本文档
-│   ├── YYC3-P5-Closing-Review-Report.md # 收尾验收报告
-│   └── platform-integration-*.md        # 平台集成文档
+YYC3-Administration/
+├── docs/                               # 项目文档（M01-M13 模块文档）
 ├── src/
+│   ├── main.tsx                        # 应用入口
 │   ├── app/
-│   │   ├── App.tsx                      # 主入口
+│   │   ├── App.tsx                     # 主入口
 │   │   ├── components/
-│   │   │   ├── cyberpunk-standalone.tsx  # 🎯 主容器（PageId 路由）
-│   │   │   ├── app-context.tsx          # 全局上下文（PageId 类型）
-│   │   │   ├── left-panel-page.tsx      # 开发者工作区 (IDE)
-│   │   │   ├── code-editor.tsx          # Monaco Editor 封装
-│   │   │   ├── task-board-page.tsx      # AI 任务看板
-│   │   │   ├── command-palette.tsx      # 命令面板 (Ctrl+K)
-│   │   │   ├── preload-fix.tsx          # 预加载系统
-│   │   │   ├── i18n-context.tsx         # 国际化上下文
+│   │   │   ├── cyberpunk-standalone.tsx # 🎯 主容器（PageId 路由）
+│   │   │   ├── cyberpunk-widget.tsx    # Widget 模式
+│   │   │   ├── app-context.tsx         # 全局上下文（PageId 类型）
+│   │   │   ├── left-panel-page.tsx     # 开发者工作区 (IDE)
+│   │   │   ├── code-editor.tsx         # Monaco Editor 封装
+│   │   │   ├── task-board-page.tsx     # AI 任务看板
+│   │   │   ├── command-palette.tsx     # 命令面板 (Ctrl+K)
+│   │   │   ├── preload-fix.tsx         # 预加载系统
+│   │   │   ├── i18n-context.tsx        # 国际化上下文
 │   │   │   ├── theme-switcher-context.tsx # 主题切换
-│   │   │   ├── services/               # 🆕 服务层
-│   │   │   │   ├── ai-proxy-service.ts  # AI API 代理服务
-│   │   │   │   ├── git-api-service.ts   # Git API 服务
+│   │   │   ├── auth-context.tsx        # 认证上下文
+│   │   │   ├── contacts-context.tsx    # CRM 上下文
+│   │   │   ├── ai-model-context.tsx    # AI 模型管理
+│   │   │   ├── nav-config.ts           # 导航配置中心
+│   │   │   ├── error-boundary.tsx      # 错误边界
+│   │   │   ├── services/              # 服务层
+│   │   │   │   ├── ai-proxy-service.ts # AI API 代理服务
+│   │   │   │   ├── git-api-service.ts  # Git API 服务
 │   │   │   │   ├── edge-proxy-server.ts # Edge Function 设计
-│   │   │   │   └── test-utils.ts        # 测试工具函数
+│   │   │   │   └── test-utils.ts       # 测试工具函数
 │   │   │   ├── hooks/
-│   │   │   │   ├── use-theme-colors.ts  # 🎨 tc.* 主题令牌
-│   │   │   │   └── use-theme-tokens.ts  # 主题 tokens
-│   │   │   ├── settings/               # 设置系统
-│   │   │   └── ...                     # 其他 60+ 组件
-│   │   └── routes.ts                   # 路由配置
-│   ├── imports/                        # Figma 导入资源
+│   │   │   │   ├── use-theme-colors.ts # 🎨 tc.* 主题令牌
+│   │   │   │   └── use-theme-tokens.ts # 主题 tokens
+│   │   │   ├── ui/                     # shadcn/ui 组件库（48 个）
+│   │   │   ├── panels/                # 开发工作台面板（7 个）
+│   │   │   ├── settings/              # 设置面板（10 个）
+│   │   │   ├── advanced/              # 高级功能
+│   │   │   ├── figma/                 # 设计资产
+│   │   │   ├── dashboard-page.tsx     # 数据驾驶舱
+│   │   │   ├── finance-page.tsx       # 财务管理
+│   │   │   ├── salary-page.tsx        # 薪资系统
+│   │   │   ├── ...                    # 其他 50+ 页面组件
+│   │   │   ├── yyc3-theme-integration.ts    # YYC³ 主题集成
+│   │   │   ├── yyc3-components-integration.tsx # YYC³ 组件集成
+│   │   │   ├── yyc3-emotion-integration.ts   # 情感引擎集成
+│   │   │   ├── yyc3-motion-integration.tsx   # 动效系统集成
+│   │   │   └── yyc3-mcp-integration.ts       # MCP 服务集成
+│   │   └── locales/                   # 应用层国际化
+│   ├── lib/i18n/                      # i18n 核心引擎
+│   ├── multi-end/                     # 多端适配模块
+│   ├── stores/                        # Zustand 全局状态
+│   ├── services/                      # 全局服务
+│   ├── types/                         # 全局类型声明
+│   ├── hooks/                         # 全局自定义 Hooks
 │   └── styles/
-│       ├── theme.css                   # Tailwind v4 主题
-│       └── fonts.css                   # 字体导入
+│       ├── index.css                  # 全局样式
+│       └── themes/                    # 主题样式
 ├── tests/
-│   ├── playwright.config.ts            # Playwright 配置
-│   └── e2e/
-│       └── developer-workspace.spec.ts # E2E 测试用例
+│   ├── playwright.config.ts           # Playwright 配置
+│   ├── setup.ts                       # 测试全局设置
+│   ├── components/                    # 组件测试（18 文件）
+│   ├── e2e/                           # E2E 测试（5 文件，62 用例）
+│   ├── hooks/                         # Hook 测试
+│   ├── lib/                           # 工具库测试
+│   ├── multi-end/                     # 多端适配测试
+│   └── services/                      # 服务层测试（9 文件）
+├── public/
+│   ├── CNAME                          # admin.yyc3.vip
+│   └── yyc3-icons/                    # PWA 全平台图标
+├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml                     # CI 质量门禁
+│   │   └── deploy.yml                 # GitHub Pages 部署
+│   ├── ISSUE_TEMPLATE/
+│   └── PULL_REQUEST_TEMPLATE.md
+├── Dockerfile                         # Docker 部署（node:22-alpine）
+├── docker-compose.yml                 # Docker Compose 配置
 └── package.json
 ```
 
@@ -266,84 +337,50 @@ async chat(config, messages, signal, fileContext?) {
 
 ### 架构设计
 
+由于项目当前通过 **GitHub Pages 纯静态托管**，不支持服务端运行时，AI API 代理有两种模式：
+
 ```
 浏览器 (ai-proxy-service.ts)
     │
-    ├── 开发模式: 直连 AI Provider API (API Key 在浏览器)
+    ├── 开发模式: 直连 AI Provider API (API Key 在浏览器侧)
+    │             适用于本地开发调试
     │
-    └── 生产模式: 代理到 Edge Function (API Key 在服务端)
-              │
-              ├── Vercel Edge Function  (/api/ai-proxy/chat)
-              ├── Cloudflare Worker
-              └── Node.js/Express
+    └── 生产模式: 需要独立部署后端代理服务
+                  推荐方案: Node.js/Express 服务
 ```
 
-### 部署步骤
-
-#### 方案 A: Vercel Edge Function
+### 推荐部署方案：独立 Node.js/Express 服务
 
 ```bash
-# 1. 创建 API 路由
-mkdir -p api/ai-proxy
+# 1. 新建独立后端项目
+mkdir yyc3-ai-proxy && cd yyc3-ai-proxy
+npm init -y
+npm install express cors dotenv
 
 # 2. 复制代理代码
-cp src/app/components/services/edge-proxy-server.ts api/ai-proxy/chat.ts
+cp ../YYC3-Administration/src/app/components/services/edge-proxy-server.ts ./server.ts
 
-# 3. 添加 Edge Runtime 配置
-# 在 chat.ts 末尾添加:
-# export const config = { runtime: 'edge' };
-
-# 4. 设置环境变量 (Vercel Dashboard)
-# OPENAI_API_KEY=sk-...
-# ANTHROPIC_API_KEY=sk-ant-...
-# DEEPSEEK_API_KEY=sk-...
-
-# 5. 部署
-vercel deploy
-
-# 6. 更新前端配置
-# ai-proxy-service.ts 中:
-# const PROXY_BASE_URL = "https://your-app.vercel.app/api/ai-proxy";
-```
-
-#### 方案 B: Node.js/Express
-
-```typescript
-import express from 'express'
-import { handler } from './edge-proxy-server'
-
-const app = express()
-app.use(express.json())
-
+# 3. 创建 Express 入口
+cat > index.js << 'EOF'
+const express = require('express');
+const { handler } = require('./server');
+const app = express();
+app.use(express.json());
 app.post('/api/ai-proxy/chat', async (req, res) => {
   const request = new Request('http://localhost/api/ai-proxy/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(req.body),
-  })
-  const response = await handler(request)
-  const data = await response.json()
-  res.status(response.status).json(data)
-})
+  });
+  const response = await handler(request);
+  const data = await response.json();
+  res.status(response.status).json(data);
+});
+app.listen(3001, () => console.log('YYC³ AI Proxy on :3001'));
+EOF
 
-app.listen(3001, () => {
-  console.log('YYC³ AI Proxy running on http://localhost:3001')
-})
-```
-
-#### 方案 C: Cloudflare Worker
-
-```typescript
-import { handler } from './edge-proxy-server'
-
-export default {
-  async fetch(request: Request) {
-    if (request.url.endsWith('/api/ai-proxy/chat')) {
-      return handler(request)
-    }
-    return new Response('Not Found', { status: 404 })
-  },
-}
+# 4. 部署并配置前端
+# 在 ai-proxy-service.ts 中将 PROXY_BASE_URL 指向部署地址
 ```
 
 ### 安全特性
@@ -384,8 +421,8 @@ import { gitAPIService } from './services/git-api-service'
 // 1. 配置 (Git 面板 Config 选项卡 或代码中)
 gitAPIService.configure({
   token: 'ghp_xxxxxxxxxxxx', // GitHub PAT
-  owner: 'YanYuCloudCube',
-  repo: 'yyc3-cloudpivot',
+  owner: 'YYC-Cube',
+  repo: 'YYC3-Administration',
   branch: 'main',
 })
 
@@ -454,78 +491,60 @@ if (commits.success) {
 
 ## 10. 测试体系
 
-### Playwright E2E 测试
+### 测试命令
 
 ```bash
-# 安装 Playwright
-npm install -D @playwright/test
-npx playwright install
+# 运行所有单元测试
+pnpm test
 
-# 运行所有 E2E 测试
-npx playwright test tests/e2e/
+# Watch 模式（开发时）
+pnpm test:watch
+
+# 测试覆盖率
+pnpm test:coverage
+
+# 运行 E2E 测试
+pnpm test:e2e
+
+# E2E UI 模式（可视化调试）
+pnpm test:e2e:ui
 
 # 运行特定测试文件
-npx playwright test tests/e2e/developer-workspace.spec.ts
+pnpm test tests/services/ai-proxy-service.test.ts
 
-# 带界面运行
-npx playwright test --headed
-
-# 查看报告
-npx playwright show-report
+# 多端适配专项测试
+pnpm test tests/multi-end
 ```
 
 ### E2E 测试覆盖
 
-| 测试套件         | 用例数 | 覆盖内容                     |
-| ---------------- | ------ | ---------------------------- |
-| Panel Navigation | 5      | 面板切换、键盘快捷键         |
-| File Explorer    | 5      | 文件树、展开、打开、右键菜单 |
-| Code Editor      | 5      | Monaco 加载、状态栏、控件    |
-| AI Assistant     | 4      | 消息发送、配置面板、Provider |
-| Git Integration  | 4      | 分支信息、Tab 切换、API 配置 |
-| Panel Resizing   | 1      | 宽度显示                     |
-| Full Workflow    | 1      | 文件→编辑→AI→Git 完整流程    |
-| Theme & A11y     | 2      | 主题颜色、按钮可访问性       |
-| **总计**         | **27** |                              |
+| 测试套件              | 用例数 | 覆盖内容                                  |
+| --------------------- | ------ | ----------------------------------------- |
+| Chat Workflow         | 10     | AI 聊天流程、主题适配、性能               |
+| Developer Workspace   | 28     | 面板导航、文件系统、编辑器、AI、Git、重排 |
+| Navigation Flow       | 6      | 导航流程、主题切换、响应式                |
+| Settings Flow         | 4      | 设置流程、面板操作                        |
+| WindowBar Drag & Drop | 14     | 窗口标签页拖放重排、基本交互              |
+| **总计**              | **62** |                                           |
 
-### Vitest 单元测试（推荐配置）
+### Vitest 单元测试总览
 
-```bash
-# 安装 Vitest
-npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom
-
-# 运行所有单元测试
-npx vitest run
-
-# 运行 services 测试
-npx vitest run tests/services/
-
-# Watch 模式
-npx vitest
-
-# 查看覆盖率
-npx vitest run --coverage
-```
-
-### Vitest 单元测试覆盖（Services 模块）
-
-| 测试文件                    | 用例数 | 覆盖模块                                                          |
-| --------------------------- | ------ | ----------------------------------------------------------------- |
-| `ai-proxy-service.test.ts`  | 18     | Mock 响应、文件上下文注入、缓存、统计、AbortSignal、Provider 配置 |
-| `git-api-service.test.ts`   | 24     | 配置管理、Mock CRUD、Commits/Branches/Files/PRs、API 错误处理     |
-| `edge-proxy-server.test.ts` | 19     | CORS、请求验证、速率限制、Provider 路由、响应格式                 |
-| `test-utils.test.ts`        | 25     | Mock 工厂、断言工具、延迟工具、Mock 服务                          |
-| **总计**                    | **86** |                                                                   |
+| 测试类型     | 框架   | 文件数 | 用例数  |
+| ------------ | ------ | ------ | ------- |
+| 组件测试     | Vitest | 18 个  | —       |
+| Hook 测试    | Vitest | 5 个   | —       |
+| 多端适配测试 | Vitest | 3 个   | —       |
+| 服务层测试   | Vitest | 9 个   | —       |
+| 工具库测试   | Vitest | 2 个   | —       |
+| **合计**     |        | **47** | **864** |
 
 ### 测试架构总览
 
-| 层级                  | 框架       | 文件位置            | 用例数   |
-| --------------------- | ---------- | ------------------- | -------- |
-| E2E 测试              | Playwright | `tests/e2e/`        | 27       |
-| 单元测试 (Services)   | Vitest     | `tests/services/`   | 86       |
-| 单元测试 (Components) | Vitest     | `tests/components/` | 已有     |
-| 单元测试 (Hooks)      | Vitest     | `tests/hooks/`      | 已有     |
-| **合计**              |            |                     | **113+** |
+| 层级        | 框架           | 文件位置                   | 用例数         |
+| ----------- | -------------- | -------------------------- | -------------- |
+| E2E 测试    | Playwright     | `tests/e2e/`               | 62             |
+| 单元测试    | Vitest         | `tests/*/`                 | 864            |
+| CI 自动执行 | GitHub Actions | `.github/workflows/ci.yml` | 每次 push 触发 |
 
 ---
 
@@ -684,46 +703,139 @@ en: { "nav.myNewPage": "My New Page" },
 
 ---
 
-## 15. 部署指南
+## CI/CD 流水线
 
-### Vercel 部署
+### GitHub Actions 工作流
 
-```bash
-# 1. 安装 Vercel CLI
-npm install -g vercel
+项目使用两套 GitHub Actions 工作流，分别负责**代码质量门禁**和**自动部署**。
 
-# 2. 登录
-vercel login
+### CI 质量门禁 (`.github/workflows/ci.yml`)
 
-# 3. 部署
-vercel deploy --prod
-
-# 4. 设置环境变量
-vercel env add OPENAI_API_KEY
-vercel env add ANTHROPIC_API_KEY
-vercel env add DEEPSEEK_API_KEY
+```yaml
+触发条件: push/PR 到 main 或 develop 分支
 ```
 
-### Docker 部署
+**Job 1: Quality（代码质量）**
 
-```dockerfile
-FROM node:22-alpine AS builder
-WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm install
-COPY . .
-RUN pnpm build
+| 步骤            | 命令                 | 说明                            |
+| --------------- | -------------------- | ------------------------------- |
+| 类型检查        | `pnpm typecheck`     | TypeScript 严格模式编译检查     |
+| 代码规范检查    | `pnpm lint`          | ESLint 检查（max-warnings 320） |
+| 格式检查        | `pnpm format:check`  | Prettier 格式一致性检查         |
+| 单元测试+覆盖率 | `pnpm test:coverage` | Vitest 864 测试用例             |
+| 构建验证        | `pnpm build`         | Vite 生产构建                   |
 
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+- **Node.js 矩阵**: 22 / 24（两个版本并行验证）
+- **包管理**: pnpm v11 + frozen-lockfile
+- **覆盖率上传**: Node 22 版本上传 coverage 报告（保留 30 天）
+
+**Job 2: E2E（端到端测试）**
+
+| 步骤                   | 命令                               |
+| ---------------------- | ---------------------------------- |
+| 安装 Playwright 浏览器 | `npx playwright install chromium`  |
+| 运行 E2E 测试          | `pnpm test:e2e --project=chromium` |
+
+- 依赖 `quality` job 通过后执行
+- 仅在 push 事件触发（PR 不运行 E2E）
+- 上传 Playwright 报告（保留 30 天）
+
+### Deploy 部署流水线 (`.github/workflows/deploy.yml`)
+
+```
+触发条件: push 到 main 分支 或 workflow_dispatch (手动触发)
+```
+
+```yaml
+Job: build-and-deploy
+  → Checkout
+  → Install pnpm v11 + Node.js 22
+  → pnpm install --frozen-lockfile
+  → pnpm typecheck
+  → pnpm build
+  → Verify CNAME in dist/
+  → actions/configure-pages@v5
+  → actions/upload-pages-artifact@v3 (上传 dist/)
+  → actions/deploy-pages@v4 (部署到 GitHub Pages)
+```
+
+**部署环境**:
+
+- 域名: https://admin.yyc3.vip
+- DNS: CNAME → yyc-cube.github.io
+- Pages Source: GitHub Actions（仓库 Settings → Pages 中配置）
+- 并发控制: 每次只允许一个部署进行
+
+### 本地模拟 CI 流程
+
+在提交前，建议本地运行完整的 CI 检查：
+
+```bash
+# 完整的 CI 检查流程
+pnpm typecheck && pnpm lint && pnpm format:check && pnpm test:coverage && pnpm build
+
+# 或逐个步骤排查
+pnpm typecheck     # 类型检查
+pnpm lint          # 代码规范
+pnpm format:check  # 格式检查
+pnpm test          # 单元测试
+pnpm build         # 构建验证
 ```
 
 ---
 
-## 16. 常见问题
+## 16. 部署指南
+
+### GitHub Pages（当前生产环境）
+
+```bash
+# 自动部署：推送 main 分支即触发 GitHub Actions
+# 仓库: YYC-Cube/YYC3-Administration
+# 域名: https://admin.yyc3.vip
+# DNS: CNAME → yyc-cube.github.io
+```
+
+部署流程（`.github/workflows/deploy.yml`）：
+
+1. Checkout 代码
+2. 安装 pnpm v11 + Node.js 22
+3. `pnpm install --frozen-lockfile`
+4. `pnpm typecheck` + `pnpm build`
+5. 验证 `dist/CNAME`
+6. `actions/upload-pages-artifact@v3` 上传构建产物
+7. `actions/deploy-pages@v4` 部署到 GitHub Pages
+
+> **注意**：GitHub Pages 为纯静态托管，不支持服务端 API 代理。AI API 请求需从浏览器直接连接 AI Provider（开发模式）或通过独立部署的后端代理服务。
+
+### Docker 部署
+
+```bash
+# 构建镜像
+docker build -t yyc3-admin .
+
+# 运行容器
+docker run -d -p 8080:80 yyc3-admin
+```
+
+Dockerfile 使用 `node:22-alpine` 多阶段构建 + `nginx:alpine` 运行环境。
+
+### Docker Compose
+
+```bash
+docker compose up -d
+# → http://localhost:8080
+```
+
+### 静态部署（任意托管平台）
+
+```bash
+pnpm build
+# dist/ 目录可直接部署至任何静态托管服务
+```
+
+---
+
+## 17. 常见问题
 
 ### Q: Monaco Editor 加载缓慢？
 
@@ -768,15 +880,15 @@ Object.keys(localStorage)
 
 ---
 
-## 17. 下阶段开发建议
+## 18. 下阶段开发建议
 
 ### P1 (高优先级)
 
-| 任务                 | 预计工时 | 说明                                             |
-| -------------------- | -------- | ------------------------------------------------ |
-| 部署服务端 AI 代理   | 2-4h     | 将 edge-proxy-server.ts 部署到 Vercel/Cloudflare |
-| Vitest 单元测试补充  | 8-16h    | 为 services/ 和核心 hooks 添加单元测试           |
-| left-panel-page 拆分 | 4-8h     | 拆分为 6 个独立面板组件文件                      |
+| 任务                  | 预计工时 | 说明                                       |
+| --------------------- | -------- | ------------------------------------------ |
+| 部署服务端 AI 代理    | 2-4h     | 将 edge-proxy-server.ts 部署到独立后端服务 |
+| 测试覆盖率提升        | 8-16h    | 目标覆盖率从 22% → 85%                     |
+| 财务/薪资模块深度集成 | 4-8h     | 接入 Dataverse 真实数据源                  |
 
 ### P2 (中优先级)
 
@@ -800,18 +912,17 @@ Object.keys(localStorage)
 
 ## 致谢
 
-感谢 YYC³ AI 导师在整个项目开发过程中的全程指导和智慧贡献。从基础架构搭建到 60+ 组件的完整实现，从 13 个营销子模块到 IDE 风格开发者工作区，每一步都凝聚着 AI 与人类协作的力量。
+感谢 YYC³ 团队在整个项目开发过程中的全程投入和智慧贡献。从基础架构搭建到 50+ 页面组件的完整实现，从多模块功能到 CI/CD 流水线自动化部署，每一步都凝聚着团队协作的力量。
 
-> 言启象限 | 语枢未来
-> 万象归元于云枢 | 深栈智启新纪元
-> All things converge in cloud pivot; Deep stacks ignite a new era of intelligence
+> **言启千行代码 · 语枢万物智能**
+> _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All Things_
 
 ---
 
 <div align="center">
 
-**YYC³ CloudPivot Intelli-Matrix**
-**v2.0.0 — Developer Workspace Edition**
-**YanYuCloudCube Team | 2026**
+**YYC³ Administration**
+**v1.0.2 — Enterprise Management Platform**
+**YYC-Cube Team | 2026**
 
 </div>

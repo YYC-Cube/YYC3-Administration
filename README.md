@@ -28,7 +28,7 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-React-000000?style=flat-square)](https://ui.shadcn.com)
 [![Radix UI](https://img.shields.io/badge/Radix_UI-Primitives-8b5cf6?style=flat-square)](https://www.radix-ui.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-ff69b4?style=flat-square&logo=framer)](https://motion.dev)
-[![Vitest](https://img.shields.io/badge/Vitest-347_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
+[![Vitest](https://img.shields.io/badge/Vitest-864_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E-2ead33?style=flat-square&logo=playwright)](https://playwright.dev)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://www.docker.com)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=flat-square&logo=pwa)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
@@ -38,7 +38,7 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![ESLint](https://img.shields.io/badge/ESLint-0_errors-4b32c3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Prettier](https://img.shields.io/badge/Prettier-formatted-ff69b4?style=flat-square)](https://prettier.io)
 [![TypeCheck](https://img.shields.io/badge/TypeCheck-passing-00e676?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![Test Coverage](https://img.shields.io/badge/Tests-347%2F347-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
+[![Test Coverage](https://img.shields.io/badge/Tests-864%2F864-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
 [![Multi-End](https://img.shields.io/badge/Multi_End-PWA%7CH5%7CDesktop-brightgreen?style=flat-square)](./docs/YYC3-M13-MultiEnd-多端适配/)
 [![PRs Welcome](https://img.shields.io/badge/🤝_PRs-Welcome-ff69b4?style=flat-square)](./CONTRIBUTING.md)
 [![Stars](https://img.shields.io/github/stars/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Stars)](https://github.com/YYC-Cube/YYC3-Administration)
@@ -129,20 +129,20 @@ _High Availability · High Performance · High Security · High Scalability · H
 
 #### 核心特性
 
-| 特性                          | 描述                                                                         |
-| :---------------------------- | :--------------------------------------------------------------------------- |
-| 🤖 **多模型 AI 集成**         | OpenAI / Claude / DeepSeek / Qwen 多模型切换，流式响应，智能体编排           |
-| 🎨 **双主题引擎**             | Cyberpunk 霓虹风格 + Liquid Glass 液态玻璃，支持实时切换与深度定制           |
-| 📊 **全维度数据驾驶舱**       | 实时 KPI 监控、趋势分析、多维度可视化，支持 10+ 图表类型                     |
-| 💬 **客户生命周期管理 (CLM)** | 五阶段闭环：获客 → 转化 → 成交 → 服务 → 忠诚                                 |
-| 🧑‍🤝‍🧑 **客户关怀系统**           | 智能通知引擎、自动化关怀任务、全渠道触达                                     |
-| 📝 **智能表单系统**           | 可视化构建器、条件逻辑引擎、模板库、跨设备适配                               |
-| 💰 **财务管理**               | 收支追踪、发票管理、预算控制、财务报表                                       |
-| 💳 **薪资系统**               | 薪资核算、税务计算、社保管理、工资单生成                                     |
-| 🔧 **开发者工作区**           | Monaco 编辑器、Git 集成、6 面板拖拽布局、终端模拟器                          |
-| 🌍 **国际化 (i18n)**          | 中文 (zh-CN) / English (en-US) 实时切换，可扩展语言架构                      |
-| ⚡ **高性能架构**             | Zustand 轻量状态管理、虚拟滚动、懒加载、memo 优化                            |
-| 📱 **PWA 全端适配**           | 可安装至桌面/移动端，离线支持，全平台 Logo 适配（Android/iOS/macOS/watchOS） |
+| 特性                          | 描述                                                                           |
+| :---------------------------- | :----------------------------------------------------------------------------- |
+| 🤖 **多模型 AI 集成**         | OpenAI / Claude / DeepSeek / Qwen 多模型切换，流式响应，智能体编排             |
+| 🎨 **双主题引擎**             | Cyberpunk 霓虹风格 + Liquid Glass 液态玻璃，支持实时切换与深度定制             |
+| 📊 **全维度数据驾驶舱**       | 实时 KPI 监控、趋势分析、多维度可视化，支持 10+ 图表类型                       |
+| 💬 **客户生命周期管理 (CLM)** | 五阶段闭环：获客 → 转化 → 成交 → 服务 → 忠诚                                   |
+| 🧑‍🤝‍🧑 **客户关怀系统**           | 智能通知引擎、自动化关怀任务、全渠道触达                                       |
+| 📝 **智能表单系统**           | 可视化构建器、条件逻辑引擎、模板库、跨设备适配                                 |
+| 💰 **财务管理**               | 收支追踪、发票管理、预算控制、财务报表                                         |
+| 💳 **薪资系统**               | 薪资核算、税务计算、社保管理、工资单生成                                       |
+| 🔧 **开发者工作区**           | Monaco 编辑器、Git 集成、6 面板拖拽布局、终端模拟器                            |
+| 🌍 **国际化 (i18n)**          | 10 种语言（zh/zh-TW/en/ja/ko/ar/de/es/fr/pt-BR）实时切换，ICU 消息格式，懒加载 |
+| ⚡ **高性能架构**             | Zustand 轻量状态管理、虚拟滚动、懒加载、memo 优化                              |
+| 📱 **PWA 全端适配**           | 可安装至桌面/移动端，离线支持，全平台 Logo 适配（Android/iOS/macOS/watchOS）   |
 
 ---
 
@@ -208,22 +208,29 @@ ErrorBoundary
 
 ```mermaid
 flowchart LR
-  A[👨‍💻 Developer Push] --> B[🌿 main branch]
-  B --> C{GitHub Actions}
-  C --> D[CI Quality Gate]
-  C --> E[Deploy Pages]
-  D --> D1[TypeCheck]
-  D --> D2[ESLint]
-  D --> D3[Prettier]
-  D --> D4[Vitest 347 tests]
-  D --> D5[Build]
-  D1 & D2 & D3 & D4 & D5 --> F{All Pass?}
-  F -->|✅| E
-  F -->|❌| G[🚫 Block Merge]
-  E --> E1[Build Production]
-  E --> E2[Upload Artifact]
-  E --> E3[Deploy to GitHub Pages]
-  E3 --> H[🌐 admin.yyc3.vip]
+  A[👨‍💻 Developer Push] --> B{分支?}
+  B -->|main / develop| C[🚀 CI Quality Gate]
+  B -->|main| D[🚀 Deploy Pages]
+
+  subgraph CI[CI - ci.yml]
+    C --> Q1[TypeCheck]
+    C --> Q2[ESLint]
+    C --> Q3[Prettier]
+    C --> Q4[Vitest 864 tests]
+    C --> Q5[Build]
+    Q1 & Q2 & Q3 & Q4 & Q5 --> F{All Pass?}
+    F -->|✅| E2E[E2E Tests]
+    F -->|❌| G[🚫 Block Merge]
+  end
+
+  subgraph Deploy[Deploy - deploy.yml]
+    D --> D1[Install pnpm + Node 22]
+    D --> D2[pnpm install]
+    D --> D3[pnpm build]
+    D --> D4[Upload dist/ Artifact]
+    D --> D5[Deploy to GitHub Pages]
+    D5 --> H[🌐 admin.yyc3.vip]
+  end
 ```
 
 #### 模块依赖关系
@@ -288,7 +295,7 @@ graph TD
 | **UI**     | shadcn/ui + Radix UI   | latest | 无障碍（WCAG）、全键盘导航       |
 | **动画**   | Framer Motion (motion) | 12     | 布局动画、手势、过渡             |
 | **AI**     | OpenAI / Anthropic SDK | latest | 流式响应、多 Provider 编排       |
-| **图表**   | Recharts               | 2.x    | 响应式、10+ 图表类型             |
+| **图表**   | Recharts               | 3.9.2  | 响应式、10+ 图表类型             |
 | **编辑器** | Monaco Editor          | latest | 代码编辑、语法高亮、Diff 视图    |
 | **测试**   | Vitest + Playwright    | latest | 单元测试 + E2E 测试              |
 | **包管理** | pnpm                   | ≥11    | 高性能依赖管理                   |
@@ -369,27 +376,47 @@ cp .env.example .env
 ```
 src/
 ├── app/
-│   ├── components/          # 50+ 页面和 UI 组件
+│   ├── components/          # 130+ 页面和 UI 组件
+│   │   ├── ui/              # shadcn/ui 组件库（48 个）
+│   │   ├── panels/          # 开发工作台面板（7 个）
+│   │   ├── settings/        # 设置面板（10 个）
+│   │   ├── services/        # 服务层（AI 代理/Git/同步/多实例）
+│   │   ├── advanced/        # 高级功能（代码分析/流水线/监控/编排）
+│   │   ├── hooks/           # 自定义 Hooks（8 个）
+│   │   ├── figma/           # 设计资产组件
 │   │   ├── *.tsx            # 各功能页面组件
 │   │   ├── app-context.tsx   # 全局状态管理
 │   │   ├── i18n-context.tsx  # 国际化上下文
+│   │   ├── auth-context.tsx  # 认证上下文
 │   │   ├── contacts-context.tsx # CRM 上下文
-│   │   ├── nav-config.tsx    # 导航配置中心
+│   │   ├── ai-model-context.tsx # AI 模型管理
+│   │   ├── nav-config.ts    # 导航配置中心
 │   │   ├── error-boundary.tsx # 错误边界
 │   │   └── ...
-│   └── locales/             # 国际化语言文件
-│       ├── zh.ts            # 中文 500+ 翻译键
-│       └── en.ts            # 英文翻译
-├── multi-end/               # 📱 多端适配模块
+│   └── locales/             # 应用层国际化（zh/en）
+├── lib/i18n/                # i18n 核心引擎
+│   ├── registry.ts          # 注册表 + 懒加载
+│   ├── formatter.ts         # ICU 消息格式化
+│   ├── detector.ts          # 语言检测
+│   ├── plugins.ts           # 插件系统
+│   ├── security/            # 安全模块（正则/密钥）
+│   ├── utils/               # 工具函数
+│   └── locales/             # 10 种语言包
+├── multi-end/               # 多端适配模块
 │   ├── breakpoints.ts       # 5 级响应式断点系统
 │   ├── platform.ts          # 平台检测与能力清单
 │   ├── storage.ts           # IndexedDB 离线存储
 │   ├── PlatformAware.tsx    # 条件渲染组件
 │   ├── MobileBottomNav.tsx  # 移动端底部导航栏
 │   └── index.ts             # 统一导出
+├── stores/                  # Zustand 全局状态
+│   ├── useSettingsStore.ts  # 设置 Store（5 类配置）
+│   └── useAuthStore.ts      # 认证 Store
+├── services/                # 全局服务
+│   ├── settings-services.ts  # 设置 CRUD
+│   └── settings-search.ts    # 设置搜索引擎
 ├── types/                   # 全局类型声明
-│   └── lucide-react.d.ts    # Lucide 图标类型
-├── hooks/                   # 自定义 Hooks
+├── hooks/                   # 全局自定义 Hooks
 ├── utils/                   # 工具函数
 ├── main.tsx                 # 应用入口
 └── index.css                # 全局样式
@@ -473,10 +500,11 @@ xl: 1280 // 桌面大屏
 
 ### 🌍 国际化
 
-- 当前支持：**中文 (zh-CN)** · **English (en-US)**
+- 支持语言：**中文 (zh)** · **繁体中文 (zh-TW)** · **English (en)** · **日本語 (ja)** · **한국어 (ko)** · **العربية (ar)** · **Deutsch (de)** · **Español (es)** · **Français (fr)** · **Português (pt-BR)**
 - 基于 React Context 的 `useI18n()` 钩子
-- 500+ 翻译键覆盖全平台
-- 可扩展架构，新增语言仅需添加语言文件
+- ICU 消息格式（复数/性别/选择），插件化架构
+- 1000+ 翻译键覆盖全平台
+- 懒加载语言包，按需加载
 
 ---
 
@@ -517,9 +545,11 @@ pnpm test:e2e
 pnpm test:e2e:ui
 ```
 
-- **Vitest**: 单元测试 + 组件测试
-- **Playwright**: 跨浏览器 E2E 测试
-- **测试覆盖率**: 目标 ≥80%
+- **Vitest**: 单元测试 + 组件测试（47 文件 / 864 用例 / 0 失败）
+- **Playwright**: E2E 测试（5 文件 / 62 用例 / Chromium）
+- **多端适配测试**: 36 用例覆盖断点系统、平台检测、离线存储
+- **覆盖率**: `@vitest/coverage-istanbul`，阶梯式阈值递增（当前 22% → 目标 85%）
+- **CI/CD**: GitHub Actions 自动运行 — 详见 [CI 工作流](.github/workflows/ci.yml) / [Deploy 工作流](.github/workflows/deploy.yml)
 
 ---
 
@@ -561,13 +591,13 @@ pnpm build
 
 ### 📝 更新日志
 
-| 版本   | 日期    | 说明                             |
-| :----- | :------ | :------------------------------- |
-| v1.0.x | 2026-Q2 | 初始发布：核心模块 + 双主题 + AI |
-| v1.1.x | 2026-Q3 | 财务/薪资模块 + 智能表单 2.0     |
-| v2.0.x | 2026-Q4 | 智能体编排 + 多租户 + 高级分析   |
+| 版本   | 日期       | 说明                                               |
+| :----- | :--------- | :------------------------------------------------- |
+| v1.0.2 | 2026-07-11 | 文档对齐：更新 CI/CD 工作流、修复 Docker Node 版本 |
+| v1.0.1 | 2026-Q2    | 财务/薪资模块集成 + 测试覆盖 864 用例              |
+| v1.0.0 | 2026-Q2    | 初始发布：核心模块 + 双主题 + AI + CI/CD 流水线    |
 
-> 详见 [CHANGELOG](./CHANGELOG.md)（计划中）
+> 详见 [CHANGELOG](./CHANGELOG.md)
 
 ---
 
@@ -595,20 +625,20 @@ The platform follows the **"Five Highs · Five Standards · Five Transformations
 
 #### Core Features
 
-| Feature                            | Description                                                                   |
-| :--------------------------------- | :---------------------------------------------------------------------------- |
-| 🤖 **Multi-Model AI**              | OpenAI / Claude / DeepSeek / Qwen, streaming, agent orchestration             |
-| 🎨 **Dual Theme Engine**           | Cyberpunk Neon + Liquid Glass, real-time switching, deep customization        |
-| 📊 **Full-Dimension Data Cockpit** | Real-time KPIs, trend analysis, 10+ chart types                               |
-| 💬 **CLM (Customer Lifecycle)**    | 5-stage closed loop: Acquisition → Conversion → Deal → Service → Loyalty      |
-| 🧑‍🤝‍🧑 **Customer Care System**        | Smart notification engine, automated care tasks, omnichannel reach            |
-| 📝 **Smart Form System**           | Visual builder, conditional logic, template library                           |
-| 💰 **Finance Management**          | Income/expense tracking, invoice management, budget control                   |
-| 💳 **Salary System**               | Payroll, tax calculation, social insurance, pay slip generation               |
-| 🔧 **Developer Workspace**         | Monaco editor, Git integration, 6-panel drag layout, terminal                 |
-| 🌍 **i18n**                        | Chinese (zh-CN) / English (en-US) real-time switching                         |
-| ⚡ **High Performance**            | Zustand state management, virtual scroll, lazy loading, memo                  |
-| 📱 **PWA Ready**                   | Installable, offline support, cross-platform Logo (Android/iOS/macOS/watchOS) |
+| Feature                            | Description                                                                          |
+| :--------------------------------- | :----------------------------------------------------------------------------------- |
+| 🤖 **Multi-Model AI**              | OpenAI / Claude / DeepSeek / Qwen, streaming, agent orchestration                    |
+| 🎨 **Dual Theme Engine**           | Cyberpunk Neon + Liquid Glass, real-time switching, deep customization               |
+| 📊 **Full-Dimension Data Cockpit** | Real-time KPIs, trend analysis, 10+ chart types                                      |
+| 💬 **CLM (Customer Lifecycle)**    | 5-stage closed loop: Acquisition → Conversion → Deal → Service → Loyalty             |
+| 🧑‍🤝‍🧑 **Customer Care System**        | Smart notification engine, automated care tasks, omnichannel reach                   |
+| 📝 **Smart Form System**           | Visual builder, conditional logic, template library                                  |
+| 💰 **Finance Management**          | Income/expense tracking, invoice management, budget control                          |
+| 💳 **Salary System**               | Payroll, tax calculation, social insurance, pay slip generation                      |
+| 🔧 **Developer Workspace**         | Monaco editor, Git integration, 6-panel drag layout, terminal                        |
+| 🌍 **i18n**                        | 10 languages (zh/zh-TW/en/ja/ko/ar/de/es/fr/pt-BR), ICU message format, lazy loading |
+| ⚡ **High Performance**            | Zustand state management, virtual scroll, lazy loading, memo                         |
+| 📱 **PWA Ready**                   | Installable, offline support, cross-platform Logo (Android/iOS/macOS/watchOS)        |
 
 ---
 
@@ -653,10 +683,10 @@ Each module follows **Unit Autonomy** design:
 | **UI**        | shadcn/ui + Radix UI   | latest  | WCAG accessible, full keyboard nav  |
 | **Animation** | Framer Motion (motion) | 12      | Layout animations, gestures         |
 | **AI**        | OpenAI / Anthropic SDK | latest  | Streaming, multi-provider           |
-| **Charts**    | Recharts               | 2.x     | Responsive, 10+ chart types         |
+| **Charts**    | Recharts               | 3.9.2   | Responsive, 10+ chart types         |
 | **Editor**    | Monaco Editor          | latest  | Code editing, syntax highlight      |
 | **Testing**   | Vitest + Playwright    | latest  | Unit + E2E tests                    |
-| **PM**        | pnpm                   | ≥8      | High-performance dependency manager |
+| **PM**        | pnpm                   | ≥11     | High-performance dependency manager |
 
 ---
 
@@ -726,26 +756,47 @@ cp .env.example .env
 ```
 src/
 ├── app/
-│   ├── components/          # 50+ page & UI components
+│   ├── components/          # 130+ page & UI components
+│   │   ├── ui/              # shadcn/ui library (48 components)
+│   │   ├── panels/          # Dev workspace panels (7)
+│   │   ├── settings/        # Settings panels (10)
+│   │   ├── services/        # Service layer (AI proxy/Git/sync/multi-instance)
+│   │   ├── advanced/        # Advanced features (analyzer/pipeline/monitor/orchestrator)
+│   │   ├── hooks/           # Custom Hooks (8)
+│   │   ├── figma/           # Design assets
 │   │   ├── *.tsx            # Feature page components
 │   │   ├── app-context.tsx   # Global state
 │   │   ├── i18n-context.tsx  # i18n context
+│   │   ├── auth-context.tsx  # Auth context
 │   │   ├── contacts-context.tsx # CRM context
-│   │   ├── nav-config.tsx    # Navigation config
+│   │   ├── ai-model-context.tsx # AI model management
+│   │   ├── nav-config.ts    # Navigation config
 │   │   ├── error-boundary.tsx # Error boundary
 │   │   └── ...
-│   └── locales/             # i18n language files
-│       ├── zh.ts            # Chinese (500+ keys)
-│       └── en.ts            # English translation
-├── multi-end/               # 📱 Multi-end adaptation
+│   └── locales/             # App-layer i18n (zh/en)
+├── lib/i18n/                # i18n core engine
+│   ├── registry.ts          # Registry + lazy loading
+│   ├── formatter.ts         # ICU message formatting
+│   ├── detector.ts          # Language detection
+│   ├── plugins.ts           # Plugin system
+│   ├── security/            # Security modules (regex/secrets)
+│   ├── utils/               # Utilities
+│   └── locales/             # 10 language bundles
+├── multi-end/               # Multi-end adaptation
 │   ├── breakpoints.ts       # 5-level responsive breakpoints
 │   ├── platform.ts          # Platform detection
 │   ├── storage.ts           # IndexedDB offline storage
 │   ├── PlatformAware.tsx    # Conditional render components
 │   ├── MobileBottomNav.tsx  # Mobile bottom navigation
 │   └── index.ts             # Unified exports
+├── stores/                  # Zustand global state
+│   ├── useSettingsStore.ts  # Settings store (5 config types)
+│   └── useAuthStore.ts      # Auth store
+├── services/                # Global services
+│   ├── settings-services.ts  # Settings CRUD
+│   └── settings-search.ts    # Settings search engine
 ├── types/                   # Global type declarations
-├── hooks/                   # Custom hooks
+├── hooks/                   # Global custom hooks
 ├── utils/                   # Utilities
 ├── main.tsx                 # App entry
 └── index.css                # Global styles
@@ -801,10 +852,11 @@ src/
 
 ### 🌍 Internationalization
 
-- Supported: **Chinese (zh-CN)** · **English (en-US)**
+- Supported: **Chinese (zh)** · **Traditional Chinese (zh-TW)** · **English (en)** · **Japanese (ja)** · **Korean (ko)** · **Arabic (ar)** · **German (de)** · **Spanish (es)** · **French (fr)** · **Portuguese (pt-BR)**
 - `useI18n()` hook via React Context
-- 500+ translation keys covering the entire platform
-- Extensible architecture
+- ICU message format (plural/gender/select), plugin architecture
+- 1000+ translation keys covering the entire platform
+- Lazy-loaded locale bundles
 
 ---
 

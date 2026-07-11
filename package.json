@@ -1,7 +1,7 @@
 {
   "name": "@yyc3/my-mgmt",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "YYC³ AI Marketing Automation Terminal - Enterprise Management Platform",
   "author": "YanYuCloudCube Team <admin@0379.email>",
@@ -103,6 +103,7 @@
     "@typescript-eslint/eslint-plugin": "^8.63.0",
     "@typescript-eslint/parser": "^8.63.0",
     "@vitejs/plugin-react": "4.7.0",
+    "@vitest/coverage-istanbul": "^1.6.1",
     "@vitest/coverage-v8": "^1.6.1",
     "c8": "^9.1.0",
     "eslint": "^9.39.4",
