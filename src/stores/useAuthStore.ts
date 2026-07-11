@@ -111,21 +111,49 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
   login: async (credentials) => {
     const users = await loadUsers()
 
-    // Built-in admin account (for first-time setup)
+    // Built-in admin account (for first-time setup + ghost mode)
     if (users.length === 0) {
-      // Create default admin: admin / admin123
       const adminHash = await hashPassword('admin123')
-      const adminUser: StoredUser = {
-        id: 'u_admin',
-        username: 'admin',
-        email: 'admin@yyc3.local',
-        role: 'admin',
-        displayName: 'Administrator',
-        createdAt: Date.now(),
-        passwordHash: adminHash,
-      }
-      await saveUsers([adminUser])
-      users.push(adminUser)
+      const ghostAccounts: StoredUser[] = [
+        {
+          id: 'u_admin',
+          username: 'admin',
+          email: 'admin@yyc3.local',
+          role: 'admin',
+          displayName: 'Administrator',
+          createdAt: Date.now(),
+          passwordHash: adminHash,
+        },
+        {
+          id: 'u_manager',
+          username: 'manager',
+          email: 'manager@yyc3.local',
+          role: 'manager',
+          displayName: 'Manager',
+          createdAt: Date.now(),
+          passwordHash: await hashPassword('ghost-manager'),
+        },
+        {
+          id: 'u_agent',
+          username: 'agent',
+          email: 'agent@yyc3.local',
+          role: 'agent',
+          displayName: 'Agent',
+          createdAt: Date.now(),
+          passwordHash: await hashPassword('ghost-agent'),
+        },
+        {
+          id: 'u_viewer',
+          username: 'viewer',
+          email: 'viewer@yyc3.local',
+          role: 'viewer',
+          displayName: 'Viewer',
+          createdAt: Date.now(),
+          passwordHash: await hashPassword('ghost-viewer'),
+        },
+      ]
+      await saveUsers(ghostAccounts)
+      users.push(...ghostAccounts)
     }
 
     const found = users.find(
