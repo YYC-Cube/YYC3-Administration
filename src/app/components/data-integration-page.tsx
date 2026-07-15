@@ -24,6 +24,7 @@ import {
 } from 'recharts'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -45,6 +46,7 @@ interface DataSource {
 
 export function DataIntegrationPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [activeTab, setActiveTab] = useState<IntegrationTab>('sources')
 
   const dataSources: DataSource[] = [
@@ -111,19 +113,27 @@ export function DataIntegrationPage() {
   }))
 
   const qualityTrendData = Array.from({ length: 7 }, (_, i) => ({
-    day: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'][i],
+    day: [
+      t('ch.day.mon'),
+      t('ch.day.tue'),
+      t('ch.day.wed'),
+      t('ch.day.thu'),
+      t('ch.day.fri'),
+      t('ch.day.sat'),
+      t('ch.day.sun'),
+    ][i],
     completeness: 92 + Math.random() * 6,
     accuracy: 88 + Math.random() * 8,
     consistency: 90 + Math.random() * 7,
   }))
 
   const tabs = [
-    { id: 'sources' as const, label: '数据源', icon: Database },
-    { id: 'sync' as const, label: '数据同步', icon: Activity },
-    { id: 'transform' as const, label: '数据转换', icon: Cpu },
-    { id: 'quality' as const, label: '数据质量', icon: CheckCircle2 },
-    { id: 'lineage' as const, label: '数据血缘', icon: GitBranch },
-    { id: 'monitoring' as const, label: '监控', icon: BarChart3 },
+    { id: 'sources' as const, label: t('di.cat.sources'), icon: Database },
+    { id: 'sync' as const, label: t('di.cat.sync'), icon: Activity },
+    { id: 'transform' as const, label: t('di.cat.transform'), icon: Cpu },
+    { id: 'quality' as const, label: t('di.cat.quality'), icon: CheckCircle2 },
+    { id: 'lineage' as const, label: t('di.cat.lineage'), icon: GitBranch },
+    { id: 'monitoring' as const, label: t('di.cat.monitoring'), icon: BarChart3 },
   ]
 
   const getStatusColor = (status: string) => {
@@ -142,11 +152,11 @@ export function DataIntegrationPage() {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'connected':
-        return '已连接'
+        return t('di.status.connected')
       case 'error':
-        return '错误'
+        return t('di.status.error')
       case 'disconnected':
-        return '未连接'
+        return t('di.status.disconnected')
       default:
         return '未知'
     }
@@ -190,11 +200,9 @@ export function DataIntegrationPage() {
                 textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.4)}`,
               }}
             >
-              数据集成
+              {t('di.title')}
             </h1>
-            <p className="text-[10px] text-white/20 tracking-wider">
-              企业级数据集成 · 实时CDC同步 · 数据质量保障 · 数据血缘
-            </p>
+            <p className="text-[10px] text-white/20 tracking-wider">{t('di.desc')}</p>
           </div>
           <span
             className="ml-2 px-2 py-0.5 rounded-full text-[9px]"
@@ -204,7 +212,7 @@ export function DataIntegrationPage() {
               border: `1px solid ${tc.alpha('#06b6d4', 0.15)}`,
             }}
           >
-            平台集成
+            {t('di.platformIntegration')}
           </span>
         </div>
       </div>
@@ -213,10 +221,32 @@ export function DataIntegrationPage() {
       <div className="px-6 pb-5">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: '数据源', value: '15个', trend: '+2 本月', trendUp: true, color: '#06b6d4' },
-            { label: '同步任务', value: '48个', trend: '运行中', color: '#22c55e' },
-            { label: '数据质量', value: '94分', trend: '+3分', trendUp: true, color: '#8b5cf6' },
-            { label: '日处理量', value: '2.1TB', trend: '稳定', color: '#f97316' },
+            {
+              label: t('di.stat.sources'),
+              value: '15个',
+              trend: t('di.stat.thisMonth'),
+              trendUp: true,
+              color: '#06b6d4',
+            },
+            {
+              label: t('di.stat.syncTasks'),
+              value: '48个',
+              trend: t('di.status.running'),
+              color: '#22c55e',
+            },
+            {
+              label: t('di.stat.dataQuality'),
+              value: '94分',
+              trend: t('di.stat.plus3'),
+              trendUp: true,
+              color: '#8b5cf6',
+            },
+            {
+              label: t('di.stat.dailyThroughput'),
+              value: '2.1TB',
+              trend: t('di.stat.stable'),
+              color: '#f97316',
+            },
           ].map((stat, idx) => (
             <NeonCard key={idx} color={stat.color}>
               <div
@@ -334,6 +364,7 @@ export function DataIntegrationPage() {
                   <div className="flex items-center gap-2">
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
+                      onClick={() => {}}
                       style={{
                         background: tc.alpha(tc.secondary, 0.1),
                         border: `1px solid ${tc.alpha(tc.secondary, 0.2)}`,
@@ -344,6 +375,7 @@ export function DataIntegrationPage() {
                     </button>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
+                      onClick={() => {}}
                       style={{
                         background: tc.alpha(tc.accent, 0.1),
                         border: `1px solid ${tc.alpha(tc.accent, 0.2)}`,
@@ -425,6 +457,7 @@ export function DataIntegrationPage() {
                         </span>
                         <button
                           className="w-6 h-6 rounded-md flex items-center justify-center"
+                          onClick={() => {}}
                           style={{
                             background: tc.alpha(
                               task.status === 'running' ? tc.success : tc.warning,

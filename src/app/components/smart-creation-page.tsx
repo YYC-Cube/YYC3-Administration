@@ -15,6 +15,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -34,6 +35,7 @@ interface CreationTemplate {
 
 export function SmartCreationPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [selectedType, setSelectedType] = useState<'all' | CreationTemplate['type']>('all')
 
   const templates: CreationTemplate[] = [
@@ -121,7 +123,7 @@ export function SmartCreationPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            智能创作工具
+            {t('nav.aiCreativeTools')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             AI文案生成 · 图片设计 · 视频制作

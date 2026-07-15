@@ -24,6 +24,7 @@ import {
 } from 'recharts'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -46,6 +47,7 @@ interface Channel {
 
 export function ChannelCenterPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [activeTab, setActiveTab] = useState<ChannelTab>('overview')
 
   const channels: Channel[] = [
@@ -112,18 +114,26 @@ export function ChannelCenterPage() {
   ]
 
   const channelGrowthData = Array.from({ length: 7 }, (_, i) => ({
-    day: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'][i],
+    day: [
+      t('ch.day.mon'),
+      t('ch.day.tue'),
+      t('ch.day.wed'),
+      t('ch.day.thu'),
+      t('ch.day.fri'),
+      t('ch.day.sat'),
+      t('ch.day.sun'),
+    ][i],
     wechat: 1200 + Math.random() * 300,
     douyin: 800 + Math.random() * 200,
     xiaohongshu: 600 + Math.random() * 150,
   }))
 
   const tabs = [
-    { id: 'overview' as const, label: '概览', icon: Radio },
-    { id: 'config' as const, label: '渠道配置', icon: Settings },
-    { id: 'sync' as const, label: '数据同步', icon: Activity },
-    { id: 'analytics' as const, label: '数据分析', icon: BarChart3 },
-    { id: 'operations' as const, label: '运营管理', icon: Megaphone },
+    { id: 'overview' as const, label: t('ch.cat.overview'), icon: Radio },
+    { id: 'config' as const, label: t('ch.cat.config'), icon: Settings },
+    { id: 'sync' as const, label: t('ch.cat.sync'), icon: Activity },
+    { id: 'analytics' as const, label: t('ch.cat.analytics'), icon: BarChart3 },
+    { id: 'operations' as const, label: t('ch.cat.operations'), icon: Megaphone },
   ]
 
   const getStatusColor = (status: string) => {
@@ -142,11 +152,11 @@ export function ChannelCenterPage() {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'connected':
-        return '已连接'
+        return t('ch.status.connected')
       case 'warning':
-        return '异常'
+        return t('ch.status.warning')
       case 'disconnected':
-        return '未连接'
+        return t('ch.status.disconnected')
       default:
         return '未知'
     }
@@ -184,11 +194,9 @@ export function ChannelCenterPage() {
                 textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.4)}`,
               }}
             >
-              渠道中心
+              {t('ch.title')}
             </h1>
-            <p className="text-[10px] text-white/20 tracking-wider">
-              全渠道统一管理 · 微信/抖音/小红书/飞书/钉钉多渠道集成
-            </p>
+            <p className="text-[10px] text-white/20 tracking-wider">{t('ch.desc')}</p>
           </div>
           <span
             className="ml-2 px-2 py-0.5 rounded-full text-[9px]"
@@ -198,7 +206,7 @@ export function ChannelCenterPage() {
               border: `1px solid ${tc.alpha('#f97316', 0.15)}`,
             }}
           >
-            平台集成
+            {t('ch.platformIntegration')}
           </span>
         </div>
       </div>
@@ -207,10 +215,33 @@ export function ChannelCenterPage() {
       <div className="px-6 pb-5">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: '接入渠道', value: '6个', trend: '全部在线', trendUp: true, color: '#f97316' },
-            { label: '日活用户', value: '5.8万', trend: '+12%', trendUp: true, color: '#22c55e' },
-            { label: '同步任务', value: '32个', trend: '运行中', color: '#3b82f6' },
-            { label: '渠道ROI', value: '4.2x', trend: '+0.8', trendUp: true, color: '#8b5cf6' },
+            {
+              label: t('ch.stat.channels'),
+              value: '6个',
+              trend: t('ch.allOnline'),
+              trendUp: true,
+              color: '#f97316',
+            },
+            {
+              label: t('ch.stat.dau'),
+              value: '5.8万',
+              trend: '+12%',
+              trendUp: true,
+              color: '#22c55e',
+            },
+            {
+              label: t('ch.stat.syncTasks'),
+              value: '32个',
+              trend: t('ch.sync.running'),
+              color: '#3b82f6',
+            },
+            {
+              label: t('ch.stat.channelROI'),
+              value: '4.2x',
+              trend: '+0.8',
+              trendUp: true,
+              color: '#8b5cf6',
+            },
           ].map((stat, idx) => (
             <NeonCard key={idx} color={stat.color}>
               <div
@@ -319,6 +350,7 @@ export function ChannelCenterPage() {
                     {channel.status === 'disconnected' && (
                       <button
                         className="w-full px-3 py-2 rounded-lg text-[10px] transition-all"
+                        onClick={() => console.log(`配置渠道: ${channel.name}`)}
                         style={{
                           background: tc.alpha(tc.primary, 0.1),
                           border: `1px solid ${tc.alpha(tc.primary, 0.2)}`,
@@ -401,6 +433,7 @@ export function ChannelCenterPage() {
                     </span>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
+                      onClick={() => console.log(`配置渠道: ${channel.name}`)}
                       style={{
                         background: tc.alpha(tc.secondary, 0.1),
                         border: `1px solid ${tc.alpha(tc.secondary, 0.2)}`,
@@ -411,6 +444,7 @@ export function ChannelCenterPage() {
                     </button>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
+                      onClick={() => console.log(`测试连接: ${channel.name}`)}
                       style={{
                         background: tc.alpha(tc.accent, 0.1),
                         border: `1px solid ${tc.alpha(tc.accent, 0.2)}`,

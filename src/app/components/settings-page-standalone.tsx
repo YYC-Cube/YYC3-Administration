@@ -35,7 +35,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { useThemeColors } from './hooks/use-theme-colors'
-import { useI18n, type Locale } from './i18n-context'
+import { type Locale, useI18n } from './i18n-context'
 import { useThemeSwitcher } from './theme-switcher-context'
 
 import type { LucideIcon } from 'lucide-react'
@@ -175,36 +175,51 @@ interface SettingsCategory {
   description: string
 }
 
-const SETTINGS_CATEGORIES: SettingsCategory[] = [
-  { id: 'account', label: '账号信息', icon: User, description: '管理您的个人信息和头像' },
-  {
-    id: 'general',
-    label: '通用设置',
-    icon: SettingsIcon,
-    description: '主题、语言、编辑器等基础配置',
-  },
-  { id: 'agents', label: '智能体管理', icon: Bot, description: '配置和管理AI智能体' },
-  { id: 'mcp', label: 'MCP 连接', icon: Plug, description: '模型上下文协议连接管理' },
-  { id: 'models', label: '模型配置', icon: Cpu, description: 'AI 模型和 API 密钥配置' },
-  { id: 'context', label: '上下文管理', icon: FolderTree, description: '代码索引和文档集管理' },
-  {
-    id: 'conversation',
-    label: '对话流设置',
-    icon: MessageSquare,
-    description: '对话行为和通知配置',
-  },
-  { id: 'rules', label: '规则管理', icon: FileCode, description: '自定义规则和约束' },
-  { id: 'skills', label: '技能管理', icon: Zap, description: '自定义技能和能力' },
-  { id: 'import-export', label: '导入/导出', icon: Download, description: '备份和迁移设置' },
-]
-
 export function SettingsPage() {
   const tc = useThemeColors()
   const { theme, setTheme } = useThemeSwitcher()
-  const { locale: language, setLocale: setLanguage } = useI18n()
+  const { locale: language, setLocale: setLanguage, t } = useI18n()
   const [activeCategory, setActiveCategory] = useState('general')
   const [searchQuery, setSearchQuery] = useState('')
   const [importingLoading, setImportingLoading] = useState(false)
+
+  const SETTINGS_CATEGORIES: SettingsCategory[] = [
+    {
+      id: 'account',
+      label: t('stg.cat.account'),
+      icon: User,
+      description: t('stg.cat.accountDesc'),
+    },
+    {
+      id: 'general',
+      label: t('stg.cat.general'),
+      icon: SettingsIcon,
+      description: t('stg.cat.generalDesc'),
+    },
+    { id: 'agents', label: t('stg.cat.agents'), icon: Bot, description: t('stg.cat.agentsDesc') },
+    { id: 'mcp', label: t('stg.cat.mcp'), icon: Plug, description: t('stg.cat.mcpDesc') },
+    { id: 'models', label: t('stg.cat.models'), icon: Cpu, description: t('stg.cat.modelsDesc') },
+    {
+      id: 'context',
+      label: t('stg.cat.context'),
+      icon: FolderTree,
+      description: t('stg.cat.contextDesc'),
+    },
+    {
+      id: 'conversation',
+      label: t('stg.cat.conversation'),
+      icon: MessageSquare,
+      description: t('stg.cat.conversationDesc'),
+    },
+    { id: 'rules', label: t('stg.cat.rules'), icon: FileCode, description: t('stg.cat.rulesDesc') },
+    { id: 'skills', label: t('stg.cat.skills'), icon: Zap, description: t('stg.cat.skillsDesc') },
+    {
+      id: 'import-export',
+      label: t('stg.cat.importExport'),
+      icon: Download,
+      description: t('stg.cat.importExportDesc'),
+    },
+  ]
 
   // ── Import/Export/Reset with toast feedback ──
 
@@ -223,12 +238,12 @@ export function SettingsPage() {
       a.download = `yyc3-settings-${new Date().toISOString().split('T')[0]}.json`
       a.click()
       URL.revokeObjectURL(url)
-      toast.success('配置已导出', {
-        description: `文件: ${a.download}`,
+      toast.success(t('stg.exportSuccess'), {
+        description: `${t('stg.exportSuccess')}: ${a.download}`,
         duration: 3000,
       })
     } catch {
-      toast.error('导出失败', { description: '无法创建配置文件' })
+      toast.error(t('stg.exportFailed'), { description: t('stg.exportFailedDesc') })
     }
   }, [theme, language])
 
@@ -246,18 +261,18 @@ export function SettingsPage() {
           const config = JSON.parse(event.target?.result as string)
           if (config.theme) setTheme(config.theme)
           if (config.language) setLanguage(config.language)
-          toast.success('配置已导入', {
-            description: '设置已自动应用',
+          toast.success(t('stg.importSuccessToast'), {
+            description: t('stg.importApplied'),
             duration: 3000,
           })
         } catch {
-          toast.error('导入失败', { description: '配置文件格式错误，请检查文件内容' })
+          toast.error(t('stg.importFailed'), { description: t('stg.importFailedDesc') })
         } finally {
           setImportingLoading(false)
         }
       }
       reader.onerror = () => {
-        toast.error('读取失败', { description: '无法读取所选文件' })
+        toast.error(t('stg.readFailed'), { description: t('stg.readFailedDesc') })
         setImportingLoading(false)
       }
       reader.readAsText(file)
@@ -266,19 +281,19 @@ export function SettingsPage() {
   }, [setTheme, setLanguage])
 
   const handleReset = useCallback(() => {
-    toast('确认重置所有设置吗？此操作不可撤销。', {
+    toast(t('stg.resetConfirmToast'), {
       duration: 8000,
       action: {
-        label: '确认重置',
+        label: t('stg.confirmReset'),
         onClick: () => {
           setTheme('cyberpunk')
           setLanguage('zh')
-          toast.success('设置已重置', { description: '已恢复默认配置' })
+          toast.success(t('stg.resetDoneToast'), { description: t('stg.resetDefaultDesc') })
         },
       },
       cancel: {
-        label: '取消',
-        onClick: () => toast('操作已取消'),
+        label: t('stg.cancel'),
+        onClick: () => toast(t('stg.cancelled')),
       },
     })
   }, [setTheme, setLanguage])
@@ -289,32 +304,36 @@ export function SettingsPage() {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold mb-2" style={{ color: tc.primary }}>
-          通用设置
+          {t('stg.generalSettings')}
         </h2>
-        <p style={{ color: tc.textSecondary }}>配置主题、语言、编辑器等基础选项</p>
+        <p style={{ color: tc.textSecondary }}>{t('stg.generalSettingsDesc')}</p>
       </div>
 
       {/* ── Theme Selector ── */}
-      <SettingsCard icon={Palette} title="主题" description="选择界面主题风格" tc={tc}>
+      <SettingsCard icon={Palette} title={t('stg.theme')} description={t('stg.themeDesc')} tc={tc}>
         <div className="grid grid-cols-2 gap-4">
           <ThemeOption
             name="Cyberpunk"
-            description="赛博朋克风格"
+            description={t('stg.cyberpunkDesc')}
             active={theme === 'cyberpunk'}
             onClick={() => {
               setTheme('cyberpunk')
-              toast.success('主题已切换', { description: 'Cyberpunk 赛博朋克风格' })
+              toast.success(t('stg.themeSwitched'), {
+                description: `Cyberpunk ${t('stg.cyberpunkDesc')}`,
+              })
             }}
             tc={tc}
             gradient="linear-gradient(135deg, #00f0ff, #00d4ff)"
           />
           <ThemeOption
             name="Liquid Glass"
-            description="液态玻璃风格"
+            description={t('stg.liquidGlassDesc')}
             active={theme === 'liquidGlass'}
             onClick={() => {
               setTheme('liquidGlass')
-              toast.success('主题已切换', { description: 'Liquid Glass 液态玻璃风格' })
+              toast.success(t('stg.themeSwitched'), {
+                description: `Liquid Glass ${t('stg.liquidGlassDesc')}`,
+              })
             }}
             tc={tc}
             gradient="linear-gradient(135deg, #00ff87, #06b6d4)"
@@ -325,8 +344,8 @@ export function SettingsPage() {
       {/* ── Language Selector with Flags ── */}
       <SettingsCard
         icon={Globe}
-        title="语言"
-        description="选择系统显示语言（支持 10 种语言）"
+        title={t('stg.language')}
+        description={t('stg.languageDesc')}
         tc={tc}
       >
         <LanguageSelector
@@ -334,7 +353,7 @@ export function SettingsPage() {
           onChange={(code) => {
             setLanguage(code as Locale)
             const lang = LANGUAGES.find((l) => l.code === code)
-            toast.success('语言已切换', {
+            toast.success(t('stg.languageSwitched'), {
               description: lang ? `${lang.flag} ${lang.label}` : code,
               duration: 2000,
             })
@@ -351,9 +370,7 @@ export function SettingsPage() {
           border: `1px solid ${tc.alpha(tc.accent, 0.3)}`,
         }}
       >
-        <p style={{ color: tc.accent }}>
-          更多设置功能（智能体、MCP、模型、规则等）即将上线，敬请期待。
-        </p>
+        <p style={{ color: tc.accent }}>{t('stg.comingSoon')}</p>
       </div>
     </div>
   )
@@ -387,7 +404,7 @@ export function SettingsPage() {
             {category.label}
           </p>
           <p className="text-sm" style={{ color: tc.textMuted }}>
-            完整功能面板即将上线
+            {t('stg.fullFeatureSoon')}
           </p>
         </div>
       </div>
@@ -410,10 +427,10 @@ export function SettingsPage() {
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
         <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-          系统设置
+          {t('stg.systemSettings')}
         </h1>
         <p className="text-sm" style={{ color: tc.textSecondary }}>
-          配置和管理 YYC³ CloudPivot Intelli-Matrix 的各项功能
+          {t('stg.pageDesc')}
         </p>
       </motion.div>
 
@@ -434,7 +451,7 @@ export function SettingsPage() {
           />
           <input
             type="text"
-            placeholder="搜索设置..."
+            placeholder={t('stg.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full py-3 pl-12 pr-4 bg-transparent outline-none"
@@ -497,7 +514,7 @@ export function SettingsPage() {
                 }}
               >
                 <Download size={16} />
-                导出配置
+                {t('stg.exportConfig')}
               </button>
               <button
                 onClick={handleImport}
@@ -513,7 +530,7 @@ export function SettingsPage() {
                 }}
               >
                 <Upload size={16} />
-                {importingLoading ? '导入中...' : '导入配置'}
+                {importingLoading ? t('stg.importing') : t('stg.importConfig')}
               </button>
               <button
                 onClick={handleReset}
@@ -525,7 +542,7 @@ export function SettingsPage() {
                 }}
               >
                 <RotateCcw size={16} />
-                重置设置
+                {t('stg.resetSettings')}
               </button>
             </div>
           </div>

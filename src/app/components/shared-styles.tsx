@@ -14,7 +14,7 @@ export function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
   return (
     <div className="flex items-center justify-between">
       <div>
-        <h1 className="text-xl font-bold mb-1" style={{ color: tc.textPrimary }}>
+        <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
           {title}
         </h1>
         <p className="text-[11px]" style={{ color: tc.textMuted }}>

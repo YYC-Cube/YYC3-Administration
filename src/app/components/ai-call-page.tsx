@@ -127,10 +127,15 @@ export function AICallPage() {
   }
 
   const recentStats = [
-    { label: '今日通话', value: '28', icon: Phone, change: '+12%' },
-    { label: '接通率', value: '87%', icon: Activity, change: '+5%' },
-    { label: '平均时长', value: '6.5分钟', icon: Clock, change: '-1.2分钟' },
-    { label: 'AI分析', value: '100%', icon: Headphones, change: '全量' },
+    { label: translate('ac.callsToday'), value: '28', icon: Phone, change: '+12%' },
+    { label: translate('ac.connectRate'), value: '87%', icon: Activity, change: '+5%' },
+    { label: translate('ac.avgDuration'), value: '6.5min', icon: Clock, change: '-1.2min' },
+    {
+      label: translate('ac.aiAnalysis'),
+      value: '100%',
+      icon: Headphones,
+      change: translate('ac.fullCoverage'),
+    },
   ]
 
   return (
@@ -141,7 +146,7 @@ export function AICallPage() {
             {translate('nav.aicall')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            全链路智能呼叫系统 · AI驱动通话分析
+            {translate('ac.subtitle')}
           </p>
         </div>
         <button
@@ -149,7 +154,7 @@ export function AICallPage() {
           style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
         >
           <Settings className="w-5 h-5" />
-          呼叫设置
+          {translate('ac.callSettings')}
         </button>
       </div>
 
@@ -184,7 +189,7 @@ export function AICallPage() {
         <NeonCard color={tc.primary} hoverable={false} className="lg:col-span-2 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-              通话记录
+              {translate('ac.callHistory')}
             </h2>
             <div className="flex gap-2">
               <button
@@ -195,7 +200,7 @@ export function AICallPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                全部
+                {translate('ac.all')}
               </button>
               <button
                 className="px-4 py-2 rounded-lg text-sm"
@@ -205,7 +210,7 @@ export function AICallPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                未接
+                {translate('ac.missed')}
               </button>
               <button
                 className="px-4 py-2 rounded-lg text-sm"
@@ -215,7 +220,7 @@ export function AICallPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                AI分析
+                {translate('ac.aiAnalysis')}
               </button>
             </div>
           </div>
@@ -244,7 +249,9 @@ export function AICallPage() {
                   {formatDuration(activeCall.duration)}
                 </p>
                 <p className="text-sm mt-2" style={{ color: tc.textMuted }}>
-                  {activeCall.status === 'connecting' ? '正在连接...' : '通话中'}
+                  {activeCall.status === 'connecting'
+                    ? translate('ac.connecting')
+                    : translate('ac.inCall')}
                 </p>
               </div>
               <div className="flex justify-center gap-4">
@@ -358,7 +365,7 @@ export function AICallPage() {
 
         <NeonCard color={tc.secondary} hoverable={false} className="p-6">
           <h2 className="text-xl font-semibold mb-4" style={{ color: tc.textPrimary }}>
-            AI通话分析
+            {translate('ac.aiCallAnalysis')}
           </h2>
           <div className="space-y-3">
             {callHistory.slice(0, 3).map((record) => (
@@ -384,11 +391,11 @@ export function AICallPage() {
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-5 h-5" style={{ color: tc.success }} />
               <span className="font-medium" style={{ color: tc.success }}>
-                AI推荐拨号
+                {translate('ac.aiRecommendedCall')}
               </span>
             </div>
             <p className="text-sm" style={{ color: tc.textSecondary }}>
-              根据客户画像和历史数据，AI建议优先拨打以下客户：
+              {translate('ac.aiRecommendDesc')}
             </p>
             <div className="mt-3 space-y-2">
               <div
@@ -397,7 +404,7 @@ export function AICallPage() {
               >
                 <span style={{ color: tc.textPrimary }}>张明远</span>
                 <span className="text-xs" style={{ color: tc.accent }}>
-                  意向度 92%
+                  {translate('ac.intentScore')} 92%
                 </span>
               </div>
               <div
@@ -406,7 +413,7 @@ export function AICallPage() {
               >
                 <span style={{ color: tc.textPrimary }}>李思琪</span>
                 <span className="text-xs" style={{ color: tc.accent }}>
-                  意向度 85%
+                  {translate('ac.intentScore')} 85%
                 </span>
               </div>
             </div>

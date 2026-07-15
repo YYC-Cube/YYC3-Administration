@@ -563,11 +563,11 @@ function WidgetInsights() {
 
 function WidgetCLM() {
   const customers = [
-    { name: '张明远', stage: '转化', health: 92, color: '#00ffc8' },
-    { name: '李思琪', stage: '成交', health: 88, color: '#00ffc8' },
-    { name: '王建华', stage: '获客', health: 65, color: '#00ffcc' },
-    { name: '陈雅文', stage: '服务', health: 95, color: '#00ffc8' },
-    { name: '赵鹏飞', stage: '忠诚', health: 98, color: '#00ffc8' },
+    { name: '张明远', stage: 'conversion', health: 92, color: '#00ffc8' },
+    { name: '李思琪', stage: 'deal', health: 88, color: '#00ffc8' },
+    { name: '王建华', stage: 'acquisition', health: 65, color: '#00ffcc' },
+    { name: '陈雅文', stage: 'service', health: 95, color: '#00ffc8' },
+    { name: '赵鹏飞', stage: 'loyalty', health: 98, color: '#00ffc8' },
   ]
   const stageColors: Record<string, string> = {
     获客: '#00f0ff',
@@ -584,7 +584,7 @@ function WidgetCLM() {
       <p className="text-[10px] text-white/30 tracking-wider mb-3 uppercase">客户生命周期 · CLM</p>
       {/* Mini funnel */}
       <div className="flex gap-1 mb-3">
-        {['获客', '转化', '成交', '服务', '忠诚'].map((s) => (
+        {['acquisition', 'conversion', 'deal', 'service', 'loyalty'].map((s) => (
           <div
             key={s}
             className="flex-1 text-center py-1.5 rounded-lg text-[9px]"

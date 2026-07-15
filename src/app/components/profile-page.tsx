@@ -141,13 +141,13 @@ export function ProfilePage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2
+          <h1
             className="tracking-wider flex items-center gap-3"
             style={{ color: tc.secondary, textShadow: `0 0 15px ${tc.alpha(tc.secondary, 0.5)}` }}
           >
             <UserCircle className="w-6 h-6" />
             个人中心
-          </h2>
+          </h1>
           <p className="text-xs mt-1 tracking-wider" style={{ color: tc.textMuted }}>
             Personal Center — 用户档案与使用统计
           </p>

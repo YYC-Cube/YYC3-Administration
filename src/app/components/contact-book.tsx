@@ -171,7 +171,7 @@ function ContactFormModal({
       email: '',
       company: '',
       position: '',
-      stage: '获客',
+      stage: 'acquisition',
       tags: [],
       aiScore: 50,
       aiInsights: ['新建联系人，AI 将自动分析'],
@@ -350,7 +350,7 @@ function ContactFormModal({
           <div>
             <label className="text-[10px] text-white/30 mb-2 block">{t('cb.lifecycleStage')}</label>
             <div className="flex gap-2">
-              {(['获客', '转化', '成交', '服务', '忠诚'] as const).map((stage) => {
+              {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map((stage) => {
                 const meta = STAGE_META[stage]
                 const active = form.stage === stage
                 return (
@@ -683,10 +683,10 @@ function ContactDetailPanel({
           {t('cb.lifecycleAdvance')}
         </h4>
         <div className="flex gap-1">
-          {(['获客', '转化', '成交', '服务', '忠诚'] as const).map((stage, i) => {
+          {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map((stage, i) => {
             const meta = STAGE_META[stage]
             const isActive = contact.stage === stage
-            const stageIdx = ['获客', '转化', '成交', '服务', '忠诚'].indexOf(contact.stage)
+            const stageIdx = ['acquisition', 'conversion', 'deal', 'service', 'loyalty'].indexOf(contact.stage)
             const isPast = i < stageIdx
             return (
               <button
@@ -800,7 +800,7 @@ export function ContactBookPage() {
     const avgAI = total > 0 ? Math.round(contacts.reduce((s, c) => s + c.aiScore, 0) / total) : 0
     const totalValue = contacts.reduce((s, c) => s + c.totalValue, 0)
     const stageCount = Object.fromEntries(
-      (['获客', '转化', '成交', '服务', '忠诚'] as const).map((s) => [
+      (['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map((s) => [
         s,
         contacts.filter((c) => c.stage === s).length,
       ]),
@@ -1117,7 +1117,7 @@ export function ContactBookPage() {
               <div className="mb-3">
                 <p className="text-[9px] text-white/20 mb-2">{t('cb.lifecycleStage')}</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {(['获客', '转化', '成交', '服务', '忠诚'] as const).map((stage) => {
+                  {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map((stage) => {
                     const meta = STAGE_META[stage]
                     const active = filterStage === stage
                     return (

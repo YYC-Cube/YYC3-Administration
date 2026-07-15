@@ -23,8 +23,8 @@ import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 import { useThemeSwitcher } from './theme-switcher-context'
 
-import type { ThemeConfig } from './app-context'
 import type { ReactNode } from 'react'
+import type { ThemeConfig } from './app-context'
 
 // ==========================================
 // YYC³ 主题配置面板 — Theme Config Panel
@@ -119,42 +119,42 @@ export function ThemeConfigPage() {
   }> = [
     {
       key: 'scanlineEnabled',
-      label: '扫描线效果',
+      label: t('theme.scanline'),
       sublabel: 'Scanline overlay animation',
       icon: ScanLine,
       color: '#00f0ff',
     },
     {
       key: 'glitchEnabled',
-      label: '故障效果',
+      label: t('theme.glitch'),
       sublabel: 'Glitch text distortion',
       icon: Sparkles,
       color: '#00d4ff',
     },
     {
       key: 'circuitGridEnabled',
-      label: '电路网格',
+      label: t('theme.circuit'),
       sublabel: 'Circuit board grid background',
       icon: Grid3X3,
       color: '#00ffcc',
     },
     {
       key: 'dataFlowEnabled',
-      label: '数据流动画',
+      label: t('theme.dataFlow'),
       sublabel: 'Data flow particle effects',
       icon: Waves,
       color: '#00ffc8',
     },
     {
       key: 'springAnimEnabled',
-      label: '弹簧动画',
+      label: t('theme.spring'),
       sublabel: 'Spring transition effects',
       icon: Wind,
       color: '#008b9d',
     },
     {
       key: 'blurEnabled',
-      label: '毛玻璃效果',
+      label: t('theme.blur'),
       sublabel: 'Backdrop blur glassmorphism',
       icon: Droplets,
       color: '#00f0ff',
@@ -211,14 +211,8 @@ export function ThemeConfigPage() {
                 <Palette className="w-5 h-5" style={{ color: tc.primary }} />
               </div>
               <div>
-                <p className="text-sm text-white/80">
-                  {locale === 'zh' ? 'UI 主题风格' : 'UI Theme Style'}
-                </p>
-                <p className="text-[10px] text-white/20">
-                  {locale === 'zh'
-                    ? '切换赛博朋克 / 液态玻璃视觉风格'
-                    : 'Switch Cyberpunk / Liquid Glass visual style'}
-                </p>
+                <p className="text-sm text-white/80">{t('theme.uiStyle')}</p>
+                <p className="text-[10px] text-white/20">{t('theme.uiStyleDesc')}</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -320,7 +314,7 @@ export function ThemeConfigPage() {
             </div>
             <div className="flex-1">
               <div className="flex items-center justify-between mb-1">
-                <p className="text-sm text-white/80">霓虹发光强度</p>
+                <p className="text-sm text-white/80">{t('theme.neonIntensity')}</p>
                 <span
                   className="text-sm tabular-nums min-w-[48px] text-right"
                   style={{
@@ -331,9 +325,7 @@ export function ThemeConfigPage() {
                   {theme.neonIntensity}%
                 </span>
               </div>
-              <p className="text-[10px] text-white/20">
-                Neon Glow Intensity — 调节所有霓虹元素的发光强度
-              </p>
+              <p className="text-[10px] text-white/20">{t('theme.neonDesc')}</p>
             </div>
           </div>
 
@@ -374,7 +366,15 @@ export function ThemeConfigPage() {
                     background: theme.neonIntensity === v ? 'rgba(0,240,255,0.1)' : 'transparent',
                   }}
                 >
-                  {v === 0 ? '关闭' : v === 25 ? '低' : v === 50 ? '中' : v === 75 ? '高' : '极致'}
+                  {v === 0
+                    ? t('theme.neonOff')
+                    : v === 25
+                      ? t('theme.neonLow')
+                      : v === 50
+                        ? t('theme.neonMedium')
+                        : v === 75
+                          ? t('theme.neonHigh')
+                          : t('theme.neonMax')}
                 </button>
               ))}
             </div>
@@ -386,7 +386,7 @@ export function ThemeConfigPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Sliders className="w-4 h-4" style={{ color: '#00d4ff' }} />
-              <h3 className="text-sm text-white/60 tracking-wider">视觉效果开关</h3>
+              <h3 className="text-sm text-white/60 tracking-wider">{t('theme.effectToggles')}</h3>
             </div>
             <button
               onClick={() => {
@@ -405,7 +405,7 @@ export function ThemeConfigPage() {
                 color: '#00d4ff',
               }}
             >
-              {allEnabled ? '全部关闭' : '全部开启'}
+              {allEnabled ? t('theme.disableAll') : t('theme.enableAll')}
             </button>
           </div>
           <div className="space-y-2">
@@ -432,7 +432,7 @@ export function ThemeConfigPage() {
               ) : (
                 <EyeOff className="w-4 h-4" style={{ color: '#00ffcc' }} />
               )}
-              <h3 className="text-sm text-white/60 tracking-wider">实时预览</h3>
+              <h3 className="text-sm text-white/60 tracking-wider">{t('theme.preview')}</h3>
             </div>
             <button
               onClick={() => setShowPreview(!showPreview)}
@@ -443,7 +443,7 @@ export function ThemeConfigPage() {
                 color: '#00ffcc',
               }}
             >
-              {showPreview ? '隐藏' : '显示'}
+              {showPreview ? t('theme.hide') : t('theme.show')}
             </button>
           </div>
 
@@ -513,7 +513,7 @@ export function ThemeConfigPage() {
                     className="text-xs"
                     style={{ color: `rgba(0,240,255,${0.4 + (0.5 * theme.neonIntensity) / 100})` }}
                   >
-                    霓虹强度 {theme.neonIntensity}%
+                    {t('theme.neonIntensityValue', { n: String(theme.neonIntensity) })}
                   </p>
                 </div>
 
@@ -532,7 +532,7 @@ export function ThemeConfigPage() {
                       animation: theme.glitchEnabled ? 'glitch-1 3s infinite' : 'none',
                     }}
                   >
-                    {theme.glitchEnabled ? 'G̸l̴i̵t̷c̸h̷ 故障效果' : '故障效果已关闭'}
+                    {theme.glitchEnabled ? t('theme.glitchOn') : t('theme.glitchOff')}
                   </p>
                 </div>
 
@@ -558,15 +558,17 @@ export function ThemeConfigPage() {
 
           {/* Quick Presets */}
           <div className="mt-4">
-            <p className="text-[10px] text-white/25 mb-2 uppercase tracking-wider">快速预设</p>
+            <p className="text-[10px] text-white/25 mb-2 uppercase tracking-wider">
+              {t('theme.presets')}
+            </p>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { label: '极简', neon: 30, effects: false, color: '#00f0ff' },
-                { label: '标准', neon: 80, effects: true, color: '#00d4ff' },
-                { label: '极致', neon: 100, effects: true, color: '#00ffcc' },
+                { labelKey: 'theme.presetMinimal', neon: 30, effects: false, color: '#00f0ff' },
+                { labelKey: 'theme.presetStandard', neon: 80, effects: true, color: '#00d4ff' },
+                { labelKey: 'theme.presetExtreme', neon: 100, effects: true, color: '#00ffcc' },
               ].map((preset) => (
                 <button
-                  key={preset.label}
+                  key={preset.labelKey}
                   onClick={() => {
                     updateTheme({
                       neonIntensity: preset.neon,
@@ -585,7 +587,7 @@ export function ThemeConfigPage() {
                     color: preset.color,
                   }}
                 >
-                  {preset.label}
+                  {t(preset.labelKey)}
                 </button>
               ))}
             </div>
@@ -600,7 +602,7 @@ export function ThemeConfigPage() {
           >
             <div className="flex items-center gap-2">
               <Info className="w-4 h-4" style={{ color: '#00ffc8' }} />
-              <h3 className="text-sm text-white/60 tracking-wider">高级选项与系统信息</h3>
+              <h3 className="text-sm text-white/60 tracking-wider">{t('theme.advanced')}</h3>
             </div>
             {showAdvanced ? (
               <ChevronUp className="w-4 h-4 text-white/25" />
@@ -620,8 +622,8 @@ export function ThemeConfigPage() {
                 style={{ background: 'rgba(10,10,10,0.4)', borderColor: 'rgba(255,255,255,0.04)' }}
               >
                 <div>
-                  <p className="text-sm text-white/60">重置新手引导</p>
-                  <p className="text-[10px] text-white/20">下次刷新时重新展示引导教程</p>
+                  <p className="text-sm text-white/60">{t('theme.resetOnboarding')}</p>
+                  <p className="text-[10px] text-white/20">{t('theme.resetOnboardingDesc')}</p>
                 </div>
                 <button
                   onClick={() => setOnboardingDone(false)}
@@ -632,7 +634,7 @@ export function ThemeConfigPage() {
                     color: '#00ffc8',
                   }}
                 >
-                  重置
+{t('theme.reset')}
                 </button>
               </div>
 
@@ -642,11 +644,11 @@ export function ThemeConfigPage() {
                 style={{ background: 'rgba(10,10,10,0.4)', borderColor: 'rgba(255,255,255,0.04)' }}
               >
                 <p className="text-[10px] text-white/25 mb-2 uppercase tracking-wider">
-                  当前配置摘要
+                  {t('theme.configSummary')}
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   <div className="text-[10px]">
-                    <span className="text-white/20">霓虹强度: </span>
+                    <span className="text-white/20">{t('theme.neonIntensity')}: </span>
                     <span className="text-[#00f0ff]">{theme.neonIntensity}%</span>
                   </div>
                   {toggleItems.map((item) => (

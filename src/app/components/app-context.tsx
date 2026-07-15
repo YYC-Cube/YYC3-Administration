@@ -67,6 +67,8 @@ export type PageId =
   | 'salary'
   // Supply Chain (供应链)
   | 'smartForm'
+  | 'procurement'
+  | 'inventory'
 
 /**
  * Application display mode.

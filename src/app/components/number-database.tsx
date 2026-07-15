@@ -73,8 +73,8 @@ import {
 import { useContacts } from './contacts-context'
 import { useI18n } from './i18n-context'
 
-import type { SharedContact } from './contacts-context'
 import type { ReactNode } from 'react'
+import type { SharedContact } from './contacts-context'
 
 // ==========================================
 // YYC³ 号码库 — Number Database Hub
@@ -94,19 +94,17 @@ type TabId =
 
 const TABS: {
   id: TabId
-  label: string
-  sublabel: string
   icon: (props: { className?: string }) => ReactNode
   color: string
 }[] = [
-  { id: 'overview', label: '总览', sublabel: 'Overview', icon: Gauge, color: '#00f0ff' },
-  { id: 'contacts', label: '客户信息', sublabel: 'Contacts', icon: Users, color: '#00d4ff' },
-  { id: 'analytics', label: '智能分析', sublabel: 'Analytics', icon: BarChart3, color: '#00ffcc' },
-  { id: 'collaboration', label: '协同管理', sublabel: 'Synergy', icon: Layers, color: '#00ffc8' },
-  { id: 'value', label: '客户价值', sublabel: 'Value', icon: Crown, color: '#008b9d' },
-  { id: 'service', label: '服务运营', sublabel: 'Service', icon: HeartHandshake, color: '#00f0ff' },
-  { id: 'knowledge', label: '知识赋能', sublabel: 'Knowledge', icon: BookOpen, color: '#00d4ff' },
-  { id: 'monitor', label: '效能监控', sublabel: 'Monitor', icon: Radio, color: '#005f73' },
+  { id: 'overview', icon: Gauge, color: '#00f0ff' },
+  { id: 'contacts', icon: Users, color: '#00d4ff' },
+  { id: 'analytics', icon: BarChart3, color: '#00ffcc' },
+  { id: 'collaboration', icon: Layers, color: '#00ffc8' },
+  { id: 'value', icon: Crown, color: '#008b9d' },
+  { id: 'service', icon: HeartHandshake, color: '#00f0ff' },
+  { id: 'knowledge', icon: BookOpen, color: '#00d4ff' },
+  { id: 'monitor', icon: Radio, color: '#005f73' },
 ]
 
 // ---- Contact type alias from shared context ----
@@ -116,23 +114,25 @@ const STAGE_META: Record<
   string,
   { icon: (props: { className?: string }) => ReactNode; color: string }
 > = {
-  获客: { icon: Megaphone, color: '#00f0ff' },
-  转化: { icon: Target, color: '#00d4ff' },
-  成交: { icon: Handshake, color: '#00ffcc' },
-  服务: { icon: HeartHandshake, color: '#00ffc8' },
-  忠诚: { icon: Crown, color: '#008b9d' },
+  acquisition: { icon: Megaphone, color: '#00f0ff' },
+  conversion: { icon: Target, color: '#00d4ff' },
+  deal: { icon: Handshake, color: '#00ffcc' },
+  service: { icon: HeartHandshake, color: '#00ffc8' },
+  loyalty: { icon: Crown, color: '#008b9d' },
 }
+
+const STAGE_KEYS = ['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const
 
 const TAG_COLORS: Record<string, string> = {
   VIP: '#00d4ff',
-  重点客户: '#00ffcc',
-  新客户: '#00f0ff',
-  高潜力: '#00ffc8',
-  待跟进: '#008b9d',
-  休眠: '#005f73',
-  决策人: '#41ffdd',
-  技术对接: '#00b4d8',
-  战略合作: '#80ffea',
+  keyClient: '#00ffcc',
+  newClient: '#00f0ff',
+  highPotential: '#00ffc8',
+  pending: '#008b9d',
+  dormant: '#005f73',
+  decisionMaker: '#41ffdd',
+  techContact: '#00b4d8',
+  strategicPartner: '#80ffea',
 }
 
 // ---- Data now comes from shared ContactsContext ----
@@ -300,7 +300,7 @@ function OverviewTab({ contacts }: { contacts: Contact[] }) {
     ? Math.round(contacts.reduce((s, c) => s + c.aiScore, 0) / contacts.length)
     : 0
   const highRisk = contacts.filter((c) => c.riskLevel === 'high').length
-  const todayFollowUp = contacts.filter((c) => c.tags.includes('待跟进')).length
+  const todayFollowUp = contacts.filter((c) => c.tags.includes('pending')).length
 
   return (
     <div className="space-y-6">
@@ -657,7 +657,7 @@ function ContactsTab({
             />
           </div>
           <div className="flex gap-1">
-            {(['获客', '转化', '成交', '服务', '忠诚'] as const).map((s) => {
+            {STAGE_KEYS.map((s) => {
               const active = filterStage === s
               const col = STAGE_META[s].color
               return (
@@ -671,7 +671,7 @@ function ContactsTab({
                     color: active ? col : 'rgba(255,255,255,0.25)',
                   }}
                 >
-                  {s}
+                  {t(`ndb.stage.${s}`)}
                 </button>
               )
             })}
@@ -794,16 +794,16 @@ function ContactsTab({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-white/80 truncate">{c.name}</span>
-                    {c.tags.slice(0, 1).map((t) => (
+                    {c.tags.slice(0, 1).map((tag) => (
                       <span
-                        key={t}
+                        key={tag}
                         className="text-[8px] px-1.5 py-0.5 rounded-full hidden sm:inline"
                         style={{
-                          background: `${TAG_COLORS[t] || '#00f0ff'}12`,
-                          color: `${TAG_COLORS[t] || '#00f0ff'}90`,
+                          background: `${TAG_COLORS[tag] || '#00f0ff'}12`,
+                          color: `${TAG_COLORS[tag] || '#00f0ff'}90`,
                         }}
                       >
-                        {t}
+                        {t(`ndb.cat.${tag}`)}
                       </span>
                     ))}
                   </div>
@@ -819,7 +819,7 @@ function ContactsTab({
                     border: `1px solid ${sm.color}25`,
                   }}
                 >
-                  {c.stage}
+                  {t(`ndb.stage.${c.stage}`)}
                 </span>
                 <div className="hidden lg:block">
                   <AIBadge score={c.aiScore} />
@@ -945,9 +945,9 @@ function ContactsTab({
           </div>
           <div className="p-4 space-y-3">
             {[
-              { label: '电话', value: selected.phone, icon: Phone, color: '#00ffcc' },
-              { label: '邮箱', value: selected.email, icon: Mail, color: '#00f0ff' },
-              { label: '地址', value: selected.source, icon: MapPin, color: '#00ffc8' },
+              { label: t('ndb.phone'), value: selected.phone, icon: Phone, color: '#00ffcc' },
+              { label: t('ndb.email'), value: selected.email, icon: Mail, color: '#00f0ff' },
+              { label: t('ndb.address'), value: selected.source, icon: MapPin, color: '#00ffc8' },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2">
                 <item.icon className="w-3 h-3 shrink-0" style={{ color: `${item.color}60` }} />
@@ -957,21 +957,21 @@ function ContactsTab({
           </div>
           <div className="px-4 pb-4 grid grid-cols-2 gap-2">
             {[
-              { label: 'AI评分', value: selected.aiScore.toString(), color: '#00d4ff' },
-              { label: '通话', value: selected.totalCalls.toString(), color: '#00ffcc' },
+              { label: t('ndb.aiScore'), value: selected.aiScore.toString(), color: '#00d4ff' },
+              { label: t('ndb.calls'), value: selected.totalCalls.toString(), color: '#00ffcc' },
               {
-                label: '价值',
+                label: t('ndb.value'),
                 value: `¥${(selected.totalValue / 1000).toFixed(0)}K`,
                 color: '#00ffc8',
               },
               {
-                label: '风险',
+                label: t('ndb.risk'),
                 value:
                   selected.riskLevel === 'low'
-                    ? '低'
+                    ? t('ndb.riskLow')
                     : selected.riskLevel === 'medium'
-                      ? '中'
-                      : '高',
+                      ? t('ndb.riskMedium')
+                      : t('ndb.riskHigh'),
                 color:
                   selected.riskLevel === 'low'
                     ? '#00ffc8'
@@ -996,7 +996,7 @@ function ContactsTab({
             ))}
           </div>
           <div className="px-4 pb-4">
-            <p className="text-[9px] text-white/20 mb-1">备注</p>
+            <p className="text-[9px] text-white/20 mb-1">{t('ndb.notes')}</p>
             <p className="text-[10px] text-white/35">{selected.notes}</p>
           </div>
         </div>
@@ -2413,7 +2413,7 @@ function ContactFormModal({
       email: '',
       company: '',
       position: '',
-      stage: '获客',
+      stage: 'acquisition',
       tags: [],
       aiScore: 50,
       aiInsights: ['新建联系人，AI 将自动分析'],
@@ -2440,9 +2440,9 @@ function ContactFormModal({
   }
 
   // ---- Conditional field visibility based on stage ----
-  const showValueField = form.stage !== '获客' // Value only visible after acquisition
-  const showRenewalField = form.stage === '服务' || form.stage === '忠诚' // Renewal notes for service/loyalty
-  const showRiskField = form.stage !== '忠诚' // Risk not relevant for loyal customers
+  const showValueField = form.stage !== 'acquisition' // Value only visible after acquisition
+  const showRenewalField = form.stage === 'service' || form.stage === 'loyalty' // Renewal notes for service/loyalty
+  const showRiskField = form.stage !== 'loyalty' // Risk not relevant for loyal customers
 
   return (
     <div
@@ -2550,7 +2550,7 @@ function ContactFormModal({
           <div>
             <label className="text-[10px] text-white/30 mb-2 block">生命周期阶段</label>
             <div className="flex gap-2">
-              {(['获客', '转化', '成交', '服务', '忠诚'] as const).map((stage) => {
+              {STAGE_KEYS.map((stage) => {
                 const meta = STAGE_META[stage]
                 const active = form.stage === stage
                 return (
@@ -2564,7 +2564,7 @@ function ContactFormModal({
                       color: active ? meta.color : 'rgba(255,255,255,0.3)',
                     }}
                   >
-                    {stage}
+                    {t(`ndb.stage.${stage}`)}
                   </button>
                 )
               })}

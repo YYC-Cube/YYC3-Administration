@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
+import { useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
@@ -28,6 +29,7 @@ type SalaryTab = 'dashboard' | 'calculation' | 'tax' | 'attendance'
 
 export function SalaryPage() {
   const { t } = useI18n()
+  const tc = useThemeColors()
   const [activeTab, setActiveTab] = useState<SalaryTab>('dashboard')
 
   const tabs: { id: SalaryTab; label: string; icon: typeof Wallet }[] = useMemo(
@@ -48,13 +50,13 @@ export function SalaryPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2
+          <h1
             className="tracking-wider flex items-center gap-3"
-            style={{ color: '#8b5cf6', textShadow: '0 0 15px rgba(139,92,246,0.5)' }}
+            style={{ color: tc.primary, textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.5)}` }}
           >
             <Wallet className="w-6 h-6" />
             {t('salary.title')}
-          </h2>
+          </h1>
           <p className="text-xs text-white/25 mt-1 tracking-wider">
             Salary Management System — Intelligent Payroll Engine
           </p>
@@ -63,9 +65,9 @@ export function SalaryPage() {
           <button
             className="px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5"
             style={{
-              background: 'rgba(139,92,246,0.08)',
-              border: '1px solid rgba(139,92,246,0.2)',
-              color: '#8b5cf6',
+              background: tc.alpha(tc.primary, 0.08),
+              border: `1px solid ${tc.alpha(tc.primary, 0.2)}`,
+              color: tc.primary,
             }}
           >
             <Calendar className="w-3 h-3" />
@@ -74,9 +76,9 @@ export function SalaryPage() {
           <button
             className="px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5"
             style={{
-              background: 'rgba(16,185,129,0.08)',
-              border: '1px solid rgba(16,185,129,0.2)',
-              color: '#10b981',
+              background: tc.alpha(tc.success, 0.08),
+              border: `1px solid ${tc.alpha(tc.success, 0.2)}`,
+              color: tc.success,
             }}
           >
             <Calculator className="w-3 h-3" />
@@ -88,7 +90,10 @@ export function SalaryPage() {
       {/* Tab Navigation */}
       <div
         className="flex gap-1 mb-6 p-1 rounded-xl"
-        style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+        style={{
+          background: tc.alpha(tc.textPrimary, 0.02),
+          border: `1px solid ${tc.alpha(tc.textPrimary, 0.06)}`,
+        }}
       >
         {tabs.map((tab) => {
           const Icon = tab.icon
@@ -99,9 +104,9 @@ export function SalaryPage() {
               onClick={() => setActiveTab(tab.id)}
               className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs transition-all duration-300"
               style={{
-                background: isActive ? 'rgba(139,92,246,0.1)' : 'transparent',
-                color: isActive ? '#8b5cf6' : 'rgba(255,255,255,0.35)',
-                boxShadow: isActive ? '0 0 8px rgba(139,92,246,0.1)' : 'none',
+                background: isActive ? tc.alpha(tc.primary, 0.1) : 'transparent',
+                color: isActive ? tc.primary : tc.alpha(tc.textPrimary, 0.35),
+                boxShadow: isActive ? `0 0 8px ${tc.alpha(tc.primary, 0.1)}` : 'none',
               }}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -112,10 +117,10 @@ export function SalaryPage() {
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'dashboard' && <SalaryDashboard />}
-      {activeTab === 'calculation' && <SalaryCalculation />}
-      {activeTab === 'tax' && <TaxManagement />}
-      {activeTab === 'attendance' && <AttendanceBoard />}
+      {activeTab === 'dashboard' && <SalaryDashboard tc={tc} />}
+      {activeTab === 'calculation' && <SalaryCalculation tc={tc} />}
+      {activeTab === 'tax' && <TaxManagement tc={tc} />}
+      {activeTab === 'attendance' && <AttendanceBoard tc={tc} />}
     </div>
   )
 }
@@ -123,7 +128,7 @@ export function SalaryPage() {
 // ==========================================
 //  Salary Dashboard
 // ==========================================
-function SalaryDashboard() {
+function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const kpiCards = useMemo(
     () => [
@@ -219,7 +224,7 @@ function SalaryDashboard() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
         {/* Department Breakdown */}
         <NeonCard color="#8b5cf6" hoverable={false}>
-          <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
+          <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
             {t('salary.deptBreakdown')}
           </h3>
           <div className="space-y-3">
@@ -252,7 +257,7 @@ function SalaryDashboard() {
 
         {/* Salary Composition */}
         <NeonCard color="#10b981" hoverable={false}>
-          <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
+          <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
             {t('salary.composition')}
           </h3>
           {[
@@ -335,7 +340,7 @@ function SalaryDashboard() {
 // ==========================================
 //  Salary Calculation
 // ==========================================
-function SalaryCalculation() {
+function SalaryCalculation({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const employees = useMemo(
     () => [
@@ -434,7 +439,7 @@ function SalaryCalculation() {
 
       {/* Employee Salary Table */}
       <NeonCard color="#8b5cf6" hoverable={false}>
-        <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
+        <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
           {t('salary.employeeList')}
         </h3>
         {/* Table Header */}
@@ -489,7 +494,7 @@ function SalaryCalculation() {
 // ==========================================
 //  Tax Management
 // ==========================================
-function TaxManagement() {
+function TaxManagement({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const taxBrackets = useMemo(
     () => [
@@ -522,7 +527,7 @@ function TaxManagement() {
 
       {/* Tax Bracket Table */}
       <NeonCard color="#8b5cf6" hoverable={false}>
-        <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
+        <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
           {t('salary.tax.brackets')}
         </h3>
         <div
@@ -558,7 +563,7 @@ function TaxManagement() {
 // ==========================================
 //  Attendance Board
 // ==========================================
-function AttendanceBoard() {
+function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const attendanceData = useMemo(
     () => [
@@ -637,7 +642,7 @@ function AttendanceBoard() {
 
       {/* Attendance Table */}
       <NeonCard color="#8b5cf6" hoverable={false}>
-        <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
+        <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
           {t('salary.att.summary')}
         </h3>
         <div

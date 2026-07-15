@@ -119,3 +119,6 @@ components.d.ts
 # Placeholder / dev-only public assets
 public/placeholder*
 public/clear-sw.js
+
+# Editor cache
+.next/

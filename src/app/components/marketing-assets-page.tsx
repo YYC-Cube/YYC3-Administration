@@ -19,6 +19,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -41,6 +42,7 @@ interface Asset {
 
 export function MarketingAssetsPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selectedType, setSelectedType] = useState<'all' | Asset['type']>('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -183,7 +185,7 @@ export function MarketingAssetsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            营销素材管理
+            {t('nav.marketingAssets')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             智能分类 · 版权管理 · 快速检索
@@ -191,6 +193,7 @@ export function MarketingAssetsPage() {
         </div>
         <button
           className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all"
+          onClick={() => {}}
           style={{
             background: tc.gradientButton,
             color: tc.textPrimary,
@@ -294,6 +297,7 @@ export function MarketingAssetsPage() {
 
         <button
           className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all"
+          onClick={() => {}}
           style={{
             background: tc.bgCard,
             color: tc.textSecondary,
@@ -377,6 +381,7 @@ export function MarketingAssetsPage() {
                   <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       className="flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all"
+                      onClick={() => {}}
                       style={{
                         background: tc.alpha(tc.primary, 0.1),
                         color: tc.primary,
@@ -388,6 +393,7 @@ export function MarketingAssetsPage() {
                     </button>
                     <button
                       className="px-3 py-2 rounded-lg transition-all"
+                      onClick={() => {}}
                       style={{
                         background: tc.bgCard,
                         color: tc.textSecondary,
@@ -398,6 +404,7 @@ export function MarketingAssetsPage() {
                     </button>
                     <button
                       className="px-3 py-2 rounded-lg transition-all"
+                      onClick={() => {}}
                       style={{
                         background: tc.bgCard,
                         color: tc.textSecondary,
@@ -523,6 +530,7 @@ export function MarketingAssetsPage() {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             className="p-2 rounded transition-all"
+                            onClick={() => {}}
                             style={{
                               background: tc.bgCard,
                               color: tc.textSecondary,
@@ -532,6 +540,7 @@ export function MarketingAssetsPage() {
                           </button>
                           <button
                             className="p-2 rounded transition-all"
+                            onClick={() => {}}
                             style={{
                               background: tc.bgCard,
                               color: tc.textSecondary,
@@ -541,6 +550,7 @@ export function MarketingAssetsPage() {
                           </button>
                           <button
                             className="p-2 rounded transition-all"
+                            onClick={() => {}}
                             style={{
                               background: tc.bgCard,
                               color: tc.textSecondary,

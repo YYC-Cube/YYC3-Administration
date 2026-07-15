@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -34,65 +35,66 @@ interface Platform {
 
 export function PlatformIntegrationPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
 
   const platforms: Platform[] = [
     {
       id: 'wechat',
-      name: '微信公众号',
-      type: '社交媒体',
+      name: t('integ.wechat'),
+      type: t('integ.socialMedia'),
       status: 'connected',
       icon: MessageSquare,
-      lastSync: '2分钟前',
+      lastSync: t('integ.sync.2minAgo'),
       dataCount: 15420,
       color: tc.success,
     },
     {
       id: 'douyin',
-      name: '抖音',
-      type: '短视频',
+      name: t('integ.douyin'),
+      type: t('integ.shortVideo'),
       status: 'connected',
       icon: Activity,
-      lastSync: '5分钟前',
+      lastSync: t('integ.sync.5minAgo'),
       dataCount: 28350,
       color: tc.primary,
     },
     {
       id: 'xiaohongshu',
-      name: '小红书',
-      type: '社交电商',
+      name: t('integ.xiaohongshu'),
+      type: t('integ.socialEcommerce'),
       status: 'connected',
       icon: ShoppingCart,
-      lastSync: '10分钟前',
+      lastSync: t('integ.sync.10minAgo'),
       dataCount: 12890,
       color: tc.secondary,
     },
     {
       id: 'weibo',
-      name: '微博',
-      type: '社交媒体',
+      name: t('integ.weibo'),
+      type: t('integ.socialMedia'),
       status: 'error',
       icon: Globe,
-      lastSync: '1小时前',
+      lastSync: t('integ.sync.1hourAgo'),
       dataCount: 8740,
       color: tc.danger,
     },
     {
       id: 'baidu',
-      name: '百度推广',
-      type: '搜索广告',
+      name: t('integ.baidu'),
+      type: t('integ.searchAds'),
       status: 'connected',
       icon: Globe,
-      lastSync: '3分钟前',
+      lastSync: t('integ.sync.3minAgo'),
       dataCount: 21450,
       color: tc.accent,
     },
     {
       id: 'dingding',
-      name: '钉钉',
-      type: '企业协作',
+      name: t('integ.dingtalk'),
+      type: t('integ.enterprise'),
       status: 'disconnected',
       icon: Users,
-      lastSync: '未连接',
+      lastSync: t('integ.notConnected'),
       dataCount: 0,
       color: tc.textMuted,
     },
@@ -100,25 +102,25 @@ export function PlatformIntegrationPage() {
 
   const stats = [
     {
-      label: '已连接平台',
+      label: t('integ.stat.connected'),
       value: platforms.filter((p) => p.status === 'connected').length.toString(),
       icon: CheckCircle2,
       color: tc.success,
     },
     {
-      label: '待连接',
+      label: t('integ.stat.pending'),
       value: platforms.filter((p) => p.status === 'disconnected').length.toString(),
       icon: Clock,
       color: tc.textMuted,
     },
     {
-      label: '异常平台',
+      label: t('integ.stat.error'),
       value: platforms.filter((p) => p.status === 'error').length.toString(),
       icon: AlertCircle,
       color: tc.danger,
     },
     {
-      label: '同步数据量',
+      label: t('integ.stat.syncVolume'),
       value: `${(platforms.reduce((sum, p) => sum + p.dataCount, 0) / 1000).toFixed(1)}K`,
       icon: Database,
       color: tc.primary,
@@ -128,11 +130,11 @@ export function PlatformIntegrationPage() {
   const getStatusConfig = (status: Platform['status']) => {
     switch (status) {
       case 'connected':
-        return { label: '已连接', color: tc.success, icon: CheckCircle2 }
+        return { label: t('integ.connected'), color: tc.success, icon: CheckCircle2 }
       case 'disconnected':
-        return { label: '未连接', color: tc.textMuted, icon: Clock }
+        return { label: t('integ.notConnected'), color: tc.textMuted, icon: Clock }
       case 'error':
-        return { label: '连接异常', color: tc.danger, icon: AlertCircle }
+        return { label: t('integ.connectionError'), color: tc.danger, icon: AlertCircle }
     }
   }
 
@@ -141,10 +143,10 @@ export function PlatformIntegrationPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            平台对接中心
+            {t('integ.title')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            多平台连接 · 数据同步 · API管理
+            {t('integ.desc')}
           </p>
         </div>
         <button
@@ -152,7 +154,7 @@ export function PlatformIntegrationPage() {
           style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
         >
           <Link className="w-5 h-5" />
-          添加平台
+          {t('integ.addPlatform')}
         </button>
       </div>
 
@@ -230,7 +232,7 @@ export function PlatformIntegrationPage() {
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                   <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                    最后同步
+                    {t('integ.lastSync')}
                   </p>
                   <p className="text-sm font-medium" style={{ color: tc.textPrimary }}>
                     {platform.lastSync}
@@ -238,7 +240,7 @@ export function PlatformIntegrationPage() {
                 </div>
                 <div>
                   <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                    数据量
+                    {t('integ.dataVolume')}
                   </p>
                   <p className="text-sm font-medium" style={{ color: tc.primary }}>
                     {platform.dataCount.toLocaleString()}
@@ -256,7 +258,7 @@ export function PlatformIntegrationPage() {
                   }}
                 >
                   <RefreshCw className="w-4 h-4" />
-                  同步
+                  {t('integ.sync')}
                 </button>
                 <button
                   className="px-3 py-2 rounded-lg"

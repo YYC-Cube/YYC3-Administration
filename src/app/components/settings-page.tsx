@@ -49,87 +49,84 @@ import { searchSettings } from '@/services/settings-search'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 
 /**
- * 设置分类配置
- */
-const SETTINGS_CATEGORIES: Array<{
-  id: SettingsCategory
-  label: string
-  icon: (props: { className?: string }) => ReactNode
-  description: string
-}> = [
-  {
-    id: 'account',
-    label: '账号信息',
-    icon: User,
-    description: '管理您的个人信息和头像',
-  },
-  {
-    id: 'general',
-    label: '通用设置',
-    icon: SettingsIcon,
-    description: '主题、语言、编辑器等基础配置',
-  },
-  {
-    id: 'agents',
-    label: '智能体管理',
-    icon: Bot,
-    description: '配置和管理AI智能体',
-  },
-  {
-    id: 'mcp',
-    label: 'MCP 连接',
-    icon: Plug,
-    description: '模型上下文协议连接管理',
-  },
-  {
-    id: 'models',
-    label: '模型配置',
-    icon: Cpu,
-    description: 'AI 模型和 API 密钥配置',
-  },
-  {
-    id: 'context',
-    label: '上下文管理',
-    icon: FolderTree,
-    description: '代码索引和文档集管理',
-  },
-  {
-    id: 'conversation',
-    label: '对话流设置',
-    icon: MessageSquare,
-    description: '对话行为和通知配置',
-  },
-  {
-    id: 'rules',
-    label: '规则管理',
-    icon: FileCode,
-    description: '自定义规则和约束',
-  },
-  {
-    id: 'skills',
-    label: '技能管理',
-    icon: Zap,
-    description: '自定义技能和能力',
-  },
-  {
-    id: 'import-export',
-    label: '导入/导出',
-    icon: Download,
-    description: '备份和迁移设置',
-  },
-]
-
-/**
  * 设置页面主组件
  */
 export function SettingsPage() {
   const tc = useThemeColors()
-  const { t: _t } = useI18n()
+  const { t } = useI18n()
   const { settings, searchQuery, setSearchQuery, exportConfig, importConfig, resetSettings } =
     useSettingsStore()
 
   const [activeCategory, setActiveCategory] = useState<SettingsCategory>('account')
   const [showSearchResults, setShowSearchResults] = useState(false)
+
+  const SETTINGS_CATEGORIES: Array<{
+    id: SettingsCategory
+    label: string
+    icon: (props: { className?: string }) => ReactNode
+    description: string
+  }> = [
+    {
+      id: 'account',
+      label: t('stg.cat.account'),
+      icon: User,
+      description: t('stg.cat.accountDesc'),
+    },
+    {
+      id: 'general',
+      label: t('stg.cat.general'),
+      icon: SettingsIcon,
+      description: t('stg.cat.generalDesc'),
+    },
+    {
+      id: 'agents',
+      label: t('stg.cat.agents'),
+      icon: Bot,
+      description: t('stg.cat.agentsDesc'),
+    },
+    {
+      id: 'mcp',
+      label: t('stg.cat.mcp'),
+      icon: Plug,
+      description: t('stg.cat.mcpDesc'),
+    },
+    {
+      id: 'models',
+      label: t('stg.cat.models'),
+      icon: Cpu,
+      description: t('stg.cat.modelsDesc'),
+    },
+    {
+      id: 'context',
+      label: t('stg.cat.context'),
+      icon: FolderTree,
+      description: t('stg.cat.contextDesc'),
+    },
+    {
+      id: 'conversation',
+      label: t('stg.cat.conversation'),
+      icon: MessageSquare,
+      description: t('stg.cat.conversationDesc'),
+    },
+    {
+      id: 'rules',
+      label: t('stg.cat.rules'),
+      icon: FileCode,
+      description: t('stg.cat.rulesDesc'),
+    },
+    {
+      id: 'skills',
+      label: t('stg.cat.skills'),
+      icon: Zap,
+      description: t('stg.cat.skillsDesc'),
+    },
+    {
+      id: 'import-export',
+      label: t('stg.cat.importExport'),
+      icon: Download,
+      description: t('stg.cat.importExportDesc'),
+    },
+  ]
 
   // 执行搜索
   const searchResults = useMemo(() => {
@@ -168,9 +165,9 @@ export function SettingsPage() {
           try {
             const config = JSON.parse(event.target?.result as string)
             importConfig(config)
-            alert('配置导入成功！')
+            alert(t('stg.importSuccess'))
           } catch {
-            alert('配置文件格式错误')
+            alert(t('stg.importFormatError'))
           }
         }
         reader.readAsText(file)
@@ -181,9 +178,9 @@ export function SettingsPage() {
 
   // 处理重置
   const handleReset = () => {
-    if (confirm('确定要重置所有设置吗？此操作不可撤销。')) {
+    if (confirm(t('stg.resetConfirm'))) {
       resetSettings()
-      alert('设置已重置')
+      alert(t('stg.resetDone'))
     }
   }
 
@@ -231,12 +228,10 @@ export function SettingsPage() {
         transition={{ duration: 0.6, ease: tc.springEasing as any }}
         className="mb-8"
       >
-        <h1 className="text-4xl font-bold mb-2" style={{ color: tc.primary }}>
-          ⚙️ 系统设置
+        <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
+          {t('stg.systemSettings')}
         </h1>
-        <p style={{ color: tc.textSecondary }}>
-          配置和管理 YYC³ CloudPivot Intelli-Matrix 的各项功能
-        </p>
+        <p style={{ color: tc.textSecondary }}>{t('stg.pageDesc')}</p>
       </motion.div>
 
       {/* 搜索栏 */}
@@ -261,7 +256,7 @@ export function SettingsPage() {
           />
           <input
             type="text"
-            placeholder="搜索设置..."
+            placeholder={t('stg.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
             className="w-full py-3 pl-12 pr-4 bg-transparent outline-none"
@@ -390,7 +385,7 @@ export function SettingsPage() {
                   }}
                 >
                   <Download size={16} />
-                  导出配置
+                  {t('stg.exportConfig')}
                 </button>
                 <button
                   onClick={handleImport}
@@ -402,7 +397,7 @@ export function SettingsPage() {
                   }}
                 >
                   <Upload size={16} />
-                  导入配置
+                  {t('stg.importConfig')}
                 </button>
                 <button
                   onClick={handleReset}
@@ -414,7 +409,7 @@ export function SettingsPage() {
                   }}
                 >
                   <RotateCcw size={16} />
-                  重置设置
+                  {t('stg.resetSettings')}
                 </button>
               </div>
             </div>

@@ -244,13 +244,13 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
       {/* Page Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2
+          <h1
             className="tracking-wider flex items-center gap-3"
             style={{ color: tc.primary, textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.5)}` }}
           >
             <BarChart3 className="w-6 h-6" />
             {t('dash.title')}
-          </h2>
+          </h1>
           <p className="text-xs mt-1 tracking-wider" style={{ color: tc.textMuted }}>
             {t('dash.subtitle')}
           </p>

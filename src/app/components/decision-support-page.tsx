@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -33,6 +34,7 @@ interface Decision {
 
 export function DecisionSupportPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
 
   const decisions: Decision[] = [
     {
@@ -161,7 +163,7 @@ export function DecisionSupportPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            智能决策支持
+            {t('nav.aiDecisionSupport')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             AI预测分析 · 策略建议 · 风险评估

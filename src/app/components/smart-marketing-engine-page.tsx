@@ -1,6 +1,7 @@
 import { Brain, Pause, Play, Rocket, Sparkles, TrendingUp, Users, Zap } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -10,6 +11,7 @@ import { NeonCard } from './neon-card'
 
 export function SmartMarketingEnginePage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
 
   const engineStats = [
     { label: '自动化任务', value: '128', change: '+32', icon: Rocket, color: tc.primary },
@@ -79,7 +81,7 @@ export function SmartMarketingEnginePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            智能营销引擎
+            {t('nav.aiMarketingEngine')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             AI自动化 · 策略优化 · 效果最大化

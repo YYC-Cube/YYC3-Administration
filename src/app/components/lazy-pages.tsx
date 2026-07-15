@@ -39,12 +39,8 @@ function PageLoadingFallback() {
 // Core pages — eagerly loaded (imported directly in cyberpunk-standalone.tsx)
 // Non-core pages — lazy loaded below
 
-const LazyCLMPage = lazy(() =>
-  import('./clm-page').then((m) => ({ default: m.CLMPage })),
-)
-const LazyAICallPage = lazy(() =>
-  import('./ai-call-page').then((m) => ({ default: m.AICallPage })),
-)
+const LazyCLMPage = lazy(() => import('./clm-page').then((m) => ({ default: m.CLMPage })))
+const LazyAICallPage = lazy(() => import('./ai-call-page').then((m) => ({ default: m.AICallPage })))
 const LazyCustomerCarePage = lazy(() =>
   import('./customer-care-page').then((m) => ({ default: m.CustomerCarePage })),
 )
@@ -140,6 +136,12 @@ const LazyDecisionSupportPage = lazy(() =>
 const LazyNLPProcessingPage = lazy(() =>
   import('./nlp-processing-page').then((m) => ({ default: m.NLPProcessingPage })),
 )
+const LazyProcurementPage = lazy(() =>
+  import('./procurement-page').then((m) => ({ default: m.ProcurementPage })),
+)
+const LazyInventoryPage = lazy(() =>
+  import('./inventory-page').then((m) => ({ default: m.InventoryPage })),
+)
 
 // ==========================================
 // Lazy Page Registry
@@ -185,6 +187,8 @@ const lazyPageRegistry: Partial<Record<PageId, LazyPageEntry>> = {
   appOverview: { component: LazyAppOverviewPage, name: 'App Overview' },
   aiDecisionSupport: { component: LazyDecisionSupportPage, name: 'AI Decision Support' },
   nlpProcessing: { component: LazyNLPProcessingPage, name: 'NLP Processing' },
+  procurement: { component: LazyProcurementPage, name: 'Procurement' },
+  inventory: { component: LazyInventoryPage, name: 'Inventory' },
 }
 
 /**

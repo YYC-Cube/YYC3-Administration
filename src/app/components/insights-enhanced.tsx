@@ -98,8 +98,8 @@ export function InsightsEnhancedPage() {
     { stage: '曝光', value: 12400, color: tc.primary },
     { stage: '点击', value: 8200, color: tc.secondary },
     { stage: '注册', value: 3400, color: tc.accent },
-    { stage: '转化', value: 1560, color: tc.success },
-    { stage: '成交', value: 890, color: tc.warning },
+    { stage: 'conversion', value: 1560, color: tc.success },
+    { stage: 'deal', value: 890, color: tc.warning },
   ]
 
   // AI Capability Radar

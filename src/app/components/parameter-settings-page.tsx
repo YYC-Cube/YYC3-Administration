@@ -16,6 +16,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -59,6 +60,7 @@ type ConfigSection = 'system' | 'platform' | 'email' | 'security'
 
 export function ParameterSettingsPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [activeSection, setActiveSection] = useState<ConfigSection>('system')
   const [showPassword, setShowPassword] = useState(false)
   const [modified, setModified] = useState(false)
@@ -108,10 +110,15 @@ export function ParameterSettingsPage() {
   }
 
   const sections = [
-    { id: 'system' as const, label: '系统基础配置', icon: Settings, color: tc.primary },
-    { id: 'platform' as const, label: '平台连接参数', icon: Link, color: tc.secondary },
-    { id: 'email' as const, label: '邮件服务配置', icon: Mail, color: tc.success },
-    { id: 'security' as const, label: '安全策略配置', icon: Shield, color: tc.destructive },
+    { id: 'system' as const, label: t('param.cat.system'), icon: Settings, color: tc.primary },
+    { id: 'platform' as const, label: t('param.cat.platform'), icon: Link, color: tc.secondary },
+    { id: 'email' as const, label: t('param.cat.email'), icon: Mail, color: tc.success },
+    {
+      id: 'security' as const,
+      label: t('param.cat.security'),
+      icon: Shield,
+      color: tc.destructive,
+    },
   ]
 
   return (
@@ -147,11 +154,9 @@ export function ParameterSettingsPage() {
                   textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.4)}`,
                 }}
               >
-                参数设置
+                {t('param.title')}
               </h1>
-              <p className="text-[10px] text-white/20 tracking-wider">
-                系统级参数配置管理 · AI智能推荐 · 配置验证与自动优化
-              </p>
+              <p className="text-[10px] text-white/20 tracking-wider">{t('param.desc')}</p>
             </div>
             <span
               className="ml-2 px-2 py-0.5 rounded-full text-[9px]"
@@ -161,7 +166,7 @@ export function ParameterSettingsPage() {
                 border: `1px solid ${tc.alpha('#8b5cf6', 0.15)}`,
               }}
             >
-              平台集成
+              {t('param.platformIntegration')}
             </span>
           </div>
 
@@ -177,7 +182,7 @@ export function ParameterSettingsPage() {
               }}
             >
               <RotateCcw className="w-3 h-3" />
-              重置
+              {t('param.reset')}
             </button>
             <button
               onClick={handleSave}
@@ -194,7 +199,7 @@ export function ParameterSettingsPage() {
               }}
             >
               <Save className="w-3 h-3" />
-              保存配置
+              {t('param.saveConfig')}
             </button>
           </div>
         </div>
@@ -204,10 +209,28 @@ export function ParameterSettingsPage() {
       <div className="px-6 pb-5">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { label: '配置项', value: '128', trend: '+3 本周', trendUp: true },
-            { label: '安全评分', value: '96分', trend: '优秀', trendUp: true },
-            { label: '配置版本', value: 'v2.8', trend: '最新' },
-            { label: '最近变更', value: '2h前', trend: '张运维' },
+            {
+              label: t('param.stat.configItems'),
+              value: '128',
+              trend: t('param.trend.thisWeek'),
+              trendUp: true,
+            },
+            {
+              label: t('param.stat.securityScore'),
+              value: t('param.score.96'),
+              trend: t('param.excellent'),
+              trendUp: true,
+            },
+            {
+              label: t('param.stat.configVersion'),
+              value: t('param.version.v2.8'),
+              trend: t('param.latest'),
+            },
+            {
+              label: t('param.stat.lastChange'),
+              value: t('param.time.2hAgo'),
+              trend: t('param.operator'),
+            },
           ].map((stat, idx) => (
             <NeonCard key={idx} color="#8b5cf6">
               <div
@@ -268,12 +291,14 @@ export function ParameterSettingsPage() {
             <div className="space-y-4">
               <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
                 <Globe className="w-4 h-4" style={{ color: tc.primary }} />
-                系统基础配置
+                {t('param.systemConfig')}
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">系统名称</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.siteName')}
+                  </label>
                   <input
                     type="text"
                     value={systemConfig.siteName}
@@ -291,7 +316,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">系统URL</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.siteUrl')}
+                  </label>
                   <input
                     type="url"
                     value={systemConfig.siteUrl}
@@ -309,7 +336,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">管理员邮箱</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.adminEmail')}
+                  </label>
                   <input
                     type="email"
                     value={systemConfig.adminEmail}
@@ -328,7 +357,7 @@ export function ParameterSettingsPage() {
 
                 <div>
                   <label className="block text-[10px] text-white/40 mb-1.5 flex items-center gap-1">
-                    时区设置
+                    {t('param.timezone')}
                     <Info className="w-3 h-3 text-white/20" />
                   </label>
                   <select
@@ -352,7 +381,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">语言设置</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.language')}
+                  </label>
                   <select
                     value={systemConfig.language}
                     onChange={(e) => {
@@ -373,7 +404,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">货币单位</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.currency')}
+                  </label>
                   <select
                     value={systemConfig.currency}
                     onChange={(e) => {
@@ -401,10 +434,25 @@ export function ParameterSettingsPage() {
         {activeSection === 'platform' && (
           <div className="space-y-4">
             {[
-              { name: '微信公众号', platform: 'WeChat', enabled: true, status: 'connected' },
-              { name: '钉钉应用', platform: 'DingTalk', enabled: true, status: 'connected' },
-              { name: '飞书应用', platform: 'Feishu', enabled: false, status: 'disconnected' },
-              { name: '抖音开放平台', platform: 'Douyin', enabled: false, status: 'disconnected' },
+              { name: t('param.wechat'), platform: 'WeChat', enabled: true, status: 'connected' },
+              {
+                name: t('param.dingtalk'),
+                platform: 'DingTalk',
+                enabled: true,
+                status: 'connected',
+              },
+              {
+                name: t('param.feishu'),
+                platform: 'Feishu',
+                enabled: false,
+                status: 'disconnected',
+              },
+              {
+                name: t('param.douyin'),
+                platform: 'Douyin',
+                enabled: false,
+                status: 'disconnected',
+              },
             ].map((platform, idx) => (
               <NeonCard key={idx} color={tc.secondary}>
                 <div className="flex items-center justify-between">
@@ -443,7 +491,9 @@ export function ParameterSettingsPage() {
                       ) : (
                         <AlertCircle className="w-2.5 h-2.5" />
                       )}
-                      {platform.status === 'connected' ? '已连接' : '未连接'}
+                      {platform.status === 'connected'
+                        ? t('param.connected')
+                        : t('param.disconnected')}
                     </span>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
@@ -453,7 +503,7 @@ export function ParameterSettingsPage() {
                         color: tc.primary,
                       }}
                     >
-                      配置
+                      {t('param.configure')}
                     </button>
                   </div>
                 </div>
@@ -468,12 +518,14 @@ export function ParameterSettingsPage() {
             <div className="space-y-4">
               <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
                 <Mail className="w-4 h-4" style={{ color: tc.success }} />
-                邮件服务配置
+                {t('param.emailConfig')}
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">SMTP 主机</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.smtpHost')}
+                  </label>
                   <input
                     type="text"
                     value={emailConfig.smtpHost}
@@ -491,7 +543,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">SMTP 端口</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.smtpPort')}
+                  </label>
                   <input
                     type="text"
                     value={emailConfig.smtpPort}
@@ -509,7 +563,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">SMTP 用户名</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.smtpUser')}
+                  </label>
                   <input
                     type="text"
                     value={emailConfig.smtpUser}
@@ -527,7 +583,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">SMTP 密码</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.smtpPass')}
+                  </label>
                   <div className="relative">
                     <input
                       type={showPassword ? 'text' : 'password'}
@@ -555,7 +613,9 @@ export function ParameterSettingsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-1.5">加密方式</label>
+                  <label className="block text-[10px] text-white/40 mb-1.5">
+                    {t('param.encryption')}
+                  </label>
                   <select
                     value={emailConfig.smtpEncryption}
                     onChange={(e) => {
@@ -588,12 +648,14 @@ export function ParameterSettingsPage() {
             <div className="space-y-4">
               <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4" style={{ color: tc.destructive }} />
-                安全策略配置
+                {t('param.securityConfig')}
               </h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-[10px] text-white/40 mb-2">密码最小长度</label>
+                  <label className="block text-[10px] text-white/40 mb-2">
+                    {t('param.pwdMinLength')}
+                  </label>
                   <input
                     type="range"
                     min="6"
@@ -610,7 +672,9 @@ export function ParameterSettingsPage() {
                   />
                   <div className="flex justify-between text-[10px] text-white/30 mt-1">
                     <span>6</span>
-                    <span className="text-white/60">{securityConfig.passwordMinLength} 位</span>
+                    <span className="text-white/60">
+                      {securityConfig.passwordMinLength} {t('param.digits')}
+                    </span>
                     <span>20</span>
                   </div>
                 </div>
@@ -618,22 +682,22 @@ export function ParameterSettingsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
                     {
-                      label: '要求特殊字符',
+                      label: t('param.requireSpecialChar'),
                       value: securityConfig.passwordRequireSpecial,
                       key: 'passwordRequireSpecial' as const,
                     },
                     {
-                      label: '要求数字',
+                      label: t('param.requireDigit'),
                       value: securityConfig.passwordRequireNumber,
                       key: 'passwordRequireNumber' as const,
                     },
                     {
-                      label: '要求大写字母',
+                      label: t('param.requireUppercase'),
                       value: securityConfig.passwordRequireUpper,
                       key: 'passwordRequireUpper' as const,
                     },
                     {
-                      label: '启用双因素认证',
+                      label: t('param.enable2FA'),
                       value: securityConfig.twoFactorAuth,
                       key: 'twoFactorAuth' as const,
                     },
@@ -664,7 +728,7 @@ export function ParameterSettingsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[10px] text-white/40 mb-1.5">
-                      会话超时 (分钟)
+                      {t('param.sessionTimeout')}
                     </label>
                     <input
                       type="number"
@@ -687,7 +751,7 @@ export function ParameterSettingsPage() {
 
                   <div>
                     <label className="block text-[10px] text-white/40 mb-1.5">
-                      最大登录尝试次数
+                      {t('param.maxLoginAttempts')}
                     </label>
                     <input
                       type="number"
@@ -720,15 +784,15 @@ export function ParameterSettingsPage() {
           <div className="flex items-start gap-3">
             <Zap className="w-5 h-5 shrink-0" style={{ color: tc.accent }} />
             <div>
-              <h4 className="text-[11px] text-white/60 mb-2">AI 智能特性</h4>
+              <h4 className="text-[11px] text-white/60 mb-2">{t('param.aiFeatures')}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                 {[
-                  '基于地理位置的时区自动推荐',
-                  'API密钥强度检测与安全评分',
-                  '连接配置智能验证与错误诊断',
-                  '密码强度AI评估与改进建议',
-                  '异常登录行为AI检测与预警',
-                  '配置漂移自动检测',
+                  t('param.ai.timezone'),
+                  t('param.ai.apiKeyCheck'),
+                  t('param.ai.connValidation'),
+                  t('param.ai.pwdAssessment'),
+                  t('param.ai.anomalyDetection'),
+                  t('param.ai.driftDetection'),
                 ].map((cap, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <div

@@ -13,6 +13,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -35,6 +36,7 @@ interface StrategyPlan {
 
 export function MarketingStrategyPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
 
   const strategies: StrategyPlan[] = [
@@ -113,7 +115,7 @@ export function MarketingStrategyPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            营销方案策划
+            {t('nav.marketingPlan')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             AI智能方案生成 · 数据驱动决策 · 多维度策略分析

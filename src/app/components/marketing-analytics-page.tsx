@@ -4,7 +4,6 @@ import {
   DollarSign,
   Download,
   Filter,
-  Sparkles,
   Target,
   TrendingUp,
   Users,
@@ -12,6 +11,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { ContentCard, PageHeader, StatCard } from './shared-styles.tsx'
 
 // ==========================================
@@ -30,11 +30,12 @@ interface MetricData {
 
 export function MarketingAnalyticsPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('30d')
 
   const metrics: MetricData[] = [
     {
-      label: '总投资回报率',
+      label: t('ma.roi'),
       value: 3.8,
       change: 12.5,
       trend: 'up',
@@ -42,7 +43,7 @@ export function MarketingAnalyticsPage() {
       color: tc.success,
     },
     {
-      label: '转化率',
+      label: t('ma.conversion'),
       value: 4.2,
       change: 0.8,
       trend: 'up',
@@ -50,7 +51,7 @@ export function MarketingAnalyticsPage() {
       color: tc.primary,
     },
     {
-      label: '获客成本',
+      label: t('ma.acquisitionCost'),
       value: 128,
       change: -8.3,
       trend: 'down',
@@ -58,7 +59,7 @@ export function MarketingAnalyticsPage() {
       color: tc.secondary,
     },
     {
-      label: '客户生命周期价值',
+      label: t('ma.reachRate'),
       value: 1580,
       change: 15.2,
       trend: 'up',
@@ -123,8 +124,8 @@ export function MarketingAnalyticsPage() {
     <div className="space-y-6">
       {/* Header */}
       <PageHeader
-        title="营销效果分析"
-        subtitle="实时数据追踪 · AI智能分析 · 可视化报表"
+        title={t('ma.title')}
+        subtitle={t('ma.desc')}
         actions={
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
@@ -140,7 +141,7 @@ export function MarketingAnalyticsPage() {
                     boxShadow: timeRange === range ? tc.neonGlow(tc.primary, 0.3) : 'none',
                   }}
                 >
-                  {range === '7d' ? '近7天' : range === '30d' ? '近30天' : '近90天'}
+                  {t(`ma.timeRange.${range}`)}
                 </button>
               ))}
             </div>
@@ -153,13 +154,13 @@ export function MarketingAnalyticsPage() {
               }}
             >
               <Download className="w-3.5 h-3.5" />
-              导出报表
+              {t('ma.export')}
             </button>
           </div>
         }
       />
 
-      {/* 核心指标 */}
+      {/* Core Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {metrics.map((metric) => {
           const Icon = metric.icon
@@ -168,9 +169,9 @@ export function MarketingAnalyticsPage() {
               key={metric.label}
               label={metric.label}
               value={
-                metric.label.includes('率')
+                metric.label === t('ma.conversion') || metric.label === t('ma.reachRate')
                   ? `${metric.value}%`
-                  : metric.label.includes('成本')
+                  : metric.label === t('ma.acquisitionCost')
                     ? `¥${metric.value}`
                     : metric.value
               }
@@ -183,23 +184,12 @@ export function MarketingAnalyticsPage() {
         })}
       </div>
 
-      {/* AI智能洞察 */}
+      {/* AI Insights */}
       <ContentCard>
         <div className="flex items-center gap-3 mb-4">
           <Brain className="w-4 h-4" style={{ color: tc.primary }} />
-          <h2 className="text-[10px] text-white/30 uppercase tracking-wider flex items-center gap-2">
-            AI智能洞察
-            <span
-              className="ml-auto flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px]"
-              style={{
-                background: tc.alpha(tc.primary, 0.1),
-                color: tc.primary,
-                border: `1px solid ${tc.alpha(tc.primary, 0.2)}`,
-              }}
-            >
-              <Sparkles className="w-3 h-3" />
-              实时分析
-            </span>
+          <h2 className="text-xs font-semibold" style={{ color: tc.textSecondary }}>
+            {t('ma.aiAnalyze')}
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -223,12 +213,12 @@ export function MarketingAnalyticsPage() {
         </div>
       </ContentCard>
 
-      {/* 渠道表现分析 */}
+      {/* Channel Performance */}
       <ContentCard>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-[10px] text-white/30 uppercase tracking-wider flex items-center gap-2">
             <BarChart3 className="w-3.5 h-3.5 text-[#00f0ff]" />
-            渠道表现分析
+            {t('ma.channelPerformance')}
           </h2>
           <button
             className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] transition-all"
@@ -239,7 +229,7 @@ export function MarketingAnalyticsPage() {
             }}
           >
             <Filter className="w-3 h-3" />
-            筛选
+            {t('ma.filter')}
           </button>
         </div>
         <div className="overflow-x-auto">
@@ -305,11 +295,11 @@ export function MarketingAnalyticsPage() {
         </div>
       </ContentCard>
 
-      {/* 活动效果详情 */}
+      {/* Campaign Details */}
       <ContentCard>
         <h2 className="text-[10px] text-white/30 uppercase tracking-wider mb-4 flex items-center gap-2">
           <Target className="w-3.5 h-3.5 text-[#00d4ff]" />
-          活动效果详情
+          {t('ma.campaignMetrics')}
         </h2>
         <div className="space-y-3">
           {campaignAnalytics.map((campaign) => {

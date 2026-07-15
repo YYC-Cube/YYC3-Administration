@@ -32,11 +32,11 @@ interface Customer {
 }
 
 const STAGE_CONFIG = {
-  acquisition: { label: '获客', icon: Megaphone, color: '#00f0ff' },
-  conversion: { label: '转化', icon: Target, color: '#00d4ff' },
-  closing: { label: '成交', icon: Handshake, color: '#00ffcc' },
-  service: { label: '服务', icon: HeartHandshake, color: '#00ffc8' },
-  loyalty: { label: '忠诚', icon: Crown, color: '#008b9d' },
+  acquisition: { label: 'acquisition', icon: Megaphone, color: '#00f0ff' },
+  conversion: { label: 'conversion', icon: Target, color: '#00d4ff' },
+  closing: { label: 'deal', icon: Handshake, color: '#00ffcc' },
+  service: { label: 'service', icon: HeartHandshake, color: '#00ffc8' },
+  loyalty: { label: 'loyalty', icon: Crown, color: '#008b9d' },
 }
 
 export function CLMPage() {
@@ -146,10 +146,10 @@ export function CLMPage() {
   ]
 
   const stats = [
-    { label: '总客户数', value: '1,256', change: '+12%', positive: true },
-    { label: '转化率', value: '34.2%', change: '+2.1%', positive: true },
-    { label: '客户健康度', value: '87.5%', change: '+1.5%', positive: true },
-    { label: '客户终身价值', value: '¥285万', change: '+8%', positive: true },
+    { label: translate('clm.totalCustomers'), value: '1,256', change: '+12%', positive: true },
+    { label: translate('clm.conversionRate'), value: '34.2%', change: '+2.1%', positive: true },
+    { label: translate('clm.healthScore'), value: '87.5%', change: '+1.5%', positive: true },
+    { label: translate('clm.lifetime'), value: '¥285万', change: '+8%', positive: true },
   ]
 
   const stageCounts = {
@@ -289,7 +289,7 @@ export function CLMPage() {
               <Search className="w-4 h-4" style={{ color: tc.textMuted }} />
               <input
                 type="text"
-                placeholder="搜索客户..."
+                placeholder={translate("clm.searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent outline-none text-sm w-40"
@@ -309,8 +309,8 @@ export function CLMPage() {
                   }}
                 >
                   {stage === 'all'
-                    ? '全部'
-                    : STAGE_CONFIG[stage as keyof typeof STAGE_CONFIG].label}
+                    ? translate('clm.all')
+                    : translate("clm.stage." + stage)}
                 </button>
               ))}
             </div>
@@ -370,24 +370,24 @@ export function CLMPage() {
                   }}
                 >
                   <StageIcon className="w-3 h-3" />
-                  {stageConfig.label}
+                  {translate("clm.stage." + customer.stage)}
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span style={{ color: tc.textMuted }}>客户价值</span>
+                    <span style={{ color: tc.textMuted }}>{translate("clm.customerValue")}</span>
                     <span className="font-medium" style={{ color: tc.success }}>
                       ¥{customer.value.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span style={{ color: tc.textMuted }}>健康度</span>
+                    <span style={{ color: tc.textMuted }}>{translate("clm.health")}</span>
                     <span className="font-medium" style={{ color: tc.accent }}>
                       {customer.healthScore}%
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span style={{ color: tc.textMuted }}>下次跟进</span>
+                    <span style={{ color: tc.textMuted }}>{translate("clm.nextFollowUp")}</span>
                     <span style={{ color: tc.textSecondary }}>{customer.nextFollowUp}</span>
                   </div>
                 </div>

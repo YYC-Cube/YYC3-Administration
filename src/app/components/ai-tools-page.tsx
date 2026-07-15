@@ -68,32 +68,31 @@ const toolConfigs: ToolConfig[] = [
     color: '#00f0ff',
     detailIcon: Code,
     metrics: [
-      { label: '生成效率', value: '3.2s', change: '-0.8s', positive: true },
-      { label: '代码质量', value: '96.4%', change: '+2.1%', positive: true },
-      { label: '覆盖率', value: '89%', change: '+5%', positive: true },
-      { label: 'Bug 率', value: '0.3%', change: '-0.2%', positive: true },
+      { label: 'tools.metrics.efficiency', value: '3.2s', change: '-0.8s', positive: true },
+      { label: 'tools.metrics.codeQuality', value: '96.4%', change: '+2.1%', positive: true },
+      { label: 'tools.metrics.coverage', value: '89%', change: '+5%', positive: true },
+      { label: 'tools.metrics.bugRate', value: '0.3%', change: '-0.2%', positive: true },
     ],
     capabilities: [
-      'React/TS 代码生成',
-      'API 接口自动生成',
-      '单元测试生成',
-      '代码重构优化',
-      '文档自动生成',
+      'tools.cap.codeGen',
+      'tools.cap.apiGen',
+      'tools.cap.unitTest',
+      'tools.cap.refactor',
+      'tools.cap.docs',
     ],
     simulationLogs: [
-      '正在分析项目结构...',
-      '检测到 TypeScript 配置: strict mode',
-      '扫描已有组件: 32 个 TSX 文件',
-      '构建 AST 语法树...',
-      'AI 模型加载: YYC³-Ultra v4.2',
-      '生成代码模板 (React + Hooks)...',
-      '应用 ESLint 规则校验...',
-      'TypeScript 类型检查: 0 errors',
-      '代码质量评分: 96.4/100',
-      '生成完成 · 输出 3 个文件',
+      'tools.simLog.codeGen.0',
+      'tools.simLog.codeGen.1',
+      'tools.simLog.codeGen.2',
+      'tools.simLog.codeGen.3',
+      'tools.simLog.codeGen.4',
+      'tools.simLog.codeGen.5',
+      'tools.simLog.codeGen.6',
+      'tools.simLog.codeGen.7',
+      'tools.simLog.codeGen.8',
+      'tools.simLog.codeGen.9',
     ],
-    resultSummary:
-      '已生成 3 个高质量 TypeScript React 组件，通过全部类型检查和 ESLint 规则。代码覆盖率 89%，无安全漏洞。',
+    resultSummary: 'tools.result.codeGen',
   },
   {
     id: 'data-flow',
@@ -103,26 +102,31 @@ const toolConfigs: ToolConfig[] = [
     color: '#00d4ff',
     detailIcon: Network,
     metrics: [
-      { label: '数据吞吐', value: '12.8K/s', change: '+2.1K', positive: true },
-      { label: '延迟', value: '3.2ms', change: '-1.8ms', positive: true },
-      { label: '异常率', value: '0.01%', change: '-0.02%', positive: true },
-      { label: '流水线', value: '8 active', change: '+2', positive: true },
+      { label: 'tools.metrics.throughput', value: '12.8K/s', change: '+2.1K', positive: true },
+      { label: 'tools.metrics.latency', value: '3.2ms', change: '-1.8ms', positive: true },
+      { label: 'tools.metrics.errorRate', value: '0.01%', change: '-0.02%', positive: true },
+      { label: 'tools.metrics.pipelines', value: '8 active', change: '+2', positive: true },
     ],
-    capabilities: ['实时数据流监控', '异常检测告警', '流量预测分析', '管道健康评估', '自动扩缩容'],
+    capabilities: [
+      'tools.cap.dataMonitor',
+      'tools.cap.anomaly',
+      'tools.cap.trafficPredict',
+      'tools.cap.pipeline',
+      'tools.cap.autoScale',
+    ],
     simulationLogs: [
-      '启动数据流监控服务...',
-      '连接 8 个数据管道...',
-      '实时吞吐量: 12,847 records/s',
-      '延迟检测: P50=1.2ms P99=3.2ms',
-      '异常检测模型加载完成',
-      '扫描最近 1 小时数据: 46.2M 条',
-      '发现 1 个潜在瓶颈: Pipeline #3',
-      '自动优化建议已生成',
-      '流量预测: 未来 4h 峰值 15.2K/s',
-      '监控报告已保存',
+      'tools.simLog.dataFlow.0',
+      'tools.simLog.dataFlow.1',
+      'tools.simLog.dataFlow.2',
+      'tools.simLog.dataFlow.3',
+      'tools.simLog.dataFlow.4',
+      'tools.simLog.dataFlow.5',
+      'tools.simLog.dataFlow.6',
+      'tools.simLog.dataFlow.7',
+      'tools.simLog.dataFlow.8',
+      'tools.simLog.dataFlow.9',
     ],
-    resultSummary:
-      '8 条数据管道运行正常，检测到 Pipeline #3 存在潜在瓶颈，已自动生成优化建议。预测未来 4 小时流量峰值为 15.2K/s。',
+    resultSummary: 'tools.result.dataFlow',
   },
   {
     id: 'security',
@@ -132,26 +136,31 @@ const toolConfigs: ToolConfig[] = [
     color: '#00ffcc',
     detailIcon: Lock,
     metrics: [
-      { label: '安全评分', value: 'A+', change: '+1级', positive: true },
-      { label: '漏洞数', value: '0', change: '-3', positive: true },
-      { label: '防护率', value: '99.97%', change: '+0.02%', positive: true },
-      { label: '扫描次数', value: '1,247', change: '+89', positive: true },
+      { label: 'tools.metrics.securityScore', value: 'A+', change: '+1级', positive: true },
+      { label: 'tools.metrics.vulnerabilities', value: '0', change: '-3', positive: true },
+      { label: 'tools.metrics.protectionRate', value: '99.97%', change: '+0.02%', positive: true },
+      { label: 'tools.metrics.scanCount', value: '1,247', change: '+89', positive: true },
     ],
-    capabilities: ['代码漏洞扫描', '依赖安全审计', 'API 安全检测', '敏感数据检测', '合规性检查'],
+    capabilities: [
+      'tools.cap.vulnScan',
+      'tools.cap.depAudit',
+      'tools.cap.apiSecurity',
+      'tools.cap.sensitiveData',
+      'tools.cap.compliance',
+    ],
     simulationLogs: [
-      '启动安全扫描引擎...',
-      '加载漏洞数据库: CVE 2024-2025',
-      '扫描源代码: 32 文件 / 8,420 行',
-      '依赖包审计: 47 packages',
-      '检测 SQL 注入风险: 0',
-      '检测 XSS 风险: 0',
-      '检测敏感数据泄露: 0',
-      'API 端点安全评估: 全部通过',
-      'OWASP Top 10 合规检查: PASS',
-      '安全评级: A+ · 0 威胁',
+      'tools.simLog.security.0',
+      'tools.simLog.security.1',
+      'tools.simLog.security.2',
+      'tools.simLog.security.3',
+      'tools.simLog.security.4',
+      'tools.simLog.security.5',
+      'tools.simLog.security.6',
+      'tools.simLog.security.7',
+      'tools.simLog.security.8',
+      'tools.simLog.security.9',
     ],
-    resultSummary:
-      '全量安全扫描完成：32 文件、47 依赖包均通过检查。0 漏洞、0 敏感数据泄露，OWASP Top 10 全部合规。安全评级 A+。',
+    resultSummary: 'tools.result.security',
   },
   {
     id: 'knowledge',
@@ -161,26 +170,31 @@ const toolConfigs: ToolConfig[] = [
     color: '#00ffc8',
     detailIcon: FileSearch,
     metrics: [
-      { label: '知识��点', value: '24.6K', change: '+1.2K', positive: true },
-      { label: '关联度', value: '94.8%', change: '+3.1%', positive: true },
-      { label: '查询速度', value: '8ms', change: '-4ms', positive: true },
-      { label: '更新频率', value: '实时', change: '实时', positive: true },
+      { label: 'tools.metrics.knowledgeNodes', value: '24.6K', change: '+1.2K', positive: true },
+      { label: 'tools.metrics.relevance', value: '94.8%', change: '+3.1%', positive: true },
+      { label: 'tools.metrics.querySpeed', value: '8ms', change: '-4ms', positive: true },
+      { label: 'tools.metrics.updateFreq', value: '实时', change: '实时', positive: true },
     ],
-    capabilities: ['知识图谱构建', '语义搜索引擎', '实体关系抽取', '知识推理引擎', '自动问答系统'],
+    capabilities: [
+      'tools.cap.knowledgeGraph',
+      'tools.cap.semanticSearch',
+      'tools.cap.entityRelation',
+      'tools.cap.reasoning',
+      'tools.cap.qa',
+    ],
     simulationLogs: [
-      '初始化知识图谱引擎...',
-      '加载知识库: 24,600 个节点',
-      '构建实体关系索引...',
-      '语义向量化处理: 2,048 维',
-      '关联分析: 发现 312 个新关联',
-      '知识推理: 生成 45 条推断',
-      '验证推断准确率: 94.8%',
-      '更新图谱结构...',
-      '索引重建完成: 8ms 查询延迟',
-      '知识图谱更新完成',
+      'tools.simLog.knowledge.0',
+      'tools.simLog.knowledge.1',
+      'tools.simLog.knowledge.2',
+      'tools.simLog.knowledge.3',
+      'tools.simLog.knowledge.4',
+      'tools.simLog.knowledge.5',
+      'tools.simLog.knowledge.6',
+      'tools.simLog.knowledge.7',
+      'tools.simLog.knowledge.8',
+      'tools.simLog.knowledge.9',
     ],
-    resultSummary:
-      '知识图谱更新完成：24.6K 节点，发现 312 个新实体关联，生成 45 条推断（准确率 94.8%）。查询延迟优化至 8ms。',
+    resultSummary: 'tools.result.knowledge',
   },
   {
     id: 'perf',
@@ -190,32 +204,31 @@ const toolConfigs: ToolConfig[] = [
     color: '#008b9d',
     detailIcon: Gauge,
     metrics: [
-      { label: 'FPS', value: '60', change: '+0', positive: true },
-      { label: '加载时间', value: '1.2s', change: '-0.4s', positive: true },
-      { label: '内存', value: '128MB', change: '-32MB', positive: true },
-      { label: '优化项', value: '7', change: '+3', positive: true },
+      { label: 'tools.metrics.fps', value: '60', change: '+0', positive: true },
+      { label: 'tools.metrics.loadTime', value: '1.2s', change: '-0.4s', positive: true },
+      { label: 'tools.metrics.memory', value: '128MB', change: '-32MB', positive: true },
+      { label: 'tools.metrics.optimizations', value: '7', change: '+3', positive: true },
     ],
     capabilities: [
-      '性能瓶颈诊断',
-      '内存泄漏检测',
-      '渲染优化建议',
-      'Bundle 分析',
-      'Lighthouse 评估',
+      'tools.cap.bottleneck',
+      'tools.cap.memoryLeak',
+      'tools.cap.renderOptimize',
+      'tools.cap.bundleAnalysis',
+      'tools.cap.cacheStrategy',
     ],
     simulationLogs: [
-      '启动性能分析引擎...',
-      '监测 FPS: 稳定 60fps',
-      '内存快照采集...',
-      '检测内存泄漏: 0 项',
-      'Bundle 大小分析: 847KB (gzipped)',
-      '发现 3 个懒加载优化机会',
-      '发现 2 个重复渲染组件',
-      '发现 2 个未使用导入',
-      '生成优化方案: 预估提升 18%',
-      '性能报告已生成',
+      'tools.simLog.perf.0',
+      'tools.simLog.perf.1',
+      'tools.simLog.perf.2',
+      'tools.simLog.perf.3',
+      'tools.simLog.perf.4',
+      'tools.simLog.perf.5',
+      'tools.simLog.perf.6',
+      'tools.simLog.perf.7',
+      'tools.simLog.perf.8',
+      'tools.simLog.perf.9',
     ],
-    resultSummary:
-      '性能分析完成：FPS 稳定 60，无内存泄漏。发现 7 个优化机会（3 懒加载、2 重复渲染、2 未使用导入），预估优化后提升 18%。',
+    resultSummary: 'tools.result.perf',
   },
   {
     id: 'warehouse',
@@ -225,32 +238,31 @@ const toolConfigs: ToolConfig[] = [
     color: '#00f0ff',
     detailIcon: HardDrive,
     metrics: [
-      { label: '数据量', value: '2.4TB', change: '+128GB', positive: true },
-      { label: '查询延迟', value: '45ms', change: '-12ms', positive: true },
-      { label: '可用性', value: '99.99%', change: '+0.01%', positive: true },
-      { label: '分片数', value: '16', change: '+4', positive: true },
+      { label: 'tools.metrics.storage', value: '2.4TB', change: '+128GB', positive: true },
+      { label: 'tools.metrics.queryPerf', value: '45ms', change: '-12ms', positive: true },
+      { label: 'tools.metrics.availability', value: '99.99%', change: '+0.01%', positive: true },
+      { label: 'tools.metrics.dataNodes', value: '16', change: '+4', positive: true },
     ],
     capabilities: [
-      '分布式存储管理',
-      '数据分片优化',
-      '查询性能调优',
-      '自动备份恢复',
-      '数据生命周期',
+      'tools.cap.dataWarehouse',
+      'tools.cap.dataPartition',
+      'tools.cap.queryEngine',
+      'tools.cap.dataBackup',
+      'tools.cap.dataCompress',
     ],
     simulationLogs: [
-      '连接数据仓库集群...',
-      '节点状态: 16/16 在线',
-      '数据量统计: 2.4TB / 3,847万条',
-      '分片健康检查: 全部正常',
-      '查询优化器启动...',
-      '索引分析: 发现 4 个低效索引',
-      '自动重建索引: idx_customer_stage',
-      '查询延迟优化: 57ms → 45ms',
-      '备份状态: 最近备份 2h 前',
-      '数据仓库状态报告已生成',
+      'tools.simLog.warehouse.0',
+      'tools.simLog.warehouse.1',
+      'tools.simLog.warehouse.2',
+      'tools.simLog.warehouse.3',
+      'tools.simLog.warehouse.4',
+      'tools.simLog.warehouse.5',
+      'tools.simLog.warehouse.6',
+      'tools.simLog.warehouse.7',
+      'tools.simLog.warehouse.8',
+      'tools.simLog.warehouse.9',
     ],
-    resultSummary:
-      '数据仓库集群 16 节点全部在线，总数据量 2.4TB。优化 4 个低效索引后查询延迟降至 45ms，可用性 99.99%。',
+    resultSummary: 'tools.result.warehouse',
   },
 ]
 
@@ -290,7 +302,7 @@ export function AIToolsPage() {
           () => {
             const entry: ToolLogEntry = {
               timestamp: new Date().toISOString().slice(11, 23),
-              message: msg,
+              message: t(msg),
               type: i === config.simulationLogs.length - 1 ? 'success' : 'info',
             }
             setToolLogs((prev) => ({
@@ -303,14 +315,14 @@ export function AIToolsPage() {
               setTimeout(() => {
                 setToolStates((prev) => ({ ...prev, [toolId]: 'success' }))
                 addNotification({
-                  title: `${t(config.nameKey)} 执行完成`,
-                  message: config.resultSummary.slice(0, 60) + '…',
+                  title: t('tools.execDone', { name: t(config.nameKey) }),
+                  message: t(config.resultSummary).slice(0, 60) + '…',
                   type: 'success',
                   color: config.color,
                 })
                 addActivity({
-                  action: 'AI 工具执行',
-                  target: `${t(config.nameKey)} · 执行成功`,
+                  action: t('tools.aiToolExec'),
+                  target: t('tools.execSuccess', { name: t(config.nameKey) }),
                   type: 'ai',
                   color: config.color,
                 })
@@ -338,13 +350,13 @@ export function AIToolsPage() {
       >
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2
+            <h1
               className="tracking-wider flex items-center gap-3"
               style={{ color: tc.success, textShadow: `0 0 15px ${tc.alpha(tc.success, 0.5)}` }}
             >
               <Sparkles className="w-6 h-6" />
               {t('tools.title')}
-            </h2>
+            </h1>
             <p className="text-xs text-white/25 mt-1 tracking-wider">
               AI Tool Matrix — Phase 2A Interactive Tools
             </p>
@@ -359,7 +371,7 @@ export function AIToolsPage() {
               }}
             >
               <CheckCircle2 className="w-3 h-3" />
-              {toolConfigs.length} 工具就绪
+              {t('tools.toolsReady', { n: toolConfigs.length })}
             </div>
           </div>
         </div>
@@ -367,16 +379,34 @@ export function AIToolsPage() {
         {/* Overview stats */}
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
           {[
-            { label: '工具总数', value: '6', icon: Cpu, color: '#00f0ff', sub: '全部在线' },
-            { label: '今日执行', value: '47', icon: Play, color: '#00ffc8', sub: '+12 vs 昨日' },
             {
-              label: '成功率',
+              label: t('tools.totalTools'),
+              value: '6',
+              icon: Cpu,
+              color: '#00f0ff',
+              sub: t('tools.allOnline'),
+            },
+            {
+              label: t('tools.todayExec'),
+              value: '47',
+              icon: Play,
+              color: '#00ffc8',
+              sub: t('tools.vsYesterday'),
+            },
+            {
+              label: t('tools.successRate'),
               value: '99.4%',
               icon: CheckCircle2,
               color: '#00ffcc',
-              sub: '近 7 天',
+              sub: t('tools.near7Days'),
             },
-            { label: '平均耗时', value: '4.8s', icon: Zap, color: '#00d4ff', sub: '-1.2s 优化' },
+            {
+              label: t('tools.avgTime'),
+              value: '4.8s',
+              icon: Zap,
+              color: '#00d4ff',
+              sub: t('tools.optimized'),
+            },
           ].map((m, i) => {
             const Icon = m.icon
             return (
@@ -384,7 +414,7 @@ export function AIToolsPage() {
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">
-                      {m.label}
+                      {t(m.label)}
                     </p>
                     <p
                       className="text-xl"
@@ -449,7 +479,7 @@ export function AIToolsPage() {
                         border: `1px solid ${tool.color}20`,
                       }}
                     >
-                      {cap}
+                      {t(cap)}
                     </span>
                   ))}
                   {tool.capabilities.length > 3 && (
@@ -492,7 +522,11 @@ export function AIToolsPage() {
                               : 'rgba(255,255,255,0.25)',
                       }}
                     >
-                      {status === 'running' ? '执行中…' : status === 'success' ? '已完成' : '就绪'}
+                      {status === 'running'
+                        ? t('tools.status.running')
+                        : status === 'success'
+                          ? t('tools.status.completed')
+                          : t('tools.status.idle')}
                     </span>
                   </div>
                   <div className="flex gap-2">
@@ -505,7 +539,7 @@ export function AIToolsPage() {
                         color: tool.color,
                       }}
                     >
-                      详情 <ChevronRight className="w-3 h-3" />
+                      {t('tools.detail')} <ChevronRight className="w-3 h-3" />
                     </button>
                     <button
                       onClick={() => {
@@ -585,7 +619,7 @@ export function AIToolsPage() {
                 color: 'rgba(255,255,255,0.4)',
               }}
             >
-              <RotateCcw className="w-3 h-3" /> 重置
+              <RotateCcw className="w-3 h-3" /> {t('tools.reset')}
             </button>
           )}
           <button
@@ -607,11 +641,11 @@ export function AIToolsPage() {
                   className="w-3.5 h-3.5"
                   style={{ animation: 'icon-spin 1s linear infinite' }}
                 />{' '}
-                执行中…
+                {t('tools.status.running')}
               </>
             ) : (
               <>
-                <Play className="w-3.5 h-3.5" /> 启动工具
+                <Play className="w-3.5 h-3.5" /> {t('tools.launch')}
               </>
             )}
           </button>
@@ -622,7 +656,7 @@ export function AIToolsPage() {
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
         {activeTool.metrics.map((m, i) => (
           <NeonCard key={i} color={activeTool.color}>
-            <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">{m.label}</p>
+            <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">{t(m.label)}</p>
             <p
               className="text-xl"
               style={{ color: activeTool.color, textShadow: `0 0 10px ${activeTool.color}50` }}
@@ -651,7 +685,7 @@ export function AIToolsPage() {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xs text-white/40 uppercase tracking-wider flex items-center gap-2">
                 <Terminal className="w-3.5 h-3.5" />
-                执行日志 · Execution Log
+                {t('tools.execLogSub')}
               </h3>
               {status === 'running' && (
                 <div className="flex items-center gap-1.5">
@@ -686,8 +720,8 @@ export function AIToolsPage() {
                     className="w-10 h-10 mb-3"
                     style={{ color: `${activeTool.color}30` }}
                   />
-                  <p className="text-sm text-white/20 mb-1">点击「启动工具」开始执行</p>
-                  <p className="text-[10px] text-white/10">AI 将自动分析并生成执行报告</p>
+                  <p className="text-sm text-white/20 mb-1">{t('tools.clickToStart')}</p>
+                  <p className="text-[10px] text-white/10">{t('tools.aiWillAnalyze')}</p>
                 </div>
               ) : (
                 <>
@@ -745,7 +779,7 @@ export function AIToolsPage() {
                         }}
                       />
                       <span className="text-[10px]" style={{ color: `${activeTool.color}60` }}>
-                        处理中…
+                        {t('tools.processing')}
                       </span>
                     </div>
                   )}
@@ -770,11 +804,11 @@ export function AIToolsPage() {
                       className="w-4 h-4 text-[#00ffc8]"
                       style={{ filter: 'drop-shadow(0 0 4px #00ffc8)' }}
                     />
-                    <span className="text-xs text-[#00ffc8]">执行完成 · Result Summary</span>
+                    <span className="text-xs text-[#00ffc8]">{t('tools.execCompleteSub')}</span>
                   </div>
                   <button
                     onClick={() => {
-                      navigator.clipboard.writeText(activeTool.resultSummary)
+                      navigator.clipboard.writeText(t(activeTool.resultSummary))
                       setCopiedResult(true)
                       setTimeout(() => setCopiedResult(false), 2000)
                     }}
@@ -790,10 +824,12 @@ export function AIToolsPage() {
                     ) : (
                       <Copy className="w-2.5 h-2.5" />
                     )}
-                    {copiedResult ? '已复制' : '复制'}
+                    {copiedResult ? t('tools.copied') : t('tools.copy')}
                   </button>
                 </div>
-                <p className="text-xs text-white/50 leading-relaxed">{activeTool.resultSummary}</p>
+                <p className="text-xs text-white/50 leading-relaxed">
+                  {t(activeTool.resultSummary)}
+                </p>
               </div>
             )}
           </NeonCard>
@@ -803,7 +839,7 @@ export function AIToolsPage() {
         <div className="space-y-5">
           <NeonCard color={activeTool.color} hoverable={false}>
             <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-              功能列表 · Capabilities
+              {t('tools.capabilitiesSub')}
             </h3>
             <div className="space-y-2">
               {activeTool.capabilities.map((cap, i) => (
@@ -823,7 +859,7 @@ export function AIToolsPage() {
                       boxShadow: `0 0 4px ${activeTool.color}`,
                     }}
                   />
-                  <span className="text-xs text-white/50">{cap}</span>
+                  <span className="text-xs text-white/50">{t(cap)}</span>
                 </div>
               ))}
             </div>
@@ -831,11 +867,11 @@ export function AIToolsPage() {
 
           <NeonCard color={activeTool.color} hoverable={false}>
             <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-              执行状态 · Status
+              {t('tools.execStatusSub')}
             </h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-white/25">运行状态</span>
+                <span className="text-[10px] text-white/25">{t('tools.runStatus')}</span>
                 <span
                   className="text-[10px] flex items-center gap-1.5"
                   style={{
@@ -860,21 +896,25 @@ export function AIToolsPage() {
                         status === 'running' ? 'neon-pulse 1s ease-in-out infinite' : 'none',
                     }}
                   />
-                  {status === 'running' ? '运行中' : status === 'success' ? '已完成' : '空闲'}
+                  {status === 'running'
+                    ? t('tools.status.runningState')
+                    : status === 'success'
+                      ? t('tools.status.completedState')
+                      : t('tools.status.idleState')}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-white/25">日志条数</span>
+                <span className="text-[10px] text-white/25">{t('tools.logCount')}</span>
                 <span className="text-[10px]" style={{ color: activeTool.color }}>
                   {logs.length}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-white/25">AI 模型</span>
+                <span className="text-[10px] text-white/25">{t('tools.aiModel')}</span>
                 <span className="text-[10px] text-white/40">YYC³-Ultra v4.2</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-white/25">执行引擎</span>
+                <span className="text-[10px] text-white/25">{t('tools.execEngine')}</span>
                 <span className="text-[10px] text-white/40">五维闭环 v1.8</span>
               </div>
               {status === 'running' && (

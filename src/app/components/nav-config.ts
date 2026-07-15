@@ -138,6 +138,8 @@ export const NAV_CATEGORIES: NavCategoryDef[] = [
     items: [
       { id: 'forms', labelKey: 'nav.forms', icon: ClipboardList, color: '#41ffdd' },
       { id: 'smartForm', labelKey: 'nav.smartForm', icon: Package, color: '#f97316' },
+      { id: 'procurement', labelKey: 'nav.procurement', icon: ClipboardList, color: '#22c55e' },
+      { id: 'inventory', labelKey: 'nav.inventory', icon: Package, color: '#3b82f6' },
     ],
   },
   {

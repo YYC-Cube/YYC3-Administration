@@ -1,6 +1,8 @@
 import { AlertCircle, RefreshCw } from 'lucide-react'
 import { Component, type ReactNode } from 'react'
 
+import { t } from '@/lib/i18n/translate'
+
 interface ErrorBoundaryProps {
   children: ReactNode
   fallback?: ReactNode
@@ -35,10 +37,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         <div className="flex flex-col items-center justify-center h-full min-h-[300px] p-8 text-center">
           <AlertCircle className="w-12 h-12 text-red-400 mb-4" />
           <h3 className="text-lg font-semibold text-red-400 mb-2">
-            {this.props.name ? `${this.props.name} 加载失败` : '页面加载失败'}
+            {this.props.name
+              ? t('eb.moduleLoadFailed', { name: this.props.name })
+              : t('eb.pageLoadFailed')}
           </h3>
           <p className="text-sm text-gray-400 mb-4 max-w-md">
-            {this.state.error?.message || '发生了未知错误'}
+            {this.state.error?.message || t('eb.unknownError')}
           </p>
           <button
             onClick={this.handleRetry}
@@ -47,7 +51,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               hover:bg-red-500/20 transition-all"
           >
             <RefreshCw className="w-4 h-4" />
-            重试
+            {t('eb.retry')}
           </button>
         </div>
       )

@@ -1,6 +1,7 @@
 import { Eye, Heart, MessageSquare, Shield, Star } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -10,6 +11,7 @@ import { NeonCard } from './neon-card'
 
 export function BrandManagementPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
 
   const brandMetrics = [
     {
@@ -36,7 +38,7 @@ export function BrandManagementPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            品牌管理平台
+            {t('nav.brandMgmt')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             品牌监测 · 口碑分析 · 声誉管理

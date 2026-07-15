@@ -30,6 +30,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -362,8 +363,9 @@ const MOCK_AI_TOOLS = [
 
 // ---------- Tab 1: 创意项目 ----------
 function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+  const { t } = useI18n()
   const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState('全部状态')
+  const [statusFilter, setStatusFilter] = useState(t('collab.allStatus'))
 
   return (
     <div style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}>
@@ -412,6 +414,7 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         </button>
         <button
           className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[11px] transition-all hover:-translate-y-0.5"
+          onClick={() => {}}
           style={{
             background: `linear-gradient(135deg, ${tc.primary}, ${tc.secondary})`,
             color: '#fff',
@@ -444,7 +447,7 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               {/* Progress */}
               <div className="my-3">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] text-white/25">项目进度</span>
+                  <span className="text-[10px] text-white/25">{t('collab.progress')}</span>
                 </div>
                 <ProgressBar value={project.progress} color={project.statusColor} tc={tc} />
               </div>
@@ -490,11 +493,15 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                   <button
                     key={label}
                     className="flex items-center gap-1 text-[10px] text-white/25 hover:text-white/50 transition-colors"
+                    onClick={() => {}}
                   >
                     <Icon className="w-3 h-3" /> {label}
                   </button>
                 ))}
-                <button className="ml-auto text-white/15 hover:text-white/30 transition-colors">
+                <button
+                  className="ml-auto text-white/15 hover:text-white/30 transition-colors"
+                  onClick={() => {}}
+                >
                   <Share2 className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -508,23 +515,25 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
 // ---------- Tab 2: 创意库 ----------
 function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+  const { t } = useI18n()
   return (
     <div style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}>
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-[14px] text-white/60 flex items-center gap-2">
           <Lightbulb className="w-4 h-4" style={{ color: tc.accent }} />
-          创意想法库
+          {t('collab.ideas')}
         </h3>
         <button
           className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[11px] transition-all hover:-translate-y-0.5"
+          onClick={() => {}}
           style={{
             background: `linear-gradient(135deg, ${tc.accent}, ${tc.primary})`,
             color: '#fff',
             boxShadow: `0 4px 12px ${tc.alpha(tc.accent, 0.25)}`,
           }}
         >
-          <Plus className="w-3.5 h-3.5" /> 提交创意
+          <Plus className="w-3.5 h-3.5" /> {t('collab.submitIdea')}
         </button>
       </div>
 
@@ -566,18 +575,30 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 className="flex items-center gap-4 pt-2"
                 style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
               >
-                <button className="flex items-center gap-1 text-[10px] text-white/25 hover:text-white/50 transition-colors">
+                <button
+                  className="flex items-center gap-1 text-[10px] text-white/25 hover:text-white/50 transition-colors"
+                  onClick={() => {}}
+                >
                   <ThumbsUp className="w-3 h-3" style={{ color: tc.primary }} />
                   <span style={{ color: tc.primary }}>{idea.likes}</span>
                 </button>
-                <button className="flex items-center gap-1 text-[10px] text-white/25 hover:text-white/50 transition-colors">
+                <button
+                  className="flex items-center gap-1 text-[10px] text-white/25 hover:text-white/50 transition-colors"
+                  onClick={() => {}}
+                >
                   <MessageSquare className="w-3 h-3" /> 评论
                 </button>
                 <div className="ml-auto flex items-center gap-2">
-                  <button className="text-white/15 hover:text-white/30 transition-colors">
+                  <button
+                    className="text-white/15 hover:text-white/30 transition-colors"
+                    onClick={() => {}}
+                  >
                     <Share2 className="w-3.5 h-3.5" />
                   </button>
-                  <button className="text-white/15 hover:text-white/30 transition-colors">
+                  <button
+                    className="text-white/15 hover:text-white/30 transition-colors"
+                    onClick={() => {}}
+                  >
                     <Bookmark className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -592,6 +613,7 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
 // ---------- Tab 3: 团队协作 ----------
 function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+  const { t } = useI18n()
   return (
     <div
       className="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -601,7 +623,7 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       <NeonCard color={tc.secondary} hoverable={false}>
         <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
           <Users className="w-4 h-4" style={{ color: tc.secondary }} />
-          在线团队成员
+          {t('collab.onlineMembers')}
         </h3>
         <div className="space-y-1">
           {MOCK_TEAM.map((member, idx) => (
@@ -631,7 +653,10 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                   在线
                 </p>
               </div>
-              <button className="text-white/15 hover:text-white/30 transition-colors p-1.5 rounded-lg hover:bg-white/[0.03]">
+              <button
+                className="text-white/15 hover:text-white/30 transition-colors p-1.5 rounded-lg hover:bg-white/[0.03]"
+                onClick={() => {}}
+              >
                 <MessageSquare className="w-3.5 h-3.5" />
               </button>
               <div
@@ -647,7 +672,7 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       <NeonCard color={tc.primary} hoverable={false}>
         <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-4">
           <Activity className="w-4 h-4" style={{ color: tc.primary }} />
-          实时协作动态
+          {t('collab.realtimeActivity')}
         </h3>
         <div className="space-y-1">
           {MOCK_ACTIVITIES.map((activity, idx) => (
@@ -719,6 +744,7 @@ function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               {/* Action Button */}
               <button
                 className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl text-[11px] text-white transition-all duration-300 hover:-translate-y-0.5"
+                onClick={() => {}}
                 style={{
                   background: `linear-gradient(135deg, ${tool.gradient[0]}, ${tool.gradient[1]})`,
                   boxShadow: `0 4px 12px ${tc.alpha(tool.gradient[0], 0.25)}`,
@@ -737,20 +763,21 @@ function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
 // ---------- Tab 5: 数据分析 ----------
 function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+  const { t } = useI18n()
   const metrics1 = [
-    { label: '创意采用率', value: 78, color: tc.primary },
-    { label: '平均评分', value: 92, display: '4.6/5.0', color: tc.secondary },
-    { label: '实施成功率', value: 85, color: tc.accent },
+    { label: t('collab.creativeAdoption'), value: 78, color: tc.primary },
+    { label: t('collab.avgRating'), value: 92, display: '4.6/5.0', color: tc.secondary },
+    { label: t('collab.implementationRate'), value: 85, color: tc.accent },
   ]
   const metrics2 = [
-    { label: '项目按时完成率', value: 91, color: '#22c55e' },
-    { label: '团队满意度', value: 96, display: '4.8/5.0', color: '#3b82f6' },
-    { label: '沟通效率提升', value: 45, display: '+45%', color: '#8b5cf6' },
+    { label: t('collab.onTimeRate'), value: 91, color: '#22c55e' },
+    { label: t('collab.teamSatisfaction'), value: 96, display: '4.8/5.0', color: '#3b82f6' },
+    { label: t('collab.commEfficiency'), value: 45, display: '+45%', color: '#8b5cf6' },
   ]
   const aiStats = [
-    { label: '创意生成效率提升', value: '40%', color: '#22c55e' },
-    { label: '设计时间节省', value: '65%', color: '#3b82f6' },
-    { label: '用户满意度', value: '85%', color: '#8b5cf6' },
+    { label: t('collab.creativeGenEfficiency'), value: '40%', color: '#22c55e' },
+    { label: t('collab.designTimeSaved'), value: '65%', color: '#3b82f6' },
+    { label: t('collab.userSatisfaction'), value: '85%', color: '#8b5cf6' },
   ]
 
   return (
@@ -761,7 +788,7 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         <NeonCard color={tc.primary} hoverable={false}>
           <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-5">
             <TrendingUp className="w-4 h-4" style={{ color: tc.primary }} />
-            创意效果分析
+            {t('collab.creativeAnalytics')}
           </h3>
           <div className="space-y-4">
             {metrics1.map((m, i) => (
@@ -847,6 +874,7 @@ const TAB_CONFIG: { key: TabKey; label: string }[] = [
 
 export function CollabCreationPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [activeTab, setActiveTab] = useState<TabKey>('projects')
 
   // Overview cards data
@@ -921,17 +949,16 @@ export function CollabCreationPage() {
                   textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.4)}`,
                 }}
               >
-                智创协同
+                {t('collab.title')}
               </h1>
-              <p className="text-[10px] text-white/20 tracking-wider">
-                AI驱动的创意协作平台，激发团队无限创造力
-              </p>
+              <p className="text-[10px] text-white/20 tracking-wider">{t('collab.desc')}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] transition-all hover:-translate-y-0.5"
+              onClick={() => {}}
               style={{
                 background: tc.alpha(tc.primary, 0.06),
                 border: `1px solid ${tc.alpha(tc.primary, 0.15)}`,
@@ -942,6 +969,7 @@ export function CollabCreationPage() {
             </button>
             <button
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[11px] text-white transition-all hover:-translate-y-0.5"
+              onClick={() => {}}
               style={{
                 background: `linear-gradient(135deg, ${tc.primary}, ${tc.secondary})`,
                 boxShadow: `0 4px 12px ${tc.alpha(tc.primary, 0.25)}`,

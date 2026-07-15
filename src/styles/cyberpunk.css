@@ -3,6 +3,12 @@
    ============================================ */
 
 :root {
+  /* Font System */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Roboto, Ubuntu,
+    sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+
   /* Unified Cyan Color System - YYC³ 统一青色调系统 */
   --cyber-cyan: #00f0ff; /* Primary Cyan - 主青色 */
   --cyber-cyan-light: #00ffff; /* Light Cyan - 浅青色 */
@@ -252,6 +258,7 @@
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

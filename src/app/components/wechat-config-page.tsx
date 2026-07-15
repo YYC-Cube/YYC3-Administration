@@ -26,6 +26,7 @@ import {
 } from 'recharts'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -37,6 +38,7 @@ type ConfigTab = 'basic' | 'menu' | 'reply' | 'message' | 'users' | 'stats'
 
 export function WechatConfigPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [activeTab, setActiveTab] = useState<ConfigTab>('basic')
   const [showSecret, setShowSecret] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -48,25 +50,33 @@ export function WechatConfigPage() {
   const wechatEncodingAesKey = import.meta.env.VITE_WECHAT_ENCODING_AES_KEY || '—'
 
   const fanGrowthData = Array.from({ length: 7 }, (_, i) => ({
-    day: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'][i],
+    day: [
+      t('wx.mon'),
+      t('wx.tue'),
+      t('wx.wed'),
+      t('wx.thu'),
+      t('wx.fri'),
+      t('wx.sat'),
+      t('wx.sun'),
+    ][i],
     newFans: Math.floor(Math.random() * 500) + 100,
     lostFans: Math.floor(Math.random() * 100),
   }))
 
   const menuClickData = [
-    { name: '产品介绍', value: 3200, color: '#22c55e' },
-    { name: '客户服务', value: 2800, color: '#3b82f6' },
-    { name: '在线咨询', value: 2100, color: '#8b5cf6' },
-    { name: '最新活动', value: 1800, color: '#f97316' },
+    { name: t('wx.productIntro'), value: 3200, color: '#22c55e' },
+    { name: t('wx.customerService'), value: 2800, color: '#3b82f6' },
+    { name: t('wx.onlineConsult'), value: 2100, color: '#8b5cf6' },
+    { name: t('wx.latestActivity'), value: 1800, color: '#f97316' },
   ]
 
   const tabs = [
-    { id: 'basic' as const, label: '基础配置', icon: Settings },
-    { id: 'menu' as const, label: '菜单管理', icon: LayoutDashboard },
-    { id: 'reply' as const, label: '自动回复', icon: Bot },
-    { id: 'message' as const, label: '消息推送', icon: Megaphone },
-    { id: 'users' as const, label: '用户管理', icon: UserPlus },
-    { id: 'stats' as const, label: '数据统计', icon: TrendingUp },
+    { id: 'basic' as const, label: t('wx.cat.basic'), icon: Settings },
+    { id: 'menu' as const, label: t('wx.cat.menu'), icon: LayoutDashboard },
+    { id: 'reply' as const, label: t('wx.cat.reply'), icon: Bot },
+    { id: 'message' as const, label: t('wx.cat.message'), icon: Megaphone },
+    { id: 'users' as const, label: t('wx.cat.users'), icon: UserPlus },
+    { id: 'stats' as const, label: t('wx.cat.stats'), icon: TrendingUp },
   ]
 
   const handleCopy = (text: string) => {
@@ -107,11 +117,9 @@ export function WechatConfigPage() {
                 textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.4)}`,
               }}
             >
-              微信配置
+              {t('wx.title')}
             </h1>
-            <p className="text-[10px] text-white/20 tracking-wider">
-              微信公众号·小程序·企业微信全生态配置管理 · AI智能运营
-            </p>
+            <p className="text-[10px] text-white/20 tracking-wider">{t('wx.desc')}</p>
           </div>
           <span
             className="ml-2 px-2 py-0.5 rounded-full text-[9px]"
@@ -121,7 +129,7 @@ export function WechatConfigPage() {
               border: `1px solid ${tc.alpha('#22c55e', 0.15)}`,
             }}
           >
-            平台集成
+            t('wx.platformIntegration')
           </span>
         </div>
       </div>
@@ -131,21 +139,32 @@ export function WechatConfigPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             {
-              label: '粉丝总数',
-              value: '12.8万',
-              trend: '+3.2% 本月',
+              label: t('wx.stat.fans'),
+              value: t('wx.stat.fansValue'),
+              trend: t('wx.stat.fansTrend'),
               trendUp: true,
               color: '#22c55e',
             },
-            { label: '消息响应率', value: '98.5%', trend: '优秀', trendUp: true, color: '#3b82f6' },
             {
-              label: '菜单点击率',
+              label: t('wx.stat.responseRate'),
+              value: '98.5%',
+              trend: t('wx.excellent'),
+              trendUp: true,
+              color: '#3b82f6',
+            },
+            {
+              label: t('wx.stat.menuClickRate'),
               value: '15.2%',
               trend: '+2.1%',
               trendUp: true,
               color: '#8b5cf6',
             },
-            { label: '模板消息', value: '24个', trend: '活跃', color: '#f97316' },
+            {
+              label: t('wx.stat.templateMsg'),
+              value: t('wx.stat.templateValue'),
+              trend: t('wx.active'),
+              color: '#f97316',
+            },
           ].map((stat, idx) => (
             <NeonCard key={idx} color={stat.color}>
               <div
@@ -204,7 +223,7 @@ export function WechatConfigPage() {
           <NeonCard color={tc.primary}>
             <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
               <Settings className="w-4 h-4" style={{ color: tc.primary }} />
-              公众号基础配置
+              {t('wx.basicConfig')}
             </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -286,7 +305,9 @@ export function WechatConfigPage() {
               </div>
 
               <div>
-                <label className="block text-[10px] text-white/40 mb-1.5">服务器URL</label>
+                <label className="block text-[10px] text-white/40 mb-1.5">
+                  {t('wx.serverUrl')}
+                </label>
                 <input
                   type="url"
                   value="https://api.yyc3.ai/wechat/callback"
@@ -307,13 +328,13 @@ export function WechatConfigPage() {
             <NeonCard color={tc.secondary}>
               <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
                 <LayoutDashboard className="w-4 h-4" style={{ color: tc.secondary }} />
-                自定义菜单
+                {t('wx.customMenu')}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {[
-                  { name: '产品中心', type: 'view', submenus: 2 },
-                  { name: '客户服务', type: 'click', submenus: 3 },
-                  { name: '关于我们', type: 'view', submenus: 2 },
+                  { name: t('wx.productCenter'), type: 'view', submenus: 2 },
+                  { name: t('wx.customerService'), type: 'click', submenus: 3 },
+                  { name: t('wx.aboutUs'), type: 'view', submenus: 2 },
                 ].map((menu, idx) => (
                   <div
                     key={idx}
@@ -325,8 +346,10 @@ export function WechatConfigPage() {
                   >
                     <h4 className="text-[11px] text-white/60 mb-2">{menu.name}</h4>
                     <div className="flex items-center justify-between text-[9px] text-white/40">
-                      <span>类型: {menu.type}</span>
-                      <span>{menu.submenus} 个子菜单</span>
+                      <span>t('wx.type'): {menu.type}</span>
+                      <span>
+                        {menu.submenus} {t('wx.submenus')}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -334,7 +357,7 @@ export function WechatConfigPage() {
             </NeonCard>
 
             <NeonCard color={tc.accent}>
-              <h3 className="text-[12px] text-white/60 mb-3">菜单点击统计</h3>
+              <h3 className="text-[12px] text-white/60 mb-3">{t('wx.menuClickStats')}</h3>
               <div className="h-48">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -370,25 +393,32 @@ export function WechatConfigPage() {
           <div className="space-y-4">
             {[
               {
-                keyword: '价格',
+                keyword: t('wx.price'),
                 type: 'text',
-                content: '感谢咨询，请问您需要了解哪个产品的价格？',
+                content: t('wx.reply.price'),
                 enabled: true,
               },
               {
-                keyword: '联系',
+                keyword: t('wx.contact'),
                 type: 'text',
-                content: '您好！客服电话：400-123-4567',
+                content: t('wx.reply.contact'),
                 enabled: true,
               },
-              { keyword: '产品', type: 'news', content: '图文消息：产品介绍', enabled: true },
-              { keyword: '帮助', type: 'text', content: 'AI智能客服为您服务', enabled: false },
+              {
+                keyword: t('wx.product'),
+                type: 'news',
+                content: t('wx.reply.product'),
+                enabled: true,
+              },
+              { keyword: t('wx.help'), type: 'text', content: t('wx.reply.help'), enabled: false },
             ].map((reply, idx) => (
               <NeonCard key={idx} color={tc.success}>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <h4 className="text-[11px] text-white/60">关键词: {reply.keyword}</h4>
+                      <h4 className="text-[11px] text-white/60">
+                        {t('wx.keyword')}: {reply.keyword}
+                      </h4>
                       <span
                         className="px-2 py-0.5 rounded-md text-[8px]"
                         style={{
@@ -397,7 +427,7 @@ export function WechatConfigPage() {
                           border: `1px solid ${tc.alpha(tc.accent, 0.2)}`,
                         }}
                       >
-                        {reply.type === 'text' ? '文本' : '图文'}
+                        reply.type === 'text' ? t('wx.text') : t('wx.imageText')
                       </span>
                     </div>
                     <p className="text-[10px] text-white/40">{reply.content}</p>
@@ -411,7 +441,7 @@ export function WechatConfigPage() {
                       style={{ accentColor: tc.success }}
                     />
                     <span className="text-[9px] text-white/40">
-                      {reply.enabled ? '已启用' : '已禁用'}
+                      reply.enabled ? t('wx.enabled') : t('wx.disabled')
                     </span>
                   </label>
                 </div>
@@ -424,14 +454,34 @@ export function WechatConfigPage() {
           <NeonCard color={tc.warning}>
             <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
               <Megaphone className="w-4 h-4" style={{ color: tc.warning }} />
-              模板消息管理
+              {t('wx.templateMsgMgmt')}
             </h3>
             <div className="space-y-3">
               {[
-                { title: '订单确认通知', id: 'TM00001', sendCount: '2,345', enabled: true },
-                { title: '支付成功通知', id: 'TM00002', sendCount: '1,890', enabled: true },
-                { title: '活动提醒', id: 'TM00003', sendCount: '856', enabled: true },
-                { title: '服务进度通知', id: 'TM00004', sendCount: '432', enabled: false },
+                {
+                  title: t('wx.template.orderConfirm'),
+                  id: 'TM00001',
+                  sendCount: '2,345',
+                  enabled: true,
+                },
+                {
+                  title: t('wx.template.paySuccess'),
+                  id: 'TM00002',
+                  sendCount: '1,890',
+                  enabled: true,
+                },
+                {
+                  title: t('wx.template.activityReminder'),
+                  id: 'TM00003',
+                  sendCount: '856',
+                  enabled: true,
+                },
+                {
+                  title: t('wx.template.serviceProgress'),
+                  id: 'TM00004',
+                  sendCount: '432',
+                  enabled: false,
+                },
               ].map((template, idx) => (
                 <div
                   key={idx}
@@ -451,12 +501,12 @@ export function WechatConfigPage() {
                         border: `1px solid ${tc.alpha(template.enabled ? tc.success : tc.muted, 0.2)}`,
                       }}
                     >
-                      {template.enabled ? '已启用' : '已禁用'}
+                      template.enabled ? t('wx.enabled') : t('wx.disabled')
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-[9px] text-white/40">
-                    <span>模板ID: {template.id}</span>
-                    <span>发送次数: {template.sendCount}</span>
+                    <span>t('wx.templateId'): {template.id}</span>
+                    <span>t('wx.sendCount'): {template.sendCount}</span>
                   </div>
                 </div>
               ))}
@@ -469,14 +519,14 @@ export function WechatConfigPage() {
             <NeonCard color={tc.primary}>
               <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
                 <Users className="w-4 h-4" style={{ color: tc.primary }} />
-                用户标签管理
+                {t('wx.userTagMgmt')}
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
-                  { name: '潜在客户', count: 3280, color: '#22c55e' },
-                  { name: '活跃用户', count: 5620, color: '#3b82f6' },
-                  { name: 'VIP客户', count: 1240, color: '#eab308' },
-                  { name: '流失预警', count: 890, color: '#ef4444' },
+                  { name: t('wx.tag.potential'), count: 3280, color: '#22c55e' },
+                  { name: t('wx.tag.active'), count: 5620, color: '#3b82f6' },
+                  { name: t('wx.tag.vip'), count: 1240, color: '#eab308' },
+                  { name: t('wx.tag.churn'), count: 890, color: '#ef4444' },
                 ].map((tag, idx) => (
                   <div
                     key={idx}
@@ -500,7 +550,7 @@ export function WechatConfigPage() {
         {activeTab === 'stats' && (
           <div className="space-y-4">
             <NeonCard color={tc.accent}>
-              <h3 className="text-[12px] text-white/60 mb-3">粉丝增长趋势</h3>
+              <h3 className="text-[12px] text-white/60 mb-3">{t('wx.fanGrowthTrend')}</h3>
               <div className="h-48">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={fanGrowthData}>
@@ -537,15 +587,15 @@ export function WechatConfigPage() {
           <div className="flex items-start gap-3">
             <Bot className="w-5 h-5 shrink-0" style={{ color: tc.accent }} />
             <div>
-              <h4 className="text-[11px] text-white/60 mb-2">AI 智能特性</h4>
+              <h4 className="text-[11px] text-white/60 mb-2">{t('wx.aiFeatures')}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                 {[
-                  '意图识别AI驱动智能回复',
-                  '用户画像AI构建与更新',
-                  '最佳推送时间AI预测',
-                  '菜单结构AI优化推荐',
-                  '用户流失AI识别与挽回',
-                  '支付异常AI检测与风控',
+                  t('wx.ai.intentRecognition'),
+                  t('wx.ai.userProfile'),
+                  t('wx.ai.bestPushTime'),
+                  t('wx.ai.menuOptimization'),
+                  t('wx.ai.churnRecovery'),
+                  t('wx.ai.paymentRisk'),
                 ].map((cap, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <div

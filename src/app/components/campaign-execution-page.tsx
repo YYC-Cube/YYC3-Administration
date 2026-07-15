@@ -16,6 +16,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -40,6 +41,7 @@ interface Campaign {
 
 export function CampaignExecutionPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [filter, setFilter] = useState<'all' | 'running' | 'scheduled'>('all')
 
   const campaigns: Campaign[] = [
@@ -161,7 +163,7 @@ export function CampaignExecutionPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            推广活动执行
+            {t('nav.promotionExec')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             实时活动监控 · 自动化执行 · 多渠道协同

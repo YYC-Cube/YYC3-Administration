@@ -32,6 +32,7 @@ import {
 } from 'lucide-react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 import type { LucideIcon } from 'lucide-react'
@@ -63,12 +64,13 @@ export interface ModulePageConfig {
 }
 
 const STATUS_MAP = {
-  ready: { label: '已就绪', color: '#22c55e', icon: CheckCircle2 },
-  beta: { label: '测试中', color: '#eab308', icon: Activity },
-  planned: { label: '规划中', color: '#3b82f6', icon: Clock },
+  ready: { labelKey: 'mp.ready', color: '#22c55e', icon: CheckCircle2 },
+  beta: { labelKey: 'mp.beta', color: '#eab308', icon: Activity },
+  planned: { labelKey: 'mp.planned', color: '#3b82f6', icon: Clock },
 }
 
 export function ModulePlaceholderPage({ config }: { config: ModulePageConfig }) {
+  const { t } = useI18n()
   const tc = useThemeColors()
   const Icon = config.icon
 
@@ -176,7 +178,7 @@ export function ModulePlaceholderPage({ config }: { config: ModulePageConfig }) 
       <div className="px-6 pb-5">
         <h2 className="text-[12px] text-white/35 tracking-wider mb-3 flex items-center gap-2">
           <Zap className="w-3.5 h-3.5" style={{ color: tc.primary }} />
-          功能模块
+          {t('mp.featureModules')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {config.features.map((feature, idx) => {
@@ -211,7 +213,7 @@ export function ModulePlaceholderPage({ config }: { config: ModulePageConfig }) 
                       }}
                     >
                       <StatusIcon className="w-2.5 h-2.5" />
-                      {statusInfo.label}
+                      {t(statusInfo.labelKey)}
                     </span>
                   </div>
                   <p className="text-[10px] text-white/20 leading-relaxed">{feature.desc}</p>
@@ -227,7 +229,7 @@ export function ModulePlaceholderPage({ config }: { config: ModulePageConfig }) 
         <div className="px-6 pb-8">
           <h2 className="text-[12px] text-white/35 tracking-wider mb-3 flex items-center gap-2">
             <Bot className="w-3.5 h-3.5" style={{ color: tc.accent }} />
-            AI 智能特性
+            {t('mp.aiCapabilities')}
           </h2>
           <NeonCard color={tc.accent} hoverable={false}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">

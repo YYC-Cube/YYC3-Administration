@@ -2,6 +2,7 @@ import { Brain, Heart, MessageSquare, Sparkles, Tag, ThumbsDown, ThumbsUp } from
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -22,6 +23,7 @@ interface TextAnalysis {
 
 export function NLPProcessingPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [selectedSentiment, setSelectedSentiment] = useState<'all' | TextAnalysis['sentiment']>(
     'all',
   )
@@ -135,7 +137,7 @@ export function NLPProcessingPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            自然语言处理
+            {t('nav.nlpProcessing')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             情感分析 · 智能分类 · 关键词提取

@@ -70,7 +70,6 @@ import { ErrorBoundary } from './error-boundary'
 import { FinancePage } from './finance-page'
 import { FormHistory } from './form-history'
 import { FormTemplateBuilder } from './form-template-builder'
-import { GlitchText } from './glitch-text'
 import { getThemeNavColor, useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'
 import { InsightsEnhancedPage } from './insights-enhanced'
@@ -88,6 +87,8 @@ import { PageTransition } from './page-transition'
 import { ParameterSettingsPage } from './parameter-settings-page'
 import { ParticleCanvas } from './particle-canvas'
 import { PlatformIntegrationPage } from './platform-integration-page'
+import { ProcurementPage } from './procurement-page'
+import { InventoryPage } from './inventory-page'
 import { PlatformSettingsPage } from './platform-settings-page'
 import { ProfilePage } from './profile-page'
 import { QuickActionsPage } from './quick-actions-page'
@@ -104,58 +105,10 @@ import { WorkflowPage } from './workflow-page'
 
 import { MobileBottomNav } from '@/multi-end'
 
-const NAV_LABEL_KEYS: Record<string, string> = {
-  dashboard: 'nav.dashboard',
-  chat: 'nav.chat',
-  clm: 'nav.clm',
-  aicall: 'nav.aicall',
-  tools: 'nav.tools',
-  workflow: 'nav.workflow',
-  logs: 'nav.logs',
-  insights: 'nav.insights',
-  settings: 'nav.settings',
-  forms: 'nav.forms',
-  contacts: 'nav.contacts',
-  customerCare: 'nav.customerCare',
-  collab: 'nav.collab',
-  // Platform Integration
-  paramSettings: 'nav.paramSettings',
-  platformSettings: 'nav.platformSettings',
-  wechatConfig: 'nav.wechatConfig',
-  channelCenter: 'nav.channelCenter',
-  dataIntegration: 'nav.dataIntegration',
-  // AI Marketing
-  marketingPlan: 'nav.marketingPlan',
-  promotionExec: 'nav.promotionExec',
-  marketingAnalytics: 'nav.marketingAnalytics',
-  marketingAssets: 'nav.marketingAssets',
-  customerAcquisition: 'nav.customerAcquisition',
-  brandMgmt: 'nav.brandMgmt',
-  intelligentOps: 'nav.intelligentOps',
-  platformHub: 'nav.platformHub',
-  aiCreativeTools: 'nav.aiCreativeTools',
-  aiMarketingEngine: 'nav.aiMarketingEngine',
-  appOverview: 'nav.appOverview',
-  aiDecisionSupport: 'nav.aiDecisionSupport',
-  nlpProcessing: 'nav.nlpProcessing',
-  quickActions: 'nav.quickActions',
-  taskBoard: 'nav.taskBoard',
-  devWorkspace: 'nav.devWorkspace',
-  apiDocs: 'nav.apiDocs',
-  finance: 'nav.finance',
-  salary: 'nav.salary',
-}
-
-const SIDEBAR_PERSONAL_KEYS: Record<string, string> = {
-  history: 'nav.history',
-  favorites: 'nav.favorites',
-  profile: 'nav.profile',
-}
-
 // --- Nav item type ---
 interface NavItem {
   id: PageId
-  label: string
+  labelKey: string
   icon: typeof LayoutDashboard
   color: string
   badge?: number
@@ -168,21 +121,21 @@ interface NavGroup {
 
 // Core features (flat — always visible)
 const coreNavItems: NavItem[] = [
-  { id: 'dashboard', label: '数据驾驶舱', icon: LayoutDashboard, color: '#00f0ff' },
-  { id: 'chat', label: 'AI 聊天', icon: MessageCircle, color: '#00f0ff' },
-  { id: 'clm', label: '客户生命周期', icon: Users, color: '#00d4ff', badge: 5 },
-  { id: 'aicall', label: 'AI 智能呼叫', icon: Phone, color: '#00ffcc', badge: 3 },
-  { id: 'customerCare', label: '客户关怀中心', icon: Heart, color: '#00d4ff', badge: 8 },
-  { id: 'contacts', label: '号码库', icon: Database, color: '#00ffc8', badge: 10 },
-  { id: 'forms', label: '智能表单', icon: ClipboardList, color: '#41ffdd' },
-  { id: 'tools', label: 'AI 工具', icon: Wrench, color: '#00ffc8' },
-  { id: 'workflow', label: '工作流', icon: GitBranch, color: '#41ffdd' },
-  { id: 'logs', label: '操作日志', icon: ScrollText, color: '#00ffc8' },
-  { id: 'collab', label: '协同创作', icon: Layers, color: '#00ffcc' },
-  { id: 'insights', label: '数据洞察', icon: BarChart3, color: '#00f0ff' },
-  { id: 'quickActions', label: '一键操作', icon: Zap, color: '#f97316' },
-  { id: 'taskBoard', label: '任务看板', icon: Target, color: '#22c55e' },
-  { id: 'devWorkspace', label: '开发工作台', icon: Code, color: '#3b82f6' },
+  { id: 'dashboard', labelKey: 'nav.dashboard', icon: LayoutDashboard, color: '#00f0ff' },
+  { id: 'chat', labelKey: 'nav.chat', icon: MessageCircle, color: '#00f0ff' },
+  { id: 'clm', labelKey: 'nav.clm', icon: Users, color: '#00d4ff', badge: 5 },
+  { id: 'aicall', labelKey: 'nav.aicall', icon: Phone, color: '#00ffcc', badge: 3 },
+  { id: 'customerCare', labelKey: 'nav.customerCare', icon: Heart, color: '#00d4ff', badge: 8 },
+  { id: 'contacts', labelKey: 'nav.contacts', icon: Database, color: '#00ffc8', badge: 10 },
+  { id: 'forms', labelKey: 'nav.forms', icon: ClipboardList, color: '#41ffdd' },
+  { id: 'tools', labelKey: 'nav.tools', icon: Wrench, color: '#00ffc8' },
+  { id: 'workflow', labelKey: 'nav.workflow', icon: GitBranch, color: '#41ffdd' },
+  { id: 'logs', labelKey: 'nav.logs', icon: ScrollText, color: '#00ffc8' },
+  { id: 'collab', labelKey: 'nav.collab', icon: Layers, color: '#00ffcc' },
+  { id: 'insights', labelKey: 'nav.insights', icon: BarChart3, color: '#00f0ff' },
+  { id: 'quickActions', labelKey: 'nav.quickActions', icon: Zap, color: '#f97316' },
+  { id: 'taskBoard', labelKey: 'nav.taskBoard', icon: Target, color: '#22c55e' },
+  { id: 'devWorkspace', labelKey: 'nav.devWorkspace', icon: Code, color: '#3b82f6' },
 ]
 
 // Collapsible nav groups
@@ -191,30 +144,45 @@ const navGroups: NavGroup[] = [
     groupKey: 'platformIntegration',
     labelKey: 'nav.group.platformIntegration',
     items: [
-      { id: 'paramSettings', label: '参数设置', icon: Settings, color: '#8b5cf6' },
-      { id: 'platformSettings', label: '平台设置', icon: Server, color: '#3b82f6' },
-      { id: 'wechatConfig', label: '微信配置', icon: MessageSquare, color: '#22c55e' },
-      { id: 'channelCenter', label: '渠道中心', icon: Radio, color: '#f97316' },
-      { id: 'dataIntegration', label: '数据集成', icon: Database, color: '#06b6d4' },
+      { id: 'paramSettings', labelKey: 'nav.paramSettings', icon: Settings, color: '#8b5cf6' },
+      { id: 'platformSettings', labelKey: 'nav.platformSettings', icon: Server, color: '#3b82f6' },
+      { id: 'wechatConfig', labelKey: 'nav.wechatConfig', icon: MessageSquare, color: '#22c55e' },
+      { id: 'channelCenter', labelKey: 'nav.channelCenter', icon: Radio, color: '#f97316' },
+      { id: 'dataIntegration', labelKey: 'nav.dataIntegration', icon: Database, color: '#06b6d4' },
     ],
   },
   {
     groupKey: 'aiMarketing',
     labelKey: 'nav.group.aiMarketing',
     items: [
-      { id: 'appOverview', label: '应用总览看板', icon: LayoutDashboard, color: '#00f0ff' },
-      { id: 'marketingPlan', label: '营销方案策划', icon: Megaphone, color: '#8b5cf6' },
-      { id: 'promotionExec', label: '推广活动执行', icon: PlayCircle, color: '#22c55e' },
-      { id: 'marketingAnalytics', label: '营销效果分析', icon: BarChart3, color: '#3b82f6' },
-      { id: 'marketingAssets', label: '营销素材管理', icon: Image, color: '#ec4899' },
-      { id: 'customerAcquisition', label: '客户获取系统', icon: UserPlus, color: '#22c55e' },
-      { id: 'brandMgmt', label: '品牌管理平台', icon: Award, color: '#eab308' },
-      { id: 'aiCreativeTools', label: '智能创作工具', icon: PenTool, color: '#8b5cf6' },
-      { id: 'aiMarketingEngine', label: '智能营销引擎', icon: Rocket, color: '#f97316' },
-      { id: 'aiDecisionSupport', label: '智能决策支持', icon: Brain, color: '#a855f7' },
-      { id: 'nlpProcessing', label: '自然语言处理', icon: Languages, color: '#14b8a6' },
-      { id: 'platformHub', label: '平台对接中心', icon: Link, color: '#06b6d4' },
-      { id: 'intelligentOps', label: '智能运维系统', icon: Wrench, color: '#ef4444' },
+      { id: 'appOverview', labelKey: 'nav.appOverview', icon: LayoutDashboard, color: '#00f0ff' },
+      { id: 'marketingPlan', labelKey: 'nav.marketingPlan', icon: Megaphone, color: '#8b5cf6' },
+      { id: 'promotionExec', labelKey: 'nav.promotionExec', icon: PlayCircle, color: '#22c55e' },
+      {
+        id: 'marketingAnalytics',
+        labelKey: 'nav.marketingAnalytics',
+        icon: BarChart3,
+        color: '#3b82f6',
+      },
+      { id: 'marketingAssets', labelKey: 'nav.marketingAssets', icon: Image, color: '#ec4899' },
+      {
+        id: 'customerAcquisition',
+        labelKey: 'nav.customerAcquisition',
+        icon: UserPlus,
+        color: '#22c55e',
+      },
+      { id: 'brandMgmt', labelKey: 'nav.brandMgmt', icon: Award, color: '#eab308' },
+      { id: 'aiCreativeTools', labelKey: 'nav.aiCreativeTools', icon: PenTool, color: '#8b5cf6' },
+      {
+        id: 'aiMarketingEngine',
+        labelKey: 'nav.aiMarketingEngine',
+        icon: Rocket,
+        color: '#f97316',
+      },
+      { id: 'aiDecisionSupport', labelKey: 'nav.aiDecisionSupport', icon: Brain, color: '#a855f7' },
+      { id: 'nlpProcessing', labelKey: 'nav.nlpProcessing', icon: Languages, color: '#14b8a6' },
+      { id: 'platformHub', labelKey: 'nav.platformHub', icon: Link, color: '#06b6d4' },
+      { id: 'intelligentOps', labelKey: 'nav.intelligentOps', icon: Wrench, color: '#ef4444' },
     ],
   },
 ]
@@ -223,9 +191,9 @@ const navGroups: NavGroup[] = [
 const navItems = coreNavItems
 
 const sidebarPersonal = [
-  { id: 'history', label: '历史记录', icon: History, color: '#00f0ff' },
-  { id: 'favorites', label: '收藏夹', icon: Star, color: '#00ffcc' },
-  { id: 'profile', label: '个人资料', icon: UserCircle, color: '#00d4ff' },
+  { id: 'history', labelKey: 'nav.history', icon: History, color: '#00f0ff' },
+  { id: 'favorites', labelKey: 'nav.favorites', icon: Star, color: '#00ffcc' },
+  { id: 'profile', labelKey: 'nav.profile', icon: UserCircle, color: '#00d4ff' },
 ]
 
 /**
@@ -545,9 +513,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                   if (item.id === 'profile') handleNavClick('profile')
                 }}
                 className="p-2 rounded-xl hover:bg-white/5 transition-colors group relative"
-                title={
-                  SIDEBAR_PERSONAL_KEYS[item.id] ? t(SIDEBAR_PERSONAL_KEYS[item.id]) : item.label
-                }
+                title={t(item.labelKey)}
               >
                 <PIcon
                   className="w-4 h-4 transition-colors"
@@ -779,7 +745,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                         className="text-sm transition-colors duration-300"
                         style={{ color: active ? mc : tc.textSecondary }}
                       >
-                        {NAV_LABEL_KEYS[item.id] ? t(NAV_LABEL_KEYS[item.id]) : item.label}
+                        {t(item.labelKey)}
                       </span>
                       {item.badge && (
                         <span
@@ -848,7 +814,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                                 className="text-[12px]"
                                 style={{ color: active ? mc : tc.textSecondary }}
                               >
-                                {NAV_LABEL_KEYS[item.id] ? t(NAV_LABEL_KEYS[item.id]) : item.label}
+                                {t(item.labelKey)}
                               </span>
                             </button>
                           )
@@ -901,9 +867,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                         />
                       </div>
                       <span className="text-sm text-white/40 transition-colors duration-300 hover:text-white/60">
-                        {SIDEBAR_PERSONAL_KEYS[item.id]
-                          ? t(SIDEBAR_PERSONAL_KEYS[item.id])
-                          : item.label}
+                        {t(item.labelKey)}
                       </span>
                     </button>
                   )
@@ -1381,6 +1345,16 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
             {activePage === 'nlpProcessing' && (
               <ErrorBoundary name="NlpProcessing">
                 <NLPProcessingPage />
+              </ErrorBoundary>
+            )}
+            {activePage === 'procurement' && (
+              <ErrorBoundary name="Procurement">
+                <ProcurementPage />
+              </ErrorBoundary>
+            )}
+            {activePage === 'inventory' && (
+              <ErrorBoundary name="Inventory">
+                <InventoryPage />
               </ErrorBoundary>
             )}
           </PageTransition>

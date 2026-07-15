@@ -13,6 +13,7 @@ import {
 import { useState } from 'react'
 
 import { useThemeColors } from './hooks/use-theme-colors'
+import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 
 // ==========================================
@@ -36,6 +37,7 @@ interface Lead {
 
 export function CustomerAcquisitionPage() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   const [selectedStatus, setSelectedStatus] = useState<'all' | Lead['status']>('all')
 
   const leads: Lead[] = [
@@ -162,7 +164,7 @@ export function CustomerAcquisitionPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-            客户获取系统
+            {t('nav.customerAcquisition')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
             AI智能获客 · 精准定向 · 成本优化

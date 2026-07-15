@@ -54,13 +54,13 @@ export function FinancePage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2
+          <h1
             className="tracking-wider flex items-center gap-3"
             style={{ color: '#06b6d4', textShadow: '0 0 15px rgba(6,182,212,0.5)' }}
           >
             <Landmark className="w-6 h-6" />
             {t('finance.title')}
-          </h2>
+          </h1>
           <p className="text-xs text-white/25 mt-1 tracking-wider">
             Finance Management System — AI-Powered Financial Intelligence
           </p>
