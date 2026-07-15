@@ -49,6 +49,7 @@ function AuthPage() {
   const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
   const [ghostLogging, setGhostLogging] = useState<string | null>(null)
+  const [ghostHover, setGhostHover] = useState(false)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -186,6 +187,31 @@ function AuthPage() {
           filter: 'blur(60px)',
         }}
       />
+
+      {/* Ghost Mode Activation Overlay */}
+      {ghostLogging !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative flex flex-col items-center gap-4">
+            <Ghost
+              className="w-16 h-16"
+              style={{
+                color: tc.alpha(tc.primary, 0.6),
+                filter: `drop-shadow(0 0 30px ${tc.alpha(tc.primary, 0.5)})`,
+              }}
+            />
+            <span className="text-sm tracking-[0.3em]" style={{ color: tc.alpha(tc.primary, 0.7) }}>
+              GHOST MODE
+            </span>
+            <div
+              className="w-32 h-0.5 rounded-full"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${tc.primary}, transparent)`,
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -433,41 +459,100 @@ function AuthPage() {
             </button>
           </div>
 
+          {/* ── Ghost Mode ── */}
           {GHOST_MODE_ENABLED && mode === 'login' && (
-            <div className="mt-4">
-              <motion.button
+            <>
+              {/* OR Divider */}
+              <div className="flex items-center gap-3 my-5">
+                <div className="flex-1 h-px" style={{ background: tc.alpha(tc.primary, 0.08) }} />
+                <span
+                  className="text-xs tracking-wider"
+                  style={{ color: tc.alpha(tc.primary, 0.15) }}
+                >
+                  OR
+                </span>
+                <div className="flex-1 h-px" style={{ background: tc.alpha(tc.primary, 0.08) }} />
+              </div>
+
+              {/* Ghost Mode Button */}
+              <button
                 type="button"
                 onClick={() => handleGhostLogin(GHOST_ACCOUNTS[0])}
                 disabled={ghostLogging !== null}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-3 rounded-xl font-medium flex items-center justify-center gap-3 transition-all"
+                onMouseEnter={() => setGhostHover(true)}
+                onMouseLeave={() => setGhostHover(false)}
+                className="group w-full relative overflow-hidden rounded-xl transition-all duration-300 min-h-[48px]"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(0,240,255,0.05), rgba(0,255,200,0.03))',
-                  border: '1px solid rgba(0,240,255,0.15)',
-                  color: '#00ffc8',
-                  boxShadow: '0 0 20px rgba(0,255,200,0.1), inset 0 0 20px rgba(0,240,255,0.03)',
+                  background: ghostHover
+                    ? `linear-gradient(135deg, ${tc.alpha(tc.primary, 0.08)} 0%, ${tc.alpha(tc.secondary, 0.08)} 100%)`
+                    : tc.alpha(tc.primary, 0.02),
+                  border: ghostHover
+                    ? `1px solid ${tc.alpha(tc.primary, 0.25)}`
+                    : `1px solid ${tc.alpha(tc.primary, 0.08)}`,
+                  boxShadow: ghostHover
+                    ? `0 0 30px ${tc.alpha(tc.primary, 0.08)}, inset 0 0 30px ${tc.alpha(tc.primary, 0.03)}`
+                    : 'none',
                 }}
               >
-                {ghostLogging !== null ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Ghost className="w-4 h-4" />
+                {/* Scan line effect on hover */}
+                {ghostHover && (
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.02) 2px, rgba(0,240,255,0.02) 4px)',
+                    }}
+                  />
                 )}
-                <span className="text-sm tracking-wider">GHOST MODE</span>
-                <span
-                  className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1"
-                  style={{
-                    background: 'rgba(0,255,200,0.15)',
-                    border: '1px solid rgba(0,255,200,0.3)',
-                    color: '#00ffc8',
-                  }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ffc8] animate-pulse" />
-                  FULL ACCESS
-                </span>
-              </motion.button>
-            </div>
+                <div className="relative flex items-center justify-center gap-2.5 py-3 px-4">
+                  {ghostLogging !== null ? (
+                    <Loader2
+                      className="w-[18px] h-[18px] animate-spin"
+                      style={{ color: ghostHover ? tc.primary : tc.alpha(tc.primary, 0.3) }}
+                    />
+                  ) : (
+                    <Ghost
+                      className="w-[18px] h-[18px] transition-all duration-300"
+                      style={{
+                        color: ghostHover ? tc.primary : tc.alpha(tc.primary, 0.3),
+                        filter: ghostHover
+                          ? `drop-shadow(0 0 8px ${tc.alpha(tc.primary, 0.5)})`
+                          : 'none',
+                      }}
+                    />
+                  )}
+                  <span
+                    className="transition-colors duration-300 font-medium"
+                    style={{
+                      color: ghostHover ? tc.primary : tc.alpha(tc.primary, 0.35),
+                      fontSize: '0.82rem',
+                      letterSpacing: '0.15em',
+                    }}
+                  >
+                    GHOST MODE
+                  </span>
+                  {/* Right status indicator */}
+                  <div className="absolute right-4 flex items-center gap-1.5">
+                    <div
+                      className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                      style={{
+                        backgroundColor: ghostHover ? tc.success : tc.alpha(tc.success, 0.2),
+                        boxShadow: ghostHover ? `0 0 6px ${tc.alpha(tc.success, 0.5)}` : 'none',
+                      }}
+                    />
+                    <span
+                      className="transition-colors duration-300"
+                      style={{
+                        color: ghostHover ? tc.alpha(tc.success, 0.6) : tc.alpha(tc.success, 0.15),
+                        fontSize: '0.55rem',
+                      }}
+                    >
+                      FULL ACCESS
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </>
           )}
 
           {mode === 'login' && (
