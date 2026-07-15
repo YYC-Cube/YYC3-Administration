@@ -1,6 +1,8 @@
 allowBuilds:
-  '@tailwindcss/oxide': true
+  "@tailwindcss/oxide": true
   esbuild: true
 
 overrides:
-  vite: 6.3.5
+  minimatch@9: 9.0.9
+  dompurify: 3.4.11
+  form-data: 4.0.6
