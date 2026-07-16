@@ -35,7 +35,7 @@ export default defineConfig({
   // 共享设置
   use: {
     // 基础 URL（与 vite dev server 端口一致）
-    baseURL: 'http://localhost:3173',
+    baseURL: 'http://localhost:3171',
 
     // 截图策略
     screenshot: 'only-on-failure',
@@ -86,8 +86,8 @@ export default defineConfig({
   // Web Server 配置（自动启动开发服务器）
   webServer: {
     command: 'pnpm dev',
-    port: 3173,
-    timeout: 120 * 1000,
+    port: 3171,
+    timeout: 180 * 1000,
     reuseExistingServer: !process.env.CI,
   },
 });
