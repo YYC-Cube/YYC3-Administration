@@ -8,14 +8,13 @@ import { expect, test } from '@playwright/test'
 test.describe('E2E-NAV: 导航流程', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
   })
 
   test('E2E-NAV-001: 仪表盘页面加载', async ({ page }) => {
-    // 验证仪表盘可见
-    await expect(
-      page.locator('[data-testid="app-container"]').or(page.locator('body')),
-    ).toBeVisible()
+    // 验证 app 容器可见
+    await expect(page.locator('[data-testid="app-container"]')).toBeVisible()
     // 验证导航栏存在
     const nav = page.locator('nav').or(page.locator('[data-testid="navigation"]'))
     await expect(nav.first()).toBeVisible()
@@ -49,20 +48,18 @@ test.describe('E2E-NAV: 导航流程', () => {
 test.describe('E2E-NAV: 主题切换', () => {
   test('E2E-NAV-005: 切换主题', async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
 
     const themeSwitcher = page.locator('[data-testid="theme-switcher"]')
     if (await themeSwitcher.isVisible()) {
-      const _beforeBg = await page.evaluate(
-        () => window.getComputedStyle(document.body).backgroundColor,
-      )
       await themeSwitcher.click()
       await page.waitForTimeout(500)
-      const afterBg = await page.evaluate(
-        () => window.getComputedStyle(document.body).backgroundColor,
-      )
-      // 主题切换后背景色可能变化
-      expect(afterBg).toBeDefined()
+      const appStyle = await page.locator('[data-testid="app-container"]').evaluate((el) => {
+        return window.getComputedStyle(el).backgroundColor
+      })
+      // 主题切换后背景色应该定义
+      expect(appStyle).toBeDefined()
     }
   })
 })
@@ -72,7 +69,8 @@ test.describe('E2E-NAV: 响应式', () => {
     if (!isMobile) return
 
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
 
     // 移动端应该有汉堡菜单或侧边栏切换
     const menuButton = page

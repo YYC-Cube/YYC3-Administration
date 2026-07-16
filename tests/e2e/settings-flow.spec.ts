@@ -7,7 +7,8 @@ import { expect, test } from '@playwright/test'
 test.describe('E2E-SETTINGS: 设置流程', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
   })
 
   test('E2E-SETTINGS-001: 打开参数设置', async ({ page }) => {
@@ -38,7 +39,8 @@ test.describe('E2E-SETTINGS: 设置流程', () => {
 test.describe('E2E-SETTINGS: 面板操作', () => {
   test('E2E-SETTINGS-003: 命令面板', async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
 
     // 尝试打开命令面板 (Ctrl+K / Cmd+K)
     const modKey = process.platform === 'darwin' ? 'Meta' : 'Control'
@@ -59,7 +61,8 @@ test.describe('E2E-SETTINGS: 面板操作', () => {
 
   test('E2E-SETTINGS-004: 通知抽屉', async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
 
     const notifBtn = page
       .locator('[data-testid="notification-button"]')

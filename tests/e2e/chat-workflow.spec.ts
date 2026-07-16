@@ -8,10 +8,8 @@ import { expect, test } from '@playwright/test'
 test.describe('E2E-CHAT: AI 聊天流程', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
-    await expect(
-      page.locator('[data-testid="app-container"]').or(page.locator('body')),
-    ).toBeVisible()
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
     // Navigate to chat
     await page.click('[data-nav-id="chat"]')
     await page.waitForTimeout(500)
@@ -169,7 +167,8 @@ test.describe('E2E-CHAT: AI 聊天流程', () => {
 test.describe('E2E-CHAT: 主题适配测试', () => {
   test('E2E-CHAT-009: 聊天界面双主题切换', async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
     await page.click('[data-nav-id="chat"]')
     await expect(page.locator('[data-testid="chat-interface"]')).toBeVisible()
 
@@ -197,7 +196,8 @@ test.describe('E2E-CHAT: 主题适配测试', () => {
 test.describe('E2E-CHAT: 性能测试', () => {
   test('E2E-CHAT-010: 聊天响应性能', async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
+    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
     await page.click('[data-nav-id="chat"]')
     await expect(page.locator('[data-testid="chat-interface"]')).toBeVisible()
 
