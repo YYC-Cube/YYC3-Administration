@@ -32,6 +32,8 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          npm_config_minimum_release_age: 0
 
       - name: Type check
         run: pnpm typecheck
@@ -80,6 +82,8 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          npm_config_minimum_release_age: 0
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
