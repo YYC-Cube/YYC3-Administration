@@ -289,7 +289,7 @@ export function CLMPage() {
               <Search className="w-4 h-4" style={{ color: tc.textMuted }} />
               <input
                 type="text"
-                placeholder={translate("clm.searchPlaceholder")}
+                placeholder={translate('clm.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent outline-none text-sm w-40"
@@ -308,9 +308,7 @@ export function CLMPage() {
                     color: activeStage === stage ? tc.accent : tc.textSecondary,
                   }}
                 >
-                  {stage === 'all'
-                    ? translate('clm.all')
-                    : translate("clm.stage." + stage)}
+                  {stage === 'all' ? translate('clm.all') : translate('clm.stage.' + stage)}
                 </button>
               ))}
             </div>
@@ -370,24 +368,24 @@ export function CLMPage() {
                   }}
                 >
                   <StageIcon className="w-3 h-3" />
-                  {translate("clm.stage." + customer.stage)}
+                  {translate('clm.stage.' + customer.stage)}
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span style={{ color: tc.textMuted }}>{translate("clm.customerValue")}</span>
+                    <span style={{ color: tc.textMuted }}>{translate('clm.customerValue')}</span>
                     <span className="font-medium" style={{ color: tc.success }}>
                       ¥{customer.value.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span style={{ color: tc.textMuted }}>{translate("clm.health")}</span>
+                    <span style={{ color: tc.textMuted }}>{translate('clm.health')}</span>
                     <span className="font-medium" style={{ color: tc.accent }}>
                       {customer.healthScore}%
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span style={{ color: tc.textMuted }}>{translate("clm.nextFollowUp")}</span>
+                    <span style={{ color: tc.textMuted }}>{translate('clm.nextFollowUp')}</span>
                     <span style={{ color: tc.textSecondary }}>{customer.nextFollowUp}</span>
                   </div>
                 </div>

@@ -350,25 +350,27 @@ function ContactFormModal({
           <div>
             <label className="text-[10px] text-white/30 mb-2 block">{t('cb.lifecycleStage')}</label>
             <div className="flex gap-2">
-              {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map((stage) => {
-                const meta = STAGE_META[stage]
-                const active = form.stage === stage
-                return (
-                  <button
-                    key={stage}
-                    onClick={() => updateField('stage', stage)}
-                    className="flex-1 py-2 rounded-xl text-[11px] transition-all duration-300 border"
-                    style={{
-                      background: active ? `${meta.color}15` : 'rgba(255,255,255,0.02)',
-                      borderColor: active ? `${meta.color}50` : 'rgba(255,255,255,0.06)',
-                      color: active ? meta.color : 'rgba(255,255,255,0.3)',
-                      boxShadow: active ? `0 0 10px ${meta.color}20` : 'none',
-                    }}
-                  >
-                    {stage}
-                  </button>
-                )
-              })}
+              {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map(
+                (stage) => {
+                  const meta = STAGE_META[stage]
+                  const active = form.stage === stage
+                  return (
+                    <button
+                      key={stage}
+                      onClick={() => updateField('stage', stage)}
+                      className="flex-1 py-2 rounded-xl text-[11px] transition-all duration-300 border"
+                      style={{
+                        background: active ? `${meta.color}15` : 'rgba(255,255,255,0.02)',
+                        borderColor: active ? `${meta.color}50` : 'rgba(255,255,255,0.06)',
+                        color: active ? meta.color : 'rgba(255,255,255,0.3)',
+                        boxShadow: active ? `0 0 10px ${meta.color}20` : 'none',
+                      }}
+                    >
+                      {stage}
+                    </button>
+                  )
+                },
+              )}
             </div>
           </div>
 
@@ -683,35 +685,39 @@ function ContactDetailPanel({
           {t('cb.lifecycleAdvance')}
         </h4>
         <div className="flex gap-1">
-          {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map((stage, i) => {
-            const meta = STAGE_META[stage]
-            const isActive = contact.stage === stage
-            const stageIdx = ['acquisition', 'conversion', 'deal', 'service', 'loyalty'].indexOf(contact.stage)
-            const isPast = i < stageIdx
-            return (
-              <button
-                key={stage}
-                onClick={() => onStageChange(stage)}
-                className="flex-1 py-1.5 rounded-lg text-[9px] transition-all duration-300"
-                style={{
-                  background: isActive
-                    ? `${meta.color}20`
-                    : isPast
-                      ? `${meta.color}08`
-                      : 'rgba(255,255,255,0.02)',
-                  border: `1px solid ${isActive ? `${meta.color}50` : isPast ? `${meta.color}20` : 'rgba(255,255,255,0.05)'}`,
-                  color: isActive
-                    ? meta.color
-                    : isPast
-                      ? `${meta.color}80`
-                      : 'rgba(255,255,255,0.2)',
-                  boxShadow: isActive ? `0 0 8px ${meta.color}25` : 'none',
-                }}
-              >
-                {stage}
-              </button>
-            )
-          })}
+          {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map(
+            (stage, i) => {
+              const meta = STAGE_META[stage]
+              const isActive = contact.stage === stage
+              const stageIdx = ['acquisition', 'conversion', 'deal', 'service', 'loyalty'].indexOf(
+                contact.stage,
+              )
+              const isPast = i < stageIdx
+              return (
+                <button
+                  key={stage}
+                  onClick={() => onStageChange(stage)}
+                  className="flex-1 py-1.5 rounded-lg text-[9px] transition-all duration-300"
+                  style={{
+                    background: isActive
+                      ? `${meta.color}20`
+                      : isPast
+                        ? `${meta.color}08`
+                        : 'rgba(255,255,255,0.02)',
+                    border: `1px solid ${isActive ? `${meta.color}50` : isPast ? `${meta.color}20` : 'rgba(255,255,255,0.05)'}`,
+                    color: isActive
+                      ? meta.color
+                      : isPast
+                        ? `${meta.color}80`
+                        : 'rgba(255,255,255,0.2)',
+                    boxShadow: isActive ? `0 0 8px ${meta.color}25` : 'none',
+                  }}
+                >
+                  {stage}
+                </button>
+              )
+            },
+          )}
         </div>
       </div>
 
@@ -1117,27 +1123,29 @@ export function ContactBookPage() {
               <div className="mb-3">
                 <p className="text-[9px] text-white/20 mb-2">{t('cb.lifecycleStage')}</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map((stage) => {
-                    const meta = STAGE_META[stage]
-                    const active = filterStage === stage
-                    return (
-                      <button
-                        key={stage}
-                        onClick={() => setFilterStage(active ? null : stage)}
-                        className="px-2.5 py-1 rounded-full text-[10px] transition-all duration-200 border flex items-center gap-1"
-                        style={{
-                          background: active ? `${meta.color}20` : 'transparent',
-                          borderColor: active ? `${meta.color}50` : 'rgba(255,255,255,0.06)',
-                          color: active ? meta.color : 'rgba(255,255,255,0.3)',
-                        }}
-                      >
-                        {stage}
-                        <span className="text-[8px] opacity-60">
-                          ({stats.stageCount[stage] || 0})
-                        </span>
-                      </button>
-                    )
-                  })}
+                  {(['acquisition', 'conversion', 'deal', 'service', 'loyalty'] as const).map(
+                    (stage) => {
+                      const meta = STAGE_META[stage]
+                      const active = filterStage === stage
+                      return (
+                        <button
+                          key={stage}
+                          onClick={() => setFilterStage(active ? null : stage)}
+                          className="px-2.5 py-1 rounded-full text-[10px] transition-all duration-200 border flex items-center gap-1"
+                          style={{
+                            background: active ? `${meta.color}20` : 'transparent',
+                            borderColor: active ? `${meta.color}50` : 'rgba(255,255,255,0.06)',
+                            color: active ? meta.color : 'rgba(255,255,255,0.3)',
+                          }}
+                        >
+                          {stage}
+                          <span className="text-[8px] opacity-60">
+                            ({stats.stageCount[stage] || 0})
+                          </span>
+                        </button>
+                      )
+                    },
+                  )}
                 </div>
               </div>
               {/* Tag Filter */}

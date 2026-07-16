@@ -86,8 +86,7 @@ export function useThemeTokens(): ThemeTokens {
       overlayBg: 'bg-black/60',
       modalBg: 'bg-white/[0.08]',
       modalBorder: 'border-white/[0.1]',
-      modalShadow:
-        '0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.08)',
+      modalShadow: '0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.08)',
       textPrimary: 'text-white/95',
       textSecondary: 'text-white/60',
       textTertiary: 'text-white/40',

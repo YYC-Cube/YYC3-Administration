@@ -7,6 +7,16 @@
  * @tags hooks, export
  */
 
-export { useThemeColors, getThemeNavColor, LIQUID_GLASS_NAV_COLORS, type ThemeColors } from './use-theme-colors'
-export { useGlobalShortcuts, formatCombo, DEFAULT_SHORTCUTS, type ShortcutDef } from './use-global-shortcuts'
+export {
+  useThemeColors,
+  getThemeNavColor,
+  LIQUID_GLASS_NAV_COLORS,
+  type ThemeColors,
+} from './use-theme-colors'
+export {
+  useGlobalShortcuts,
+  formatCombo,
+  DEFAULT_SHORTCUTS,
+  type ShortcutDef,
+} from './use-global-shortcuts'
 export { useThemeTokens } from './use-theme-tokens'

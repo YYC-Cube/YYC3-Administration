@@ -20,19 +20,8 @@ export {
   DialogTrigger,
 } from './dialog'
 export { Badge } from './badge'
-export {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './select'
-export {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from './tooltip'
+export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select'
+export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip'
 export {
   DropdownMenu,
   DropdownMenuContent,

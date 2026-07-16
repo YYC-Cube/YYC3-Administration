@@ -634,7 +634,7 @@ export function ThemeConfigPage() {
                     color: '#00ffc8',
                   }}
                 >
-{t('theme.reset')}
+                  {t('theme.reset')}
                 </button>
               </div>
 
