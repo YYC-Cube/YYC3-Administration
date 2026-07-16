@@ -15,6 +15,7 @@ export function ThemeSwitcherButton() {
   return (
     <motion.button
       onClick={toggleTheme}
+      data-testid="theme-switcher"
       className="relative group"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -100,6 +101,7 @@ export function ThemeSwitcherButtonCompact() {
     <motion.button
       onClick={toggleTheme}
       className="relative"
+      data-testid="theme-switcher"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       title={isCyberpunk ? '切换到液态玻璃主题' : '切换到赛博朋克主题'}

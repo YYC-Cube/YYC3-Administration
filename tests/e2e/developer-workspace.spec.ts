@@ -22,20 +22,17 @@ import { expect, type Page, test } from '@playwright/test'
 // Test Configuration
 // ==========================================
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3173'
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3171'
 const _DEV_WORKSPACE_NAV = 'Developer Workspace' // nav item text or PageId
 
 // Helper: navigate to Developer Workspace page
 async function navigateToDevWorkspace(page: Page) {
   await page.goto(BASE_URL)
   // Wait for app to load
-  await page.waitForSelector("[data-testid='app-container'], .cyberpunk-standalone", {
+  await page.waitForSelector("[data-testid='app-container']", {
     timeout: 10000,
   })
-  // Navigate to dev workspace (click nav item or command palette)
-  const devWorkspaceLink = page
-    .locator('text=Developer Workspace, text=开发工作区, text=Dev Workspace')
-    .first()
+  const devWorkspaceLink = page.locator('[data-nav-id="devWorkspace"]').first()
   if (await devWorkspaceLink.isVisible({ timeout: 3000 }).catch(() => false)) {
     await devWorkspaceLink.click()
   }

@@ -92,7 +92,7 @@ function LanguageSelector({
   }, [open])
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative" data-testid="language-switcher">
       <button
         type="button"
         onClick={() => setOpen(!open)}

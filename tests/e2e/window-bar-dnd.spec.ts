@@ -19,17 +19,16 @@ import { expect, type Page, test } from '@playwright/test'
 // 测试配置
 // ==========================================
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3173'
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3171'
 
 // 辅助函数：导航到开发者工作区
 async function navigateToDevWorkspace(page: Page) {
   await page.goto(BASE_URL)
-  await page.waitForSelector("[data-testid='app-container'], .cyberpunk-standalone", {
+  await page.waitForSelector("[data-testid='app-container']", {
     timeout: 10000,
   })
-  const devWorkspaceLink = page
-    .locator('text=开发工作区, text=Developer Workspace, text=Dev Workspace')
-    .first()
+  // Navigate to dev workspace via nav button
+  const devWorkspaceLink = page.locator('[data-nav-id="devWorkspace"]').first()
   if (await devWorkspaceLink.isVisible({ timeout: 3000 }).catch(() => false)) {
     await devWorkspaceLink.click()
   }

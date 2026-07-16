@@ -719,6 +719,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                   return (
                     <button
                       key={item.id}
+                      data-nav-id={item.id}
                       onClick={() => handleNavClick(item.id)}
                       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300"
                       style={{
@@ -988,6 +989,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                       return (
                         <button
                           key={item.id}
+                          data-nav-id={item.id}
                           onClick={() => handleNavClick(item.id)}
                           className="w-full flex items-center rounded-xl transition-all duration-300 group relative"
                           style={{

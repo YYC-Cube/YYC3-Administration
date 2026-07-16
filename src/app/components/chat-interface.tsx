@@ -299,6 +299,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
     return (
       <div
         key={msg.id}
+        data-role={msg.role === 'ai' ? 'assistant' : 'user'}
         className={cn('flex gap-3', msg.role === 'user' && 'flex-row-reverse')}
         style={{
           animation:
@@ -465,6 +466,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
                   </button>
                   <button
                     onClick={() => handleRetry(msg.id)}
+                    data-testid="retry-button"
                     className="p-1 rounded hover:bg-white/10 transition-colors"
                     title={t('chat.retry')}
                   >
@@ -480,7 +482,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
   }
 
   return (
-    <div className="flex h-full" style={{ background: tc.bgBase }}>
+    <div className="flex h-full" data-testid="chat-interface" style={{ background: tc.bgBase }}>
       {/* Session Sidebar */}
       <div
         className="w-56 shrink-0 flex flex-col border-r"
@@ -545,6 +547,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
           </button>
           <button
             onClick={clearSession}
+            data-testid="clear-chat-button"
             className="w-full flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] hover:bg-white/5 transition-colors"
             style={{ color: tc.alpha(tc.danger, 0.6) }}
           >
@@ -568,7 +571,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
               )}
               style={activeModel ? { boxShadow: '0 0 4px ' + tc.success } : {}}
             />
-            <span className="text-[10px] text-white/30">
+            <span className="text-[10px] text-white/30" data-testid="current-model-badge">
               {activeModel
                 ? activeModel.name + ' - ' + activeModel.provider
                 : t('chat.modelNotConfigured')}
@@ -586,6 +589,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
             onClick={openModelSettings}
             className="p-1 rounded-lg hover:bg-white/5 transition-colors group"
             title={t('header.aiModel')}
+            data-testid="model-settings-button"
           >
             <Settings2 className="w-3.5 h-3.5 text-white/20 group-hover:text-white/60 transition-colors" />
           </button>
@@ -593,10 +597,14 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
 
         <div
           className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin"
+          data-testid="chat-messages-container"
           style={{ scrollbarWidth: 'none' }}
         >
           {messages.length === 0 && !streamState.isStreaming && (
-            <div className="flex flex-col items-center justify-center h-full py-16">
+            <div
+              className="flex flex-col items-center justify-center h-full py-16"
+              data-testid="empty-chat-state"
+            >
               <Bot className="w-12 h-12 mb-4" style={{ color: tc.alpha(tc.primary, 0.3) }} />
               <p className="text-sm mb-6" style={{ color: tc.textMuted }}>
                 How can I help you?
@@ -710,6 +718,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
               onKeyDown={handleKeyDown}
               placeholder={'Type a message...'}
               rows={1}
+              data-testid="chat-input"
               className="flex-1 bg-transparent text-white/90 text-sm resize-none outline-none placeholder:text-white/20 max-h-24"
               style={{ scrollbarWidth: 'none' }}
             />
@@ -728,6 +737,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
               <button
                 onClick={handleSend}
                 disabled={!input.trim()}
+                data-testid="chat-send-button"
                 className="shrink-0 p-2 rounded-xl transition-all duration-300 disabled:opacity-30"
                 style={{
                   background: input.trim() ? tc.gradientPrimary : 'rgba(255,255,255,0.05)',

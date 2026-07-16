@@ -86,7 +86,7 @@ function AppContent() {
 
   return (
     <LiquidGlassWrapper>
-      <div className="size-full">
+      <div className="size-full" data-testid="app-container">
         {appMode === 'standalone' ? (
           <CyberpunkStandalone onSwitchMode={() => setAppMode('widget')} />
         ) : (
