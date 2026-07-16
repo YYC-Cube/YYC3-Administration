@@ -432,6 +432,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
             return (
               <button
                 key={cat.id}
+                data-nav-id={cat.items[0]?.id}
                 onClick={() => {
                   setActiveCategory(cat.id)
                   const firstItem = cat.items[0]

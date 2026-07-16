@@ -31,6 +31,16 @@ async function navigateToDevWorkspace(page: Page) {
   const devWorkspaceLink = page.locator('[data-nav-id="devWorkspace"]').first()
   if (await devWorkspaceLink.isVisible({ timeout: 3000 }).catch(() => false)) {
     await devWorkspaceLink.click()
+  } else {
+    const toolkitBtn = page.locator('[data-nav-id="aicall"]').first()
+    if (await toolkitBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      await toolkitBtn.click()
+      await page.waitForTimeout(300)
+      const devWs = page.locator('[data-nav-id="devWorkspace"]').first()
+      if (await devWs.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await devWs.click()
+      }
+    }
   }
   await page.waitForTimeout(500)
 }
