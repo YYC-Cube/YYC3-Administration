@@ -2,9 +2,12 @@
 
 import { useState } from 'react'
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from './dialog'
+import { DEFAULT_SHORTCUTS, formatCombo } from '../hooks/use-global-shortcuts'
+
 import { Button } from './button'
-import { type ShortcutDef, formatCombo, DEFAULT_SHORTCUTS } from '../hooks/use-global-shortcuts'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './dialog'
+
+import type { ShortcutDef } from '../hooks/use-global-shortcuts'
 
 interface ShortcutsPanelProps {
   shortcuts?: Omit<ShortcutDef, 'handler'>[]

@@ -204,7 +204,6 @@ describe('useChatSession — Persistence', () => {
       result.current.addMessage(makeMessage({ content: 'Persist test' }))
     })
 
-    const key = 'yyc3_chat_sessions'
     unmount()
 
     // Re-mount and check data persists

@@ -53,7 +53,7 @@ export const NeonCard = memo(function NeonCard({
 }: NeonCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [revealed, setRevealed] = useState(noReveal)
-  const { theme } = useThemeSwitcher()
+  useThemeSwitcher()
   const tc = useThemeColors()
   const isLiquid = tc.isLiquidGlass
   const effectiveColor = getThemeNavColor(color, tc.isCyberpunk)

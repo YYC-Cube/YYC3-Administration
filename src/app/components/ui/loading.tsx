@@ -2,8 +2,9 @@
 
 import * as React from 'react'
 
-import { cn } from './utils'
 import { useThemeColors } from '../hooks/use-theme-colors'
+
+import { cn } from './utils'
 
 interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md' | 'lg'
@@ -65,11 +66,7 @@ export function Loading({
           animation: 'spin 1s linear infinite',
         }}
       />
-      {label && (
-        <span className={cn('text-muted-foreground', labelSizes[size])}>
-          {label}
-        </span>
-      )}
+      {label && <span className={cn('text-muted-foreground', labelSizes[size])}>{label}</span>}
     </div>
   )
 }
@@ -85,10 +82,5 @@ export function Loading({
  * ```
  */
 export function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn('animate-pulse rounded-md bg-muted/30', className)}
-      {...props}
-    />
-  )
+  return <div className={cn('animate-pulse rounded-md bg-muted/30', className)} {...props} />
 }

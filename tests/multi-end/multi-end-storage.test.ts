@@ -10,6 +10,8 @@ import { beforeAll, describe, expect, it, vi } from 'vitest'
 
 import { OfflineStorage } from '../../src/multi-end/storage'
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // ==========================================
 // Simple indexedDB mock that captures calls
 // ==========================================

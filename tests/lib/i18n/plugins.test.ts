@@ -112,7 +112,7 @@ describe('PluginManager — System Hooks', () => {
     const handler = vi.fn()
     mgr.register({ name: 'locale-watcher', onLocaleChange: handler })
 
-    mgr.notifyLocaleChange('zh-CN' as any, 'en' as any)
+    mgr.notifyLocaleChange('zh-CN', 'en')
     expect(handler).toHaveBeenCalledWith('zh-CN', 'en')
   })
 
@@ -122,8 +122,8 @@ describe('PluginManager — System Hooks', () => {
     mgr.register({ name: 'error-handler', onError: handler })
 
     const error = new Error('test error')
-    const ctx = { locale: 'en' as any, key: 'test' }
-    mgr.handleError(error, ctx as I18nContext)
+    const ctx: I18nContext = { locale: 'en', key: 'test' }
+    mgr.handleError(error, ctx)
     expect(handler).toHaveBeenCalledWith(error, ctx)
   })
 
@@ -134,7 +134,7 @@ describe('PluginManager — System Hooks', () => {
       onMissingKey: (key: string) => `FALLBACK:${key}`,
     })
 
-    const result = mgr.handleMissingKey('missing.key', 'en' as any)
+    const result = mgr.handleMissingKey('missing.key', 'en')
     expect(result).toBe('FALLBACK:missing.key')
   })
 })
@@ -146,7 +146,7 @@ describe('PluginManager — Lifecycle', () => {
     mgr.register({ name: 'p1', init: initFn })
     mgr.register({ name: 'p2', init: initFn })
 
-    await mgr.initAll({ locale: 'en' as any, key: '' })
+    await mgr.initAll({ locale: 'en', key: '' })
     expect(initFn).toHaveBeenCalledTimes(2)
   })
 

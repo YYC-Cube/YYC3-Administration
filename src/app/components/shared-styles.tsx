@@ -142,6 +142,7 @@ export function ContentCard({ title, children, color = '#00f0ff' }: ContentCardP
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const TYPOGRAPHY = {
   heading1: 'text-xl font-bold',
   heading2: 'text-lg font-semibold',
@@ -152,6 +153,7 @@ export const TYPOGRAPHY = {
   value: 'text-lg tabular-nums',
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const COLORS = {
   primary: '#00f0ff',
   secondary: '#00d4ff',

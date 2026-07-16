@@ -350,7 +350,7 @@ export function ChannelCenterPage() {
                     {channel.status === 'disconnected' && (
                       <button
                         className="w-full px-3 py-2 rounded-lg text-[10px] transition-all"
-                        onClick={() => console.log(`配置渠道: ${channel.name}`)}
+                        onClick={() => console.warn(`配置渠道: ${channel.name}`)}
                         style={{
                           background: tc.alpha(tc.primary, 0.1),
                           border: `1px solid ${tc.alpha(tc.primary, 0.2)}`,
@@ -433,7 +433,7 @@ export function ChannelCenterPage() {
                     </span>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
-                      onClick={() => console.log(`配置渠道: ${channel.name}`)}
+                      onClick={() => console.warn(`配置渠道: ${channel.name}`)}
                       style={{
                         background: tc.alpha(tc.secondary, 0.1),
                         border: `1px solid ${tc.alpha(tc.secondary, 0.2)}`,
@@ -444,7 +444,7 @@ export function ChannelCenterPage() {
                     </button>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
-                      onClick={() => console.log(`测试连接: ${channel.name}`)}
+                      onClick={() => console.warn(`测试连接: ${channel.name}`)}
                       style={{
                         background: tc.alpha(tc.accent, 0.1),
                         border: `1px solid ${tc.alpha(tc.accent, 0.2)}`,

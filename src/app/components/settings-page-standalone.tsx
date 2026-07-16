@@ -245,7 +245,7 @@ export function SettingsPage() {
     } catch {
       toast.error(t('stg.exportFailed'), { description: t('stg.exportFailedDesc') })
     }
-  }, [theme, language])
+  }, [theme, language, t])
 
   const handleImport = useCallback(() => {
     const input = document.createElement('input')
@@ -278,7 +278,7 @@ export function SettingsPage() {
       reader.readAsText(file)
     }
     input.click()
-  }, [setTheme, setLanguage])
+  }, [setTheme, setLanguage, t])
 
   const handleReset = useCallback(() => {
     toast(t('stg.resetConfirmToast'), {
@@ -296,7 +296,7 @@ export function SettingsPage() {
         onClick: () => toast(t('stg.cancelled')),
       },
     })
-  }, [setTheme, setLanguage])
+  }, [setTheme, setLanguage, t])
 
   // ── General Settings Panel ──
 

@@ -23,8 +23,8 @@ import { useI18n } from './i18n-context'
 import { NeonCard } from './neon-card'
 import { useThemeSwitcher } from './theme-switcher-context'
 
-import type { ReactNode } from 'react'
 import type { ThemeConfig } from './app-context'
+import type { ReactNode } from 'react'
 
 // ==========================================
 // YYC³ 主题配置面板 — Theme Config Panel
