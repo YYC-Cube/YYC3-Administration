@@ -10,17 +10,53 @@
 
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
-import { I18nProvider } from '../../src/app/components/i18n-context'
 import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
 
 import type { ReactNode } from 'react'
 
+// In-memory "translations" for tests. The real zh.ts stg.* keys are unfilled (key = value),
+// so we provide a proper dict so tests can assert against expected Chinese text.
+const MOCK_MESSAGES: Record<string, string> = {
+  'stg.systemSettings': '系统设置',
+  'stg.pageDesc': '系统设置与个性化配置',
+  'stg.searchPlaceholder': '搜索设置...',
+  'stg.cat.general': '通用设置',
+  'stg.cat.generalDesc': '通用设置描述',
+  'stg.cat.account': '账号信息',
+  'stg.cat.accountDesc': '账号信息描述',
+  'stg.cat.agents': '智能体管理',
+  'stg.cat.agentsDesc': '智能体管理描述',
+  'stg.cat.models': '模型配置',
+  'stg.cat.modelsDesc': '模型配置描述',
+  'stg.exportConfig': '导出配置',
+  'stg.importConfig': '导入配置',
+  'stg.resetSettings': '重置设置',
+  'stg.themeCyb': 'Cyberpunk',
+  'stg.themeLq': 'Liquid Glass',
+  'stg.themeDesc': '选择主题风格',
+  'stg.cyberpunkDesc': '赛博朋克风格',
+  'stg.liquidGlassDesc': '液态玻璃风格',
+  'stg.langZh': '简体中文',
+}
+
+// Mock the i18n-context module so the component tree gets resolved Chinese text.
+vi.mock('../../src/app/components/i18n-context', () => ({
+  I18nProvider: ({ children }: { children: ReactNode }) => <>{children}</>,
+  useI18n: () => ({
+    t: (key: string) => MOCK_MESSAGES[key] ?? key,
+    locale: 'zh',
+    setLocale: vi.fn(),
+    isZh: true,
+    isEn: false,
+    flags: {},
+    labels: {},
+  }),
+}))
+
 const TestWrapper = ({ children }: { children: ReactNode }) => (
-  <ThemeSwitcherProvider defaultTheme="cyberpunk">
-    <I18nProvider>{children}</I18nProvider>
-  </ThemeSwitcherProvider>
+  <ThemeSwitcherProvider defaultTheme="cyberpunk">{children}</ThemeSwitcherProvider>
 )
 
 describe('SettingsPage — Navigation Sidebar', () => {
