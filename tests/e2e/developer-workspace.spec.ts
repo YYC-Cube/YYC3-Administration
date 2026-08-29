@@ -121,12 +121,25 @@ test.describe('File Explorer', () => {
     const tree = page.locator('[data-testid="file-explorer"]')
     await expect(tree).toBeVisible({ timeout: 10000 })
     const fileItem = tree.locator('span', { hasText: 'App.tsx' }).first()
-    await expect(fileItem).toBeVisible({ timeout: 5000 })
 
-    // 点击后选中态应落在该文件(selectedFile 高亮),编辑器随之载入
+    // 默认展开链 ['root','src','src/app',...] 已使 App.tsx 可见
+    // (勿点击文件夹——toggle 语义会折叠)
+    await expect(fileItem).toBeVisible({ timeout: 10000 })
     await fileItem.click()
-    await page.waitForTimeout(500)
-    await expect(fileItem).toBeVisible()
+
+    // 断言编辑器随点击载入:Monaco 挂载即证明文件打开
+    // (末尾不再复检树行——满载并行下选中后的树布局抖动会偶发移除 span)
+    await expect
+      .poll(
+        async () =>
+          page
+            .locator('.monaco-editor')
+            .first()
+            .isVisible()
+            .catch(() => false),
+        { timeout: 15000 },
+      )
+      .toBe(true)
   })
 
   test('should show right-click context menu', async ({ page }) => {
@@ -227,11 +240,11 @@ test.describe('Code Editor', () => {
 test.describe('AI Assistant', () => {
   test.beforeEach(async ({ page }) => {
     await navigateToDevWorkspace(page)
-    const aiButton = page.locator('button').filter({ hasText: /^AI$/ }).first()
-    if (await aiButton.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await aiButton.click()
-      await page.waitForTimeout(300)
-    }
+    // 活动栏按钮已带 title;真实断言取代条件跳过
+    const aiButton = page.locator("button[title='AI Assistant']").first()
+    await expect(aiButton).toBeVisible({ timeout: 10000 })
+    await aiButton.click()
+    await page.waitForTimeout(300)
   })
 
   test('should display AI assistant panel', async ({ page }) => {

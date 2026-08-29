@@ -62,6 +62,8 @@ export default defineConfig({
       workbox: {
         // Clean up old precaches on new SW activation
         cleanupOutdatedCaches: true,
+        // vendor-monaco(~4MB,懒加载)超出默认 2MiB 预缓存上限
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
         runtimeCaching: [
           {
@@ -107,6 +109,10 @@ export default defineConfig({
       'recharts',
       'lucide-react',
       'motion/react',
+      // 预打包避免 dev server 运行中发现新依赖触发整页 reload
+      // (并行 E2E 下该 reload 会随机打断用例——monaco 为懒加载首用)
+      'monaco-editor/esm/vs/editor/editor.api',
+      'monaco-editor/esm/vs/basic-languages/_.contribution',
     ],
     force: true,
   },
@@ -124,6 +130,11 @@ export default defineConfig({
         // 因此仅拆"叶子型"大库,不拆共享框架代码。
         manualChunks(id: string) {
           if (!id.includes('node_modules')) return undefined
+          if (id.includes('monaco-editor')) {
+            // 编辑器核心 ~4MB:独立懒加载 chunk(code-editor 为 React.lazy),
+            // 不进首屏 vendor;SW 预缓存需放宽单文件上限(见 workbox)
+            return 'vendor-monaco'
+          }
           if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) {
             return 'vendor-react'
           }

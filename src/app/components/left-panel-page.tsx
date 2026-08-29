@@ -547,6 +547,7 @@ export function LeftPanelPage() {
             return (
               <motion.button
                 key={tab.type}
+                title={tab.label}
                 onClick={() => {
                   if (isActive && !panelCollapsed) toggleCollapsed()
                   else {
