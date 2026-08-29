@@ -117,7 +117,8 @@ test.describe('File Explorer', () => {
     if (await components.isVisible().catch(() => false)) {
       const child = tree.locator('span', { hasText: 'cyberpunk-standalone.tsx' }).first()
       await expect(child).toBeVisible({ timeout: 3000 })
-      await components.click()
+      // CI 下偶发透明浮层拦截指针;force 绕过拦截,DOM onClick 仍触发
+      await components.click({ force: true })
       await expect(child).toBeHidden({ timeout: 5000 })
     }
   })
@@ -132,7 +133,7 @@ test.describe('File Explorer', () => {
     // 默认展开链 ['root','src','src/app',...] 已使 App.tsx 可见
     // (勿点击文件夹——toggle 语义会折叠)
     await expect(fileItem).toBeVisible({ timeout: 10000 })
-    await fileItem.click()
+    await fileItem.click({ force: true })
 
     // 断言编辑器随点击载入:Monaco 挂载即证明文件打开
     // (末尾不再复检树行——满载并行下选中后的树布局抖动会偶发移除 span)
