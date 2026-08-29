@@ -46,8 +46,11 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
+import type { NavGroup, NavItem } from '@/app/components/cyberpunk-nav'
+
 import { type PageId, useApp, useRealtimeSimulation } from '@/app/components/app-context'
 import { CommandPalette, useCommandPalette } from '@/app/components/command-palette'
+import { navGroups, navItems, sidebarPersonal } from '@/app/components/cyberpunk-nav'
 import { DataExportModal } from '@/app/components/data-export-modal'
 import { ErrorBoundary } from '@/app/components/error-boundary'
 import { useI18n } from '@/app/components/i18n-context'
@@ -57,119 +60,18 @@ import { NotificationDrawer } from '@/app/components/notification-drawer'
 import { OnboardingTutorial } from '@/app/components/onboarding-tutorial'
 import { PageTransition } from '@/app/components/page-transition'
 import { ParticleCanvas } from '@/app/components/particle-canvas'
+import { ChatPage, FormsTabPage } from '@/app/components/shell-pages'
 import { ThemeSwitcherButtonCompact } from '@/app/components/theme-switcher-button'
-import { ChatInterface } from '@/features/conversation/pages/chat-interface'
 import { DashboardPage } from '@/features/overview/pages/dashboard-page'
 import { ProfilePage } from '@/features/platform/pages/profile-page'
 import { ModelSettings } from '@/features/settings/model-settings/model-settings'
 import { SettingsPage } from '@/features/settings/pages/settings-page-standalone'
-import { FormHistory } from '@/features/supply-chain/pages/form-history'
-import { FormTemplateBuilder } from '@/features/supply-chain/pages/form-template-builder'
-import { SmartFormPage } from '@/features/supply-chain/pages/smart-form-system'
 import { ApiDocs } from '@/features/toolkit/pages/api-docs'
 import { MobileBottomNav } from '@/multi-end'
 import { getThemeNavColor, useThemeColors } from '@/shared/hooks/use-theme-colors'
 import { useAIModel } from '@/stores/useAIModelStore'
 
 // --- Nav item type ---
-interface NavItem {
-  id: PageId
-  labelKey: string
-  icon: typeof LayoutDashboard
-  color: string
-  badge?: number
-}
-interface NavGroup {
-  groupKey: string
-  labelKey: string
-  items: NavItem[]
-}
-
-// Core features (flat — always visible)
-const coreNavItems: NavItem[] = [
-  { id: 'dashboard', labelKey: 'nav.dashboard', icon: LayoutDashboard, color: '#00f0ff' },
-  { id: 'chat', labelKey: 'nav.chat', icon: MessageCircle, color: '#00f0ff' },
-  { id: 'clm', labelKey: 'nav.clm', icon: Users, color: '#00d4ff', badge: 5 },
-  { id: 'aicall', labelKey: 'nav.aicall', icon: Phone, color: '#00ffcc', badge: 3 },
-  { id: 'customerCare', labelKey: 'nav.customerCare', icon: Heart, color: '#00d4ff', badge: 8 },
-  { id: 'contacts', labelKey: 'nav.contacts', icon: Database, color: '#00ffc8', badge: 10 },
-  { id: 'forms', labelKey: 'nav.forms', icon: ClipboardList, color: '#41ffdd' },
-  { id: 'tools', labelKey: 'nav.tools', icon: Wrench, color: '#00ffc8' },
-  { id: 'workflow', labelKey: 'nav.workflow', icon: GitBranch, color: '#41ffdd' },
-  { id: 'logs', labelKey: 'nav.logs', icon: ScrollText, color: '#00ffc8' },
-  { id: 'collab', labelKey: 'nav.collab', icon: Layers, color: '#00ffcc' },
-  { id: 'insights', labelKey: 'nav.insights', icon: BarChart3, color: '#00f0ff' },
-  { id: 'quickActions', labelKey: 'nav.quickActions', icon: Zap, color: '#f97316' },
-  { id: 'taskBoard', labelKey: 'nav.taskBoard', icon: Target, color: '#22c55e' },
-  { id: 'devWorkspace', labelKey: 'nav.devWorkspace', icon: Code, color: '#3b82f6' },
-]
-
-// Collapsible nav groups
-const navGroups: NavGroup[] = [
-  {
-    groupKey: 'platformIntegration',
-    labelKey: 'nav.group.platformIntegration',
-    items: [
-      { id: 'paramSettings', labelKey: 'nav.paramSettings', icon: Settings, color: '#8b5cf6' },
-      { id: 'platformSettings', labelKey: 'nav.platformSettings', icon: Server, color: '#3b82f6' },
-      { id: 'wechatConfig', labelKey: 'nav.wechatConfig', icon: MessageSquare, color: '#22c55e' },
-      { id: 'channelCenter', labelKey: 'nav.channelCenter', icon: Radio, color: '#f97316' },
-      { id: 'dataIntegration', labelKey: 'nav.dataIntegration', icon: Database, color: '#06b6d4' },
-    ],
-  },
-  {
-    groupKey: 'aiMarketing',
-    labelKey: 'nav.group.aiMarketing',
-    items: [
-      { id: 'appOverview', labelKey: 'nav.appOverview', icon: LayoutDashboard, color: '#00f0ff' },
-      { id: 'marketingPlan', labelKey: 'nav.marketingPlan', icon: Megaphone, color: '#8b5cf6' },
-      { id: 'promotionExec', labelKey: 'nav.promotionExec', icon: PlayCircle, color: '#22c55e' },
-      {
-        id: 'marketingAnalytics',
-        labelKey: 'nav.marketingAnalytics',
-        icon: BarChart3,
-        color: '#3b82f6',
-      },
-      { id: 'marketingAssets', labelKey: 'nav.marketingAssets', icon: Image, color: '#ec4899' },
-      {
-        id: 'customerAcquisition',
-        labelKey: 'nav.customerAcquisition',
-        icon: UserPlus,
-        color: '#22c55e',
-      },
-      { id: 'brandMgmt', labelKey: 'nav.brandMgmt', icon: Award, color: '#eab308' },
-      { id: 'aiCreativeTools', labelKey: 'nav.aiCreativeTools', icon: PenTool, color: '#8b5cf6' },
-      {
-        id: 'aiMarketingEngine',
-        labelKey: 'nav.aiMarketingEngine',
-        icon: Rocket,
-        color: '#f97316',
-      },
-      { id: 'aiDecisionSupport', labelKey: 'nav.aiDecisionSupport', icon: Brain, color: '#a855f7' },
-      { id: 'nlpProcessing', labelKey: 'nav.nlpProcessing', icon: Languages, color: '#14b8a6' },
-      { id: 'platformHub', labelKey: 'nav.platformHub', icon: Link, color: '#06b6d4' },
-      { id: 'intelligentOps', labelKey: 'nav.intelligentOps', icon: Wrench, color: '#ef4444' },
-    ],
-  },
-]
-
-// Flat list of all nav items for top bar (core only) and lookups
-const navItems = coreNavItems
-
-const sidebarPersonal = [
-  { id: 'history', labelKey: 'nav.history', icon: History, color: '#00f0ff' },
-  { id: 'favorites', labelKey: 'nav.favorites', icon: Star, color: '#00ffcc' },
-  { id: 'profile', labelKey: 'nav.profile', icon: UserCircle, color: '#00d4ff' },
-]
-
-/**
- * Full-screen standalone cyberpunk terminal layout.
- * Renders the complete application shell: top header bar, proximity-sensing
- * sidebar navigation, page content area with transitions, and status footer.
- * Integrates realtime simulation, keyboard shortcuts, and responsive mobile drawer.
- *
- * @param onSwitchMode - Callback to switch to widget (floating panel) mode.
- */
 export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void }) {
   const {
     activePage,
@@ -1138,11 +1040,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                 <FormsTabPage />
               </ErrorBoundary>
             )}
-            {activePage === 'smartForm' && (
-              <ErrorBoundary name="SmartForm">
-                <SmartFormPage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'smartForm' && renderLazyPage('smartForm')}
             {activePage === 'tools' && renderLazyPage('tools')}
             {activePage === 'workflow' && renderLazyPage('workflow')}
             {activePage === 'logs' && renderLazyPage('logs')}
@@ -1273,42 +1171,3 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
 }
 
 // === Inline Page Components ===
-
-function ChatPage() {
-  return (
-    <div className="h-full flex flex-col">
-      <ChatInterface />
-    </div>
-  )
-}
-
-function FormsTabPage() {
-  const [formTab, setFormTab] = useState<'builder' | 'history' | 'smart'>('builder')
-  const { t } = useI18n()
-  const tc = useThemeColors()
-  return (
-    <div className="h-full flex flex-col">
-      <div className="flex gap-2 px-6 pt-4">
-        {(['builder', 'history', 'smart'] as const).map((id) => (
-          <button
-            key={id}
-            onClick={() => setFormTab(id)}
-            className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
-            style={{
-              background: formTab === id ? tc.alpha(tc.primary, 0.15) : 'transparent',
-              color: formTab === id ? tc.primary : tc.muted,
-              border: `1px solid ${formTab === id ? tc.primary : 'transparent'}`,
-            }}
-          >
-            {t(`forms.tab.${id}`)}
-          </button>
-        ))}
-      </div>
-      <div className="flex-1 overflow-auto p-6">
-        {formTab === 'builder' && <FormTemplateBuilder />}
-        {formTab === 'history' && <FormHistory />}
-        {formTab === 'smart' && <SmartFormPage />}
-      </div>
-    </div>
-  )
-}

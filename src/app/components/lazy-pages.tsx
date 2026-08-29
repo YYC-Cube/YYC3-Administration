@@ -39,6 +39,12 @@ function PageLoadingFallback() {
 // Core pages — eagerly loaded (imported directly in cyberpunk-standalone.tsx)
 // Non-core pages — lazy loaded below
 
+const LazySmartFormPage = lazy(() =>
+  import('@/features/supply-chain/pages/smart-form-system').then((m) => ({
+    default: m.SmartFormPage,
+  })),
+)
+
 const LazyCLMPage = lazy(() =>
   import('@/features/customer/pages/clm-page').then((m) => ({ default: m.CLMPage })),
 )
@@ -208,6 +214,7 @@ interface LazyPageEntry {
 /** Map of page IDs to their lazy-loaded components */
 const lazyPageRegistry: Partial<Record<PageId, LazyPageEntry>> = {
   clm: { component: LazyCLMPage, name: 'CLM' },
+  smartForm: { component: LazySmartFormPage, name: 'Smart Form' },
   aicall: { component: LazyAICallPage, name: 'AI Call' },
   customerCare: { component: LazyCustomerCarePage, name: 'Customer Care' },
   contacts: { component: LazyNumberDatabasePage, name: 'Contacts' },
