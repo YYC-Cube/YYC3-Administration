@@ -14,7 +14,7 @@ import {
   validateField,
 } from '@/features/supply-chain/pages/smart-form-data'
 
-const field = (over: Partial<FieldDef>): FieldDef => ({
+const field = (over: Partial<FieldDef> = {}): FieldDef => ({
   id: 'f1',
   type: 'text',
   label: '字段',
@@ -51,8 +51,8 @@ describe('validateField — 校验矩阵', () => {
   })
 
   it('数组空值视为未填(required)', () => {
-    expect(validateField(field({ required: true, type: 'multiSelect' }), [])).toBeTruthy()
-    expect(validateField(field({ required: true, type: 'multiSelect' }), ['a'])).toBeNull()
+    expect(validateField(field({ required: true, type: 'select' }), [])).toBeTruthy()
+    expect(validateField(field({ required: true, type: 'select' }), ['a'])).toBeNull()
   })
 })
 
