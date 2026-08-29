@@ -1,7 +1,6 @@
+import { t } from '@yyc3/i18n-core/browser'
 import { AlertCircle, RefreshCw } from 'lucide-react'
 import { Component, type ReactNode } from 'react'
-
-import { t } from '@/lib/i18n/translate'
 
 interface ErrorBoundaryProps {
   children: ReactNode
