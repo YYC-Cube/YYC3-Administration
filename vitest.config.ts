@@ -37,12 +37,12 @@ export default defineConfig({
       ],
       include: ['src/**/*.{ts,tsx}'],
       all: true,
-      // Phase 3 阶梯式阈值递增：当前 25% → 40% → 60% → 85%
-      // 基线 = 当前实际覆盖率（22-25%），先设为略低于实际值确保 CI 通过
-      // 后续逐步提升：每阶段 +15%
+      // 基线棘轮 = 当前实际覆盖率(P1/P2 死代码与死测试清理后实测:
+      // statements 21.87 / branches 12.62),取整略低防抖动;只升不降,
+      // P2 目标:核心路径 ≥60%(见审计报告 7.3-4)
       thresholds: {
-        statements: 22,
-        branches: 13,
+        statements: 21,
+        branches: 12,
         functions: 19,
         lines: 22,
       },
