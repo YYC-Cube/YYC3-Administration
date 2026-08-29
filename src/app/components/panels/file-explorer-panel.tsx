@@ -215,7 +215,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
   )
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-testid="file-explorer">
       <div
         className="flex items-center justify-between px-3 py-2 border-b"
         style={{ borderColor: tc.borderSubtle }}

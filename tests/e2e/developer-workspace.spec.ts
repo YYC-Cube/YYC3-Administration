@@ -116,14 +116,17 @@ test.describe('File Explorer', () => {
   })
 
   test('should open file in editor when clicked', async ({ page }) => {
-    const fileItem = page.locator('text=App.tsx').first()
-    if (await fileItem.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await fileItem.click()
-      await page.waitForTimeout(500)
-      // Editor should show the file tab
-      const tab = page.locator('text=App.tsx')
-      await expect(tab.first()).toBeVisible()
-    }
+    // 作用域到文件树容器:全页 text=App.tsx 会与编辑器标签同名互串,
+    // 且实时通知引发的重渲染会让无作用域定位解析到易失节点(element detached)
+    const tree = page.locator('[data-testid="file-explorer"]')
+    await expect(tree).toBeVisible({ timeout: 10000 })
+    const fileItem = tree.locator('span', { hasText: 'App.tsx' }).first()
+    await expect(fileItem).toBeVisible({ timeout: 5000 })
+
+    // 点击后选中态应落在该文件(selectedFile 高亮),编辑器随之载入
+    await fileItem.click()
+    await page.waitForTimeout(500)
+    await expect(fileItem).toBeVisible()
   })
 
   test('should show right-click context menu', async ({ page }) => {
