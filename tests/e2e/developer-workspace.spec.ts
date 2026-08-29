@@ -108,10 +108,17 @@ test.describe('File Explorer', () => {
   })
 
   test('should expand folder on click', async ({ page }) => {
-    const folderItem = page.locator('text=src').first()
-    if (await folderItem.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await folderItem.click()
-      await page.waitForTimeout(200)
+    // 作用域到文件树容器(全页 text=src 会命中 Git/状态栏等同名文本)
+    const tree = page.locator('[data-testid="file-explorer"]')
+    await expect(tree).toBeVisible({ timeout: 10000 })
+    const components = tree.locator('span', { hasText: /^components$/ }).first()
+    // 默认展开链已含 src/app/components;点击 components 触发 toggle(折叠),
+    // 子项应从 DOM 移除——展开/折叠共用同一代码路径,单次断言即覆盖语义
+    if (await components.isVisible().catch(() => false)) {
+      const child = tree.locator('span', { hasText: 'cyberpunk-standalone.tsx' }).first()
+      await expect(child).toBeVisible({ timeout: 3000 })
+      await components.click()
+      await expect(child).toBeHidden({ timeout: 5000 })
     }
   })
 
