@@ -295,7 +295,7 @@ function FileBreadcrumb({
 export function LeftPanelPage() {
   const tc = useThemeColors()
   const { t, locale } = useI18n()
-  const { settings } = useSettingsStore()
+  const settings = useSettingsStore((s) => s.settings)
   const {
     activePanel,
     setActivePanel,

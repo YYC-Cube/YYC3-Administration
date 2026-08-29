@@ -14,7 +14,6 @@ import { Toaster } from './components/ui'
 import { APP_VERSION } from './version'
 
 // Preload all components to prevent dynamic import errors
-import './components/preload-fix'
 
 // Version management
 if (typeof window !== 'undefined') {

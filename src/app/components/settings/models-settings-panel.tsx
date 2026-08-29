@@ -19,7 +19,7 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 
 export function ModelsSettingsPanel() {
   const tc = useThemeColors()
-  const { settings } = useSettingsStore()
+  const settings = useSettingsStore((s) => s.settings)
 
   return (
     <div className="space-y-6">

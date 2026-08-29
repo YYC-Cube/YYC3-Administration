@@ -114,16 +114,34 @@ export default defineConfig({
   build: {
     // Add cache busting
     manifest: true,
-    chunkSizeWarningLimit: 1000,
+    // 回落至接近默认值——P1 代码分割后大 chunk 应当重新告警
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
-        // Single vendor chunk — avoids circular dependency issues caused by
-        // fine-grained manualChunks splitting (vendor-other ↔ vendor-react cycle).
-        // Rollup automatically resolves import order within a single chunk.
+        // 分组 vendor:页面级分割由 React.lazy 自动完成,此处仅将
+        // 独立大件拆出以利并行加载与长期缓存(库版本不变则缓存命中)。
+        // 注意:细粒度 manualChunks 曾引发 chunk 循环初始化问题,
+        // 因此仅拆"叶子型"大库,不拆共享框架代码。
         manualChunks(id: string) {
-          if (id.includes('node_modules')) {
-            return 'vendor'
+          if (!id.includes('node_modules')) return undefined
+          if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) {
+            return 'vendor-react'
           }
+          if (id.includes('recharts') || id.includes('d3-') || id.includes('victory-vendor')) {
+            return 'vendor-charts'
+          }
+          if (
+            id.includes('highlight.js') ||
+            id.includes('react-markdown') ||
+            id.includes('remark') ||
+            id.includes('rehype') ||
+            id.includes('unified') ||
+            id.includes('micromark') ||
+            id.includes('mdast')
+          ) {
+            return 'vendor-markdown'
+          }
+          return 'vendor'
         },
         // Add hash to filenames for cache busting
         entryFileNames: 'assets/[name].[hash].js',

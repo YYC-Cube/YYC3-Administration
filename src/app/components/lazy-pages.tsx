@@ -47,9 +47,6 @@ const LazyCustomerCarePage = lazy(() =>
 const LazyNumberDatabasePage = lazy(() =>
   import('./number-database').then((m) => ({ default: m.NumberDatabasePage })),
 )
-const LazyFormsTabPage = lazy(() =>
-  import('./smart-form-system').then((m) => ({ default: m.SmartFormPage })),
-)
 const LazyAIToolsPage = lazy(() =>
   import('./ai-tools-page').then((m) => ({ default: m.AIToolsPage })),
 )
@@ -158,7 +155,6 @@ const lazyPageRegistry: Partial<Record<PageId, LazyPageEntry>> = {
   aicall: { component: LazyAICallPage, name: 'AI Call' },
   customerCare: { component: LazyCustomerCarePage, name: 'Customer Care' },
   contacts: { component: LazyNumberDatabasePage, name: 'Contacts' },
-  forms: { component: LazyFormsTabPage, name: 'Forms' },
   tools: { component: LazyAIToolsPage, name: 'AI Tools' },
   workflow: { component: LazyWorkflowPage, name: 'Workflow' },
   logs: { component: LazyActivityLogPage, name: 'Activity Log' },

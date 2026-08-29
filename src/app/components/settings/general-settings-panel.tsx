@@ -28,7 +28,8 @@ export function GeneralSettingsPanel() {
   const tc = useThemeColors()
   const { theme, setTheme } = useThemeSwitcher()
   const { locale: language, setLocale: setLanguage } = useI18n()
-  const { settings, updateGeneralSettings } = useSettingsStore()
+  const settings = useSettingsStore((s) => s.settings)
+  const updateGeneralSettings = useSettingsStore((s) => s.updateGeneralSettings)
   const { general } = settings
 
   return (

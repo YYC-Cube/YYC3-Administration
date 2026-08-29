@@ -24,7 +24,8 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 
 export function AccountSettingsPanel() {
   const tc = useThemeColors()
-  const { settings, updateUserProfile } = useSettingsStore()
+  const settings = useSettingsStore((s) => s.settings)
+  const updateUserProfile = useSettingsStore((s) => s.updateUserProfile)
   const { userProfile } = settings
 
   const [isUploading, setIsUploading] = useState(false)

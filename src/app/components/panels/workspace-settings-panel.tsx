@@ -27,7 +27,8 @@ import type { ThemeColors } from '../hooks/use-theme-colors'
 type SettingsSection = 'editor' | 'theme' | 'keybindings' | 'ai' | 'workspace'
 
 export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
-  const { settings, updateGeneralSettings } = useSettingsStore()
+  const settings = useSettingsStore((s) => s.settings)
+  const updateGeneralSettings = useSettingsStore((s) => s.updateGeneralSettings)
   const { theme, setTheme } = useThemeSwitcher()
   const { locale, setLocale } = useI18n()
   const {

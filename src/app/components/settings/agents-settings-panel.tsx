@@ -25,7 +25,7 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 
 export function AgentsSettingsPanel() {
   const tc = useThemeColors()
-  const { settings } = useSettingsStore()
+  const settings = useSettingsStore((s) => s.settings)
   const { agents } = settings
 
   const [_isCreating, _setIsCreating] = useState(false)

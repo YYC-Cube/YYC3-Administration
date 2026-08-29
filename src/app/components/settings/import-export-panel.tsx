@@ -19,7 +19,8 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 
 export function ImportExportPanel() {
   const tc = useThemeColors()
-  const { exportConfig, importConfig } = useSettingsStore()
+  const exportConfig = useSettingsStore((s) => s.exportConfig)
+  const importConfig = useSettingsStore((s) => s.importConfig)
 
   const handleExport = () => {
     const config = exportConfig()

@@ -46,62 +46,29 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { ActivityLogPage } from './activity-log'
-import { AICallPage } from './ai-call-page'
 import { useAIModel } from './ai-model-context'
-import { AIToolsPage } from './ai-tools-page'
 import { ApiDocs } from './api-docs'
 import { type PageId, useApp, useRealtimeSimulation } from './app-context'
-import { AppOverviewPage } from './app-overview-page'
-import { BrandManagementPage } from './brand-management-page'
-import { CampaignExecutionPage } from './campaign-execution-page'
-import { ChannelCenterPage } from './channel-center-page'
 import { ChatInterface } from './chat-interface'
-import { CLMPage } from './clm-page'
-import { CollabCreationPage } from './collab-creation-page'
 import { CommandPalette, useCommandPalette } from './command-palette'
-import { CustomerAcquisitionPage } from './customer-acquisition-page'
-import { CustomerCarePage } from './customer-care-page'
 import { DashboardPage } from './dashboard-page'
 import { DataExportModal } from './data-export-modal'
-import { DataIntegrationPage } from './data-integration-page'
-import { DecisionSupportPage } from './decision-support-page'
 import { ErrorBoundary } from './error-boundary'
-import { FinancePage } from './finance-page'
 import { FormHistory } from './form-history'
 import { FormTemplateBuilder } from './form-template-builder'
 import { getThemeNavColor, useThemeColors } from './hooks/use-theme-colors'
 import { useI18n } from './i18n-context'
-import { InsightsEnhancedPage } from './insights-enhanced'
-import { InventoryPage } from './inventory-page'
-import { LeftPanelPage } from './left-panel-page'
-import { MarketingAnalyticsPage } from './marketing-analytics-page'
-import { MarketingAssetsPage } from './marketing-assets-page'
-import { MarketingStrategyPage } from './marketing-strategy-page'
+import { renderLazyPage } from './lazy-pages'
 import { ModelSettings } from './model-settings'
 import { findCategoryByPageId, NAV_CATEGORIES } from './nav-config'
-import { NLPProcessingPage } from './nlp-processing-page'
 import { NotificationDrawer } from './notification-drawer'
-import { NumberDatabasePage } from './number-database'
 import { OnboardingTutorial } from './onboarding-tutorial'
 import { PageTransition } from './page-transition'
-import { ParameterSettingsPage } from './parameter-settings-page'
 import { ParticleCanvas } from './particle-canvas'
-import { PlatformIntegrationPage } from './platform-integration-page'
-import { PlatformSettingsPage } from './platform-settings-page'
-import { ProcurementPage } from './procurement-page'
 import { ProfilePage } from './profile-page'
-import { QuickActionsPage } from './quick-actions-page'
-import { SalaryPage } from './salary-page'
 import { SettingsPage } from './settings-page-standalone'
-import { SmartCreationPage } from './smart-creation-page'
 import { SmartFormPage } from './smart-form-system'
-import { SmartMarketingEnginePage } from './smart-marketing-engine-page'
-import { SmartOperationsPage } from './smart-operations-page'
-import { TaskBoardPage } from './task-board-page'
 import { ThemeSwitcherButtonCompact } from './theme-switcher-button'
-import { WechatConfigPage } from './wechat-config-page'
-import { WorkflowPage } from './workflow-page'
 
 import { MobileBottomNav } from '@/multi-end'
 
@@ -1163,26 +1130,10 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                 <ChatPage />
               </ErrorBoundary>
             )}
-            {activePage === 'clm' && (
-              <ErrorBoundary name="Clm">
-                <CLMPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'aicall' && (
-              <ErrorBoundary name="Aicall">
-                <AICallPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'customerCare' && (
-              <ErrorBoundary name="CustomerCare">
-                <CustomerCarePage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'contacts' && (
-              <ErrorBoundary name="Contacts">
-                <NumberDatabasePage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'clm' && renderLazyPage('clm')}
+            {activePage === 'aicall' && renderLazyPage('aicall')}
+            {activePage === 'customerCare' && renderLazyPage('customerCare')}
+            {activePage === 'contacts' && renderLazyPage('contacts')}
             {activePage === 'forms' && (
               <ErrorBoundary name="Forms">
                 <FormsTabPage />
@@ -1193,61 +1144,21 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                 <SmartFormPage />
               </ErrorBoundary>
             )}
-            {activePage === 'tools' && (
-              <ErrorBoundary name="Tools">
-                <AIToolsPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'workflow' && (
-              <ErrorBoundary name="Workflow">
-                <WorkflowPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'logs' && (
-              <ErrorBoundary name="Logs">
-                <ActivityLogPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'collab' && (
-              <ErrorBoundary name="Collab">
-                <CollabCreationPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'insights' && (
-              <ErrorBoundary name="Insights">
-                <InsightsEnhancedPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'quickActions' && (
-              <ErrorBoundary name="QuickActions">
-                <QuickActionsPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'taskBoard' && (
-              <ErrorBoundary name="TaskBoard">
-                <TaskBoardPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'devWorkspace' && (
-              <ErrorBoundary name="DevWorkspace">
-                <LeftPanelPage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'tools' && renderLazyPage('tools')}
+            {activePage === 'workflow' && renderLazyPage('workflow')}
+            {activePage === 'logs' && renderLazyPage('logs')}
+            {activePage === 'collab' && renderLazyPage('collab')}
+            {activePage === 'insights' && renderLazyPage('insights')}
+            {activePage === 'quickActions' && renderLazyPage('quickActions')}
+            {activePage === 'taskBoard' && renderLazyPage('taskBoard')}
+            {activePage === 'devWorkspace' && renderLazyPage('devWorkspace')}
             {activePage === 'apiDocs' && (
               <ErrorBoundary name="ApiDocs">
                 <ApiDocs />
               </ErrorBoundary>
             )}
-            {activePage === 'finance' && (
-              <ErrorBoundary name="Finance">
-                <FinancePage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'salary' && (
-              <ErrorBoundary name="Salary">
-                <SalaryPage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'finance' && renderLazyPage('finance')}
+            {activePage === 'salary' && renderLazyPage('salary')}
             {activePage === 'settings' && (
               <ErrorBoundary name="Settings">
                 <SettingsPage />
@@ -1259,107 +1170,27 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
               </ErrorBoundary>
             )}
             {/* Platform Integration modules */}
-            {activePage === 'paramSettings' && (
-              <ErrorBoundary name="ParamSettings">
-                <ParameterSettingsPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'platformSettings' && (
-              <ErrorBoundary name="PlatformSettings">
-                <PlatformSettingsPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'wechatConfig' && (
-              <ErrorBoundary name="WechatConfig">
-                <WechatConfigPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'channelCenter' && (
-              <ErrorBoundary name="ChannelCenter">
-                <ChannelCenterPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'dataIntegration' && (
-              <ErrorBoundary name="DataIntegration">
-                <DataIntegrationPage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'paramSettings' && renderLazyPage('paramSettings')}
+            {activePage === 'platformSettings' && renderLazyPage('platformSettings')}
+            {activePage === 'wechatConfig' && renderLazyPage('wechatConfig')}
+            {activePage === 'channelCenter' && renderLazyPage('channelCenter')}
+            {activePage === 'dataIntegration' && renderLazyPage('dataIntegration')}
             {/* AI Marketing modules */}
-            {activePage === 'marketingPlan' && (
-              <ErrorBoundary name="MarketingPlan">
-                <MarketingStrategyPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'promotionExec' && (
-              <ErrorBoundary name="PromotionExec">
-                <CampaignExecutionPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'marketingAnalytics' && (
-              <ErrorBoundary name="MarketingAnalytics">
-                <MarketingAnalyticsPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'marketingAssets' && (
-              <ErrorBoundary name="MarketingAssets">
-                <MarketingAssetsPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'customerAcquisition' && (
-              <ErrorBoundary name="CustomerAcquisition">
-                <CustomerAcquisitionPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'brandMgmt' && (
-              <ErrorBoundary name="BrandMgmt">
-                <BrandManagementPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'intelligentOps' && (
-              <ErrorBoundary name="IntelligentOps">
-                <SmartOperationsPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'platformHub' && (
-              <ErrorBoundary name="PlatformHub">
-                <PlatformIntegrationPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'aiCreativeTools' && (
-              <ErrorBoundary name="AiCreativeTools">
-                <SmartCreationPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'aiMarketingEngine' && (
-              <ErrorBoundary name="AiMarketingEngine">
-                <SmartMarketingEnginePage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'appOverview' && (
-              <ErrorBoundary name="AppOverview">
-                <AppOverviewPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'aiDecisionSupport' && (
-              <ErrorBoundary name="AiDecisionSupport">
-                <DecisionSupportPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'nlpProcessing' && (
-              <ErrorBoundary name="NlpProcessing">
-                <NLPProcessingPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'procurement' && (
-              <ErrorBoundary name="Procurement">
-                <ProcurementPage />
-              </ErrorBoundary>
-            )}
-            {activePage === 'inventory' && (
-              <ErrorBoundary name="Inventory">
-                <InventoryPage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'marketingPlan' && renderLazyPage('marketingPlan')}
+            {activePage === 'promotionExec' && renderLazyPage('promotionExec')}
+            {activePage === 'marketingAnalytics' && renderLazyPage('marketingAnalytics')}
+            {activePage === 'marketingAssets' && renderLazyPage('marketingAssets')}
+            {activePage === 'customerAcquisition' && renderLazyPage('customerAcquisition')}
+            {activePage === 'brandMgmt' && renderLazyPage('brandMgmt')}
+            {activePage === 'intelligentOps' && renderLazyPage('intelligentOps')}
+            {activePage === 'platformHub' && renderLazyPage('platformHub')}
+            {activePage === 'aiCreativeTools' && renderLazyPage('aiCreativeTools')}
+            {activePage === 'aiMarketingEngine' && renderLazyPage('aiMarketingEngine')}
+            {activePage === 'appOverview' && renderLazyPage('appOverview')}
+            {activePage === 'aiDecisionSupport' && renderLazyPage('aiDecisionSupport')}
+            {activePage === 'nlpProcessing' && renderLazyPage('nlpProcessing')}
+            {activePage === 'procurement' && renderLazyPage('procurement')}
+            {activePage === 'inventory' && renderLazyPage('inventory')}
           </PageTransition>
         </main>
       </div>
