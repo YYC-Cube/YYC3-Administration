@@ -14,14 +14,13 @@ import { Eye, EyeOff, Ghost, KeyRound, Loader2, LogIn, UserPlus, X } from 'lucid
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { isSupabaseConfigured, supabase } from '../../lib/supabase-client'
-import { useAuthStore } from '../../stores/useAuthStore'
-
-import { useThemeColors } from './hooks/use-theme-colors'
-import { useI18n } from './i18n-context'
-
-import type { User } from '../../types/auth'
+import type { User } from '@/types/auth'
 import type { FormEvent } from 'react'
+
+import { useI18n } from '@/app/components/i18n-context'
+import { isSupabaseConfigured, supabase } from '@/lib/supabase-client'
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 // ==========================================
 // Constants

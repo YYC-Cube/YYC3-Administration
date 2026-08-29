@@ -5,7 +5,7 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { isSupabaseConfigured, supabase } from '../../src/lib/supabase-client'
+import { isSupabaseConfigured, supabase } from '@/lib/supabase-client'
 
 describe('supabase-client — 环境门控', () => {
   it('未配置 VITE_SUPABASE_* 时 client 为 null 且开关为 false(本地演示认证)', () => {

@@ -9,11 +9,11 @@
 import { render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { AppProvider } from '../../src/app/components/app-context'
-import { I18nProvider } from '../../src/app/components/i18n-context'
-import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
-
 import type { ReactNode } from 'react'
+
+import { AppProvider } from '@/app/components/app-context'
+import { I18nProvider } from '@/app/components/i18n-context'
+import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <ThemeSwitcherProvider defaultTheme="cyberpunk">
@@ -25,13 +25,13 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 
 describe('ChatInterface — Smoke', () => {
   it('renders without crashing', async () => {
-    const { ChatInterface } = await import('../../src/app/components/chat-interface')
+    const { ChatInterface } = await import('@/features/conversation/pages/chat-interface')
     const { container } = render(<ChatInterface />, { wrapper: TestWrapper })
     expect(container).toBeTruthy()
   })
 
   it('renders at least one element', async () => {
-    const { ChatInterface } = await import('../../src/app/components/chat-interface')
+    const { ChatInterface } = await import('@/features/conversation/pages/chat-interface')
     const { container } = render(<ChatInterface />, { wrapper: TestWrapper })
     expect(container.children.length).toBeGreaterThan(0)
   })

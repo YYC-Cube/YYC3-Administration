@@ -5,11 +5,7 @@
 
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import {
-  type AIModel,
-  toProviderRequestConfig,
-  useAIModelStore,
-} from '../../src/stores/useAIModelStore'
+import { type AIModel, toProviderRequestConfig, useAIModelStore } from '@/stores/useAIModelStore'
 
 const model = (over: Partial<AIModel> = {}): AIModel => ({
   id: 'm_test',

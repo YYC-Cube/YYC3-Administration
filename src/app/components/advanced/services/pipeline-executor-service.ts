@@ -15,7 +15,7 @@ import type {
   StageRun,
   StageStatus,
   TriggerType,
-} from '../advanced-types'
+} from '@/app/components/advanced/advanced-types'
 
 // ==========================================
 // Pipeline Executor Engine

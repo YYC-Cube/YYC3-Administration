@@ -10,10 +10,10 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { searchSettings } from '../../src/services/settings-search'
-import { useSettingsStore } from '../../src/stores/useSettingsStore'
+import type { Settings } from '@/types/settings'
 
-import type { Settings } from '../../src/types/settings'
+import { searchSettings } from '@/services/settings-search'
+import { useSettingsStore } from '@/stores/useSettingsStore'
 
 // Helper to get current default settings
 function getDefaultSettings(): Settings {

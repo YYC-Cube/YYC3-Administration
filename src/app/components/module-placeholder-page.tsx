@@ -31,11 +31,11 @@ import {
   Zap,
 } from 'lucide-react'
 
-import { useThemeColors } from './hooks/use-theme-colors'
-import { useI18n } from './i18n-context'
-import { NeonCard } from './neon-card'
-
 import type { LucideIcon } from 'lucide-react'
+
+import { useI18n } from '@/app/components/i18n-context'
+import { NeonCard } from '@/app/components/neon-card'
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 // ==========================================
 // YYC³ Module Placeholder Page

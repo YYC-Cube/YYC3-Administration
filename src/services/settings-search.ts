@@ -11,7 +11,7 @@
  * @tags settings,search,service,filter
  */
 
-import type { Settings } from '../types/settings'
+import type { Settings } from '@/types/settings'
 
 /**
  * 搜索结果项

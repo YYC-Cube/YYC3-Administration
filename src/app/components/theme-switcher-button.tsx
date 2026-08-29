@@ -6,7 +6,7 @@
 import { Droplets, Palette } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
-import { useThemeSwitcher } from './theme-switcher-context'
+import { useThemeSwitcher } from '@/app/components/theme-switcher-context'
 
 export function ThemeSwitcherButton() {
   const { theme, toggleTheme } = useThemeSwitcher()

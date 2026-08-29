@@ -23,9 +23,9 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 self.MonacoEnvironment = { getWorker: () => new editorWorker() }
 loader.config({ monaco })
 
-import { useThemeColors } from './hooks/use-theme-colors'
-
 import type { editor } from 'monaco-editor'
+
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 // ==========================================
 // Types
@@ -187,7 +187,7 @@ export function CodeEditor({
 
   const defaultContent =
     initialContent ??
-    `/**\n * @file ${filePath.split('/').pop()}\n * @description YYC³ Component\n * @author YanYuCloudCube Team <admin@0379.email>\n * @version v1.0.0\n */\n\nimport { useState, useCallback } from "react";\nimport { useThemeColors } from "./hooks/use-theme-colors";\nimport { motion } from "motion/react";\n\n/** Component props */\ninterface Props {\n  title?: string;\n  className?: string;\n}\n\n/** Main component */\nexport function Component({ title = "YYC³", className }: Props) {\n  const tc = useThemeColors();\n  const [count, setCount] = useState(0);\n\n  const handleClick = useCallback(() => {\n    setCount((prev) => prev + 1);\n  }, []);\n\n  return (\n    <motion.div\n      initial={{ opacity: 0, y: 20 }}\n      animate={{ opacity: 1, y: 0 }}\n      className={className}\n      style={{ background: tc.bgBase, color: tc.textPrimary }}\n    >\n      <h1>{title}</h1>\n      <p>Count: {count}</p>\n      <button onClick={handleClick}>Increment</button>\n    </motion.div>\n  );\n}\n`
+    `/**\n * @file ${filePath.split('/').pop()}\n * @description YYC³ Component\n * @author YanYuCloudCube Team <admin@0379.email>\n * @version v1.0.0\n */\n\nimport { useState, useCallback } from "react";\nimport { useThemeColors } from "@/shared/hooks/use-theme-colors";\nimport { motion } from "motion/react";\n\n/** Component props */\ninterface Props {\n  title?: string;\n  className?: string;\n}\n\n/** Main component */\nexport function Component({ title = "YYC³", className }: Props) {\n  const tc = useThemeColors();\n  const [count, setCount] = useState(0);\n\n  const handleClick = useCallback(() => {\n    setCount((prev) => prev + 1);\n  }, []);\n\n  return (\n    <motion.div\n      initial={{ opacity: 0, y: 20 }}\n      animate={{ opacity: 1, y: 0 }}\n      className={className}\n      style={{ background: tc.bgBase, color: tc.textPrimary }}\n    >\n      <h1>{title}</h1>\n      <p>Count: {count}</p>\n      <button onClick={handleClick}>Increment</button>\n    </motion.div>\n  );\n}\n`
 
   /** Called once Monaco is mounted */
   const handleEditorMount: OnMount = useCallback(

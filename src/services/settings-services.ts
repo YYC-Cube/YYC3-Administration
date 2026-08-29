@@ -11,9 +11,9 @@
  * @tags settings,services,business-logic
  */
 
-import { useSettingsStore } from '../stores/useSettingsStore'
+import type { AgentConfig, MCPConfig, RuleConfig, SkillConfig } from '@/types/settings'
 
-import type { AgentConfig, MCPConfig, RuleConfig, SkillConfig } from '../types/settings'
+import { useSettingsStore } from '@/stores/useSettingsStore'
 
 /**
  * 账号服务类

@@ -10,7 +10,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('Breakpoints — Constants', () => {
   it('exports BREAKPOINTS with correct values', async () => {
-    const mod = await import('../../src/multi-end/breakpoints')
+    const mod = await import('@/multi-end/breakpoints')
     expect(mod.BREAKPOINTS).toBeTruthy()
     expect(mod.BREAKPOINTS.md).toBe(768)
     expect(mod.BREAKPOINTS.lg).toBe(1024)
@@ -19,14 +19,14 @@ describe('Breakpoints — Constants', () => {
   })
 
   it('exports query helpers', async () => {
-    const mod = await import('../../src/multi-end/breakpoints')
+    const mod = await import('@/multi-end/breakpoints')
     expect(mod.BREAKPOINT_QUERIES).toBeTruthy()
     expect(mod.BREAKPOINT_UP).toBeTruthy()
     expect(mod.BREAKPOINT_DOWN).toBeTruthy()
   })
 
   it('exports hook functions', async () => {
-    const mod = await import('../../src/multi-end/breakpoints')
+    const mod = await import('@/multi-end/breakpoints')
     expect(typeof mod.useBreakpoint).toBe('function')
     expect(typeof mod.useIsMobile).toBe('function')
     expect(typeof mod.useIsDesktop).toBe('function')
@@ -36,19 +36,19 @@ describe('Breakpoints — Constants', () => {
 
 describe('Platform Detection', () => {
   it('exports detection functions', async () => {
-    const mod = await import('../../src/multi-end/platform')
+    const mod = await import('@/multi-end/platform')
     expect(typeof mod.detectPlatform).toBe('function')
     expect(typeof mod.getPlatformCapabilities).toBe('function')
   })
 
   it('detects web platform in test env', async () => {
-    const mod = await import('../../src/multi-end/platform')
+    const mod = await import('@/multi-end/platform')
     const platform = mod.detectPlatform()
     expect(['web', 'pwa', 'mobile', 'desktop']).toContain(platform)
   })
 
   it('returns platform capabilities', async () => {
-    const mod = await import('../../src/multi-end/platform')
+    const mod = await import('@/multi-end/platform')
     const caps = mod.getPlatformCapabilities()
     expect(caps).toBeTruthy()
     // 验证实际接口字段（非 supportsPWA/supportsTouch）

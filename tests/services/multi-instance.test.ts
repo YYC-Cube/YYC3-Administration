@@ -10,10 +10,10 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { IPCManager } from '../../src/app/components/services/multi-instance/ipc-manager'
-import { useSessionStore } from '../../src/app/components/services/multi-instance/session-manager'
-import { useWindowStore } from '../../src/app/components/services/multi-instance/window-manager'
-import { useWorkspaceStore } from '../../src/app/components/services/multi-instance/workspace-manager'
+import { IPCManager } from '@/features/dev-workspace/multi-instance/ipc-manager'
+import { useSessionStore } from '@/features/dev-workspace/multi-instance/session-manager'
+import { useWindowStore } from '@/features/dev-workspace/multi-instance/window-manager'
+import { useWorkspaceStore } from '@/features/dev-workspace/multi-instance/workspace-manager'
 
 // ==========================================
 // WindowManager Tests
@@ -354,10 +354,10 @@ describe('IPCManager', () => {
 
 describe('PanelStore', () => {
   // Import inline to avoid circular dependency issues
-  let usePanelStore: typeof import('../../src/app/components/panels/panel-store').usePanelStore
+  let usePanelStore: typeof import('@/features/dev-workspace/panels/panel-store').usePanelStore
 
   beforeEach(async () => {
-    const mod = await import('../../src/app/components/panels/panel-store')
+    const mod = await import('@/features/dev-workspace/panels/panel-store')
     usePanelStore = mod.usePanelStore
     usePanelStore.setState({
       activePanel: 'file-explorer',

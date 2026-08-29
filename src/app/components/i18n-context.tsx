@@ -2,13 +2,14 @@
 import { I18nEngine, MissingKeyReporter } from '@yyc3/i18n-core/browser'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import { enMessages } from '../locales/en'
-import { zhMessages } from '../locales/zh'
+import type { Locale as CoreLocale, TranslationMap } from '@yyc3/i18n-core/browser'
+import type { ReactNode } from 'react'
+
+import { enMessages } from '@/app/locales/en'
+import { zhMessages } from '@/app/locales/zh'
 
 // i18n 引擎来自自研 npm 包(YYC3-i18n-Core 仓库,零依赖,621 上游测试);
 // 原内嵌 fork(v2.3.0,已与上游漂移)已删除——详见审计报告第 10.1 节
-import type { Locale as CoreLocale, TranslationMap } from '@yyc3/i18n-core/browser'
-import type { ReactNode } from 'react'
 
 // All 10 supported UI locales — maps directly to core engine locales
 export type Locale = 'zh' | 'en' | 'zh-TW' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'pt-BR' | 'ar'

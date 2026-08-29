@@ -13,10 +13,10 @@
 import { useEffect, useRef } from 'react'
 import { useLocation, useNavigate, useNavigationType } from 'react-router'
 
-import { useApp } from './app-context'
-import { NAV_CATEGORIES } from './nav-config'
+import type { PageId } from '@/app/components/app-context'
 
-import type { PageId } from './app-context'
+import { useApp } from '@/app/components/app-context'
+import { NAV_CATEGORIES } from '@/app/components/nav-config'
 
 /** 全部可路由页面 id(nav-config 为单一来源,与 PageId 联合类型一一对应) */
 export const PAGE_IDS: readonly PageId[] = NAV_CATEGORIES.flatMap((c) => c.items.map((i) => i.id))

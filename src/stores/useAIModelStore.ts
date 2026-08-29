@@ -13,7 +13,7 @@
 
 import { create } from 'zustand'
 
-import { getSecure, migrateToSecure, setSecure } from '../lib/secure-storage'
+import { getSecure, migrateToSecure, setSecure } from '@/lib/secure-storage'
 
 // ==========================================
 // Types

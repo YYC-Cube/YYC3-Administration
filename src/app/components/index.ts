@@ -7,11 +7,11 @@
  * @tags components, export
  */
 
-export { NeonCard } from './neon-card'
-export { DashboardPage } from './dashboard-page'
-export { AppOverviewPage } from './app-overview-page'
-export { ThemeSwitcherProvider, useThemeSwitcher } from './theme-switcher-context'
-export { NAV_CATEGORIES } from './nav-config'
+export { NeonCard } from '@/app/components/neon-card'
+export { DashboardPage } from '@/features/overview/pages/dashboard-page'
+export { AppOverviewPage } from '@/features/marketing/pages/app-overview-page'
+export { ThemeSwitcherProvider, useThemeSwitcher } from '@/app/components/theme-switcher-context'
+export { NAV_CATEGORIES } from '@/app/components/nav-config'
 
-export * from './ui'
-export * from './hooks'
+export * from '@/shared/ui'
+export * from '@/shared/hooks'

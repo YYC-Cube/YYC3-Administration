@@ -24,15 +24,6 @@ import {
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
-import { useThemeColors } from '../../hooks/use-theme-colors'
-import { NeonCard } from '../../neon-card'
-import { PageTransition } from '../../page-transition'
-import { useCodeAnalyzer } from '../hooks/use-code-analyzer'
-import { useMCPOrchestrator } from '../hooks/use-mcp-orchestrator'
-import { useMonitor } from '../hooks/use-monitor'
-import { usePipeline } from '../hooks/use-pipeline'
-
-import type { ThemeColors } from '../../hooks/use-theme-colors'
 import type {
   AnalysisResult,
   AnalysisSummary,
@@ -49,7 +40,16 @@ import type {
   StageRun,
   StepTrace,
   ToolChain,
-} from '../advanced-types'
+} from '@/app/components/advanced/advanced-types'
+import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
+
+import { useCodeAnalyzer } from '@/app/components/advanced/hooks/use-code-analyzer'
+import { useMCPOrchestrator } from '@/app/components/advanced/hooks/use-mcp-orchestrator'
+import { useMonitor } from '@/app/components/advanced/hooks/use-monitor'
+import { usePipeline } from '@/app/components/advanced/hooks/use-pipeline'
+import { NeonCard } from '@/app/components/neon-card'
+import { PageTransition } from '@/app/components/page-transition'
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 // ==========================================
 // Tab Definitions

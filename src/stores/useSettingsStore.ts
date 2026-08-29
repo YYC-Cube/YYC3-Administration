@@ -25,7 +25,7 @@ import type {
   Settings,
   SkillConfig,
   UserProfile,
-} from '../types/settings'
+} from '@/types/settings'
 
 interface SettingsState {
   /** 设置数据 */

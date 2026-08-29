@@ -11,10 +11,10 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Panel Helpers', () => {
-  let helpers: typeof import('../../../src/app/components/panels/panel-helpers')
+  let helpers: typeof import('@/features/dev-workspace/panels/panel-helpers')
 
   beforeEach(async () => {
-    helpers = await import('../../../src/app/components/panels/panel-helpers')
+    helpers = await import('@/features/dev-workspace/panels/panel-helpers')
   })
 
   describe('getFileIcon', () => {
@@ -147,10 +147,10 @@ describe('Panel Helpers', () => {
 })
 
 describe('Panel Store (extracted)', () => {
-  let usePanelStore: typeof import('../../../src/app/components/panels/panel-store').usePanelStore
+  let usePanelStore: typeof import('@/features/dev-workspace/panels/panel-store').usePanelStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/panel-store')
+    const mod = await import('@/features/dev-workspace/panels/panel-store')
     usePanelStore = mod.usePanelStore
     usePanelStore.setState({
       activePanel: 'file-explorer',

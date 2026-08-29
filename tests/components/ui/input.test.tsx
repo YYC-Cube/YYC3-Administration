@@ -7,7 +7,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Input } from '../../../src/app/components/ui/input'
+import { Input } from '@/shared/ui/input'
 
 describe('Input Component', () => {
   describe('基础渲染', () => {

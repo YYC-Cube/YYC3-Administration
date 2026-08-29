@@ -6,9 +6,9 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { usePanelStore } from '../../src/app/components/panels/panel-store'
+import type { FileNode, QuickAccessItem } from '@/features/dev-workspace/panels/panel-types'
 
-import type { FileNode, QuickAccessItem } from '../../src/app/components/panels/panel-types'
+import { usePanelStore } from '@/features/dev-workspace/panels/panel-store'
 
 // ==========================================
 // Helper: 重置 store 状态

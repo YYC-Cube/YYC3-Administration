@@ -9,9 +9,9 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { useSettingsStore } from '../../src/stores/useSettingsStore'
+import type { AgentConfig, MCPConfig, RuleConfig, SkillConfig } from '@/types/settings'
 
-import type { AgentConfig, MCPConfig, RuleConfig, SkillConfig } from '../../src/types/settings'
+import { useSettingsStore } from '@/stores/useSettingsStore'
 
 beforeEach(() => {
   useSettingsStore.setState({

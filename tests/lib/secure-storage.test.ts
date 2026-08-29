@@ -15,7 +15,7 @@ import {
   migrateToSecure,
   removeSecure,
   setSecure,
-} from '../../src/lib/secure-storage'
+} from '@/lib/secure-storage'
 
 // ==========================================
 // Setup: Clear localStorage before each test

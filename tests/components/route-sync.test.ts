@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { isPageId, PAGE_IDS } from '../../src/app/components/route-sync'
+import { isPageId, PAGE_IDS } from '@/app/components/route-sync'
 
 describe('route-sync — 可路由页面清单', () => {
   it('PAGE_IDS 覆盖全部 41 个 PageId(nav-config 单一来源派生)', () => {

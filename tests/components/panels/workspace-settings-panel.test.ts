@@ -15,10 +15,10 @@ import { beforeEach, describe, expect, it } from 'vitest'
 // ==========================================
 
 describe('WorkspaceSettingsPanel — Settings Store Integration', () => {
-  let useSettingsStore: typeof import('../../../src/stores/useSettingsStore').useSettingsStore
+  let useSettingsStore: typeof import('@/stores/useSettingsStore').useSettingsStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/stores/useSettingsStore')
+    const mod = await import('@/stores/useSettingsStore')
     useSettingsStore = mod.useSettingsStore
     // Reset to defaults
     useSettingsStore.getState().resetSettings()
@@ -114,10 +114,10 @@ describe('WorkspaceSettingsPanel — Settings Store Integration', () => {
 // ==========================================
 
 describe('WorkspaceSettingsPanel — Panel Store Width', () => {
-  let usePanelStore: typeof import('../../../src/app/components/panels/panel-store').usePanelStore
+  let usePanelStore: typeof import('@/features/dev-workspace/panels/panel-store').usePanelStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/panel-store')
+    const mod = await import('@/features/dev-workspace/panels/panel-store')
     usePanelStore = mod.usePanelStore
     usePanelStore.setState({
       panelWidth: 300,
@@ -201,10 +201,10 @@ describe('WorkspaceSettingsPanel — Section Configuration', () => {
 // ==========================================
 
 describe('WorkspaceSettingsPanel — Window Reorder (DnD support)', () => {
-  let useWindowStore: typeof import('../../../src/app/components/services/multi-instance/window-manager').useWindowStore
+  let useWindowStore: typeof import('@/features/dev-workspace/multi-instance/window-manager').useWindowStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/services/multi-instance/window-manager')
+    const mod = await import('@/features/dev-workspace/multi-instance/window-manager')
     useWindowStore = mod.useWindowStore
     useWindowStore.setState({ instances: [], activeInstanceId: null, mainInstanceId: null })
   })

@@ -15,7 +15,7 @@ import type {
   MetricName,
   MetricPoint,
   MetricSeries,
-} from '../advanced-types'
+} from '@/app/components/advanced/advanced-types'
 
 // ==========================================
 // Default Metric Configurations
