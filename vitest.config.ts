@@ -27,6 +27,7 @@ export default defineConfig({
         'src/features/dev-workspace/left-panel-page.tsx',
         'src/features/dev-workspace/window-bar.tsx',
         'src/features/dev-workspace/panels/**',
+        'src/features/settings/model-settings/**',
         'src/app/components/**/command-palette*.tsx',
         'src/app/components/**/cyberpunk-*.tsx',
         // 入口文件
@@ -40,10 +41,10 @@ export default defineConfig({
       // statements 28.63 / branches 17.02 / functions 30.4 / lines 29.28),取整略低防抖动;只升不降,
       // P2 目标:核心路径 ≥60%(见审计报告 7.3-4)
       thresholds: {
-        statements: 28,
-        branches: 17,
-        functions: 30,
-        lines: 29,
+        statements: 31,
+        branches: 19,
+        functions: 34,
+        lines: 31,
       },
     },
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],
