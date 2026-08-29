@@ -414,7 +414,7 @@ test.describe('Full Workflow: File → Edit → AI → Git', () => {
     if (await tree.isVisible({ timeout: 5000 }).catch(() => false)) {
       const fileItem = tree.locator('span', { hasText: 'App.tsx' }).first()
       if (await fileItem.isVisible({ timeout: 5000 }).catch(() => false)) {
-        await fileItem.click()
+        await fileItem.click({ force: true })
         await page.waitForTimeout(1000)
       }
     }
