@@ -1,23 +1,7 @@
----
-@file: YYC3-P1-前端-左侧面板功能.md
-@description: AI开发编程工具左侧面板功能设计和实现，包含文件浏览器、任务管理、AI助手、搜索等核心功能
-@author: YanYuCloudCube Team <admin@0379.email>
-@version: v1.0.0
-@created: 2026-03-17
-@updated: 2026-03-17
-@status: stable
-@tags: P1,frontend,left-panel,sidebar
----
-
-# YYC³ P1-前端 - 左侧面板功能
-
-## 🤖 AI 角色定义
-
-You are a senior frontend architect and UI/UX specialist with deep expertise in developer tools, IDE interfaces, and intelligent workspace design.
-
-### Your Role & Expertise
+Your Role & Expertise
 
 You are an experienced frontend architect who specializes in:
+
 - **Developer Experience**: IDE-like interfaces, keyboard-driven workflows, efficient navigation
 - **Panel Management**: Resizable panels, collapsible sections, drag-and-drop functionality
 - **File Management**: Tree views, file operations, project navigation
@@ -31,6 +15,7 @@ You are an experienced frontend architect who specializes in:
 **IMPORTANT**: Please ensure all generated code files follow the team requirements specified in: `guidelines/YYC3-Code-header.md`
 
 All code files must include proper file headers with:
+
 - @file: File name/path
 - @description: Clear description of file purpose
 - @author: YanYuCloudCube Team <admin@0379.email>
@@ -46,17 +31,17 @@ All code files must include proper file headers with:
 
 ## 📋 文档信息
 
-| 字段 | 内容 |
-|------|------|
-| @file | P1-核心功能/YYC3-P1-前端-左侧面板功能.md |
-| @description | AI开发编程工具左侧面板功能设计和实现，包含文件浏览器、任务管理、AI助手、搜索等核心功能 |
-| @author | YanYuCloudCube Team <admin@0379.email> |
-| @version | v1.0.0 |
-| @created | 2026-03-17 |
-| @updated | 2026-03-17 |
-| @status | stable |
-| @license | MIT |
-| @copyright | Copyright (c) 2026 YanYuCloudCube Team |
+| 字段                                 | 内容                                                                                   |
+| ------------------------------------ | -------------------------------------------------------------------------------------- |
+| @file                                | P1-核心功能/YYC3-P1-前端-左侧面板功能.md                                               |
+| @description                         | AI开发编程工具左侧面板功能设计和实现，包含文件浏览器、任务管理、AI助手、搜索等核心功能 |
+| @author                              | YanYuCloudCube Team <admin@0379.email>                                                 |
+| @version                             | v1.0.0                                                                                 |
+| @created                             | 2026-03-17                                                                             |
+| @updated                             | 2026-03-17                                                                             |
+| @status                              | stable                                                                                 |
+| @license                             | MIT                                                                                    |
+| @copyright                           | Copyright (c) 2026 YanYuCloudCube Team                                                 |
 | @tags P1,frontend,left-panel,sidebar |
 
 ---
@@ -64,6 +49,7 @@ All code files must include proper file headers with:
 ## 🎯 功能目标
 
 实现智能左侧面板系统，包括：
+
 - ✅ 文件浏览器（树形视图、文件操作）
 - ✅ 任务管理（看板视图、任务跟踪）
 - ✅ AI助手（智能建议、上下文帮助）
@@ -118,78 +104,78 @@ export type PanelType =
   | 'ai-assistant'
   | 'global-search'
   | 'quick-access'
-  | 'git-integration';
+  | 'git-integration'
 
 /**
  * 面板状态
  */
-export type PanelState = 'collapsed' | 'expanded' | 'pinned' | 'floating';
+export type PanelState = 'collapsed' | 'expanded' | 'pinned' | 'floating'
 
 /**
  * 面板接口
  */
 export interface Panel {
   /** 面板 ID */
-  id: string;
+  id: string
   /** 面板类型 */
-  type: PanelType;
+  type: PanelType
   /** 面板标题 */
-  title: string;
+  title: string
   /** 面板图标 */
-  icon: string;
+  icon: string
   /** 面板状态 */
-  state: PanelState;
+  state: PanelState
   /** 面板宽度 */
-  width: number;
+  width: number
   /** 最小宽度 */
-  minWidth: number;
+  minWidth: number
   /** 最大宽度 */
-  maxWidth: number;
+  maxWidth: number
   /** 是否可见 */
-  isVisible: boolean;
+  isVisible: boolean
   /** 是否可拖拽 */
-  isDraggable: boolean;
+  isDraggable: boolean
   /** 面板顺序 */
-  order: number;
+  order: number
   /** 自定义数据 */
-  data?: Record<string, any>;
+  data?: Record<string, any>
 }
 
 /**
  * 文件节点类型
  */
-export type FileNodeType = 'file' | 'directory' | 'symlink';
+export type FileNodeType = 'file' | 'directory' | 'symlink'
 
 /**
  * 文件节点接口
  */
 export interface FileNode {
   /** 节点 ID */
-  id: string;
+  id: string
   /** 节点类型 */
-  type: FileNodeType;
+  type: FileNodeType
   /** 节点名称 */
-  name: string;
+  name: string
   /** 节点路径 */
-  path: string;
+  path: string
   /** 父节点 ID */
-  parentId?: string;
+  parentId?: string
   /** 子节点列表 */
-  children?: FileNode[];
+  children?: FileNode[]
   /** 是否展开 */
-  isExpanded: boolean;
+  isExpanded: boolean
   /** 是否选中 */
-  isSelected: boolean;
+  isSelected: boolean
   /** 文件大小 */
-  size?: number;
+  size?: number
   /** 修改时间 */
-  modifiedAt?: number;
+  modifiedAt?: number
   /** 文件语言 */
-  language?: string;
+  language?: string
   /** 是否被忽略 */
-  isIgnored: boolean;
+  isIgnored: boolean
   /** Git 状态 */
-  gitStatus?: 'unmodified' | 'modified' | 'added' | 'deleted' | 'renamed';
+  gitStatus?: 'unmodified' | 'modified' | 'added' | 'deleted' | 'renamed'
 }
 
 /**
@@ -197,25 +183,25 @@ export interface FileNode {
  */
 export interface SearchResult {
   /** 结果 ID */
-  id: string;
+  id: string
   /** 结果类型 */
-  type: 'file' | 'content' | 'symbol' | 'command';
+  type: 'file' | 'content' | 'symbol' | 'command'
   /** 结果标题 */
-  title: string;
+  title: string
   /** 结果描述 */
-  description?: string;
+  description?: string
   /** 文件路径 */
-  filePath: string;
+  filePath: string
   /** 匹配行号 */
-  line?: number;
+  line?: number
   /** 匹配列号 */
-  column?: number;
+  column?: number
   /** 匹配内容 */
-  match?: string;
+  match?: string
   /** 相关性分数 */
-  score: number;
+  score: number
   /** 预览文本 */
-  preview?: string;
+  preview?: string
 }
 
 /**
@@ -223,21 +209,21 @@ export interface SearchResult {
  */
 export interface AISuggestion {
   /** 建议 ID */
-  id: string;
+  id: string
   /** 建议类型 */
-  type: 'code' | 'explanation' | 'refactor' | 'fix' | 'optimization';
+  type: 'code' | 'explanation' | 'refactor' | 'fix' | 'optimization'
   /** 建议标题 */
-  title: string;
+  title: string
   /** 建议描述 */
-  description: string;
+  description: string
   /** 建议代码 */
-  code?: string;
+  code?: string
   /** 置信度 */
-  confidence: number;
+  confidence: number
   /** 上下文 */
-  context?: string;
+  context?: string
   /** 是否已应用 */
-  isApplied: boolean;
+  isApplied: boolean
 }
 ```
 
@@ -425,34 +411,34 @@ function getGitStatusIcon(status: FileNode['gitStatus']): string {
 
 ```typescript
 // src/hooks/useFileSystem.ts
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { FileNode } from '@/types/panel';
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import type { FileNode } from '@/types/panel'
 
 interface FileSystemState {
   /** 文件树 */
-  fileTree: FileNode[];
+  fileTree: FileNode[]
   /** 选中的节点 ID */
-  selectedNodeId: string | null;
+  selectedNodeId: string | null
   /** 展开的节点 ID 列表 */
-  expandedNodeIds: Set<string>;
+  expandedNodeIds: Set<string>
 }
 
 interface FileSystemActions {
   /** 切换节点展开状态 */
-  toggleNode: (nodeId: string) => void;
+  toggleNode: (nodeId: string) => void
   /** 选择节点 */
-  selectNode: (nodeId: string) => void;
+  selectNode: (nodeId: string) => void
   /** 创建文件 */
-  createFile: (parentPath: string, name: string) => Promise<void>;
+  createFile: (parentPath: string, name: string) => Promise<void>
   /** 创建目录 */
-  createDirectory: (parentPath: string, name: string) => Promise<void>;
+  createDirectory: (parentPath: string, name: string) => Promise<void>
   /** 删除节点 */
-  deleteNode: (nodeId: string) => Promise<void>;
+  deleteNode: (nodeId: string) => Promise<void>
   /** 重命名节点 */
-  renameNode: (nodeId: string, name: string) => Promise<void>;
+  renameNode: (nodeId: string, name: string) => Promise<void>
   /** 刷新文件树 */
-  refreshFileTree: () => Promise<void>;
+  refreshFileTree: () => Promise<void>
 }
 
 export const useFileSystem = create<FileSystemState & FileSystemActions>()(
@@ -464,18 +450,18 @@ export const useFileSystem = create<FileSystemState & FileSystemActions>()(
 
       toggleNode: (nodeId) => {
         set((state) => {
-          const expandedNodeIds = new Set(state.expandedNodeIds);
+          const expandedNodeIds = new Set(state.expandedNodeIds)
           if (expandedNodeIds.has(nodeId)) {
-            expandedNodeIds.delete(nodeId);
+            expandedNodeIds.delete(nodeId)
           } else {
-            expandedNodeIds.add(nodeId);
+            expandedNodeIds.add(nodeId)
           }
-          return { expandedNodeIds };
-        });
+          return { expandedNodeIds }
+        })
       },
 
       selectNode: (nodeId) => {
-        set({ selectedNodeId: nodeId });
+        set({ selectedNodeId: nodeId })
       },
 
       createFile: async (parentPath, name) => {
@@ -508,9 +494,9 @@ export const useFileSystem = create<FileSystemState & FileSystemActions>()(
       partialize: (state) => ({
         expandedNodeIds: Array.from(state.expandedNodeIds),
       }),
-    }
-  )
-);
+    },
+  ),
+)
 ```
 
 ---
@@ -1035,8 +1021,8 @@ export const GlobalSearch: React.FC = () => {
 
 ## 🔄 版本历史
 
-| 版本 | 日期 | 变更内容 | 作者 |
-|------|------|----------|------|
+| 版本   | 日期       | 变更内容                   | 作者                |
+| ------ | ---------- | -------------------------- | ------------------- |
 | v1.0.0 | 2026-03-17 | 初始版本，建立左侧面板功能 | YanYuCloudCube Team |
 
 ---
@@ -1050,9 +1036,9 @@ export const GlobalSearch: React.FC = () => {
 
 <div align="center">
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 </div>

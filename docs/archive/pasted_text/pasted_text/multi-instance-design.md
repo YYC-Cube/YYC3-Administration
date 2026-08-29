@@ -1,6 +1,7 @@
 Your Role & Expertise
 
 You are an experienced desktop application architect who specializes in:
+
 - **Multi-Instance Management**: Multiple application instances, window management, process isolation
 - **Workspace Management**: Independent workspaces, project isolation, context separation
 - **Session Management**: Concurrent sessions, session persistence, session synchronization
@@ -14,6 +15,7 @@ You are an experienced desktop application architect who specializes in:
 **IMPORTANT**: Please ensure all generated code files follow the team requirements specified in: `guidelines/YYC3-Code-header.md`
 
 All code files must include proper file headers with:
+
 - @file: File name/path
 - @description: Clear description of file purpose
 - @author: YanYuCloudCube Team <admin@0379.email>
@@ -29,17 +31,17 @@ All code files must include proper file headers with:
 
 ## 📋 文档信息
 
-| 字段 | 内容 |
-|------|------|
-| @file | P2-高级功能/YYC3-P2-高级功能-应用多开.md |
-| @description | 应用多开功能设计和实现，支持多窗口、多工作区、多会话并行管理 |
-| @author | YanYuCloudCube Team <admin@0379.email> |
-| @version | v1.0.0 |
-| @created | 2026-03-17 |
-| @updated | 2026-03-17 |
-| @status | stable |
-| @license | MIT |
-| @copyright | Copyright (c) 2026 YanYuCloudCube Team |
+| 字段                                                | 内容                                                         |
+| --------------------------------------------------- | ------------------------------------------------------------ |
+| @file                                               | P2-高级功能/YYC3-P2-高级功能-应用多开.md                     |
+| @description                                        | 应用多开功能设计和实现，支持多窗口、多工作区、多会话并行管理 |
+| @author                                             | YanYuCloudCube Team <admin@0379.email>                       |
+| @version                                            | v1.0.0                                                       |
+| @created                                            | 2026-03-17                                                   |
+| @updated                                            | 2026-03-17                                                   |
+| @status                                             | stable                                                       |
+| @license                                            | MIT                                                          |
+| @copyright                                          | Copyright (c) 2026 YanYuCloudCube Team                       |
 | @tags P2,multi-instance,workspace,window-management |
 
 ---
@@ -47,6 +49,7 @@ All code files must include proper file headers with:
 ## 🎯 功能目标
 
 实现智能应用多开系统，包括：
+
 - ✅ 多窗口管理（独立窗口、窗口分组）
 - ✅ 多工作区（项目隔离、上下文分离）
 - ✅ 多会话并行（AI对话、编辑会话）
@@ -94,57 +97,68 @@ Other Instances (其他实例)
 /**
  * 实例类型
  */
-export type InstanceType = 'main' | 'secondary' | 'popup' | 'preview';
+export type InstanceType = 'main' | 'secondary' | 'popup' | 'preview'
 
 /**
  * 窗口类型
  */
-export type WindowType = 'main' | 'editor' | 'preview' | 'terminal' | 'ai-chat' | 'settings';
+export type WindowType =
+  | 'main'
+  | 'editor'
+  | 'preview'
+  | 'terminal'
+  | 'ai-chat'
+  | 'settings'
 
 /**
  * 工作区类型
  */
-export type WorkspaceType = 'project' | 'ai-session' | 'debug' | 'custom';
+export type WorkspaceType = 'project' | 'ai-session' | 'debug' | 'custom'
 
 /**
  * 会话类型
  */
-export type SessionType = 'ai-chat' | 'code-edit' | 'debug' | 'preview' | 'terminal';
+export type SessionType =
+  | 'ai-chat'
+  | 'code-edit'
+  | 'debug'
+  | 'preview'
+  | 'terminal'
 
 /**
  * 应用实例接口
  */
 export interface AppInstance {
   /** 实例 ID */
-  id: string;
+  id: string
   /** 实例类型 */
-  type: InstanceType;
+  type: InstanceType
   /** 窗口 ID */
-  windowId: string;
+  windowId: string
   /** 窗口类型 */
-  windowType: WindowType;
+  windowType: WindowType
   /** 实例标题 */
-  title: string;
+  title: string
   /** 创建时间 */
-  createdAt: number;
+  createdAt: number
   /** 最后活动时间 */
-  lastActiveAt: number;
+  lastActiveAt: number
   /** 是否为主实例 */
-  isMain: boolean;
+  isMain: boolean
   /** 是否可见 */
-  isVisible: boolean;
+  isVisible: boolean
   /** 是否最小化 */
-  isMinimized: boolean;
+  isMinimized: boolean
   /** 窗口位置 */
-  position: { x: number; y: number };
+  position: { x: number; y: number }
   /** 窗口大小 */
-  size: { width: number; height: number };
+  size: { width: number; height: number }
   /** 关联的工作区 ID */
-  workspaceId?: string;
+  workspaceId?: string
   /** 关联的会话 ID 列表 */
-  sessionIds: string[];
+  sessionIds: string[]
   /** 实例状态 */
-  state: Record<string, any>;
+  state: Record<string, any>
 }
 
 /**
@@ -152,27 +166,27 @@ export interface AppInstance {
  */
 export interface Workspace {
   /** 工作区 ID */
-  id: string;
+  id: string
   /** 工作区名称 */
-  name: string;
+  name: string
   /** 工作区类型 */
-  type: WorkspaceType;
+  type: WorkspaceType
   /** 工作区图标 */
-  icon?: string;
+  icon?: string
   /** 创建时间 */
-  createdAt: number;
+  createdAt: number
   /** 更新时间 */
-  updatedAt: number;
+  updatedAt: number
   /** 项目路径 */
-  projectPath?: string;
+  projectPath?: string
   /** 工作区配置 */
-  config: WorkspaceConfig;
+  config: WorkspaceConfig
   /** 关联的会话列表 */
-  sessions: Session[];
+  sessions: Session[]
   /** 关联的窗口 ID 列表 */
-  windowIds: string[];
+  windowIds: string[]
   /** 是否激活 */
-  isActive: boolean;
+  isActive: boolean
 }
 
 /**
@@ -180,15 +194,15 @@ export interface Workspace {
  */
 export interface WorkspaceConfig {
   /** 编辑器配置 */
-  editor?: EditorConfig;
+  editor?: EditorConfig
   /** AI 配置 */
-  ai?: AIConfig;
+  ai?: AIConfig
   /** 面板布局 */
-  panelLayout?: PanelLayout;
+  panelLayout?: PanelLayout
   /** 主题配置 */
-  theme?: ThemeConfig;
+  theme?: ThemeConfig
   /** 快捷键配置 */
-  shortcuts?: ShortcutConfig;
+  shortcuts?: ShortcutConfig
 }
 
 /**
@@ -196,23 +210,23 @@ export interface WorkspaceConfig {
  */
 export interface Session {
   /** 会话 ID */
-  id: string;
+  id: string
   /** 会话类型 */
-  type: SessionType;
+  type: SessionType
   /** 会话名称 */
-  name: string;
+  name: string
   /** 创建时间 */
-  createdAt: number;
+  createdAt: number
   /** 更新时间 */
-  updatedAt: number;
+  updatedAt: number
   /** 会话状态 */
-  status: 'active' | 'idle' | 'suspended' | 'closed';
+  status: 'active' | 'idle' | 'suspended' | 'closed'
   /** 会话数据 */
-  data: SessionData;
+  data: SessionData
   /** 关联的工作区 ID */
-  workspaceId: string;
+  workspaceId: string
   /** 关联的窗口 ID */
-  windowId: string;
+  windowId: string
 }
 
 /**
@@ -220,15 +234,15 @@ export interface Session {
  */
 export interface SessionData {
   /** AI 对话消息 */
-  aiMessages?: Array<{ role: string; content: string }>;
+  aiMessages?: Array<{ role: string; content: string }>
   /** 编辑的文件列表 */
-  editedFiles?: Array<{ path: string; content: string }>;
+  editedFiles?: Array<{ path: string; content: string }>
   /** 终端历史 */
-  terminalHistory?: Array<{ command: string; output: string }>;
+  terminalHistory?: Array<{ command: string; output: string }>
   /** 调试状态 */
-  debugState?: any;
+  debugState?: any
   /** 预览 URL */
-  previewUrl?: string;
+  previewUrl?: string
 }
 
 /**
@@ -245,24 +259,24 @@ export type IPCMessageType =
   | 'session-closed'
   | 'state-sync'
   | 'resource-share'
-  | 'clipboard-share';
+  | 'clipboard-share'
 
 /**
  * IPC 消息接口
  */
 export interface IPCMessage {
   /** 消息 ID */
-  id: string;
+  id: string
   /** 消息类型 */
-  type: IPCMessageType;
+  type: IPCMessageType
   /** 发送者实例 ID */
-  senderId: string;
+  senderId: string
   /** 接收者实例 ID（可选） */
-  receiverId?: string;
+  receiverId?: string
   /** 消息数据 */
-  data: any;
+  data: any
   /** 时间戳 */
-  timestamp: number;
+  timestamp: number
 }
 ```
 
@@ -274,69 +288,82 @@ export interface IPCMessage {
 
 ```typescript
 // src/services/multi-instance/WindowManager.ts
-import { invoke } from '@tauri-apps/api/tauri';
-import { listen } from '@tauri-apps/api/event';
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { AppInstance, WindowType, InstanceType } from '@/types/multi-instance';
+import { invoke } from '@tauri-apps/api/tauri'
+import { listen } from '@tauri-apps/api/event'
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import type {
+  AppInstance,
+  WindowType,
+  InstanceType,
+} from '@/types/multi-instance'
 
 interface WindowState {
   /** 所有实例 */
-  instances: AppInstance[];
+  instances: AppInstance[]
   /** 当前激活的实例 ID */
-  activeInstanceId: string | null;
+  activeInstanceId: string | null
   /** 主实例 ID */
-  mainInstanceId: string | null;
+  mainInstanceId: string | null
 }
 
 interface WindowActions {
   /** 创建新窗口 */
-  createWindow: (type: WindowType, config?: WindowConfig) => Promise<AppInstance>;
+  createWindow: (
+    type: WindowType,
+    config?: WindowConfig,
+  ) => Promise<AppInstance>
   /** 关闭窗口 */
-  closeWindow: (windowId: string) => Promise<void>;
+  closeWindow: (windowId: string) => Promise<void>
   /** 激活窗口 */
-  activateWindow: (windowId: string) => Promise<void>;
+  activateWindow: (windowId: string) => Promise<void>
   /** 最小化窗口 */
-  minimizeWindow: (windowId: string) => Promise<void>;
+  minimizeWindow: (windowId: string) => Promise<void>
   /** 最大化窗口 */
-  maximizeWindow: (windowId: string) => Promise<void>;
+  maximizeWindow: (windowId: string) => Promise<void>
   /** 恢复窗口 */
-  restoreWindow: (windowId: string) => Promise<void>;
+  restoreWindow: (windowId: string) => Promise<void>
   /** 移动窗口 */
-  moveWindow: (windowId: string, position: { x: number; y: number }) => Promise<void>;
+  moveWindow: (
+    windowId: string,
+    position: { x: number; y: number },
+  ) => Promise<void>
   /** 调整窗口大小 */
-  resizeWindow: (windowId: string, size: { width: number; height: number }) => Promise<void>;
+  resizeWindow: (
+    windowId: string,
+    size: { width: number; height: number },
+  ) => Promise<void>
   /** 聚焦窗口 */
-  focusWindow: (windowId: string) => Promise<void>;
+  focusWindow: (windowId: string) => Promise<void>
   /** 获取窗口信息 */
-  getWindowInfo: (windowId: string) => Promise<AppInstance | null>;
+  getWindowInfo: (windowId: string) => Promise<AppInstance | null>
   /** 获取所有窗口 */
-  getAllWindows: () => AppInstance[];
+  getAllWindows: () => AppInstance[]
   /** 更新窗口状态 */
-  updateWindowState: (windowId: string, updates: Partial<AppInstance>) => void;
+  updateWindowState: (windowId: string, updates: Partial<AppInstance>) => void
 }
 
 interface WindowConfig {
   /** 窗口标题 */
-  title?: string;
+  title?: string
   /** 窗口大小 */
-  size?: { width: number; height: number };
+  size?: { width: number; height: number }
   /** 窗口位置 */
-  position?: { x: number; y: number };
+  position?: { x: number; y: number }
   /** 是否可调整大小 */
-  resizable?: boolean;
+  resizable?: boolean
   /** 是否可移动 */
-  movable?: boolean;
+  movable?: boolean
   /** 是否始终置顶 */
-  alwaysOnTop?: boolean;
+  alwaysOnTop?: boolean
   /** 是否全屏 */
-  fullscreen?: boolean;
+  fullscreen?: boolean
   /** 是否显示装饰 */
-  decorations?: boolean;
+  decorations?: boolean
   /** 透明度 */
-  transparent?: boolean;
+  transparent?: boolean
   /** 关联的工作区 ID */
-  workspaceId?: string;
+  workspaceId?: string
 }
 
 export const useWindowStore = create<WindowState & WindowActions>()(
@@ -347,8 +374,8 @@ export const useWindowStore = create<WindowState & WindowActions>()(
       mainInstanceId: null,
 
       createWindow: async (type, config = {}) => {
-        const instanceId = crypto.randomUUID();
-        const windowId = `window-${instanceId}`;
+        const instanceId = crypto.randomUUID()
+        const windowId = `window-${instanceId}`
 
         // 调用 Tauri 创建窗口
         await invoke('create_window', {
@@ -367,7 +394,7 @@ export const useWindowStore = create<WindowState & WindowActions>()(
             decorations: config.decorations !== false,
             transparent: config.transparent || false,
           },
-        });
+        })
 
         const instance: AppInstance = {
           id: instanceId,
@@ -380,124 +407,130 @@ export const useWindowStore = create<WindowState & WindowActions>()(
           isMain: get().instances.length === 0,
           isVisible: true,
           isMinimized: false,
-          position: config.position || { x: 100 + get().instances.length * 50, y: 100 + get().instances.length * 50 },
+          position: config.position || {
+            x: 100 + get().instances.length * 50,
+            y: 100 + get().instances.length * 50,
+          },
           size: config.size || { width: 1200, height: 800 },
           workspaceId: config.workspaceId,
           sessionIds: [],
           state: {},
-        };
+        }
 
         set((state) => ({
           instances: [...state.instances, instance],
           mainInstanceId: state.mainInstanceId || instance.id,
-        }));
+        }))
 
         // 通知其他实例
-        await get().notifyInstanceCreated(instance);
+        await get().notifyInstanceCreated(instance)
 
-        return instance;
+        return instance
       },
 
       closeWindow: async (windowId) => {
-        await invoke('close_window', { windowId });
+        await invoke('close_window', { windowId })
 
         set((state) => {
-          const instance = state.instances.find((i) => i.windowId === windowId);
+          const instance = state.instances.find((i) => i.windowId === windowId)
           if (instance) {
-            get().notifyInstanceClosed(instance);
+            get().notifyInstanceClosed(instance)
           }
           return {
             instances: state.instances.filter((i) => i.windowId !== windowId),
-            activeInstanceId: state.activeInstanceId === windowId ? null : state.activeInstanceId,
-          };
-        });
+            activeInstanceId:
+              state.activeInstanceId === windowId
+                ? null
+                : state.activeInstanceId,
+          }
+        })
       },
 
       activateWindow: async (windowId) => {
-        await invoke('activate_window', { windowId });
+        await invoke('activate_window', { windowId })
 
         set((state) => ({
           activeInstanceId: windowId,
           instances: state.instances.map((i) =>
-            i.windowId === windowId
-              ? { ...i, lastActiveAt: Date.now() }
-              : i
+            i.windowId === windowId ? { ...i, lastActiveAt: Date.now() } : i,
           ),
-        }));
+        }))
       },
 
       minimizeWindow: async (windowId) => {
-        await invoke('minimize_window', { windowId });
+        await invoke('minimize_window', { windowId })
 
         set((state) => ({
           instances: state.instances.map((i) =>
-            i.windowId === windowId ? { ...i, isMinimized: true } : i
+            i.windowId === windowId ? { ...i, isMinimized: true } : i,
           ),
-        }));
+        }))
       },
 
       maximizeWindow: async (windowId) => {
-        await invoke('maximize_window', { windowId });
+        await invoke('maximize_window', { windowId })
       },
 
       restoreWindow: async (windowId) => {
-        await invoke('restore_window', { windowId });
+        await invoke('restore_window', { windowId })
 
         set((state) => ({
           instances: state.instances.map((i) =>
-            i.windowId === windowId ? { ...i, isMinimized: false } : i
+            i.windowId === windowId ? { ...i, isMinimized: false } : i,
           ),
-        }));
+        }))
       },
 
       moveWindow: async (windowId, position) => {
-        await invoke('move_window', { windowId, x: position.x, y: position.y });
+        await invoke('move_window', { windowId, x: position.x, y: position.y })
 
         set((state) => ({
           instances: state.instances.map((i) =>
-            i.windowId === windowId ? { ...i, position } : i
+            i.windowId === windowId ? { ...i, position } : i,
           ),
-        }));
+        }))
       },
 
       resizeWindow: async (windowId, size) => {
-        await invoke('resize_window', { windowId, width: size.width, height: size.height });
+        await invoke('resize_window', {
+          windowId,
+          width: size.width,
+          height: size.height,
+        })
 
         set((state) => ({
           instances: state.instances.map((i) =>
-            i.windowId === windowId ? { ...i, size } : i
+            i.windowId === windowId ? { ...i, size } : i,
           ),
-        }));
+        }))
       },
 
       focusWindow: async (windowId) => {
-        await invoke('focus_window', { windowId });
+        await invoke('focus_window', { windowId })
 
         set((state) => ({
           activeInstanceId: windowId,
           instances: state.instances.map((i) =>
-            i.windowId === windowId
-              ? { ...i, lastActiveAt: Date.now() }
-              : i
+            i.windowId === windowId ? { ...i, lastActiveAt: Date.now() } : i,
           ),
-        }));
+        }))
       },
 
       getWindowInfo: async (windowId) => {
-        const info = await invoke('get_window_info', { windowId });
-        return info as AppInstance;
+        const info = await invoke('get_window_info', { windowId })
+        return info as AppInstance
       },
 
       getAllWindows: () => {
-        return get().instances;
+        return get().instances
       },
 
       updateWindowState: (windowId, updates) => {
         set((state) => ({
           instances: state.instances.map((i) =>
-            i.windowId === windowId ? { ...i, ...updates } : i
+            i.windowId === windowId ? { ...i, ...updates } : i,
           ),
-        }));
+        }))
       },
 
       notifyInstanceCreated: async (instance: AppInstance) => {
@@ -505,14 +538,14 @@ export const useWindowStore = create<WindowState & WindowActions>()(
         await invoke('broadcast_message', {
           type: 'instance-created',
           data: instance,
-        });
+        })
       },
 
       notifyInstanceClosed: async (instance: AppInstance) => {
         await invoke('broadcast_message', {
           type: 'instance-closed',
           data: instance,
-        });
+        })
       },
     }),
     {
@@ -520,9 +553,9 @@ export const useWindowStore = create<WindowState & WindowActions>()(
       partialize: (state) => ({
         instances: state.instances,
       }),
-    }
-  )
-);
+    },
+  ),
+)
 ```
 
 ---
@@ -533,43 +566,51 @@ export const useWindowStore = create<WindowState & WindowActions>()(
 
 ```typescript
 // src/services/multi-instance/WorkspaceManager.ts
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { Workspace, WorkspaceType, WorkspaceConfig } from '@/types/multi-instance';
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import type {
+  Workspace,
+  WorkspaceType,
+  WorkspaceConfig,
+} from '@/types/multi-instance'
 
 interface WorkspaceState {
   /** 所有工作区 */
-  workspaces: Workspace[];
+  workspaces: Workspace[]
   /** 当前激活的工作区 ID */
-  activeWorkspaceId: string | null;
+  activeWorkspaceId: string | null
   /** 工作区筛选 */
   filter: {
-    type?: WorkspaceType;
-    search?: string;
-  };
+    type?: WorkspaceType
+    search?: string
+  }
 }
 
 interface WorkspaceActions {
   /** 创建工作区 */
-  createWorkspace: (name: string, type: WorkspaceType, config?: WorkspaceConfig) => Workspace;
+  createWorkspace: (
+    name: string,
+    type: WorkspaceType,
+    config?: WorkspaceConfig,
+  ) => Workspace
   /** 更新工作区 */
-  updateWorkspace: (workspaceId: string, updates: Partial<Workspace>) => void;
+  updateWorkspace: (workspaceId: string, updates: Partial<Workspace>) => void
   /** 删除工作区 */
-  deleteWorkspace: (workspaceId: string) => void;
+  deleteWorkspace: (workspaceId: string) => void
   /** 激活工作区 */
-  activateWorkspace: (workspaceId: string) => void;
+  activateWorkspace: (workspaceId: string) => void
   /** 复制工作区 */
-  duplicateWorkspace: (workspaceId: string) => Workspace;
+  duplicateWorkspace: (workspaceId: string) => Workspace
   /** 导出工作区 */
-  exportWorkspace: (workspaceId: string) => Promise<string>;
+  exportWorkspace: (workspaceId: string) => Promise<string>
   /** 导入工作区 */
-  importWorkspace: (data: string) => Workspace;
+  importWorkspace: (data: string) => Workspace
   /** 更新筛选 */
-  updateFilter: (filter: Partial<WorkspaceState['filter']>) => void;
+  updateFilter: (filter: Partial<WorkspaceState['filter']>) => void
   /** 添加会话到工作区 */
-  addSessionToWorkspace: (workspaceId: string, sessionId: string) => void;
+  addSessionToWorkspace: (workspaceId: string, sessionId: string) => void
   /** 从工作区移除会话 */
-  removeSessionFromWorkspace: (workspaceId: string, sessionId: string) => void;
+  removeSessionFromWorkspace: (workspaceId: string, sessionId: string) => void
 }
 
 export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
@@ -590,13 +631,13 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
           sessions: [],
           windowIds: [],
           isActive: false,
-        };
+        }
 
         set((state) => ({
           workspaces: [...state.workspaces, workspace],
-        }));
+        }))
 
-        return workspace;
+        return workspace
       },
 
       updateWorkspace: (workspaceId, updates) => {
@@ -604,17 +645,19 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
           workspaces: state.workspaces.map((w) =>
             w.id === workspaceId
               ? { ...w, ...updates, updatedAt: Date.now() }
-              : w
+              : w,
           ),
-        }));
+        }))
       },
 
       deleteWorkspace: (workspaceId) => {
         set((state) => ({
           workspaces: state.workspaces.filter((w) => w.id !== workspaceId),
           activeWorkspaceId:
-            state.activeWorkspaceId === workspaceId ? null : state.activeWorkspaceId,
-        }));
+            state.activeWorkspaceId === workspaceId
+              ? null
+              : state.activeWorkspaceId,
+        }))
       },
 
       activateWorkspace: (workspaceId) => {
@@ -624,15 +667,15 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
             ...w,
             isActive: w.id === workspaceId,
           })),
-        }));
+        }))
       },
 
       duplicateWorkspace: (workspaceId) => {
-        const { workspaces } = get();
-        const original = workspaces.find((w) => w.id === workspaceId);
+        const { workspaces } = get()
+        const original = workspaces.find((w) => w.id === workspaceId)
 
         if (!original) {
-          throw new Error('Workspace not found');
+          throw new Error('Workspace not found')
         }
 
         const duplicated: Workspace = {
@@ -644,44 +687,44 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
           sessions: [],
           windowIds: [],
           isActive: false,
-        };
+        }
 
         set((state) => ({
           workspaces: [...state.workspaces, duplicated],
-        }));
+        }))
 
-        return duplicated;
+        return duplicated
       },
 
       exportWorkspace: async (workspaceId) => {
-        const { workspaces } = get();
-        const workspace = workspaces.find((w) => w.id === workspaceId);
+        const { workspaces } = get()
+        const workspace = workspaces.find((w) => w.id === workspaceId)
 
         if (!workspace) {
-          throw new Error('Workspace not found');
+          throw new Error('Workspace not found')
         }
 
-        return JSON.stringify(workspace, null, 2);
+        return JSON.stringify(workspace, null, 2)
       },
 
       importWorkspace: (data) => {
-        const workspace = JSON.parse(data);
-        workspace.id = crypto.randomUUID();
-        workspace.createdAt = Date.now();
-        workspace.updatedAt = Date.now();
-        workspace.isActive = false;
+        const workspace = JSON.parse(data)
+        workspace.id = crypto.randomUUID()
+        workspace.createdAt = Date.now()
+        workspace.updatedAt = Date.now()
+        workspace.isActive = false
 
         set((state) => ({
           workspaces: [...state.workspaces, workspace],
-        }));
+        }))
 
-        return workspace;
+        return workspace
       },
 
       updateFilter: (filter) => {
         set((state) => ({
           filter: { ...state.filter, ...filter },
-        }));
+        }))
       },
 
       addSessionToWorkspace: (workspaceId, sessionId) => {
@@ -693,9 +736,9 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
                   sessions: [...w.sessions, { id: sessionId } as any],
                   updatedAt: Date.now(),
                 }
-              : w
+              : w,
           ),
-        }));
+        }))
       },
 
       removeSessionFromWorkspace: (workspaceId, sessionId) => {
@@ -707,9 +750,9 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
                   sessions: w.sessions.filter((s) => s.id !== sessionId),
                   updatedAt: Date.now(),
                 }
-              : w
+              : w,
           ),
-        }));
+        }))
       },
     }),
     {
@@ -717,9 +760,9 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
       partialize: (state) => ({
         workspaces: state.workspaces,
       }),
-    }
-  )
-);
+    },
+  ),
+)
 ```
 
 ---
@@ -730,42 +773,47 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
 
 ```typescript
 // src/services/multi-instance/SessionManager.ts
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { Session, SessionType, SessionData } from '@/types/multi-instance';
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import type { Session, SessionType, SessionData } from '@/types/multi-instance'
 
 interface SessionState {
   /** 所有会话 */
-  sessions: Session[];
+  sessions: Session[]
   /** 当前激活的会话 ID */
-  activeSessionId: string | null;
+  activeSessionId: string | null
   /** 会话筛选 */
   filter: {
-    type?: SessionType;
-    workspaceId?: string;
-    status?: Session['status'];
-  };
+    type?: SessionType
+    workspaceId?: string
+    status?: Session['status']
+  }
 }
 
 interface SessionActions {
   /** 创建会话 */
-  createSession: (name: string, type: SessionType, workspaceId: string, data?: SessionData) => Session;
+  createSession: (
+    name: string,
+    type: SessionType,
+    workspaceId: string,
+    data?: SessionData,
+  ) => Session
   /** 更新会话 */
-  updateSession: (sessionId: string, updates: Partial<Session>) => void;
+  updateSession: (sessionId: string, updates: Partial<Session>) => void
   /** 删除会话 */
-  deleteSession: (sessionId: string) => void;
+  deleteSession: (sessionId: string) => void
   /** 激活会话 */
-  activateSession: (sessionId: string) => void;
+  activateSession: (sessionId: string) => void
   /** 暂停会话 */
-  suspendSession: (sessionId: string) => void;
+  suspendSession: (sessionId: string) => void
   /** 恢复会话 */
-  resumeSession: (sessionId: string) => void;
+  resumeSession: (sessionId: string) => void
   /** 更新会话数据 */
-  updateSessionData: (sessionId: string, data: Partial<SessionData>) => void;
+  updateSessionData: (sessionId: string, data: Partial<SessionData>) => void
   /** 更新筛选 */
-  updateFilter: (filter: Partial<SessionState['filter']>) => void;
+  updateFilter: (filter: Partial<SessionState['filter']>) => void
   /** 获取工作区的会话 */
-  getWorkspaceSessions: (workspaceId: string) => Session[];
+  getWorkspaceSessions: (workspaceId: string) => Session[]
 }
 
 export const useSessionStore = create<SessionState & SessionActions>()(
@@ -786,13 +834,13 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           data,
           workspaceId,
           windowId: '',
-        };
+        }
 
         set((state) => ({
           sessions: [...state.sessions, session],
-        }));
+        }))
 
-        return session;
+        return session
       },
 
       updateSession: (sessionId, updates) => {
@@ -800,9 +848,9 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           sessions: state.sessions.map((s) =>
             s.id === sessionId
               ? { ...s, ...updates, updatedAt: Date.now() }
-              : s
+              : s,
           ),
-        }));
+        }))
       },
 
       deleteSession: (sessionId) => {
@@ -810,32 +858,32 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           sessions: state.sessions.filter((s) => s.id !== sessionId),
           activeSessionId:
             state.activeSessionId === sessionId ? null : state.activeSessionId,
-        }));
+        }))
       },
 
       activateSession: (sessionId) => {
         set((state) => ({
           activeSessionId: sessionId,
           sessions: state.sessions.map((s) =>
-            s.id === sessionId ? { ...s, status: 'active' as const } : s
+            s.id === sessionId ? { ...s, status: 'active' as const } : s,
           ),
-        }));
+        }))
       },
 
       suspendSession: (sessionId) => {
         set((state) => ({
           sessions: state.sessions.map((s) =>
-            s.id === sessionId ? { ...s, status: 'suspended' as const } : s
+            s.id === sessionId ? { ...s, status: 'suspended' as const } : s,
           ),
-        }));
+        }))
       },
 
       resumeSession: (sessionId) => {
         set((state) => ({
           sessions: state.sessions.map((s) =>
-            s.id === sessionId ? { ...s, status: 'active' as const } : s
+            s.id === sessionId ? { ...s, status: 'active' as const } : s,
           ),
-        }));
+        }))
       },
 
       updateSessionData: (sessionId, data) => {
@@ -843,19 +891,19 @@ export const useSessionStore = create<SessionState & SessionActions>()(
           sessions: state.sessions.map((s) =>
             s.id === sessionId
               ? { ...s, data: { ...s.data, ...data }, updatedAt: Date.now() }
-              : s
+              : s,
           ),
-        }));
+        }))
       },
 
       updateFilter: (filter) => {
         set((state) => ({
           filter: { ...state.filter, ...filter },
-        }));
+        }))
       },
 
       getWorkspaceSessions: (workspaceId) => {
-        return get().sessions.filter((s) => s.workspaceId === workspaceId);
+        return get().sessions.filter((s) => s.workspaceId === workspaceId)
       },
     }),
     {
@@ -863,9 +911,9 @@ export const useSessionStore = create<SessionState & SessionActions>()(
       partialize: (state) => ({
         sessions: state.sessions,
       }),
-    }
-  )
-);
+    },
+  ),
+)
 ```
 
 ---
@@ -876,20 +924,23 @@ export const useSessionStore = create<SessionState & SessionActions>()(
 
 ```typescript
 // src/services/multi-instance/IPCManager.ts
-import { invoke } from '@tauri-apps/api/tauri';
-import { listen } from '@tauri-apps/api/event';
-import type { IPCMessage, IPCMessageType } from '@/types/multi-instance';
+import { invoke } from '@tauri-apps/api/tauri'
+import { listen } from '@tauri-apps/api/event'
+import type { IPCMessage, IPCMessageType } from '@/types/multi-instance'
 
 /**
  * IPC 通信管理器类
  */
 export class IPCManager {
-  private messageHandlers: Map<IPCMessageType, Set<(message: IPCMessage) => void>> = new Map();
-  private instanceId: string;
+  private messageHandlers: Map<
+    IPCMessageType,
+    Set<(message: IPCMessage) => void>
+  > = new Map()
+  private instanceId: string
 
   constructor() {
-    this.instanceId = crypto.randomUUID();
-    this.initializeListeners();
+    this.instanceId = crypto.randomUUID()
+    this.initializeListeners()
   }
 
   /**
@@ -898,46 +949,49 @@ export class IPCManager {
   private async initializeListeners(): Promise<void> {
     // 监听来自其他实例的消息
     await listen<IPCMessage>('ipc-message', (event) => {
-      const message = event.payload;
-      this.handleMessage(message);
-    });
+      const message = event.payload
+      this.handleMessage(message)
+    })
 
     // 监听实例创建事件
     await listen<AppInstance>('instance-created', (event) => {
-      console.log('New instance created:', event.payload);
-    });
+      console.log('New instance created:', event.payload)
+    })
 
     // 监听实例关闭事件
     await listen<AppInstance>('instance-closed', (event) => {
-      console.log('Instance closed:', event.payload);
-    });
+      console.log('Instance closed:', event.payload)
+    })
   }
 
   /**
    * 处理消息
    */
   private handleMessage(message: IPCMessage): void {
-    const handlers = this.messageHandlers.get(message.type);
+    const handlers = this.messageHandlers.get(message.type)
 
     if (handlers) {
-      handlers.forEach((handler) => handler(message));
+      handlers.forEach((handler) => handler(message))
     }
   }
 
   /**
    * 注册消息处理器
    */
-  on(messageType: IPCMessageType, handler: (message: IPCMessage) => void): () => void {
+  on(
+    messageType: IPCMessageType,
+    handler: (message: IPCMessage) => void,
+  ): () => void {
     if (!this.messageHandlers.has(messageType)) {
-      this.messageHandlers.set(messageType, new Set());
+      this.messageHandlers.set(messageType, new Set())
     }
 
-    this.messageHandlers.get(messageType)!.add(handler);
+    this.messageHandlers.get(messageType)!.add(handler)
 
     // 返回取消订阅函数
     return () => {
-      this.messageHandlers.get(messageType)?.delete(handler);
-    };
+      this.messageHandlers.get(messageType)?.delete(handler)
+    }
   }
 
   /**
@@ -950,9 +1004,9 @@ export class IPCManager {
       senderId: this.instanceId,
       data,
       timestamp: Date.now(),
-    };
+    }
 
-    await invoke('broadcast_message', { message });
+    await invoke('broadcast_message', { message })
   }
 
   /**
@@ -961,7 +1015,7 @@ export class IPCManager {
   async sendToInstance(
     instanceId: string,
     type: IPCMessageType,
-    data: any
+    data: any,
   ): Promise<void> {
     const message: IPCMessage = {
       id: crypto.randomUUID(),
@@ -970,20 +1024,20 @@ export class IPCManager {
       receiverId: instanceId,
       data,
       timestamp: Date.now(),
-    };
+    }
 
-    await invoke('send_to_instance', { message });
+    await invoke('send_to_instance', { message })
   }
 
   /**
    * 获取当前实例 ID
    */
   getInstanceId(): string {
-    return this.instanceId;
+    return this.instanceId
   }
 }
 
-export const ipcManager = new IPCManager();
+export const ipcManager = new IPCManager()
 ```
 
 ---
@@ -1016,8 +1070,8 @@ export const ipcManager = new IPCManager();
 
 ## 🔄 版本历史
 
-| 版本 | 日期 | 变更内容 | 作者 |
-|------|------|----------|------|
+| 版本   | 日期       | 变更内容                   | 作者                |
+| ------ | ---------- | -------------------------- | ------------------- |
 | v1.0.0 | 2026-03-17 | 初始版本，建立应用多开功能 | YanYuCloudCube Team |
 
 ---
@@ -1031,9 +1085,9 @@ export const ipcManager = new IPCManager();
 
 <div align="center">
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 </div>

@@ -1,16 +1,16 @@
 # YYC³ AI Management 完整提示词系统
 
-> ***YanYuCloudCube***
-> *言启象限 | 语枢未来*
-> ***Words Initiate Quadrants, Language Serves as Core for Future***
-> *万象归元于云枢 | 深栈智启新纪元*
-> ***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_YanYuCloudCube_**
+> _言启象限 | 语枢未来_
+> **_Words Initiate Quadrants, Language Serves as Core for Future_**
+> _万象归元于云枢 | 深栈智启新纪元_
+> **_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**
 
 ---
 
-## 📋 完整 Prompt 
+## 📋 完整 Prompt
 
-```text
+````text
 You are a senior full‑stack architect and code generator with deep expertise in modern web development, desktop application architecture, and AI-powered development tools.
 
 ## Your Role & Expertise
@@ -116,20 +116,20 @@ The application must implement a **comprehensive AI service layer** that support
 export interface AIServiceConfig {
   // Provider configuration (supports dynamic add/remove)
   providers: AIProviderConfig[];
-  
+
   // Currently active provider
   activeProvider: string;
-  
+
   // Currently active model
   activeModel: string;
-  
+
   // Cache configuration
   cache: {
     enabled: boolean;          // Enable caching
     ttl: number;              // Cache time (seconds)
     maxSize: number;          // Max cache entries
   };
-  
+
   // Rate limiting
   rateLimit: {
     enabled: boolean;          // Enable rate limiting
@@ -137,7 +137,7 @@ export interface AIServiceConfig {
     retryAttempts: number;     // Retry attempts
     backoffMultiplier: number; // Backoff multiplier
   };
-  
+
   // Intelligent detection configuration
   detection: {
     enabled: boolean;          // Enable intelligent detection
@@ -226,7 +226,7 @@ export interface AIService {
   removeProvider(providerId: string): Promise<void>;
   enableProvider(providerId: string): Promise<void>;
   disableProvider(providerId: string): Promise<void>;
-  
+
   // Model management
   listModels(providerId: string): Promise<AIModelConfig[]>;
   addModel(providerId: string, model: AIModelConfig): Promise<void>;
@@ -234,28 +234,28 @@ export interface AIService {
   removeModel(providerId: string, modelId: string): Promise<void>;
   enableModel(providerId: string, modelId: string): Promise<void>;
   disableModel(providerId: string, modelId: string): Promise<void>;
-  
+
   // API key management
   setApiKey(providerId: string, apiKey: string): Promise<void>;
   getApiKey(providerId: string): Promise<string>;
   validateApiKey(providerId: string): Promise<boolean>;
-  
+
   // One-click API acquisition
   getApiKeyURL(providerId: string): Promise<string>;
   openApiKeyPage(providerId: string): Promise<void>;
-  
+
   // Intelligent detection
   detectBestProvider(): Promise<AIProviderConfig>;
   detectBestModel(providerId: string): Promise<AIModelConfig>;
   monitorPerformance(): Promise<PerformanceMetrics[]>;
   analyzeErrors(): Promise<ErrorAnalysis[]>;
-  
+
   // Chat functionality
   chat(messages: ChatMessage[], options?: ChatOptions): Promise<ChatResponse>;
-  
+
   // Embedding functionality
   embed(text: string, options?: EmbedOptions): Promise<number[]>;
-  
+
   // Streaming chat
   chatStream(messages: ChatMessage[], options?: ChatOptions): AsyncIterable<ChatStreamChunk>;
 }
@@ -310,7 +310,7 @@ export interface EmbedOptions {
   model?: string;
   dimensions?: number;
 }
-```
+````
 
 ### AI Service Implementation
 
@@ -325,23 +325,23 @@ export class AIServiceImpl implements AIService {
   private errorHistory: ErrorAnalysis[] = [];
   private rateLimitTracker: Map<string, { count: number; resetTime: number }> = new Map();
   private costTracker: Map<string, { inputTokens: number; outputTokens: number; cost: number }> = new Map();
-  
+
   constructor(config: AIServiceConfig) {
     this.config = config;
     this.cache = new Map();
     this.loadConfig();
   }
-  
+
   // Provider management
   async listProviders(): Promise<AIProviderConfig[]> {
     return this.config.providers.filter(p => p.enabled);
   }
-  
+
   async addProvider(provider: AIProviderConfig): Promise<void> {
     this.config.providers.push(provider);
     await this.saveConfig();
   }
-  
+
   async editProvider(provider: AIProviderConfig): Promise<void> {
     const index = this.config.providers.findIndex(p => p.id === provider.id);
     if (index !== -1) {
@@ -349,12 +349,12 @@ export class AIServiceImpl implements AIService {
       await this.saveConfig();
     }
   }
-  
+
   async removeProvider(providerId: string): Promise<void> {
     this.config.providers = this.config.providers.filter(p => p.id !== providerId);
     await this.saveConfig();
   }
-  
+
   async enableProvider(providerId: string): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider) {
@@ -362,7 +362,7 @@ export class AIServiceImpl implements AIService {
       await this.saveConfig();
     }
   }
-  
+
   async disableProvider(providerId: string): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider) {
@@ -370,13 +370,13 @@ export class AIServiceImpl implements AIService {
       await this.saveConfig();
     }
   }
-  
+
   // Model management
   async listModels(providerId: string): Promise<AIModelConfig[]> {
     const provider = this.config.providers.find(p => p.id === providerId);
     return provider?.models.filter(m => m.enabled) || [];
   }
-  
+
   async addModel(providerId: string, model: AIModelConfig): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider) {
@@ -384,7 +384,7 @@ export class AIServiceImpl implements AIService {
       await this.saveConfig();
     }
   }
-  
+
   async editModel(providerId: string, model: AIModelConfig): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider) {
@@ -395,7 +395,7 @@ export class AIServiceImpl implements AIService {
       }
     }
   }
-  
+
   async removeModel(providerId: string, modelId: string): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider) {
@@ -403,7 +403,7 @@ export class AIServiceImpl implements AIService {
       await this.saveConfig();
     }
   }
-  
+
   async enableModel(providerId: string, modelId: string): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider) {
@@ -414,7 +414,7 @@ export class AIServiceImpl implements AIService {
       }
     }
   }
-  
+
   async disableModel(providerId: string, modelId: string): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider) {
@@ -425,7 +425,7 @@ export class AIServiceImpl implements AIService {
       }
     }
   }
-  
+
   // API key management
   async setApiKey(providerId: string, apiKey: string): Promise<void> {
     const provider = this.config.providers.find(p => p.id === providerId);
@@ -436,7 +436,7 @@ export class AIServiceImpl implements AIService {
       await this.saveConfig();
     }
   }
-  
+
   async getApiKey(providerId: string): Promise<string> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (provider && provider.apiKey) {
@@ -444,42 +444,42 @@ export class AIServiceImpl implements AIService {
     }
     return '';
   }
-  
+
   async validateApiKey(providerId: string): Promise<boolean> {
     try {
       const provider = this.config.providers.find(p => p.id === providerId);
       if (!provider) return false;
-      
+
       // Test API key with a simple request
       const response = await fetch(`${provider.baseURL}/models`, {
         headers: {
           'Authorization': `Bearer ${await this.getApiKey(providerId)}`
         }
       });
-      
+
       return response.ok;
     } catch (error) {
       return false;
     }
   }
-  
+
   // One-click API acquisition
   async getApiKeyURL(providerId: string): Promise<string> {
     const provider = this.config.providers.find(p => p.id === providerId);
     return provider?.apiKeyURL || '';
   }
-  
+
   async openApiKeyPage(providerId: string): Promise<void> {
     const url = await this.getApiKeyURL(providerId);
     if (url) {
       await open(url);
     }
   }
-  
+
   // Intelligent detection
   async detectBestProvider(): Promise<AIProviderConfig> {
     const metrics = await this.monitorPerformance();
-    
+
     // Calculate score for each provider
     const scores = metrics.reduce((acc, metric) => {
       if (!acc[metric.providerId]) {
@@ -490,52 +490,52 @@ export class AIServiceImpl implements AIService {
           requestCount: 0
         };
       }
-      
+
       const provider = acc[metric.providerId];
       provider.totalLatency += metric.latency;
       provider.totalThroughput += metric.throughput;
       provider.successRate += metric.successRate;
       provider.requestCount += metric.totalRequests;
-      
+
       return acc;
     }, {} as Record<string, any>);
-    
+
     // Find provider with best score
     let bestProvider: AIProviderConfig | null = null;
     let bestScore = -1;
-    
+
     for (const [providerId, score] of Object.entries(scores)) {
       const avgLatency = score.totalLatency / score.requestCount;
       const avgThroughput = score.totalThroughput / score.requestCount;
       const avgSuccessRate = score.successRate / score.requestCount;
-      
+
       // Calculate composite score (lower latency is better, higher throughput and success rate are better)
       const compositeScore = (avgThroughput * 0.4 + avgSuccessRate * 0.4) - (avgLatency / 10000 * 0.2);
-      
+
       if (compositeScore > bestScore) {
         bestScore = compositeScore;
         bestProvider = this.config.providers.find(p => p.id === providerId) || null;
       }
     }
-    
+
     return bestProvider || this.config.providers[0];
   }
-  
+
   async detectBestModel(providerId: string): Promise<AIModelConfig> {
     const provider = this.config.providers.find(p => p.id === providerId);
     if (!provider) {
       throw new Error(`Provider ${providerId} not found`);
     }
-    
+
     const metrics = this.performanceMetrics.filter(m => m.providerId === providerId);
-    
+
     // Find model with best performance
     let bestModel: AIModelConfig | null = null;
     let bestScore = -1;
-    
+
     for (const model of provider.models) {
       if (!model.enabled) continue;
-      
+
       const modelMetrics = metrics.filter(m => m.modelId === model.id);
       if (modelMetrics.length === 0) {
         // No metrics yet, use benchmark data
@@ -551,7 +551,7 @@ export class AIServiceImpl implements AIService {
         const avgLatency = modelMetrics.reduce((sum, m) => sum + m.latency, 0) / modelMetrics.length;
         const avgThroughput = modelMetrics.reduce((sum, m) => sum + m.throughput, 0) / modelMetrics.length;
         const avgSuccessRate = modelMetrics.reduce((sum, m) => sum + m.successRate, 0) / modelMetrics.length;
-        
+
         const score = (avgThroughput * 0.4 + avgSuccessRate * 0.4) - (avgLatency / 10000 * 0.2);
         if (score > bestScore) {
           bestScore = score;
@@ -559,22 +559,22 @@ export class AIServiceImpl implements AIService {
         }
       }
     }
-    
+
     return bestModel || provider.models[0];
   }
-  
+
   async monitorPerformance(): Promise<PerformanceMetrics[]> {
     // Return recent performance metrics
     const oneHourAgo = Date.now() - 60 * 60 * 1000;
     return this.performanceMetrics.filter(m => m.timestamp >= oneHourAgo);
   }
-  
+
   async analyzeErrors(): Promise<ErrorAnalysis[]> {
     // Analyze recent errors
     const oneHourAgo = Date.now() - 60 * 60 * 1000;
     return this.errorHistory.filter(e => e.timestamp >= oneHourAgo);
   }
-  
+
   // Configuration management
   private async loadConfig(): Promise<void> {
     try {
@@ -586,7 +586,7 @@ export class AIServiceImpl implements AIService {
       console.error('Failed to load AI config:', error);
     }
   }
-  
+
   private async saveConfig(): Promise<void> {
     try {
       await invoke('save_ai_config', { config: JSON.stringify(this.config) });
@@ -594,7 +594,7 @@ export class AIServiceImpl implements AIService {
       console.error('Failed to save AI config:', error);
     }
   }
-  
+
   // API key encryption/decryption
   private async encryptApiKey(apiKey: string): Promise<string> {
     try {
@@ -614,7 +614,7 @@ export class AIServiceImpl implements AIService {
       throw new Error('API key encryption failed');
     }
   }
-  
+
   private async decryptApiKey(encryptedKey: string): Promise<string> {
     try {
       const key = await this.getEncryptionKey();
@@ -630,7 +630,7 @@ export class AIServiceImpl implements AIService {
       throw new Error('API key decryption failed');
     }
   }
-  
+
   private async getEncryptionKey(): Promise<CryptoKey> {
     try {
       const keyData = await invoke('get_encryption_key');
@@ -646,17 +646,17 @@ export class AIServiceImpl implements AIService {
       throw new Error('Encryption key retrieval failed');
     }
   }
-  
+
   // Rate limiting
   private async checkRateLimit(providerId: string, modelId: string): Promise<boolean> {
     if (!this.config.rateLimit.enabled) {
       return true;
     }
-    
+
     const key = `${providerId}:${modelId}`;
     const tracker = this.rateLimitTracker.get(key);
     const now = Date.now();
-    
+
     if (!tracker || now > tracker.resetTime) {
       this.rateLimitTracker.set(key, {
         count: 1,
@@ -664,45 +664,45 @@ export class AIServiceImpl implements AIService {
       });
       return true;
     }
-    
+
     if (tracker.count >= this.config.rateLimit.requestsPerMinute) {
       return false;
     }
-    
+
     tracker.count++;
     return true;
   }
-  
+
   // Cost tracking
   private trackCost(providerId: string, modelId: string, inputTokens: number, outputTokens: number): void {
     const key = `${providerId}:${modelId}`;
     const provider = this.config.providers.find(p => p.id === providerId);
-    
+
     if (!provider?.pricing) {
       return;
     }
-    
+
     const inputCost = (inputTokens / 1000) * provider.pricing.inputPrice;
     const outputCost = (outputTokens / 1000) * provider.pricing.outputPrice;
     const totalCost = inputCost + outputCost;
-    
+
     const tracker = this.costTracker.get(key) || {
       inputTokens: 0,
       outputTokens: 0,
       cost: 0
     };
-    
+
     tracker.inputTokens += inputTokens;
     tracker.outputTokens += outputTokens;
     tracker.cost += totalCost;
-    
+
     this.costTracker.set(key, tracker);
   }
-  
+
   getCostReport(): Map<string, { inputTokens: number; outputTokens: number; cost: number }> {
     return new Map(this.costTracker);
   }
-  
+
   // API request with retry and fallback
   private async makeAPIRequest(
     provider: AIProviderConfig,
@@ -712,16 +712,16 @@ export class AIServiceImpl implements AIService {
     retryCount: number = 0
   ): Promise<ChatResponse> {
     const maxRetries = this.config.rateLimit.retryAttempts;
-    
+
     try {
       const apiKey = await this.getApiKey(provider.id);
-      
+
       // Check rate limit
       const rateLimitOk = await this.checkRateLimit(provider.id, model.id);
       if (!rateLimitOk) {
         throw new Error('Rate limit exceeded');
       }
-      
+
       // Make API request
       const response = await fetch(`${provider.baseURL}/chat/completions`, {
         method: 'POST',
@@ -739,19 +739,19 @@ export class AIServiceImpl implements AIService {
           presence_penalty: options?.presencePenalty ?? model.parameters.presencePenalty
         })
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(`API request failed: ${response.status} ${response.statusText} - ${JSON.stringify(errorData)}`);
       }
-      
+
       const data = await response.json();
-      
+
       // Track cost
       if (data.usage) {
         this.trackCost(provider.id, model.id, data.usage.prompt_tokens, data.usage.completion_tokens);
       }
-      
+
       return {
         id: data.id,
         model: model.name,
@@ -767,14 +767,14 @@ export class AIServiceImpl implements AIService {
     } catch (error) {
       // Record error
       await this.recordError(provider.id, model.id, error);
-      
+
       // Retry logic
       if (retryCount < maxRetries) {
         const backoffTime = Math.pow(this.config.rateLimit.backoffMultiplier, retryCount) * 1000;
         await new Promise(resolve => setTimeout(resolve, backoffTime));
         return this.makeAPIRequest(provider, model, messages, options, retryCount + 1);
       }
-      
+
       // Fallback to alternative provider
       if (this.config.detection.enabled) {
         const alternativeProvider = await this.findAlternativeProvider(provider.id);
@@ -784,36 +784,36 @@ export class AIServiceImpl implements AIService {
           return this.makeAPIRequest(alternativeProvider, alternativeModel, messages, options);
         }
       }
-      
+
       throw error;
     }
   }
-  
+
   // Find alternative provider
   private async findAlternativeProvider(excludeProviderId: string): Promise<AIProviderConfig | null> {
-    const enabledProviders = this.config.providers.filter(p => 
+    const enabledProviders = this.config.providers.filter(p =>
       p.enabled && p.id !== excludeProviderId
     );
-    
+
     if (enabledProviders.length === 0) {
       return null;
     }
-    
+
     // Select provider with best performance
     const metrics = await this.monitorPerformance();
     const providerMetrics = metrics.filter(m => m.providerId !== excludeProviderId);
-    
+
     if (providerMetrics.length === 0) {
       return enabledProviders[0];
     }
-    
-    const bestProviderId = providerMetrics.reduce((best, current) => 
+
+    const bestProviderId = providerMetrics.reduce((best, current) =>
       current.successRate > best.successRate ? current : best
     ).providerId;
-    
+
     return enabledProviders.find(p => p.id === bestProviderId) || enabledProviders[0];
   }
-  
+
   // Performance metrics recording
   private recordPerformanceMetrics(
     providerId: string,
@@ -825,7 +825,7 @@ export class AIServiceImpl implements AIService {
     const existingMetrics = this.performanceMetrics.find(
       m => m.providerId === providerId && m.modelId === modelId
     );
-    
+
     if (existingMetrics) {
       existingMetrics.timestamp = Date.now();
       existingMetrics.latency = latency;
@@ -845,23 +845,23 @@ export class AIServiceImpl implements AIService {
         totalRequests: 1
       });
     }
-    
+
     // Keep only recent metrics (last 24 hours)
     const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
     this.performanceMetrics = this.performanceMetrics.filter(m => m.timestamp >= oneDayAgo);
   }
-  
+
   // Error recording
   private async recordError(providerId: string, modelId: string, error: any): Promise<void> {
     const errorType = this.classifyError(error);
     const errorMessage = error.message || 'Unknown error';
-    
+
     const existingError = this.errorHistory.find(
-      e => e.providerId === providerId && 
-           e.modelId === modelId && 
+      e => e.providerId === providerId &&
+           e.modelId === modelId &&
            e.errorType === errorType
     );
-    
+
     if (existingError) {
       existingError.timestamp = Date.now();
       existingError.count++;
@@ -876,16 +876,16 @@ export class AIServiceImpl implements AIService {
         suggestions: this.getErrorSuggestions(errorType)
       });
     }
-    
+
     // Keep only recent errors (last 24 hours)
     const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
     this.errorHistory = this.errorHistory.filter(e => e.timestamp >= oneDayAgo);
   }
-  
+
   // Error classification
   private classifyError(error: any): ErrorAnalysis['errorType'] {
     const message = error.message?.toLowerCase() || '';
-    
+
     if (message.includes('network') || message.includes('fetch') || message.includes('econnrefused')) {
       return 'network';
     }
@@ -900,7 +900,7 @@ export class AIServiceImpl implements AIService {
     }
     return 'unknown';
   }
-  
+
   // Error suggestions
   private getErrorSuggestions(errorType: ErrorAnalysis['errorType']): string[] {
     const suggestions: Record<ErrorAnalysis['errorType'], string[]> = {
@@ -935,33 +935,33 @@ export class AIServiceImpl implements AIService {
         '尝试重启应用程序'
       ]
     };
-    
+
     return suggestions[errorType] || suggestions.unknown;
   }
-  
+
   // Cache key generation
   private getCacheKey(messages: ChatMessage[], options?: ChatOptions): string {
     const content = JSON.stringify({ messages, options });
     return crypto.subtle.digest('SHA-256', new TextEncoder().encode(content))
       .then(hash => Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join(''));
   }
-  
+
   // Cache cleanup
   private cleanupCache(): void {
     if (!this.config.cache.enabled) {
       this.cache.clear();
       return;
     }
-    
+
     const now = Date.now();
     const ttl = this.config.cache.ttl * 1000;
-    
+
     for (const [key, value] of this.cache.entries()) {
       if (now - value.timestamp > ttl) {
         this.cache.delete(key);
       }
     }
-    
+
     // Limit cache size
     while (this.cache.size > this.config.cache.maxSize) {
       const oldestKey = Array.from(this.cache.entries())
@@ -969,22 +969,22 @@ export class AIServiceImpl implements AIService {
       this.cache.delete(oldestKey);
     }
   }
-  
+
   // Chat functionality
   async chat(messages: ChatMessage[], options?: ChatOptions): Promise<ChatResponse> {
     const providerId = options?.model || this.config.activeProvider;
     const modelId = options?.model || this.config.activeModel;
-    
+
     const provider = this.config.providers.find(p => p.id === providerId);
     if (!provider) {
       throw new Error(`Provider ${providerId} not found`);
     }
-    
+
     const model = provider.models.find(m => m.id === modelId);
     if (!model) {
       throw new Error(`Model ${modelId} not found`);
     }
-    
+
     // Check cache
     const cacheKey = await this.getCacheKey(messages, options);
     if (this.config.cache.enabled && this.cache.has(cacheKey)) {
@@ -993,16 +993,16 @@ export class AIServiceImpl implements AIService {
         return cached.data;
       }
     }
-    
+
     try {
       const startTime = Date.now();
-      
+
       // Make API request
       const response = await this.makeAPIRequest(provider, model, messages, options);
-      
+
       const endTime = Date.now();
       const latency = endTime - startTime;
-      
+
       // Record performance metrics
       this.recordPerformanceMetrics(
         providerId,
@@ -1011,7 +1011,7 @@ export class AIServiceImpl implements AIService {
         true,
         response.usage.totalTokens
       );
-      
+
       // Cache response
       if (this.config.cache.enabled) {
         this.cache.set(cacheKey, {
@@ -1020,65 +1020,65 @@ export class AIServiceImpl implements AIService {
         });
         this.cleanupCache();
       }
-      
+
       return response;
     } catch (error) {
       // Record error
       await this.recordError(providerId, modelId, error);
-      
+
       // Re-throw error
       throw error;
     }
   }
-  
+
   // Embedding functionality
   async embed(text: string, options?: EmbedOptions): Promise<number[]> {
     const providerId = this.config.activeProvider;
     const provider = this.config.providers.find(p => p.id === providerId);
-    
+
     if (!provider) {
       throw new Error(`Provider ${providerId} not found`);
     }
-    
+
     // Find embedding model
     const embeddingModel = provider.models.find(m => m.type === 'embedding' && m.enabled);
     if (!embeddingModel) {
       throw new Error(`No embedding model found for provider ${providerId}`);
     }
-    
+
     // Make API request
     const response = await this.makeEmbeddingRequest(provider, embeddingModel, text, options);
-    
+
     return response.embedding;
   }
-  
+
   // Streaming chat
   async *chatStream(messages: ChatMessage[], options?: ChatOptions): AsyncIterable<ChatStreamChunk> {
     const providerId = options?.model || this.config.activeProvider;
     const modelId = options?.model || this.config.activeModel;
-    
+
     const provider = this.config.providers.find(p => p.id === providerId);
     if (!provider) {
       throw new Error(`Provider ${providerId} not found`);
     }
-    
+
     const model = provider.models.find(m => m.id === modelId);
     if (!model) {
       throw new Error(`Model ${modelId} not found`);
     }
-    
+
     // Make streaming API request
     const stream = await this.makeStreamingAPIRequest(provider, model, messages, options);
-    
+
     for await (const chunk of stream) {
       yield chunk;
     }
   }
-  
+
   // Helper methods
   private async makeAPIRequest(provider: AIProviderConfig, model: AIModelConfig, messages: ChatMessage[], options?: ChatOptions): Promise<ChatResponse> {
     const apiKey = await this.getApiKey(provider.id);
-    
+
     const response = await fetch(`${provider.baseURL}/chat/completions`, {
       method: 'POST',
       headers: {
@@ -1095,17 +1095,17 @@ export class AIServiceImpl implements AIService {
         presence_penalty: options?.presencePenalty ?? model.parameters.presencePenalty
       })
     });
-    
+
     if (!response.ok) {
       throw new Error(`API request failed: ${response.statusText}`);
     }
-    
+
     return await response.json();
   }
-  
+
   private async makeEmbeddingRequest(provider: AIProviderConfig, model: AIModelConfig, text: string, options?: EmbedOptions): Promise<any> {
     const apiKey = await this.getApiKey(provider.id);
-    
+
     const response = await fetch(`${provider.baseURL}/embeddings`, {
       method: 'POST',
       headers: {
@@ -1118,24 +1118,24 @@ export class AIServiceImpl implements AIService {
         dimensions: options?.dimensions
       })
     });
-    
+
     if (!response.ok) {
       throw new Error(`Embedding request failed: ${response.statusText}`);
     }
-    
+
     const data = await response.json();
-    
+
     // Track cost
     if (data.usage) {
       this.trackCost(provider.id, model.id, data.usage.prompt_tokens, 0);
     }
-    
+
     return data;
   }
-  
+
   private async makeStreamingAPIRequest(provider: AIProviderConfig, model: AIModelConfig, messages: ChatMessage[], options?: ChatOptions): Promise<AsyncIterable<ChatStreamChunk>> {
     const apiKey = await this.getApiKey(provider.id);
-    
+
     const response = await fetch(`${provider.baseURL}/chat/completions`, {
       method: 'POST',
       headers: {
@@ -1153,31 +1153,31 @@ export class AIServiceImpl implements AIService {
         stream: true
       })
     });
-    
+
     if (!response.ok) {
       throw new Error(`Streaming API request failed: ${response.statusText}`);
     }
-    
+
     return this.parseStreamResponse(response.body, provider.id, model.id);
   }
-  
+
   private async *parseStreamResponse(body: ReadableStream | null, providerId: string, modelId: string): AsyncIterable<ChatStreamChunk> {
     if (!body) return;
-    
+
     const reader = body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
     let totalTokens = 0;
-    
+
     try {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        
+
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split('\n');
         buffer = lines.pop() || '';
-        
+
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             const data = line.slice(6);
@@ -1185,14 +1185,14 @@ export class AIServiceImpl implements AIService {
               yield { delta: '', done: true };
               return;
             }
-            
+
             try {
               const parsed = JSON.parse(data);
               const delta = parsed.choices[0]?.delta?.content || '';
-              
+
               if (delta) {
                 totalTokens += delta.length;
-                
+
                 yield {
                   id: parsed.id,
                   model: parsed.model,
@@ -1206,10 +1206,10 @@ export class AIServiceImpl implements AIService {
           }
         }
       }
-      
+
       // Track cost for streaming
       this.trackCost(providerId, modelId, totalTokens, 0);
-      
+
     } catch (error) {
       await this.recordError(providerId, modelId, error);
       throw error;
@@ -1220,19 +1220,19 @@ export class AIServiceImpl implements AIService {
       errorCount: success ? 0 : 1,
       totalRequests: 1
     };
-    
+
     this.performanceMetrics.push(metrics);
-    
+
     // Keep only last 1000 metrics
     if (this.performanceMetrics.length > 1000) {
       this.performanceMetrics = this.performanceMetrics.slice(-1000);
     }
   }
-  
+
   private async recordError(providerId: string, modelId: string, error: any): Promise<void> {
     const errorType = this.classifyError(error);
     const suggestions = this.getErrorSuggestions(error);
-    
+
     const analysis: ErrorAnalysis = {
       providerId,
       modelId,
@@ -1242,15 +1242,15 @@ export class AIServiceImpl implements AIService {
       count: 1,
       suggestions
     };
-    
+
     this.errorHistory.push(analysis);
-    
+
     // Keep only last 1000 errors
     if (this.errorHistory.length > 1000) {
       this.errorHistory = this.errorHistory.slice(-1000);
     }
   }
-  
+
   private classifyError(error: any): ErrorAnalysis['errorType'] {
     if (error.message.includes('network') || error.message.includes('fetch')) {
       return 'network';
@@ -1266,33 +1266,33 @@ export class AIServiceImpl implements AIService {
     }
     return 'unknown';
   }
-  
+
   private getErrorSuggestions(error: any): string[] {
     const suggestions: string[] = [];
-    
+
     if (error.message.includes('rate limit')) {
       suggestions.push('降低请求频率');
       suggestions.push('考虑升级到更高级别的 API 计划');
     }
-    
+
     if (error.message.includes('authentication')) {
       suggestions.push('检查 API 密钥是否正确');
       suggestions.push('确认 API 密钥是否已激活');
       suggestions.push('尝试重新生成 API 密钥');
     }
-    
+
     if (error.message.includes('network')) {
       suggestions.push('检查网络连接');
       suggestions.push('确认 API 服务是否正常运行');
       suggestions.push('尝试使用 VPN 或代理');
     }
-    
+
     if (error.message.includes('API')) {
       suggestions.push('检查请求参数是否正确');
       suggestions.push('确认模型名称是否有效');
       suggestions.push('查看 API 文档了解最新变更');
     }
-    
+
     return suggestions;
   }
 }
@@ -1325,14 +1325,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 1.0,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning'],
         benchmark: {
           latency: 1500,
           throughput: 50,
-          accuracy: 0.95
-        }
+          accuracy: 0.95,
+        },
       },
       {
         id: 'gpt-3.5-turbo',
@@ -1346,14 +1346,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 1.0,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code'],
         benchmark: {
           latency: 800,
           throughput: 100,
-          accuracy: 0.90
-        }
+          accuracy: 0.9,
+        },
       },
       {
         id: 'text-embedding-ada-002',
@@ -1367,29 +1367,29 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.0,
           topP: 1.0,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['embedding'],
         benchmark: {
           latency: 200,
           throughput: 500,
-          accuracy: 0.85
-        }
-      }
+          accuracy: 0.85,
+        },
+      },
     ],
     enabled: true,
     priority: 1,
     rateLimit: {
       requestsPerMinute: 3500,
-      tokensPerMinute: 90000
+      tokensPerMinute: 90000,
     },
     pricing: {
       inputPrice: 0.01,
       outputPrice: 0.03,
-      currency: 'USD'
-    }
+      currency: 'USD',
+    },
   },
-  
+
   // Anthropic
   {
     id: 'anthropic',
@@ -1412,14 +1412,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 1.0,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning', 'analysis'],
         benchmark: {
           latency: 2000,
           throughput: 40,
-          accuracy: 0.97
-        }
+          accuracy: 0.97,
+        },
       },
       {
         id: 'claude-3-sonnet-20240229',
@@ -1433,29 +1433,29 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 1.0,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning'],
         benchmark: {
           latency: 1200,
           throughput: 60,
-          accuracy: 0.94
-        }
-      }
+          accuracy: 0.94,
+        },
+      },
     ],
     enabled: true,
     priority: 2,
     rateLimit: {
       requestsPerMinute: 50,
-      tokensPerMinute: 40000
+      tokensPerMinute: 40000,
     },
     pricing: {
       inputPrice: 0.015,
       outputPrice: 0.075,
-      currency: 'USD'
-    }
+      currency: 'USD',
+    },
   },
-  
+
   // 智谱 AI
   {
     id: 'zhipuai',
@@ -1479,14 +1479,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning'],
         benchmark: {
           latency: 1000,
           throughput: 70,
-          accuracy: 0.92
-        }
+          accuracy: 0.92,
+        },
       },
       {
         id: 'glm-4-flash',
@@ -1500,14 +1500,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code'],
         benchmark: {
           latency: 500,
           throughput: 120,
-          accuracy: 0.88
-        }
+          accuracy: 0.88,
+        },
       },
       {
         id: 'embedding-2',
@@ -1521,29 +1521,29 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.0,
           topP: 1.0,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['embedding'],
         benchmark: {
           latency: 150,
           throughput: 600,
-          accuracy: 0.87
-        }
-      }
+          accuracy: 0.87,
+        },
+      },
     ],
     enabled: true,
     priority: 3,
     rateLimit: {
       requestsPerMinute: 100,
-      tokensPerMinute: 50000
+      tokensPerMinute: 50000,
     },
     pricing: {
       inputPrice: 0.0001,
       outputPrice: 0.0001,
-      currency: 'CNY'
-    }
+      currency: 'CNY',
+    },
   },
-  
+
   // 百度文心
   {
     id: 'baidu',
@@ -1552,7 +1552,8 @@ export const presetProviders: AIProviderConfig[] = [
     type: 'cloud',
     baseURL: 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop',
     apiKey: '',
-    apiKeyURL: 'https://console.bce.baidu.com/qianfan/ais/console/application/list',
+    apiKeyURL:
+      'https://console.bce.baidu.com/qianfan/ais/console/application/list',
     region: 'cn',
     models: [
       {
@@ -1567,14 +1568,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning'],
         benchmark: {
           latency: 1200,
           throughput: 65,
-          accuracy: 0.91
-        }
+          accuracy: 0.91,
+        },
       },
       {
         id: 'ernie-3.5-8k',
@@ -1588,29 +1589,29 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code'],
         benchmark: {
           latency: 800,
           throughput: 90,
-          accuracy: 0.89
-        }
-      }
+          accuracy: 0.89,
+        },
+      },
     ],
     enabled: true,
     priority: 4,
     rateLimit: {
       requestsPerMinute: 50,
-      tokensPerMinute: 30000
+      tokensPerMinute: 30000,
     },
     pricing: {
       inputPrice: 0.00012,
       outputPrice: 0.00012,
-      currency: 'CNY'
-    }
+      currency: 'CNY',
+    },
   },
-  
+
   // 阿里通义
   {
     id: 'aliyun',
@@ -1634,14 +1635,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code'],
         benchmark: {
           latency: 600,
           throughput: 100,
-          accuracy: 0.90
-        }
+          accuracy: 0.9,
+        },
       },
       {
         id: 'qwen-plus',
@@ -1655,14 +1656,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning'],
         benchmark: {
           latency: 1000,
           throughput: 75,
-          accuracy: 0.93
-        }
+          accuracy: 0.93,
+        },
       },
       {
         id: 'qwen-max',
@@ -1676,29 +1677,29 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning', 'analysis'],
         benchmark: {
           latency: 1500,
           throughput: 55,
-          accuracy: 0.95
-        }
-      }
+          accuracy: 0.95,
+        },
+      },
     ],
     enabled: true,
     priority: 5,
     rateLimit: {
       requestsPerMinute: 100,
-      tokensPerMinute: 60000
+      tokensPerMinute: 60000,
     },
     pricing: {
       inputPrice: 0.00008,
       outputPrice: 0.00008,
-      currency: 'CNY'
-    }
+      currency: 'CNY',
+    },
   },
-  
+
   // Ollama (本地)
   {
     id: 'ollama',
@@ -1720,14 +1721,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code'],
         benchmark: {
           latency: 3000,
           throughput: 20,
-          accuracy: 0.85
-        }
+          accuracy: 0.85,
+        },
       },
       {
         id: 'mistral',
@@ -1741,14 +1742,14 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code', 'reasoning'],
         benchmark: {
           latency: 2000,
           throughput: 30,
-          accuracy: 0.88
-        }
+          accuracy: 0.88,
+        },
       },
       {
         id: 'codellama',
@@ -1762,25 +1763,25 @@ export const presetProviders: AIProviderConfig[] = [
           temperature: 0.7,
           topP: 0.9,
           frequencyPenalty: 0.0,
-          presencePenalty: 0.0
+          presencePenalty: 0.0,
         },
         capabilities: ['chat', 'code'],
         benchmark: {
           latency: 2500,
           throughput: 25,
-          accuracy: 0.90
-        }
-      }
+          accuracy: 0.9,
+        },
+      },
     ],
     enabled: true,
     priority: 10,
     pricing: {
       inputPrice: 0,
       outputPrice: 0,
-      currency: 'USD'
-    }
-  }
-];
+      currency: 'USD',
+    },
+  },
+]
 ```
 
 ### AI Service UI Components
@@ -1788,54 +1789,55 @@ export const presetProviders: AIProviderConfig[] = [
 ```tsx
 // Provider Manager Component
 export const ProviderManager: React.FC = () => {
-  const [providers, setProviders] = useState<AIProviderConfig[]>([]);
-  const [selectedProvider, setSelectedProvider] = useState<AIProviderConfig | null>(null);
-  const [showAddDialog, setShowAddDialog] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
-  
-  const aiService = useAIService();
-  
+  const [providers, setProviders] = useState<AIProviderConfig[]>([])
+  const [selectedProvider, setSelectedProvider] =
+    useState<AIProviderConfig | null>(null)
+  const [showAddDialog, setShowAddDialog] = useState(false)
+  const [showEditDialog, setShowEditDialog] = useState(false)
+
+  const aiService = useAIService()
+
   useEffect(() => {
-    loadProviders();
-  }, []);
-  
+    loadProviders()
+  }, [])
+
   const loadProviders = async () => {
-    const data = await aiService.listProviders();
-    setProviders(data);
-  };
-  
+    const data = await aiService.listProviders()
+    setProviders(data)
+  }
+
   const handleAddProvider = async (provider: AIProviderConfig) => {
-    await aiService.addProvider(provider);
-    await loadProviders();
-    setShowAddDialog(false);
-  };
-  
+    await aiService.addProvider(provider)
+    await loadProviders()
+    setShowAddDialog(false)
+  }
+
   const handleEditProvider = async (provider: AIProviderConfig) => {
-    await aiService.editProvider(provider);
-    await loadProviders();
-    setShowEditDialog(false);
-  };
-  
+    await aiService.editProvider(provider)
+    await loadProviders()
+    setShowEditDialog(false)
+  }
+
   const handleRemoveProvider = async (providerId: string) => {
     if (confirm('确定要删除此服务商吗？')) {
-      await aiService.removeProvider(providerId);
-      await loadProviders();
+      await aiService.removeProvider(providerId)
+      await loadProviders()
     }
-  };
-  
+  }
+
   const handleToggleProvider = async (providerId: string, enabled: boolean) => {
     if (enabled) {
-      await aiService.enableProvider(providerId);
+      await aiService.enableProvider(providerId)
     } else {
-      await aiService.disableProvider(providerId);
+      await aiService.disableProvider(providerId)
     }
-    await loadProviders();
-  };
-  
+    await loadProviders()
+  }
+
   const handleGetApiKey = async (providerId: string) => {
-    await aiService.openApiKeyPage(providerId);
-  };
-  
+    await aiService.openApiKeyPage(providerId)
+  }
+
   return (
     <div className="provider-manager">
       <div className="provider-header">
@@ -1845,16 +1847,18 @@ export const ProviderManager: React.FC = () => {
           添加服务商
         </button>
       </div>
-      
+
       <div className="provider-list">
-        {providers.map(provider => (
+        {providers.map((provider) => (
           <div key={provider.id} className="provider-card">
             <div className="provider-info">
               <h3>{provider.displayName}</h3>
               <p>{provider.type === 'cloud' ? '云端服务' : '本地服务'}</p>
-              {provider.region && <span className="region-badge">{provider.region}</span>}
+              {provider.region && (
+                <span className="region-badge">{provider.region}</span>
+              )}
             </div>
-            
+
             <div className="provider-actions">
               <button onClick={() => setSelectedProvider(provider)}>
                 <Icon name="Settings" />
@@ -1866,7 +1870,11 @@ export const ProviderManager: React.FC = () => {
                 <Icon name="Key" />
                 获取 API 密钥
               </button>
-              <button onClick={() => handleToggleProvider(provider.id, !provider.enabled)}>
+              <button
+                onClick={() =>
+                  handleToggleProvider(provider.id, !provider.enabled)
+                }
+              >
                 <Icon name={provider.enabled ? 'ToggleRight' : 'ToggleLeft'} />
               </button>
               <button onClick={() => handleRemoveProvider(provider.id)}>
@@ -1876,7 +1884,7 @@ export const ProviderManager: React.FC = () => {
           </div>
         ))}
       </div>
-      
+
       {showAddDialog && (
         <ProviderDialog
           mode="add"
@@ -1884,7 +1892,7 @@ export const ProviderManager: React.FC = () => {
           onClose={() => setShowAddDialog(false)}
         />
       )}
-      
+
       {showEditDialog && selectedProvider && (
         <ProviderDialog
           mode="edit"
@@ -1894,55 +1902,57 @@ export const ProviderManager: React.FC = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
 // Model Manager Component
-export const ModelManager: React.FC<{ providerId: string }> = ({ providerId }) => {
-  const [models, setModels] = useState<AIModelConfig[]>([]);
-  const [showAddDialog, setShowAddDialog] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<AIModelConfig | null>(null);
-  
-  const aiService = useAIService();
-  
+export const ModelManager: React.FC<{ providerId: string }> = ({
+  providerId,
+}) => {
+  const [models, setModels] = useState<AIModelConfig[]>([])
+  const [showAddDialog, setShowAddDialog] = useState(false)
+  const [showEditDialog, setShowEditDialog] = useState(false)
+  const [selectedModel, setSelectedModel] = useState<AIModelConfig | null>(null)
+
+  const aiService = useAIService()
+
   useEffect(() => {
-    loadModels();
-  }, [providerId]);
-  
+    loadModels()
+  }, [providerId])
+
   const loadModels = async () => {
-    const data = await aiService.listModels(providerId);
-    setModels(data);
-  };
-  
+    const data = await aiService.listModels(providerId)
+    setModels(data)
+  }
+
   const handleAddModel = async (model: AIModelConfig) => {
-    await aiService.addModel(providerId, model);
-    await loadModels();
-    setShowAddDialog(false);
-  };
-  
+    await aiService.addModel(providerId, model)
+    await loadModels()
+    setShowAddDialog(false)
+  }
+
   const handleEditModel = async (model: AIModelConfig) => {
-    await aiService.editModel(providerId, model);
-    await loadModels();
-    setShowEditDialog(false);
-  };
-  
+    await aiService.editModel(providerId, model)
+    await loadModels()
+    setShowEditDialog(false)
+  }
+
   const handleRemoveModel = async (modelId: string) => {
     if (confirm('确定要删除此模型吗？')) {
-      await aiService.removeModel(providerId, modelId);
-      await loadModels();
+      await aiService.removeModel(providerId, modelId)
+      await loadModels()
     }
-  };
-  
+  }
+
   const handleToggleModel = async (modelId: string, enabled: boolean) => {
     if (enabled) {
-      await aiService.enableModel(providerId, modelId);
+      await aiService.enableModel(providerId, modelId)
     } else {
-      await aiService.disableModel(providerId, modelId);
+      await aiService.disableModel(providerId, modelId)
     }
-    await loadModels();
-  };
-  
+    await loadModels()
+  }
+
   return (
     <div className="model-manager">
       <div className="model-header">
@@ -1952,22 +1962,26 @@ export const ModelManager: React.FC<{ providerId: string }> = ({ providerId }) =
           添加模型
         </button>
       </div>
-      
+
       <div className="model-list">
-        {models.map(model => (
+        {models.map((model) => (
           <div key={model.id} className="model-card">
             <div className="model-info">
               <h3>{model.displayName}</h3>
               <p>{model.type}</p>
-              <span className="context-length">上下文: {model.contextLength}</span>
+              <span className="context-length">
+                上下文: {model.contextLength}
+              </span>
               {model.benchmark && (
                 <div className="benchmark">
                   <span>延迟: {model.benchmark.latency}ms</span>
-                  <span>准确率: {(model.benchmark.accuracy * 100).toFixed(1)}%</span>
+                  <span>
+                    准确率: {(model.benchmark.accuracy * 100).toFixed(1)}%
+                  </span>
                 </div>
               )}
             </div>
-            
+
             <div className="model-actions">
               <button onClick={() => setSelectedModel(model)}>
                 <Icon name="Settings" />
@@ -1975,7 +1989,9 @@ export const ModelManager: React.FC<{ providerId: string }> = ({ providerId }) =
               <button onClick={() => setShowEditDialog(true)}>
                 <Icon name="Edit" />
               </button>
-              <button onClick={() => handleToggleModel(model.id, !model.enabled)}>
+              <button
+                onClick={() => handleToggleModel(model.id, !model.enabled)}
+              >
                 <Icon name={model.enabled ? 'ToggleRight' : 'ToggleLeft'} />
               </button>
               <button onClick={() => handleRemoveModel(model.id)}>
@@ -1985,7 +2001,7 @@ export const ModelManager: React.FC<{ providerId: string }> = ({ providerId }) =
           </div>
         ))}
       </div>
-      
+
       {showAddDialog && (
         <ModelDialog
           mode="add"
@@ -1993,7 +2009,7 @@ export const ModelManager: React.FC<{ providerId: string }> = ({ providerId }) =
           onClose={() => setShowAddDialog(false)}
         />
       )}
-      
+
       {showEditDialog && selectedModel && (
         <ModelDialog
           mode="edit"
@@ -2003,35 +2019,35 @@ export const ModelManager: React.FC<{ providerId: string }> = ({ providerId }) =
         />
       )}
     </div>
-  );
-};
+  )
+}
 
 // Performance Monitor Component
 export const PerformanceMonitor: React.FC = () => {
-  const [metrics, setMetrics] = useState<PerformanceMetrics[]>([]);
-  const [errors, setErrors] = useState<ErrorAnalysis[]>([]);
-  
-  const aiService = useAIService();
-  
+  const [metrics, setMetrics] = useState<PerformanceMetrics[]>([])
+  const [errors, setErrors] = useState<ErrorAnalysis[]>([])
+
+  const aiService = useAIService()
+
   useEffect(() => {
-    loadData();
-    const interval = setInterval(loadData, 5000);
-    return () => clearInterval(interval);
-  }, []);
-  
+    loadData()
+    const interval = setInterval(loadData, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   const loadData = async () => {
     const [metricsData, errorsData] = await Promise.all([
       aiService.monitorPerformance(),
-      aiService.analyzeErrors()
-    ]);
-    setMetrics(metricsData);
-    setErrors(errorsData);
-  };
-  
+      aiService.analyzeErrors(),
+    ])
+    setMetrics(metricsData)
+    setErrors(errorsData)
+  }
+
   return (
     <div className="performance-monitor">
       <h2>性能监控</h2>
-      
+
       <div className="metrics-section">
         <h3>性能指标</h3>
         <table className="metrics-table">
@@ -2046,8 +2062,10 @@ export const PerformanceMonitor: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {metrics.map(metric => (
-              <tr key={`${metric.providerId}-${metric.modelId}-${metric.timestamp}`}>
+            {metrics.map((metric) => (
+              <tr
+                key={`${metric.providerId}-${metric.modelId}-${metric.timestamp}`}
+              >
                 <td>{metric.providerId}</td>
                 <td>{metric.modelId}</td>
                 <td>{metric.latency}ms</td>
@@ -2059,7 +2077,7 @@ export const PerformanceMonitor: React.FC = () => {
           </tbody>
         </table>
       </div>
-      
+
       <div className="errors-section">
         <h3>错误分析</h3>
         <table className="errors-table">
@@ -2074,8 +2092,10 @@ export const PerformanceMonitor: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {errors.map(error => (
-              <tr key={`${error.providerId}-${error.modelId}-${error.timestamp}`}>
+            {errors.map((error) => (
+              <tr
+                key={`${error.providerId}-${error.modelId}-${error.timestamp}`}
+              >
                 <td>{error.providerId}</td>
                 <td>{error.modelId}</td>
                 <td>{error.errorType}</td>
@@ -2094,34 +2114,45 @@ export const PerformanceMonitor: React.FC = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // Cost Report Component
 export const CostReport: React.FC = () => {
-  const [costData, setCostData] = useState<Map<string, { inputTokens: number; outputTokens: number; cost: number }>>(new Map());
-  
-  const aiService = useAIService();
-  
+  const [costData, setCostData] = useState<
+    Map<string, { inputTokens: number; outputTokens: number; cost: number }>
+  >(new Map())
+
+  const aiService = useAIService()
+
   useEffect(() => {
-    loadCostData();
-    const interval = setInterval(loadCostData, 30000); // Update every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
-  
+    loadCostData()
+    const interval = setInterval(loadCostData, 30000) // Update every 30 seconds
+    return () => clearInterval(interval)
+  }, [])
+
   const loadCostData = () => {
-    const data = aiService.getCostReport();
-    setCostData(data);
-  };
-  
-  const totalCost = Array.from(costData.values()).reduce((sum, item) => sum + item.cost, 0);
-  const totalInputTokens = Array.from(costData.values()).reduce((sum, item) => sum + item.inputTokens, 0);
-  const totalOutputTokens = Array.from(costData.values()).reduce((sum, item) => sum + item.outputTokens, 0);
-  
+    const data = aiService.getCostReport()
+    setCostData(data)
+  }
+
+  const totalCost = Array.from(costData.values()).reduce(
+    (sum, item) => sum + item.cost,
+    0,
+  )
+  const totalInputTokens = Array.from(costData.values()).reduce(
+    (sum, item) => sum + item.inputTokens,
+    0,
+  )
+  const totalOutputTokens = Array.from(costData.values()).reduce(
+    (sum, item) => sum + item.outputTokens,
+    0,
+  )
+
   return (
     <div className="cost-report">
       <h2>成本报告</h2>
-      
+
       <div className="cost-summary">
         <div className="cost-card">
           <h3>总成本</h3>
@@ -2136,7 +2167,7 @@ export const CostReport: React.FC = () => {
           <p className="cost-value">{totalOutputTokens.toLocaleString()}</p>
         </div>
       </div>
-      
+
       <div className="cost-details">
         <h3>详细成本</h3>
         <table className="cost-table">
@@ -2151,7 +2182,7 @@ export const CostReport: React.FC = () => {
           </thead>
           <tbody>
             {Array.from(costData.entries()).map(([key, data]) => {
-              const [providerId, modelId] = key.split(':');
+              const [providerId, modelId] = key.split(':')
               return (
                 <tr key={key}>
                   <td>{providerId}</td>
@@ -2160,14 +2191,14 @@ export const CostReport: React.FC = () => {
                   <td>{data.outputTokens.toLocaleString()}</td>
                   <td>${data.cost.toFixed(4)}</td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 ```
 
 ### AI Service Integration Requirements
@@ -2219,6 +2250,7 @@ export const CostReport: React.FC = () => {
 The AI service integration implements a **complete closed-loop system** that covers the entire lifecycle of API interactions:
 
 #### 1. **Initialization Phase**
+
 ```
 User Launches Application
     ↓
@@ -2232,6 +2264,7 @@ Validate API Keys (optional, on-demand)
 ```
 
 #### 2. **Configuration Phase**
+
 ```
 User Opens AI Settings
     ↓
@@ -2249,6 +2282,7 @@ Save Configuration (encrypted storage)
 ```
 
 #### 3. **API Key Management Phase**
+
 ```
 User Needs API Key
     ↓
@@ -2268,6 +2302,7 @@ Ready to Use
 ```
 
 #### 4. **Request Phase**
+
 ```
 User Initiates Chat/Code Generation
     ↓
@@ -2287,6 +2322,7 @@ Make API Request (with retry logic)
 ```
 
 #### 5. **Response Phase**
+
 ```
 API Response Received
     ↓
@@ -2302,6 +2338,7 @@ Update UI (chat, code preview, etc.)
 ```
 
 #### 6. **Error Handling Phase**
+
 ```
 API Request Fails
     ↓
@@ -2319,6 +2356,7 @@ Notify User (with suggestions)
 ```
 
 #### 7. **Monitoring Phase**
+
 ```
 Background Monitoring (every 5 seconds)
     ↓
@@ -2336,6 +2374,7 @@ Update Dashboard (real-time)
 ```
 
 #### 8. **Optimization Phase**
+
 ```
 Periodic Optimization (daily)
     ↓
@@ -2387,6 +2426,7 @@ Suggest Optimizations (e.g., switch providers, adjust parameters)
 This AI service integration follows the **YYC³ Five Highs, Five Standards, Five Transformations** framework:
 
 #### Five Highs (五高)
+
 - **High Availability**: Multi-provider support with automatic fallback
 - **High Performance**: Intelligent caching, rate limiting, and performance optimization
 - **High Security**: AES-GCM encryption, secure keychain storage
@@ -2394,6 +2434,7 @@ This AI service integration follows the **YYC³ Five Highs, Five Standards, Five
 - **High Intelligence**: Automatic provider selection, error analysis, cost optimization
 
 #### Five Standards (五标)
+
 - **Standardization**: Consistent API interfaces across all providers
 - **Normalization**: Standardized error handling and performance metrics
 - **Automation**: Automatic retry, fallback, cache cleanup
@@ -2401,6 +2442,7 @@ This AI service integration follows the **YYC³ Five Highs, Five Standards, Five
 - **Intelligence**: Smart provider selection, error classification, recommendations
 
 #### Five Transformations (五化)
+
 - **Process-Oriented**: Complete lifecycle management from config to monitoring
 - **Documented**: Comprehensive documentation and inline comments
 - **Tool-Enabled**: UI components for easy management
@@ -2414,6 +2456,7 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 ### 1. Multi-Panel Layout System
 
 #### 1.1 Panel Management
+
 - **Panel Creation**: Dynamically create new panels
 - **Panel Deletion**: Delete any panel (minimum one panel must remain)
 - **Panel Movement**: Drag and drop to move panel positions
@@ -2423,6 +2466,7 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 - **Panel Maximization**: Full-screen panel display
 
 #### 1.2 Panel Splitting
+
 - **Horizontal Split**: Split panels horizontally
 - **Vertical Split**: Split panels vertically
 - **Nested Split**: Support multi-level nested splitting
@@ -2430,12 +2474,14 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 - **Split Memory**: Remember user's split layout
 
 #### 1.3 Panel Merging
+
 - **Drag Merge**: Drag panels to other panels for merging
 - **Tab Merge**: Merge multiple panels into one tab group
 - **Smart Merge**: Intelligently recommend merge options based on panel types
 - **Merge Confirmation**: Show preview and confirmation before merging
 
 #### 1.4 Panel Types
+
 - **Code Editor Panel**: Integrated Monaco Editor
 - **File Browser Panel**: Display file tree structure
 - **Preview Panel**: Real-time preview of code effects
@@ -2450,6 +2496,7 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 ### 2. Window Management System
 
 #### 2.1 Multi-Window Support
+
 - **New Window**: Support opening new windows
 - **Window Switching**: Support switching between multiple windows
 - **Window Dragging**: Support dragging panels to new windows
@@ -2457,12 +2504,14 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 - **Window Synchronization**: Synchronize state across multiple windows
 
 #### 2.2 Window Layouts
+
 - **Tiled Layout**: Support tiled window display
 - **Stacked Layout**: Support stacked window display
 - **Grid Layout**: Support grid window layout
 - **Custom Layout**: Support user-defined layouts
 
 #### 2.3 Window State
+
 - **Window Memory**: Remember window position and size
 - **Window Recovery**: Restore window state after restart
 - **Window Minimization**: Support minimizing windows to tray
@@ -2471,6 +2520,7 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 ### 3. Tab System
 
 #### 3.1 Tab Management
+
 - **Tab Creation**: Support creating new tabs
 - **Tab Closing**: Support closing tabs
 - **Tab Switching**: Support switching between tabs
@@ -2479,12 +2529,14 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 - **Tab Grouping**: Support tab grouping display
 
 #### 3.2 Tab States
+
 - **Unsaved Marker**: Display marker for unsaved files
 - **Modified Marker**: Display marker for modified files
 - **Error Marker**: Display marker for files with errors
 - **Active Marker**: Highlight currently active tab
 
 #### 3.3 Tab Navigation
+
 - **Keyboard Shortcut**: Support Ctrl+Tab / Cmd+Tab switching
 - **Mouse Wheel**: Support mouse wheel tab switching
 - **Tab List**: Display all tabs list
@@ -2493,18 +2545,21 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 ### 4. Drag and Drop Interaction
 
 #### 4.1 Panel Dragging
+
 - **Drag Start**: Show drag preview
 - **Drag Process**: Show drop zone hints
 - **Drag End**: Execute drop operation
 - **Drag Cancel**: Support canceling drag operations
 
 #### 4.2 Tab Dragging
+
 - **Tab Drag**: Support dragging tabs
 - **Drag Preview**: Show drag preview
 - **Drop Hint**: Show available drop zones
 - **Drag Sorting**: Support tab reordering
 
 #### 4.3 Drag Feedback
+
 - **Visual Feedback**: Show visual feedback during drag
 - **Animation Effects**: Smooth drag animations
 - **Drop Preview**: Show preview after drop
@@ -2513,18 +2568,21 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 ### 5. Layout Persistence
 
 #### 5.1 Layout Saving
+
 - **Auto Save**: Auto-save layout on changes
 - **Manual Save**: Support manual layout saving
 - **Multiple Layouts**: Support saving multiple layouts
 - **Layout Naming**: Support naming layouts
 
 #### 5.2 Layout Loading
+
 - **Quick Load**: Quickly load saved layouts
 - **Layout Switching**: Switch between different layouts
 - **Layout Recovery**: Restore last layout after restart
 - **Default Layout**: Provide default layout options
 
 #### 5.3 Layout Synchronization
+
 - **Cloud Sync**: Support cloud layout synchronization
 - **Cross-Device Sync**: Support cross-device layout synchronization
 - **Conflict Resolution**: Handle layout synchronization conflicts
@@ -2533,18 +2591,21 @@ The application must provide a **flexible, efficient, and user-friendly multi-pa
 ### 6. Performance Optimization
 
 #### 6.1 Rendering Optimization
+
 - **Virtual Scrolling**: Use virtual scrolling for large tab lists
 - **Lazy Loading**: Lazy load panel content
 - **On-Demand Rendering**: Only render visible panels
 - **Render Caching**: Cache render results
 
 #### 6.2 Memory Optimization
+
 - **Panel Recycling**: Recycle resources for invisible panels
 - **Memory Monitoring**: Monitor memory usage
 - **Garbage Collection**: Proactively trigger garbage collection
 - **Memory Limits**: Limit memory usage
 
 #### 6.3 Interaction Optimization
+
 - **Smooth Animations**: 60fps smooth animations
 - **Fast Response**: Interaction response time < 16ms
 - **Debounce/Throttle**: Optimize frequent operations
@@ -2557,6 +2618,7 @@ The application must provide an **efficient, accurate, and real-time code previe
 ### 1. Real-Time Preview Engine
 
 #### 1.1 Preview Type Support
+
 - **HTML Preview**: Real-time rendering of HTML code
 - **CSS Preview**: Real-time application of CSS styles
 - **JavaScript Preview**: Real-time execution of JavaScript code
@@ -2569,6 +2631,7 @@ The application must provide an **efficient, accurate, and real-time code previe
 - **Chart Preview**: Real-time rendering of data visualization charts
 
 #### 1.2 Preview Update Mechanism
+
 - **Real-Time Update**: Update preview immediately after code modification
 - **Debounced Update**: Debounce updates during frequent modifications
 - **Manual Refresh**: Support manual preview refresh
@@ -2577,6 +2640,7 @@ The application must provide an **efficient, accurate, and real-time code previe
 - **Incremental Update**: Support incremental DOM updates
 
 #### 1.3 Preview Synchronization
+
 - **Scroll Synchronization**: Synchronize editor and preview scrolling
 - **Cursor Synchronization**: Synchronize editor cursor position to preview
 - **Selection Synchronization**: Synchronize editor selection area to preview
@@ -2585,18 +2649,21 @@ The application must provide an **efficient, accurate, and real-time code previe
 ### 2. Code Execution Environment
 
 #### 2.1 Sandbox Environment
+
 - **Isolated Execution**: Execute code in isolated environment
 - **Security Restrictions**: Restrict dangerous operations
 - **Resource Limits**: Limit memory and CPU usage
 - **Timeout Control**: Auto-terminate on execution timeout
 
 #### 2.2 Dependency Management
+
 - **Auto Loading**: Automatically load common dependencies
 - **Custom Dependencies**: Support custom dependencies
 - **Dependency Caching**: Cache loaded dependencies
 - **Dependency Versions**: Support specifying dependency versions
 
 #### 2.3 Hot Update
+
 - **HMR Support**: Support Hot Module Replacement
 - **State Preservation**: Preserve state during hot updates
 - **Error Boundaries**: Handle hot update errors
@@ -2605,12 +2672,14 @@ The application must provide an **efficient, accurate, and real-time code previe
 ### 3. Preview Control
 
 #### 3.1 Preview Modes
+
 - **Real-Time Mode**: Code modifications update immediately
 - **Manual Mode**: Trigger updates manually
 - **Delayed Mode**: Update after a delay
 - **Smart Mode**: Intelligently select mode based on code type
 
 #### 3.2 Preview Settings
+
 - **Auto Refresh**: Set auto-refresh interval
 - **Preview Delay**: Set preview delay time
 - **Preview Theme**: Select preview theme
@@ -2618,6 +2687,7 @@ The application must provide an **efficient, accurate, and real-time code previe
 - **Device Simulation**: Simulate different devices
 
 #### 3.3 Preview Tools
+
 - **Element Inspection**: Inspect preview elements
 - **Network Monitoring**: Monitor network requests
 - **Performance Analysis**: Analyze preview performance
@@ -2627,18 +2697,21 @@ The application must provide an **efficient, accurate, and real-time code previe
 ### 4. Multi-Device Preview
 
 #### 4.1 Device Simulation
+
 - **Desktop Device**: Simulate desktop browser
 - **Tablet Device**: Simulate tablet device
 - **Mobile Device**: Simulate mobile device
 - **Custom Device**: Custom device parameters
 
 #### 4.2 Responsive Preview
+
 - **Breakpoint Preview**: Preview at different breakpoints
 - **Real-Time Adjustment**: Real-time preview size adjustment
 - **Grid Lines**: Display responsive grid lines
 - **Media Query Info**: Display media query information
 
 #### 4.3 Parallel Preview
+
 - **Multi-Device Preview**: Preview multiple devices simultaneously
 - **Synchronized Scrolling**: Synchronize scrolling across devices
 - **Synchronized Interaction**: Synchronize interaction across devices
@@ -2647,18 +2720,21 @@ The application must provide an **efficient, accurate, and real-time code previe
 ### 5. Preview History
 
 #### 5.1 History Recording
+
 - **Auto Recording**: Automatically record preview history
 - **Manual Saving**: Manually save preview snapshots
 - **Timeline**: Display preview timeline
 - **Version Comparison**: Compare different preview versions
 
 #### 5.2 History Rollback
+
 - **Quick Rollback**: Quickly rollback to historical versions
 - **Diff Comparison**: Display version differences
 - **Version Recovery**: Recover to historical version
 - **Branch Management**: Manage preview branches
 
 #### 5.3 History Sharing
+
 - **Share Link**: Generate share link
 - **Embed Code**: Generate embed code
 - **Export Snapshot**: Export preview snapshot
@@ -2667,18 +2743,21 @@ The application must provide an **efficient, accurate, and real-time code previe
 ### 6. Performance Optimization
 
 #### 6.1 Rendering Optimization
+
 - **Virtual DOM**: Use virtual DOM for rendering optimization
 - **Incremental Update**: Only update changed parts
 - **Render Caching**: Cache render results
 - **Lazy Loading**: Lazy load preview content
 
 #### 6.2 Network Optimization
+
 - **Resource Preloading**: Preload preview resources
 - **CDN Acceleration**: Use CDN for resource acceleration
 - **Resource Compression**: Compress preview resources
 - **Cache Strategy**: Optimize cache strategy
 
 #### 6.3 Execution Optimization
+
 - **Code Compression**: Compress executed code
 - **Code Splitting**: Split executed code
 - **Parallel Execution**: Parallel execute independent code
@@ -2706,57 +2785,59 @@ The application must provide an **efficient, accurate, and real-time code previe
 ## The app must provide **two independent storage subsystems**:
 
 1️⃣ **Host‑File‑System Manager**
-   - Auto‑detect a configurable "workspace" folder on the host OS (default: user's Documents/YYC3-AI-Code).
-   - UI to browse, create, rename, delete, edit (text/markdown) files and upload/download arbitrary binary files.
-   - Full **file version control** (each edit creates a new immutable version stored in IndexedDB; ability to view history and rollback).
-   - Support drag‑and‑drop import, context‑menu actions, and a "Recent Files" pane.
-   - Use **Lucide React** icons for all UI elements following the icon system specifications.
+
+- Auto‑detect a configurable "workspace" folder on the host OS (default: user's Documents/YYC3-AI-Code).
+- UI to browse, create, rename, delete, edit (text/markdown) files and upload/download arbitrary binary files.
+- Full **file version control** (each edit creates a new immutable version stored in IndexedDB; ability to view history and rollback).
+- Support drag‑and‑drop import, context‑menu actions, and a "Recent Files" pane.
+- Use **Lucide React** icons for all UI elements following the icon system specifications.
 
 2️⃣ **Local‑Database Manager**
-   - Auto‑discover installed local DB engines (PostgreSQL, MySQL, Redis) by probing default ports and reading common configuration files (e.g., `postgresql.conf`, `my.cnf`).
-   - Provide a **Connection Manager** UI where user can add/edit/delete connection profiles (host, port, username, password, ssl, default DB).
-   - A **SQL Console** with syntax‑highlighted editor (Monaco) that can run arbitrary queries against selected profile, showing results in a paginated grid with inline editing for updatable result sets.
-   - **Table Explorer**: list schemas → tables → columns, allow CRUD on rows (INSERT/UPDATE/DELETE) using generated forms.
-   - **Backup & Restore**: one‑click logical dump (pg_dump / mysqldump / redis-cli SAVE) executed via Tauri native side, and ability to import a previously exported dump file.
-   - All DB‑related operations must be executed **asynchronously** in a Tauri‑hosted Rust worker to keep the UI responsive, and must return a typed result to the front‑end.
+
+- Auto‑discover installed local DB engines (PostgreSQL, MySQL, Redis) by probing default ports and reading common configuration files (e.g., `postgresql.conf`, `my.cnf`).
+- Provide a **Connection Manager** UI where user can add/edit/delete connection profiles (host, port, username, password, ssl, default DB).
+- A **SQL Console** with syntax‑highlighted editor (Monaco) that can run arbitrary queries against selected profile, showing results in a paginated grid with inline editing for updatable result sets.
+- **Table Explorer**: list schemas → tables → columns, allow CRUD on rows (INSERT/UPDATE/DELETE) using generated forms.
+- **Backup & Restore**: one‑click logical dump (pg_dump / mysqldump / redis-cli SAVE) executed via Tauri native side, and ability to import a previously exported dump file.
+- All DB‑related operations must be executed **asynchronously** in a Tauri‑hosted Rust worker to keep the UI responsive, and must return a typed result to the front‑end.
 
 ## General Requirements
 
 ### Architecture must be **multi‑layered**:
 
-* **UI Layer** – React components, React‑Router pages, Zustand/TanStack Query state.
-* **Service Layer** – Pure TypeScript services exposing async APIs (`FileService`, `VersionService`, `DBDetectService`, `DBConnectionService`, `DBQueryService`, `BackupService`). No side‑effects other than calling the Host Bridge.
-* **Host Bridge Layer** – Tauri `invoke` wrappers (`fs.*`, `db.*`, `backup.*`). All native code resides in `src-tauri/src` (Rust). Expose a **single entry point** per domain (`fs`, `db`, `backup`) and keep the JavaScript side type‑safe with `@tauri-apps/api` helpers.
-* **Worker Layer** – WebWorkers (Comlink) for CPU‑heavy tasks: file diff/patch for versioning, large result‑set paging, encryption of backup files.
-* **Persistence Layer** – IndexedDB (Dexie) for:
+- **UI Layer** – React components, React‑Router pages, Zustand/TanStack Query state.
+- **Service Layer** – Pure TypeScript services exposing async APIs (`FileService`, `VersionService`, `DBDetectService`, `DBConnectionService`, `DBQueryService`, `BackupService`). No side‑effects other than calling the Host Bridge.
+- **Host Bridge Layer** – Tauri `invoke` wrappers (`fs.*`, `db.*`, `backup.*`). All native code resides in `src-tauri/src` (Rust). Expose a **single entry point** per domain (`fs`, `db`, `backup`) and keep the JavaScript side type‑safe with `@tauri-apps/api` helpers.
+- **Worker Layer** – WebWorkers (Comlink) for CPU‑heavy tasks: file diff/patch for versioning, large result‑set paging, encryption of backup files.
+- **Persistence Layer** – IndexedDB (Dexie) for:
   - File metadata + version blobs (encrypted with AES‑GCM, key derived from a user‑provided passphrase stored in OS key‑ring via `tauri-plugin-keychain`).
   - DB connection profiles (encrypted as well).
   - UI preferences (theme, recent files) – non‑sensitive, stored plain in localStorage via Zustand persist.
 
 ### Security & Privacy
 
-* Minimal Tauri allow‑list: `fs`, `dialog`, `process`, `path`, `notification`, `clipboard`, `keychain`.
-* All sensitive data encrypted at rest; never written in plain text.
-* OpenAI integration (if later needed) must be optional and loaded only when a valid API key is supplied via the Connection Manager (store in key‑chain).
-* Use **Lucide React** icons for all UI elements following the icon system specifications.
+- Minimal Tauri allow‑list: `fs`, `dialog`, `process`, `path`, `notification`, `clipboard`, `keychain`.
+- All sensitive data encrypted at rest; never written in plain text.
+- OpenAI integration (if later needed) must be optional and loaded only when a valid API key is supplied via the Connection Manager (store in key‑chain).
+- Use **Lucide React** icons for all UI elements following the icon system specifications.
 
 ### Offline‑First
 
-* All UI assets cached via Workbox Service Worker; file version history and DB connection profiles are always available offline.
+- All UI assets cached via Workbox Service Worker; file version history and DB connection profiles are always available offline.
 
 ### Extensibility
 
-* Provide a **Plugin API** (`registerPlugin(name, api)`) so third‑party storage back‑ends (e.g., local SQLite, cloud S3) can be added without touching core code.
+- Provide a **Plugin API** (`registerPlugin(name, api)`) so third‑party storage back‑ends (e.g., local SQLite, cloud S3) can be added without touching core code.
 
 ### Testing
 
-* Unit tests with Vitest, integration tests with React‑Testing‑Library, E2E tests with Playwright (including native dialog mocks).
-* CI pipeline on GitHub Actions that builds for Windows, macOS, Linux, runs tests, and publishes signed installers.
+- Unit tests with Vitest, integration tests with React‑Testing‑Library, E2E tests with Playwright (including native dialog mocks).
+- CI pipeline on GitHub Actions that builds for Windows, macOS, Linux, runs tests, and publishes signed installers.
 
 ### Packaging
 
-* Use Tauri (recommended) to keep the final binary < 12 MB.
-* Provide `tauri.conf.json` with bundle icons (using Lucide React icon style), updater URL, and auto‑update configuration.
+- Use Tauri (recommended) to keep the final binary < 12 MB.
+- Provide `tauri.conf.json` with bundle icons (using Lucide React icon style), updater URL, and auto‑update configuration.
 
 ## Project Structure (Monorepo)
 
@@ -2864,7 +2945,7 @@ yyc3-ai-code/
 
 ## Detailed Interface Definitions (TypeScript)
 
-```ts
+````ts
 /**-------------------  Host Bridge   -------------------**/
 export interface FsBridge {
   // workspace
@@ -2949,7 +3030,7 @@ export interface BackupService {
 }
 
 /**-------------------  Multi-Panel Layout Interfaces   -------------------**/
-export type PanelType = 
+export type PanelType =
   | 'code-editor'
   | 'file-browser'
   | 'preview'
@@ -3092,7 +3173,7 @@ export interface LayoutManager {
 }
 
 /**-------------------  Real-Time Preview Interfaces   -------------------**/
-export type PreviewType = 
+export type PreviewType =
   | 'html'
   | 'css'
   | 'javascript'
@@ -3309,19 +3390,19 @@ export const FunctionOperationIcons = {
   codeSnippet: 'Code',
   clipboard: 'Clipboard'
 };
-```
+````
 
 ### Icon Component Wrapper
 
 ```tsx
-import { Icon as LucideIcon } from 'lucide-react';
+import { Icon as LucideIcon } from 'lucide-react'
 
 interface IconProps {
-  name: string;
-  size?: number;
-  className?: string;
-  tooltip?: string;
-  onClick?: () => void;
+  name: string
+  size?: number
+  className?: string
+  tooltip?: string
+  onClick?: () => void
 }
 
 export const Icon: React.FC<IconProps> = ({
@@ -3329,9 +3410,9 @@ export const Icon: React.FC<IconProps> = ({
   size = 24,
   className = '',
   tooltip,
-  onClick
+  onClick,
 }) => {
-  const IconComponent = LucideIcon[name];
+  const IconComponent = LucideIcon[name]
 
   return (
     <div
@@ -3341,35 +3422,35 @@ export const Icon: React.FC<IconProps> = ({
     >
       {IconComponent && <IconComponent size={size} />}
     </div>
-  );
-};
+  )
+}
 ```
 
 ## Key Algorithms / Workers
 
-| Worker | Responsibility | Communication (Comlink) |
-|-------|----------------|------------------------|
-| `diffWorker.ts` | Compute diff between two text versions, generate patch (`json-patch`) for rollback view. | `diff(old: string, new: string): Promise<Patch>` |
-| `pagingWorker.ts` | Incrementally fetch large result‑sets (cursor based) from DB query service, return pages of rows. | `page(queryId: string, page: number, size: number): Promise<Row[]>` |
-| `backupWorker.ts` | Stream dump file through Rust `pg_dump`/`mysqldump` -> encrypt on‑the‑fly -> write to destination. | `runDump(params): Promise<Progress>` |
+| Worker            | Responsibility                                                                                     | Communication (Comlink)                                             |
+| ----------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `diffWorker.ts`   | Compute diff between two text versions, generate patch (`json-patch`) for rollback view.           | `diff(old: string, new: string): Promise<Patch>`                    |
+| `pagingWorker.ts` | Incrementally fetch large result‑sets (cursor based) from DB query service, return pages of rows.  | `page(queryId: string, page: number, size: number): Promise<Row[]>` |
+| `backupWorker.ts` | Stream dump file through Rust `pg_dump`/`mysqldump` -> encrypt on‑the‑fly -> write to destination. | `runDump(params): Promise<Progress>`                                |
 
 ## Persistence (Dexie) Schema
 
 ```ts
 export class AppDB extends Dexie {
   // file system
-  files!: Table<FileMeta, string>;        // key = absolutePath
-  versions!: Table<FileVersion, string>; // key = versionId
+  files!: Table<FileMeta, string> // key = absolutePath
+  versions!: Table<FileVersion, string> // key = versionId
   // db connections
-  dbProfiles!: Table<DBConnectionProfile, string>;
+  dbProfiles!: Table<DBConnectionProfile, string>
 
   constructor() {
-    super("YYC3AICodeDB");
+    super('YYC3AICodeDB')
     this.version(3).stores({
-      files: "path, workspace, updatedAt",
-      versions: "id, path, createdAt",
-      dbProfiles: "id, type, host, port"
-    });
+      files: 'path, workspace, updatedAt',
+      versions: 'id, path, createdAt',
+      dbProfiles: 'id, type, host, port',
+    })
   }
 }
 ```

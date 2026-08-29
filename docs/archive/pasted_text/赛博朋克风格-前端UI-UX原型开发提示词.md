@@ -9,11 +9,9 @@
 @tags: cyberpunk, ui-ux, frontend, prototype, design-prompt
 ---
 
-> ***YanYuCloudCube***
-> *言启象限 | 语枢未来*
-> ***Words Initiate Quadrants, Language Serves as Core for Future***
-> *万象归元于云枢 | 深栈智启新纪元***
-> ***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***
+> **_YanYuCloudCube_**
+> _言启象限 | 语枢未来_
+> **_Words Initiate Quadrants, Language Serves as Core for Future_** \*万象归元于云枢 | 深栈智启新纪元**\* \***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence\*\*\*
 
 ---
 
@@ -45,11 +43,13 @@
 赛博朋克风格是一种融合了**霓虹发光**、**科技感**、**未来主义**的视觉风格，创造出高对比度、强视觉冲击、未来感的体验。
 
 #### 视觉特点
+
 - **高对比度**：霓虹色彩配合深色背景，视觉冲击力强
 - **科技元素**：电路板、网格、数据流、几何图形
 - **动态效果**：脉冲发光、扫描线、数据流动
 
 #### 情感体验
+
 - **未来感**：强烈的未来主义氛围，科技感十足
 - **冲击力**：高对比度和发光效果带来强烈视觉冲击
 - **沉浸感**：深色背景配合动态效果营造沉浸式体验
@@ -89,30 +89,30 @@
 ```typescript
 // 模式配置接口
 interface CyberpunkModeConfig {
-  mode: 'standalone' | 'widget';
-  standaloneConfig?: StandaloneConfig;
-  widgetConfig?: WidgetConfig;
+  mode: 'standalone' | 'widget'
+  standaloneConfig?: StandaloneConfig
+  widgetConfig?: WidgetConfig
 }
 
 // 独立应用配置
 interface StandaloneConfig {
-  fullScreen: boolean;
-  showNavigation: boolean;
-  showSidebar: boolean;
-  enableAllModules: boolean;
-  neonIntensity: 'low' | 'medium' | 'high';
-  glitchEffect: boolean;
+  fullScreen: boolean
+  showNavigation: boolean
+  showSidebar: boolean
+  enableAllModules: boolean
+  neonIntensity: 'low' | 'medium' | 'high'
+  glitchEffect: boolean
 }
 
 // 浮窗插件配置
 interface WidgetConfig {
-  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
-  size: 'small' | 'medium' | 'large' | 'custom';
-  enableDrag: boolean;
-  enableResize: boolean;
-  autoHide: boolean;
-  neonIntensity: 'low' | 'medium' | 'high';
-  glitchEffect: boolean;
+  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
+  size: 'small' | 'medium' | 'large' | 'custom'
+  enableDrag: boolean
+  enableResize: boolean
+  autoHide: boolean
+  neonIntensity: 'low' | 'medium' | 'high'
+  glitchEffect: boolean
 }
 ```
 
@@ -140,128 +140,138 @@ YYC³ Portable Intelligent AI System的MVP核心逻辑基于五维闭环系统�
 #### 1. 智能分析模块（Analysis）
 
 **功能描述**:
+
 - 用户意图识别和理解
 - 多模态输入处理（文本、语音、图像）
 - 上下文分析和语义理解
 - 情感分析和用户画像
 
 **MVP实现**:
+
 ```typescript
 interface AnalysisModule {
-  analyzeInput(input: UserInput): Promise<AnalysisResult>;
-  detectIntent(text: string): Intent;
-  extractEntities(text: string): Entity[];
-  analyzeSentiment(text: string): SentimentScore;
-  buildUserProfile(behavior: UserBehavior): UserProfile;
+  analyzeInput(input: UserInput): Promise<AnalysisResult>
+  detectIntent(text: string): Intent
+  extractEntities(text: string): Entity[]
+  analyzeSentiment(text: string): SentimentScore
+  buildUserProfile(behavior: UserBehavior): UserProfile
 }
 
 interface AnalysisResult {
-  intent: Intent;
-  entities: Entity[];
-  sentiment: SentimentScore;
-  context: Context;
-  confidence: number;
+  intent: Intent
+  entities: Entity[]
+  sentiment: SentimentScore
+  context: Context
+  confidence: number
 }
 ```
 
 #### 2. 智能执行模块（Execution）
 
 **功能描述**:
+
 - AI模型推理和生成
 - 工具调用和API集成
 - 工作流执行和任务编排
 - 实时响应和流式输出
 
 **MVP实现**:
+
 ```typescript
 interface ExecutionModule {
-  executeTask(task: Task): Promise<ExecutionResult>;
-  invokeTool(tool: Tool, params: any): Promise<ToolResult>;
-  executeWorkflow(workflow: Workflow): Promise<WorkflowResult>;
-  streamResponse(prompt: string): AsyncGenerator<ResponseChunk>;
+  executeTask(task: Task): Promise<ExecutionResult>
+  invokeTool(tool: Tool, params: any): Promise<ToolResult>
+  executeWorkflow(workflow: Workflow): Promise<WorkflowResult>
+  streamResponse(prompt: string): AsyncGenerator<ResponseChunk>
 }
 
 interface ExecutionResult {
-  output: string;
-  metadata: ExecutionMetadata;
-  toolsUsed: Tool[];
-  executionTime: number;
+  output: string
+  metadata: ExecutionMetadata
+  toolsUsed: Tool[]
+  executionTime: number
 }
 ```
 
 #### 3. 智能优化模块（Optimization）
 
 **功能描述**:
+
 - 性能监控和优化
 - 资源调度和负载均衡
 - 缓存策略和数据预加载
 - 用户体验优化
 
 **MVP实现**:
+
 ```typescript
 interface OptimizationModule {
-  optimizePerformance(): void;
-  balanceLoad(): void;
-  manageCache(): void;
-  optimizeUserExperience(): void;
-  getPerformanceMetrics(): PerformanceMetrics;
+  optimizePerformance(): void
+  balanceLoad(): void
+  manageCache(): void
+  optimizeUserExperience(): void
+  getPerformanceMetrics(): PerformanceMetrics
 }
 
 interface PerformanceMetrics {
-  responseTime: number;
-  throughput: number;
-  errorRate: number;
-  userSatisfaction: number;
+  responseTime: number
+  throughput: number
+  errorRate: number
+  userSatisfaction: number
 }
 ```
 
 #### 4. 智能学习模块（Learning）
 
 **功能描述**:
+
 - 用户行为学习和个性化
 - 反馈收集和模型微调
 - 知识图谱构建和更新
 - 持续学习和自我进化
 
 **MVP实现**:
+
 ```typescript
 interface LearningModule {
-  learnFromFeedback(feedback: UserFeedback): void;
-  personalizeExperience(user: User): void;
-  updateKnowledgeGraph(data: KnowledgeData): void;
-  fineTuneModel(trainingData: TrainingData): Promise<void>;
-  getUserInsights(user: User): UserInsights;
+  learnFromFeedback(feedback: UserFeedback): void
+  personalizeExperience(user: User): void
+  updateKnowledgeGraph(data: KnowledgeData): void
+  fineTuneModel(trainingData: TrainingData): Promise<void>
+  getUserInsights(user: User): UserInsights
 }
 
 interface UserInsights {
-  preferences: UserPreferences;
-  behaviorPatterns: BehaviorPattern[];
-  recommendations: Recommendation[];
+  preferences: UserPreferences
+  behaviorPatterns: BehaviorPattern[]
+  recommendations: Recommendation[]
 }
 ```
 
 #### 5. 智能管理模块（Management）
 
 **功能描述**:
+
 - 系统配置和状态管理
 - 用户权限和安全管理
 - 日志记录和监控告警
 - 数据备份和恢复
 
 **MVP实现**:
+
 ```typescript
 interface ManagementModule {
-  manageConfiguration(config: SystemConfig): void;
-  managePermissions(user: User, permissions: Permission[]): void;
-  manageSecurity(securityPolicy: SecurityPolicy): void;
-  manageLogs(logs: LogEntry[]): void;
-  monitorSystem(): SystemHealth;
+  manageConfiguration(config: SystemConfig): void
+  managePermissions(user: User, permissions: Permission[]): void
+  manageSecurity(securityPolicy: SecurityPolicy): void
+  manageLogs(logs: LogEntry[]): void
+  monitorSystem(): SystemHealth
 }
 
 interface SystemHealth {
-  status: 'healthy' | 'degraded' | 'unhealthy';
-  metrics: HealthMetrics;
-  alerts: Alert[];
+  status: 'healthy' | 'degraded' | 'unhealthy'
+  metrics: HealthMetrics
+  alerts: Alert[]
 }
 ```
 
@@ -271,23 +281,23 @@ interface SystemHealth {
 
 ```typescript
 class StandaloneAppManager {
-  private mode: 'standalone' = 'standalone';
-  private modules: CoreModules;
-  private uiManager: UIManager;
-  
+  private mode: 'standalone' = 'standalone'
+  private modules: CoreModules
+  private uiManager: UIManager
+
   constructor() {
-    this.modules = this.initializeModules();
-    this.uiManager = new UIManager('standalone');
+    this.modules = this.initializeModules()
+    this.uiManager = new UIManager('standalone')
   }
-  
+
   async initialize() {
     // 初始化所有核心模块
-    await this.modules.analysis.initialize();
-    await this.modules.execution.initialize();
-    await this.modules.optimization.initialize();
-    await this.modules.learning.initialize();
-    await this.modules.management.initialize();
-    
+    await this.modules.analysis.initialize()
+    await this.modules.execution.initialize()
+    await this.modules.optimization.initialize()
+    await this.modules.learning.initialize()
+    await this.modules.management.initialize()
+
     // 初始化UI
     this.uiManager.initialize({
       fullScreen: true,
@@ -295,35 +305,35 @@ class StandaloneAppManager {
       showSidebar: true,
       enableAllModules: true,
       neonIntensity: 'high',
-      glitchEffect: true
-    });
-    
+      glitchEffect: true,
+    })
+
     // 启动性能监控
-    this.modules.optimization.monitorPerformance();
+    this.modules.optimization.monitorPerformance()
   }
-  
+
   async handleUserInput(input: UserInput) {
     // 分析用户输入
-    const analysis = await this.modules.analysis.analyzeInput(input);
-    
+    const analysis = await this.modules.analysis.analyzeInput(input)
+
     // 执行任务
     const result = await this.modules.execution.executeTask({
       intent: analysis.intent,
       entities: analysis.entities,
-      context: analysis.context
-    });
-    
+      context: analysis.context,
+    })
+
     // 优化性能
-    this.modules.optimization.optimizePerformance();
-    
+    this.modules.optimization.optimizePerformance()
+
     // 学习用户行为
     this.modules.learning.learnFromFeedback({
       input,
       result,
-      timestamp: Date.now()
-    });
-    
-    return result;
+      timestamp: Date.now(),
+    })
+
+    return result
   }
 }
 ```
@@ -332,23 +342,23 @@ class StandaloneAppManager {
 
 ```typescript
 class WidgetPluginManager {
-  private mode: 'widget' = 'widget';
-  private modules: CoreModules;
-  private widgetManager: WidgetManager;
-  private hostIntegration: HostIntegration;
-  
+  private mode: 'widget' = 'widget'
+  private modules: CoreModules
+  private widgetManager: WidgetManager
+  private hostIntegration: HostIntegration
+
   constructor() {
-    this.modules = this.initializeModules();
-    this.widgetManager = new WidgetManager();
-    this.hostIntegration = new HostIntegration();
+    this.modules = this.initializeModules()
+    this.widgetManager = new WidgetManager()
+    this.hostIntegration = new HostIntegration()
   }
-  
+
   async initialize() {
     // 初始化核心模块（轻量级）
-    await this.modules.analysis.initialize();
-    await this.modules.execution.initialize();
-    await this.modules.optimization.initialize();
-    
+    await this.modules.analysis.initialize()
+    await this.modules.execution.initialize()
+    await this.modules.optimization.initialize()
+
     // 初始化浮窗
     this.widgetManager.initialize({
       position: 'bottom-right',
@@ -357,55 +367,55 @@ class WidgetPluginManager {
       enableResize: true,
       autoHide: false,
       neonIntensity: 'medium',
-      glitchEffect: false
-    });
-    
+      glitchEffect: false,
+    })
+
     // 集成到宿主应用
-    await this.hostIntegration.integrate();
-    
+    await this.hostIntegration.integrate()
+
     // 启动性能监控
-    this.modules.optimization.monitorPerformance();
+    this.modules.optimization.monitorPerformance()
   }
-  
+
   async handleUserInput(input: UserInput) {
     // 快速分析用户输入
-    const analysis = await this.modules.analysis.analyzeInput(input);
-    
+    const analysis = await this.modules.analysis.analyzeInput(input)
+
     // 执行任务（优化响应速度）
     const result = await this.modules.execution.executeTask({
       intent: analysis.intent,
       entities: analysis.entities,
       context: analysis.context,
-      priority: 'high'
-    });
-    
+      priority: 'high',
+    })
+
     // 优化性能（浮窗模式优先级更高）
     this.modules.optimization.optimizePerformance({
       priority: 'high',
-      mode: 'widget'
-    });
-    
+      mode: 'widget',
+    })
+
     // 学习用户行为
     this.modules.learning.learnFromFeedback({
       input,
       result,
       timestamp: Date.now(),
-      mode: 'widget'
-    });
-    
-    return result;
+      mode: 'widget',
+    })
+
+    return result
   }
-  
+
   toggleWidget() {
-    this.widgetManager.toggle();
+    this.widgetManager.toggle()
   }
-  
+
   resizeWidget(size: WidgetSize) {
-    this.widgetManager.resize(size);
+    this.widgetManager.resize(size)
   }
-  
+
   moveWidget(position: WidgetPosition) {
-    this.widgetManager.move(position);
+    this.widgetManager.move(position)
   }
 }
 ```
@@ -414,26 +424,26 @@ class WidgetPluginManager {
 
 ```typescript
 interface AppState {
-  mode: 'standalone' | 'widget';
-  user: User;
-  sessions: Session[];
-  activeSession: Session | null;
-  tools: Tool[];
-  workflows: Workflow[];
-  insights: Insight[];
-  theme: Theme;
-  settings: Settings;
+  mode: 'standalone' | 'widget'
+  user: User
+  sessions: Session[]
+  activeSession: Session | null
+  tools: Tool[]
+  workflows: Workflow[]
+  insights: Insight[]
+  theme: Theme
+  settings: Settings
 }
 
 interface CyberpunkTheme {
-  neonIntensity: 'low' | 'medium' | 'high';
-  glitchEffect: boolean;
-  scanlines: boolean;
-  circuitGrid: boolean;
-  dataFlow: boolean;
-  primaryColor: string;
-  secondaryColor: string;
-  backgroundColor: string;
+  neonIntensity: 'low' | 'medium' | 'high'
+  glitchEffect: boolean
+  scanlines: boolean
+  circuitGrid: boolean
+  dataFlow: boolean
+  primaryColor: string
+  secondaryColor: string
+  backgroundColor: string
 }
 ```
 
@@ -528,8 +538,8 @@ interface CyberpunkTheme {
 /* 赛博朋克独立应用全屏布局 */
 .cyberpunk-standalone-app {
   display: grid;
-  grid-template-rows: 64px 1fr 40px;  /* 顶部导航 | 主内容 | 底部状态 */
-  grid-template-columns: 280px 1fr;    /* 侧边栏 | 主内容 */
+  grid-template-rows: 64px 1fr 40px; /* 顶部导航 | 主内容 | 底部状态 */
+  grid-template-columns: 280px 1fr; /* 侧边栏 | 主内容 */
   height: 100vh;
   overflow: hidden;
   background: var(--cyber-dark);
@@ -682,73 +692,73 @@ interface CyberpunkTheme {
 
 ```typescript
 interface NavigationItem {
-  id: string;
-  label: string;
-  icon: string;
-  path: string;
-  badge?: number;
-  active?: boolean;
-  neonColor?: string;
+  id: string
+  label: string
+  icon: string
+  path: string
+  badge?: number
+  active?: boolean
+  neonColor?: string
 }
 
 const navigationItems: NavigationItem[] = [
-  { 
-    id: 'chat', 
-    label: '聊天', 
-    icon: 'MessageCircle', 
-    path: '/chat', 
+  {
+    id: 'chat',
+    label: '聊天',
+    icon: 'MessageCircle',
+    path: '/chat',
     active: true,
-    neonColor: '#00f0ff'
+    neonColor: '#00f0ff',
   },
-  { 
-    id: 'tools', 
-    label: '工具', 
-    icon: 'Tool', 
-    path: '/tools', 
+  {
+    id: 'tools',
+    label: '工具',
+    icon: 'Tool',
+    path: '/tools',
     badge: 3,
-    neonColor: '#ff00ff'
+    neonColor: '#ff00ff',
   },
-  { 
-    id: 'workflow', 
-    label: '工作流', 
-    icon: 'Workflow', 
+  {
+    id: 'workflow',
+    label: '工作流',
+    icon: 'Workflow',
     path: '/workflow',
-    neonColor: '#ffff00'
+    neonColor: '#ffff00',
   },
-  { 
-    id: 'insights', 
-    label: '洞察', 
-    icon: 'BarChart3', 
+  {
+    id: 'insights',
+    label: '洞察',
+    icon: 'BarChart3',
     path: '/insights',
-    neonColor: '#00ff00'
+    neonColor: '#00ff00',
   },
-  { 
-    id: 'settings', 
-    label: '设置', 
-    icon: 'Settings', 
+  {
+    id: 'settings',
+    label: '设置',
+    icon: 'Settings',
     path: '/settings',
-    neonColor: '#ff0000'
+    neonColor: '#ff0000',
   },
-];
+]
 ```
 
 #### 霓虹侧边栏导航
 
 ```typescript
 interface SidebarSection {
-  title: string;
-  items: SidebarItem[];
-  glitchEffect?: boolean;
+  title: string
+  items: SidebarItem[]
+  glitchEffect?: boolean
 }
 
 interface SidebarItem {
-  id: string;
-  label: string;
-  icon: string;
-  path: string;
-  badge?: number;
-  active?: boolean;
-  neonColor?: string;
+  id: string
+  label: string
+  icon: string
+  path: string
+  badge?: number
+  active?: boolean
+  neonColor?: string
 }
 
 const sidebarSections: SidebarSection[] = [
@@ -756,65 +766,65 @@ const sidebarSections: SidebarSection[] = [
     title: '主要功能',
     glitchEffect: true,
     items: [
-      { 
-        id: 'chat', 
-        label: 'AI聊天', 
-        icon: 'MessageCircle', 
-        path: '/chat', 
+      {
+        id: 'chat',
+        label: 'AI聊天',
+        icon: 'MessageCircle',
+        path: '/chat',
         active: true,
-        neonColor: '#00f0ff'
+        neonColor: '#00f0ff',
       },
-      { 
-        id: 'tools', 
-        label: 'AI工具', 
-        icon: 'Tool', 
-        path: '/tools', 
+      {
+        id: 'tools',
+        label: 'AI工具',
+        icon: 'Tool',
+        path: '/tools',
         badge: 12,
-        neonColor: '#ff00ff'
+        neonColor: '#ff00ff',
       },
-      { 
-        id: 'workflow', 
-        label: '工作流', 
-        icon: 'Workflow', 
+      {
+        id: 'workflow',
+        label: '工作流',
+        icon: 'Workflow',
         path: '/workflow',
-        neonColor: '#ffff00'
+        neonColor: '#ffff00',
       },
-      { 
-        id: 'insights', 
-        label: '数据洞察', 
-        icon: 'BarChart3', 
+      {
+        id: 'insights',
+        label: '数据洞察',
+        icon: 'BarChart3',
         path: '/insights',
-        neonColor: '#00ff00'
+        neonColor: '#00ff00',
       },
     ],
   },
   {
     title: '个人中心',
     items: [
-      { 
-        id: 'history', 
-        label: '历史记录', 
-        icon: 'History', 
+      {
+        id: 'history',
+        label: '历史记录',
+        icon: 'History',
         path: '/history',
-        neonColor: '#0000ff'
+        neonColor: '#0000ff',
       },
-      { 
-        id: 'favorites', 
-        label: '收藏夹', 
-        icon: 'Star', 
+      {
+        id: 'favorites',
+        label: '收藏夹',
+        icon: 'Star',
         path: '/favorites',
-        neonColor: '#ff00ff'
+        neonColor: '#ff00ff',
       },
-      { 
-        id: 'profile', 
-        label: '个人资料', 
-        icon: 'User', 
+      {
+        id: 'profile',
+        label: '个人资料',
+        icon: 'User',
         path: '/profile',
-        neonColor: '#00f0ff'
+        neonColor: '#00f0ff',
       },
     ],
   },
-];
+]
 ```
 
 ### 页面设计
@@ -1022,41 +1032,41 @@ const sidebarSections: SidebarSection[] = [
 ```typescript
 interface CyberpunkWidgetConfig {
   // 基础配置
-  id: string;
-  title: string;
-  
+  id: string
+  title: string
+
   // 尺寸配置
-  width: number;
-  height: number;
-  minWidth: number;
-  minHeight: number;
-  maxWidth: number;
-  maxHeight: number;
-  
+  width: number
+  height: number
+  minWidth: number
+  minHeight: number
+  maxWidth: number
+  maxHeight: number
+
   // 位置配置
-  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
-  x: number;
-  y: number;
-  
+  position: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'
+  x: number
+  y: number
+
   // 状态配置
-  minimized: boolean;
-  maximized: boolean;
-  hidden: boolean;
-  
+  minimized: boolean
+  maximized: boolean
+  hidden: boolean
+
   // 交互配置
-  enableDrag: boolean;
-  enableResize: boolean;
-  autoHide: boolean;
-  
+  enableDrag: boolean
+  enableResize: boolean
+  autoHide: boolean
+
   // 赛博朋克风格配置
-  neonIntensity: 'low' | 'medium' | 'high';
-  glitchEffect: boolean;
-  scanlines: boolean;
-  circuitGrid: boolean;
-  dataFlow: boolean;
-  primaryColor: string;
-  secondaryColor: string;
-  backgroundColor: string;
+  neonIntensity: 'low' | 'medium' | 'high'
+  glitchEffect: boolean
+  scanlines: boolean
+  circuitGrid: boolean
+  dataFlow: boolean
+  primaryColor: string
+  secondaryColor: string
+  backgroundColor: string
 }
 ```
 
@@ -1091,7 +1101,7 @@ interface CyberpunkWidgetConfig {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, transparent 50%),
     linear-gradient(225deg, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
   border-radius: 20px;
@@ -1198,13 +1208,22 @@ interface CyberpunkWidgetConfig {
 }
 
 @keyframes shimmer-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes shimmer-move {
-  0% { left: -100%; }
-  50%, 100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 200%;
+  }
 }
 ```
 
@@ -1242,7 +1261,8 @@ interface CyberpunkWidgetConfig {
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 ```
-```
+
+````
 
 #### 尺寸配置
 
@@ -1269,7 +1289,7 @@ interface CyberpunkWidgetConfig {
 .cyberpunk-widget-plugin.size-custom {
   /* 用户自定义尺寸 */
 }
-```
+````
 
 ### 赛博朋克毛玻璃融合设计
 
@@ -1280,6 +1300,7 @@ interface CyberpunkWidgetConfig {
 #### 核心特性
 
 **1. 毛玻璃效果（Glassmorphism）**
+
 - **半透明背景**：使用 `rgba(10, 10, 10, 0.75)` 作为基础背景，保持赛博朋克的深色基调
 - **高级模糊效果**：`backdrop-filter: blur(20px) saturate(180%)` 提供深度感和层次感
 - **多层玻璃叠加**：通过 `::before` 和 `::after` 伪元素创建多层渐变叠加，增强视觉深度
@@ -1289,6 +1310,7 @@ interface CyberpunkWidgetConfig {
 - **圆角更大**：`border-radius: 20px` 提供更柔和的视觉体验
 
 **2. 赛博朋克元素**
+
 - **霓虹发光**：青色主题的霓虹发光效果，保持赛博朋克的核心视觉特征
 - **电路网格**：低透明度的电路网格背景，增强科技感
 - **扫描线效果**：水平扫描线动画，营造复古未来感
@@ -1296,6 +1318,7 @@ interface CyberpunkWidgetConfig {
 - **数据流动画**：垂直数据流动效果，增强科技氛围
 
 **3. 优雅的弹簧动画**
+
 - **弹簧进入动画**：所有元素使用 `cubic-bezier(0.175, 0.885, 0.32, 1.275)` 弹簧缓动函数
 - **卡片悬停 8px 上浮 + 放大**：悬停时卡片上浮 8px 并放大 1.02 倍
 - **Icon 旋转 360° 动画**：所有图标悬停时旋转 360 度
@@ -1303,6 +1326,7 @@ interface CyberpunkWidgetConfig {
 - **AI 思考时的脉冲动画**：三个脉冲点依次放大缩小，模拟 AI 思考过程
 
 **4. 交互增强**
+
 - **光泽扫过效果（Shimmer）**：所有可交互元素都有光泽扫过动画
 - **发光效果（Glow）- 青色主题**：聚焦和悬停时的青色霓虹发光
 - **卡片悬停时的 3D 提升**：悬停时卡片产生 3D 提升效果
@@ -1334,6 +1358,7 @@ interface CyberpunkWidgetConfig {
 #### 动画系统
 
 **弹簧动画配置**
+
 ```css
 /* 弹簧缓动函数 */
 :root {
@@ -1364,6 +1389,7 @@ interface CyberpunkWidgetConfig {
 ```
 
 **光泽扫过动画**
+
 ```css
 /* 光泽扫过效果 */
 .shimmer-effect {
@@ -1394,6 +1420,7 @@ interface CyberpunkWidgetConfig {
 ```
 
 **霓虹发光动画**
+
 ```css
 /* 霓虹发光效果 */
 .neon-glow {
@@ -1416,21 +1443,22 @@ interface CyberpunkWidgetConfig {
 #### 响应式设计
 
 **移动端适配**
+
 ```css
 @media (max-width: 768px) {
   .cyberpunk-widget-plugin {
     border-radius: 16px;
     backdrop-filter: blur(15px) saturate(150%);
   }
-  
+
   .cyberpunk-widget-header {
     padding: 10px 12px;
   }
-  
+
   .cyberpunk-widget-title {
     font-size: 12px;
   }
-  
+
   .cyberpunk-widget-btn {
     width: 24px;
     height: 24px;
@@ -1439,21 +1467,22 @@ interface CyberpunkWidgetConfig {
 ```
 
 **桌面端适配**
+
 ```css
 @media (min-width: 1024px) {
   .cyberpunk-widget-plugin {
     border-radius: 20px;
     backdrop-filter: blur(20px) saturate(180%);
   }
-  
+
   .cyberpunk-widget-header {
     padding: 12px 16px;
   }
-  
+
   .cyberpunk-widget-title {
     font-size: 14px;
   }
-  
+
   .cyberpunk-widget-btn {
     width: 28px;
     height: 28px;
@@ -1464,6 +1493,7 @@ interface CyberpunkWidgetConfig {
 #### 性能优化
 
 **1. 使用 transform 代替 top/left**
+
 ```css
 /* 优化前 */
 .cyberpunk-widget-plugin {
@@ -1478,6 +1508,7 @@ interface CyberpunkWidgetConfig {
 ```
 
 **2. 使用 will-change 提示浏览器优化**
+
 ```css
 .cyberpunk-widget-plugin {
   will-change: transform, opacity, backdrop-filter;
@@ -1493,6 +1524,7 @@ interface CyberpunkWidgetConfig {
 ```
 
 **3. 使用 GPU 加速**
+
 ```css
 .cyberpunk-widget-plugin {
   transform: translateZ(0);
@@ -1503,6 +1535,7 @@ interface CyberpunkWidgetConfig {
 #### 可访问性
 
 **1. ARIA 属性**
+
 ```tsx
 <div
   className="cyberpunk-widget-plugin"
@@ -1540,27 +1573,29 @@ interface CyberpunkWidgetConfig {
 ```
 
 **2. 键盘导航**
+
 ```typescript
 const handleKeyDown = (e: KeyboardEvent) => {
   switch (e.key) {
     case 'Escape':
-      e.preventDefault();
-      closeWidget();
-      break;
+      e.preventDefault()
+      closeWidget()
+      break
     case 'Tab':
-      e.preventDefault();
-      focusNextElement();
-      break;
+      e.preventDefault()
+      focusNextElement()
+      break
     case 'Enter':
     case ' ':
-      e.preventDefault();
-      activateElement();
-      break;
+      e.preventDefault()
+      activateElement()
+      break
   }
-};
+}
 ```
 
 **3. 焦点管理**
+
 ```css
 /* 焦点样式 */
 .cyberpunk-widget-btn:focus-visible {
@@ -1580,6 +1615,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 #### 浏览器兼容性
 
 **1. backdrop-filter 兼容性**
+
 ```css
 /* 回退方案 */
 .cyberpunk-widget-plugin {
@@ -1597,6 +1633,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 **2. CSS 变量回退**
+
 ```css
 :root {
   --neon-cyan: #00f0ff;
@@ -1643,7 +1680,8 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes logo-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
   50% {
@@ -1676,8 +1714,13 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* 控制按钮 */
@@ -2000,7 +2043,8 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes thinking-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.5;
     box-shadow: 0 0 5px rgba(0, 240, 255, 0.3);
@@ -2060,7 +2104,11 @@ const handleKeyDown = (e: KeyboardEvent) => {
 
 /* 发送按钮 */
 .cyberpunk-widget-send-btn {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(0, 240, 255, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 240, 255, 0.2),
+    rgba(0, 240, 255, 0.1)
+  );
   backdrop-filter: blur(10px) saturate(150%);
   -webkit-backdrop-filter: blur(10px) saturate(150%);
   border: 1px solid rgba(0, 240, 255, 0.5);
@@ -2097,7 +2145,11 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 .cyberpunk-widget-send-btn:hover {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(0, 240, 255, 0.2));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 240, 255, 0.3),
+    rgba(0, 240, 255, 0.2)
+  );
   border-color: #00f0ff;
   box-shadow:
     0 0 20px rgba(0, 240, 255, 0.4),
@@ -2121,15 +2173,16 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 .cyberpunk-widget-tab.active {
-  background: rgba(0, 240, 255, 0.2);
-  border-color: #00f0ff;
-  color: #00f0ff;
-  box-shadow:
-    0 0 10px #00f0ff,
-    0 0 20px rgba(0, 240, 255, 0.3),
-    inset 0 0 10px rgba(0, 240, 255, 0.1);
+background: rgba(0, 240, 255, 0.2);
+border-color: #00f0ff;
+color: #00f0ff;
+box-shadow:
+0 0 10px #00f0ff,
+0 0 20px rgba(0, 240, 255, 0.3),
+inset 0 0 10px rgba(0, 240, 255, 0.1);
 }
-```
+
+````
 
 #### 霓虹快捷操作栏
 
@@ -2173,7 +2226,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
     0 0 10px #00f0ff,
     0 0 20px rgba(0, 240, 255, 0.3);
 }
-```
+````
 
 ---
 
@@ -2182,6 +2235,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 1. 高对比度原则
 
 #### 霓虹发光
+
 ```css
 /* 文本霓虹发光 */
 .neon-text {
@@ -2196,7 +2250,8 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes neon-pulse {
-  0%, 100% {
+  0%,
+  100% {
     text-shadow:
       0 0 5px #00f0ff,
       0 0 10px #00f0ff,
@@ -2216,6 +2271,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### 边框霓虹
+
 ```css
 /* 边框霓虹发光 */
 .neon-border {
@@ -2228,7 +2284,8 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes neon-border-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow:
       0 0 5px #ff00ff,
       0 0 10px #ff00ff,
@@ -2246,6 +2303,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 2. 科技感原则
 
 #### 电路板效果
+
 ```css
 /* 电路网格背景 */
 .circuit-grid {
@@ -2270,42 +2328,61 @@ const handleKeyDown = (e: KeyboardEvent) => {
   right: 0;
   bottom: 0;
   background:
-    linear-gradient(45deg, transparent 49%, rgba(0, 240, 255, 0.3) 50%, transparent 51%),
-    linear-gradient(-45deg, transparent 49%, rgba(255, 0, 255, 0.3) 50%, transparent 51%);
+    linear-gradient(
+      45deg,
+      transparent 49%,
+      rgba(0, 240, 255, 0.3) 50%,
+      transparent 51%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 49%,
+      rgba(255, 0, 255, 0.3) 50%,
+      transparent 51%
+    );
   background-size: 40px 40px;
   animation: circuit-flow 20s linear infinite;
 }
 
 @keyframes circuit-flow {
-  0% { background-position: 0 0; }
-  100% { background-position: 40px 40px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
 }
 ```
 
 #### 数据流动效果
+
 ```css
 /* 数据流背景 */
 .data-flow {
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 240, 255, 0.03) 2px,
-      rgba(0, 240, 255, 0.03) 4px
-    );
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 240, 255, 0.03) 2px,
+    rgba(0, 240, 255, 0.03) 4px
+  );
   animation: data-scroll 10s linear infinite;
 }
 
 @keyframes data-scroll {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 100px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100px;
+  }
 }
 ```
 
 ### 3. 动态性原则
 
 #### 扫描线效果
+
 ```css
 /* 水平扫描线 */
 .scanlines {
@@ -2332,12 +2409,17 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes scanline-move {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 100%; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
 }
 ```
 
 #### 全息投影效果
+
 ```css
 /* 全息卡片 */
 .hologram-card {
@@ -2356,8 +2438,13 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes hologram-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.95; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.95;
+  }
 }
 ```
 
@@ -2368,6 +2455,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 色彩系统
 
 #### 主色调
+
 ```css
 :root {
   --cyber-cyan: #00f0ff;
@@ -2380,6 +2468,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### 背景色系
+
 ```css
 :root {
   --cyber-dark: #0a0a0a;
@@ -2390,6 +2479,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### 霓虹渐变
+
 ```css
 /* 青紫渐变 */
 .gradient-cyan-magenta {
@@ -2410,6 +2500,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 字体系统
 
 #### 字体家族
+
 ```css
 :root {
   --font-primary: 'Orbitron', 'Rajdhani', 'Share Tech Mono', monospace;
@@ -2419,6 +2510,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### 字体大小
+
 ```css
 :root {
   --text-xs: 12px;
@@ -2434,6 +2526,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 间距系统
 
 #### 基础间距
+
 ```css
 :root {
   --space-1: 4px;
@@ -2451,6 +2544,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 圆角系统
 
 #### 圆角规范
+
 ```css
 :root {
   --radius-sm: 4px;
@@ -2468,6 +2562,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 1. 卡片组件
 
 #### 霓虹卡片
+
 ```css
 .card-neon {
   background: rgba(10, 10, 10, 0.8);
@@ -2489,6 +2584,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### 全息卡片
+
 ```css
 .card-hologram {
   background: linear-gradient(
@@ -2511,6 +2607,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 2. 按钮组件
 
 #### 霓虹按钮
+
 ```css
 .button-neon {
   background: transparent;
@@ -2546,7 +2643,12 @@ const handleKeyDown = (e: KeyboardEvent) => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -2556,6 +2658,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### 扫描按钮
+
 ```css
 .button-scan {
   background: rgba(10, 10, 10, 0.8);
@@ -2594,6 +2697,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 3. 输入框组件
 
 #### 霓虹输入框
+
 ```css
 .input-neon {
   background: rgba(10, 10, 10, 0.8);
@@ -2624,6 +2728,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 4. 导航组件
 
 #### 霓虹导航栏
+
 ```css
 .nav-neon {
   background: rgba(10, 10, 10, 0.9);
@@ -2673,6 +2778,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 1. 故障效果
 
 #### 文本故障
+
 ```css
 .glitch-text {
   position: relative;
@@ -2701,25 +2807,58 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 @keyframes glitch-1 {
-  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
-  20% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 2px); }
-  40% { clip-path: inset(40% 0 40% 0); transform: translate(2px, -2px); }
-  60% { clip-path: inset(60% 0 20% 0); transform: translate(-2px, 2px); }
-  80% { clip-path: inset(80% 0 0 0); transform: translate(2px, -2px); }
+  0%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(2px, -2px);
+  }
+  60% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(-2px, 2px);
+  }
+  80% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(2px, -2px);
+  }
 }
 
 @keyframes glitch-2 {
-  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
-  20% { clip-path: inset(60% 0 20% 0); transform: translate(2px, -2px); }
-  40% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 2px); }
-  60% { clip-path: inset(20% 0 60% 0); transform: translate(2px, -2px); }
-  80% { clip-path: inset(0 0 80% 0); transform: translate(-2px, 2px); }
+  0%,
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  20% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(2px, -2px);
+  }
+  40% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(-2px, 2px);
+  }
+  60% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(2px, -2px);
+  }
+  80% {
+    clip-path: inset(0 0 80% 0);
+    transform: translate(-2px, 2px);
+  }
 }
 ```
 
 ### 2. 悬停效果
 
 #### 霓虹悬停
+
 ```css
 .card-neon {
   transition: all 0.3s ease;
@@ -2736,6 +2875,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 3. 点击效果
 
 #### 霓虹点击
+
 ```css
 .button-neon {
   transition: all 0.15s ease;
@@ -2756,6 +2896,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ### 1. 技术栈推荐
 
 #### 前端框架
+
 ```json
 {
   "framework": "React 18+",
@@ -2767,6 +2908,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### UI组件库
+
 ```json
 {
   "base": "Radix UI",
@@ -2808,6 +2950,7 @@ src/
 ### 3. 性能优化
 
 #### 懒加载
+
 ```typescript
 const LazyNeonCard = React.lazy(() => import('./components/cyberpunk/NeonCard'));
 
@@ -2821,12 +2964,13 @@ const App = () => {
 ```
 
 #### 虚拟滚动
+
 ```typescript
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 const VirtualList = ({ items }: { items: any[] }) => {
   const parentRef = React.useRef<HTMLDivElement>(null);
-  
+
   const virtualizer = useVirtualizer({
     count: items.length,
     getScrollElement: () => parentRef.current,
@@ -2864,6 +3008,7 @@ const VirtualList = ({ items }: { items: any[] }) => {
 ### 1. React组件实现
 
 #### 霓虹卡片组件
+
 ```typescript
 import React from 'react';
 
@@ -2892,6 +3037,7 @@ export const NeonCard: React.FC<NeonCardProps> = ({
 ```
 
 #### 故障文本组件
+
 ```typescript
 import React, { useState, useEffect } from 'react';
 
@@ -2905,15 +3051,15 @@ export const GlitchText: React.FC<GlitchTextProps> = ({
   className = '',
 }) => {
   const [isGlitching, setIsGlitching] = useState(false);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIsGlitching(Math.random() > 0.7);
     }, 3000);
-    
+
     return () => clearInterval(interval);
   }, []);
-  
+
   return (
     <span
       className={`glitch-text ${isGlitching ? 'glitching' : ''} ${className}`}
@@ -2928,52 +3074,54 @@ export const GlitchText: React.FC<GlitchTextProps> = ({
 ### 2. 自定义Hooks
 
 #### 霓虹效果Hook
+
 ```typescript
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 
 export const useNeonEffect = (color: string = '#00f0ff') => {
-  const elementRef = useRef<HTMLElement>(null);
-  
+  const elementRef = useRef<HTMLElement>(null)
+
   useEffect(() => {
-    if (!elementRef.current) return;
-    
-    const element = elementRef.current;
-    
+    if (!elementRef.current) return
+
+    const element = elementRef.current
+
     // 添加脉冲发光效果
     const addPulseEffect = () => {
-      element.style.setProperty('--neon-glow', color);
-    };
-    
-    addPulseEffect();
-    
+      element.style.setProperty('--neon-glow', color)
+    }
+
+    addPulseEffect()
+
     return () => {
-      element.style.removeProperty('--neon-glow');
-    };
-  }, [color]);
-  
-  return elementRef;
-};
+      element.style.removeProperty('--neon-glow')
+    }
+  }, [color])
+
+  return elementRef
+}
 ```
 
 #### 故障动画Hook
+
 ```typescript
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 export const useGlitchAnimation = (enabled: boolean = true) => {
-  const [isGlitching, setIsGlitching] = useState(false);
-  
+  const [isGlitching, setIsGlitching] = useState(false)
+
   useEffect(() => {
-    if (!enabled) return;
-    
+    if (!enabled) return
+
     const interval = setInterval(() => {
-      setIsGlitching(Math.random() > 0.8);
-    }, 2000);
-    
-    return () => clearInterval(interval);
-  }, [enabled]);
-  
-  return isGlitching;
-};
+      setIsGlitching(Math.random() > 0.8)
+    }, 2000)
+
+    return () => clearInterval(interval)
+  }, [enabled])
+
+  return isGlitching
+}
 ```
 
 ---
@@ -2983,6 +3131,7 @@ export const useGlitchAnimation = (enabled: boolean = true) => {
 ### 1. 性能优化
 
 #### 减少重绘
+
 ```css
 /* 使用transform代替top/left */
 .card-neon {
@@ -2996,6 +3145,7 @@ export const useGlitchAnimation = (enabled: boolean = true) => {
 ```
 
 #### 使用will-change
+
 ```css
 /* 提示浏览器优化 */
 .card-neon {
@@ -3010,47 +3160,46 @@ export const useGlitchAnimation = (enabled: boolean = true) => {
 ### 2. 可访问性
 
 #### ARIA属性
+
 ```tsx
-<div
-  className="card-neon"
-  role="article"
-  aria-label="霓虹卡片"
->
+<div className="card-neon" role="article" aria-label="霓虹卡片">
   <h2>卡片标题</h2>
   <p>卡片内容</p>
 </div>
 ```
 
 #### 键盘导航
+
 ```typescript
 const handleKeyDown = (e: KeyboardEvent) => {
   switch (e.key) {
     case 'Tab':
-      e.preventDefault();
-      focusNextElement();
-      break;
+      e.preventDefault()
+      focusNextElement()
+      break
     case 'Enter':
     case ' ':
-      e.preventDefault();
-      activateElement();
-      break;
+      e.preventDefault()
+      activateElement()
+      break
     case 'Escape':
-      closeDropdown();
-      break;
+      closeDropdown()
+      break
   }
-};
+}
 ```
 
 ### 3. 响应式设计
 
 #### 移动端适配
+
 ```css
 @media (max-width: 768px) {
   .card-neon {
     padding: 16px;
     border-width: 1px;
   }
-  
+
   .neon-text {
     font-size: 14px;
   }
@@ -3058,13 +3207,14 @@ const handleKeyDown = (e: KeyboardEvent) => {
 ```
 
 #### 桌面端适配
+
 ```css
 @media (min-width: 1024px) {
   .card-neon {
     padding: 24px;
     border-width: 2px;
   }
-  
+
   .neon-text {
     font-size: 16px;
   }
@@ -3075,9 +3225,9 @@ const handleKeyDown = (e: KeyboardEvent) => {
 
 <div align="center">
 
-> 「***YanYuCloudCube***」
-> 「***<admin@0379.email>***」
-> 「***Words Initiate Quadrants, Language Serves as Core for Future***」
-> 「***All things converge in cloud pivot; Deep stacks ignite a new era of intelligence***」
+> 「**_YanYuCloudCube_**」
+> 「**_<admin@0379.email>_**」
+> 「**_Words Initiate Quadrants, Language Serves as Core for Future_**」
+> 「**_All things converge in cloud pivot; Deep stacks ignite a new era of intelligence_**」
 
 </div>

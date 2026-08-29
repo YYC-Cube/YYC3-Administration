@@ -11,52 +11,52 @@
 
 ### 1.1 已完成模块清单
 
-| # | 模块 | PageId | 完成度 | 功能深度 | 备注 |
-|---|------|--------|--------|----------|------|
-| 1 | 数据驾驶舱 | `dashboard` | 95% | 深 | Live KPI、7日趋势、客户分布、呼叫热力、AI矩阵、快捷导航 |
-| 2 | AI 聊天 | `chat` | 85% | 深 | 多服务商LLM集成(OpenAI/Ollama/Custom)、会话管理、流式响应 |
-| 3 | 客户生命周期 | `clm` | 80% | 中 | 5阶段漏斗、客户卡片、实时看板、阶段筛选 |
-| 4 | AI 智能呼叫 | `aicall` | 75% | 中 | 呼叫队列、AI实时分析(情感/意图/策略)、效率环、呼叫流程管道 |
-| 5 | 客户关怀中心 | `customerCare` | 90% | 深 | 客户列表、状态管理、AI评分、来源筛选、统计卡片 |
-| 6 | 号码库 | `contacts` | 90% | 深 | 8大子标签页(总览/信息/分析/协同/价值/服务/知识/监控) |
-| 7 | 智能表单 | `forms` | 85% | 深 | 模板选择、动态字段、AI辅助、实时校验、提交历史、模板构建器 |
-| 8 | AI 工具 | `tools` | 30% | 浅 | 仅展示卡片，无实际功能入口 |
-| 9 | 工作流 | `workflow` | 25% | 浅 | 5节点流程可视化，无编辑/创建能力 |
-| 10 | 操作日志 | `logs` | 80% | 中 | 实时日志流、类型筛选、自动滚动、搜索 |
-| 11 | 数据洞察 | `insights` | 35% | 浅 | 4个指标卡片 + 基础趋势图 |
-| 12 | 设置 | `settings` | 85% | 深 | 主题配置(7项)、语言切换、引导重置、系统信息 |
+| #   | 模块         | PageId         | 完成度 | 功能深度 | 备注                                                       |
+| --- | ------------ | -------------- | ------ | -------- | ---------------------------------------------------------- |
+| 1   | 数据驾驶舱   | `dashboard`    | 95%    | 深       | Live KPI、7日趋势、客户分布、呼叫热力、AI矩阵、快捷导航    |
+| 2   | AI 聊天      | `chat`         | 85%    | 深       | 多服务商LLM集成(OpenAI/Ollama/Custom)、会话管理、流式响应  |
+| 3   | 客户生命周期 | `clm`          | 80%    | 中       | 5阶段漏斗、客户卡片、实时看板、阶段筛选                    |
+| 4   | AI 智能呼叫  | `aicall`       | 75%    | 中       | 呼叫队列、AI实时分析(情感/意图/策略)、效率环、呼叫流程管道 |
+| 5   | 客户关怀中心 | `customerCare` | 90%    | 深       | 客户列表、状态管理、AI评分、来源筛选、统计卡片             |
+| 6   | 号码库       | `contacts`     | 90%    | 深       | 8大子标签页(总览/信息/分析/协同/价值/服务/知识/监控)       |
+| 7   | 智能表单     | `forms`        | 85%    | 深       | 模板选择、动态字段、AI辅助、实时校验、提交历史、模板构建器 |
+| 8   | AI 工具      | `tools`        | 30%    | 浅       | 仅展示卡片，无实际功能入口                                 |
+| 9   | 工作流       | `workflow`     | 25%    | 浅       | 5节点流程可视化，无编辑/创建能力                           |
+| 10  | 操作日志     | `logs`         | 80%    | 中       | 实时日志流、类型筛选、自动滚动、搜索                       |
+| 11  | 数据洞察     | `insights`     | 35%    | 浅       | 4个指标卡片 + 基础趋势图                                   |
+| 12  | 设置         | `settings`     | 85%    | 深       | 主题配置(7项)、语言切换、引导重置、系统信息                |
 
 ### 1.2 基础设施能力
 
-| 能力 | 状态 | 覆盖率 |
-|------|------|--------|
-| 双模式 (standalone + widget) | ✅ 完成 | 100% |
-| 双主题 (cyberpunk + liquidGlass) | ✅ 完成 | 100% |
-| i18n 中英双语 | ✅ 完成 | ~150 keys |
-| AI 模型管理 (多服务商) | ✅ 完成 | OpenAI/Ollama/Custom |
-| 实时数据模拟 | ✅ 完成 | 通知+活动流 |
-| 数据导出 (CSV/JSON) | ✅ 完成 | 3个数据集 |
-| 命令面板 (Ctrl+K) | ✅ 完成 | 导航+操作+工具 |
-| 通知系统 | ✅ 完成 | 实时推送+抽屉 |
-| 引导教程 | ✅ 完成 | 多步骤引导 |
-| PWA 支持 | ✅ 完成 | 安装提示 |
-| 全局键盘快捷键 | ✅ 完成 | Ctrl+K/N/E/./  |
-| TypeScript 类型系统 | ✅ 完成 | 90+ 接口定义 |
-| 响应式布局 | ✅ 完成 | 移动端侧边栏抽屉 |
-| 共享联系人状态 | ✅ 完成 | ContactsContext |
-| localStorage 持久化 | ✅ 完成 | 7个 storage key |
+| 能力                             | 状态    | 覆盖率               |
+| -------------------------------- | ------- | -------------------- |
+| 双模式 (standalone + widget)     | ✅ 完成 | 100%                 |
+| 双主题 (cyberpunk + liquidGlass) | ✅ 完成 | 100%                 |
+| i18n 中英双语                    | ✅ 完成 | ~150 keys            |
+| AI 模型管理 (多服务商)           | ✅ 完成 | OpenAI/Ollama/Custom |
+| 实时数据模拟                     | ✅ 完成 | 通知+活动流          |
+| 数据导出 (CSV/JSON)              | ✅ 完成 | 3个数据集            |
+| 命令面板 (Ctrl+K)                | ✅ 完成 | 导航+操作+工具       |
+| 通知系统                         | ✅ 完成 | 实时推送+抽屉        |
+| 引导教程                         | ✅ 完成 | 多步骤引导           |
+| PWA 支持                         | ✅ 完成 | 安装提示             |
+| 全局键盘快捷键                   | ✅ 完成 | Ctrl+K/N/E/./        |
+| TypeScript 类型系统              | ✅ 完成 | 90+ 接口定义         |
+| 响应式布局                       | ✅ 完成 | 移动端侧边栏抽屉     |
+| 共享联系人状态                   | ✅ 完成 | ContactsContext      |
+| localStorage 持久化              | ✅ 完成 | 7个 storage key      |
 
 ### 1.3 核心短板识别
 
-| 短板 | 严重度 | 影响范围 | 分析 |
-|------|--------|----------|------|
-| **AI 工具页仅有展示** | 高 | 用户价值感知 | 6个工具卡片无实际交互，用户点击无反馈 |
-| **工作流无编辑能力** | 高 | 核心差异化 | 仅5节点静态展示，无法创建/编辑/执行工作流 |
-| **数据洞察过于简单** | 中 | 决策支持 | 仅4指标+1趋势，缺乏多维分析、对比、下钻 |
-| **无用户认证体系** | 中 | 安全/个性化 | 所有数据本地存储，无多用户/权限概念 |
-| **个人中心三项为空** | 中 | 完整度感知 | 历史记录/收藏夹/个人资料 sidebar按钮无功能 |
-| **无批量操作能力** | 低 | 效率 | 客户/联系人无批量选择、批量操作 |
-| **Chat 无多轮上下文** | 低 | AI体验 | 每次对话独立，无上下文记忆 |
+| 短板                  | 严重度 | 影响范围     | 分析                                       |
+| --------------------- | ------ | ------------ | ------------------------------------------ |
+| **AI 工具页仅有展示** | 高     | 用户价值感知 | 6个工具卡片无实际交互，用户点击无反馈      |
+| **工作流无编辑能力**  | 高     | 核心差异化   | 仅5节点静态展示，无法创建/编辑/执行工作流  |
+| **数据洞察过于简单**  | 中     | 决策支持     | 仅4指标+1趋势，缺乏多维分析、对比、下钻    |
+| **无用户认证体系**    | 中     | 安全/个性化  | 所有数据本地存储，无多用户/权限概念        |
+| **个人中心三项为空**  | 中     | 完整度感知   | 历史记录/收藏夹/个人资料 sidebar按钮无功能 |
+| **无批量操作能力**    | 低     | 效率         | 客户/联系人无批量选择、批量操作            |
+| **Chat 无多轮上下文** | 低     | AI体验       | 每次对话独立，无上下文记忆                 |
 
 ---
 
@@ -104,6 +104,7 @@ tools 页面重构:
 ```
 
 **技术实现**:
+
 - 复用 `AIModelContext` 的 LLM 调用能力
 - 新建 `ai-tools-page.tsx` 替代现有工具卡片
 - 每个工具为独立子组件，通过 tabs/cards 切换
@@ -111,6 +112,7 @@ tools 页面重构:
 - 新增 i18n keys: `tools.textAssist.*`, `tools.analyzer.*` 等 (~30 keys)
 
 **用户场景**:
+
 ```
 场景1: 销售经理需要给客户写跟进邮件
 → 打开 AI 工具 → 文本助手 → 选择"跟进邮件"模板
@@ -161,6 +163,7 @@ workflow 页面重构:
 ```
 
 **技术实现**:
+
 - 使用已安装的 `react-dnd` + `react-dnd-html5-backend`
 - 新建 `workflow-editor.tsx` (可视化编辑器核心)
 - 新建 `workflow-node-types.ts` (节点类型定义)
@@ -169,33 +172,40 @@ workflow 页面重构:
 - 新增 i18n keys: `workflow.editor.*`, `workflow.node.*` (~35 keys)
 
 **数据模型**:
+
 ```typescript
 interface WorkflowDefinition {
-  id: string;
-  name: string;
-  description: string;
-  status: 'active' | 'draft' | 'archived';
-  nodes: WorkflowNode[];
-  edges: WorkflowEdge[];
-  createdAt: string;
-  updatedAt: string;
+  id: string
+  name: string
+  description: string
+  status: 'active' | 'draft' | 'archived'
+  nodes: WorkflowNode[]
+  edges: WorkflowEdge[]
+  createdAt: string
+  updatedAt: string
 }
 
 interface WorkflowNode {
-  id: string;
-  type: 'trigger' | 'condition' | 'ai_action' | 'notification' | 'data_op' | 'delay';
-  position: { x: number; y: number };
-  config: Record<string, unknown>;
-  label: string;
-  color: string;
+  id: string
+  type:
+    | 'trigger'
+    | 'condition'
+    | 'ai_action'
+    | 'notification'
+    | 'data_op'
+    | 'delay'
+  position: { x: number; y: number }
+  config: Record<string, unknown>
+  label: string
+  color: string
 }
 
 interface WorkflowEdge {
-  id: string;
-  source: string;
-  target: string;
-  label?: string;
-  condition?: string;
+  id: string
+  source: string
+  target: string
+  label?: string
+  condition?: string
 }
 ```
 
@@ -233,6 +243,7 @@ insights 页面重构:
 ```
 
 **技术实现**:
+
 - 充分利用已安装的 `recharts` (AreaChart/PieChart/BarChart/RadarChart/RadialBar 等)
 - 新建 `insights-page.tsx` 替代现有简单展示
 - 数据源复用 `app-context.tsx` 中的 mock 数据 + 扩展
@@ -265,6 +276,7 @@ insights 页面重构:
 ```
 
 **技术实现**:
+
 - 新增 PageId: `history` | `favorites` | `profile` 到 `app-context.tsx`
 - 或使用 Modal/Drawer 模式避免修改路由
 - 推荐: **Drawer 右侧滑出面板** (与 NotificationDrawer 同模式)
@@ -295,6 +307,7 @@ insights 页面重构:
 ```
 
 **技术实现**:
+
 - 新增 `useBatchSelection` hook
 - 使用 `Set<string>` 存储选中 ID
 - 操作确认使用已有的 Radix AlertDialog
@@ -328,6 +341,7 @@ Chat 增强:
 ```
 
 **技术实现**:
+
 - 修改 `chat-interface.tsx`，增加 `messages` 历史传递给 LLM
 - 新建 `chat-sessions-context.tsx` 管理多会话
 - Markdown 渲染考虑轻量方案 (自行实现基础 MD parser，避免引入重依赖)
@@ -353,6 +367,7 @@ Chat 增强:
 ```
 
 **技术实现**:
+
 - 扩展 `command-palette.tsx` 的搜索逻辑
 - 从 `ContactsContext` 读取联系人数据做模糊匹配
 - 使用已有的 `cmdk` 组件
@@ -369,6 +384,7 @@ Chat 增强:
 ```
 
 **技术实现**:
+
 - 使用已安装的 `react-dnd`
 - Dashboard 卡片包裹 DraggableCard HOC
 - 排序状态存储: `yyc3_layout_config`
@@ -402,6 +418,7 @@ AI Copilot 浮窗:
 ```
 
 **技术实现**:
+
 - 新建 `ai-copilot.tsx` 浮窗组件
 - 使用 `useApp().activePage` 感知当前页面
 - 调用 `AIModelContext` 进行 LLM 推理
@@ -480,6 +497,7 @@ AI 评分增强:
 ```
 
 **迁移策略**:
+
 - 所有 localStorage 操作已封装为 `load/save` 函数，迁移成本低
 - `ContactsContext` 可直接切换数据源为 Supabase table
 - `AIModelContext` 的 API key 可迁移至 Supabase Secrets
@@ -522,22 +540,22 @@ i18n 扩展:
 
 ### 3.1 优先级评估 (ICE 评分法)
 
-| 功能 | Impact (1-10) | Confidence (1-10) | Ease (1-10) | ICE Score | 优先级 |
-|------|---------|------------|------|-----------|--------|
-| AI 工具矩阵实际化 | 9 | 8 | 7 | 504 | P0 |
-| 个人中心三联补全 | 7 | 9 | 8 | 504 | P0 |
-| 数据洞察增强 | 8 | 8 | 7 | 448 | P0 |
-| 工作流编辑器 | 9 | 7 | 5 | 315 | P1 |
-| 批量操作系统 | 7 | 9 | 7 | 441 | P1 |
-| AI Chat 增强 | 8 | 8 | 6 | 384 | P1 |
-| AI Copilot | 8 | 7 | 6 | 336 | P1 |
-| 高级搜索增强 | 6 | 8 | 8 | 384 | P2 |
-| 拖拽排序布局 | 5 | 8 | 7 | 280 | P2 |
-| 智能评分增强 | 7 | 7 | 5 | 245 | P2 |
-| 智能日报/周报 | 7 | 7 | 6 | 294 | P2 |
-| Supabase 集成 | 8 | 6 | 4 | 192 | P3 |
-| 插件系统 | 6 | 5 | 3 | 90 | P4 |
-| 多语言扩展 | 4 | 8 | 7 | 224 | P4 |
+| 功能              | Impact (1-10) | Confidence (1-10) | Ease (1-10) | ICE Score | 优先级 |
+| ----------------- | ------------- | ----------------- | ----------- | --------- | ------ |
+| AI 工具矩阵实际化 | 9             | 8                 | 7           | 504       | P0     |
+| 个人中心三联补全  | 7             | 9                 | 8           | 504       | P0     |
+| 数据洞察增强      | 8             | 8                 | 7           | 448       | P0     |
+| 工作流编辑器      | 9             | 7                 | 5           | 315       | P1     |
+| 批量操作系统      | 7             | 9                 | 7           | 441       | P1     |
+| AI Chat 增强      | 8             | 8                 | 6           | 384       | P1     |
+| AI Copilot        | 8             | 7                 | 6           | 336       | P1     |
+| 高级搜索增强      | 6             | 8                 | 8           | 384       | P2     |
+| 拖拽排序布局      | 5             | 8                 | 7           | 280       | P2     |
+| 智能评分增强      | 7             | 7                 | 5           | 245       | P2     |
+| 智能日报/周报     | 7             | 7                 | 6           | 294       | P2     |
+| Supabase 集成     | 8             | 6                 | 4           | 192       | P3     |
+| 插件系统          | 6             | 5                 | 3           | 90        | P4     |
+| 多语言扩展        | 4             | 8                 | 7           | 224       | P4     |
 
 ### 3.2 实施路线图
 
@@ -601,10 +619,19 @@ src/app/components/
 ```typescript
 // app-context.tsx 扩展
 export type PageId =
-  | "dashboard" | "chat" | "clm" | "aicall"
-  | "tools" | "workflow" | "insights" | "settings"
-  | "logs" | "forms" | "contacts" | "customerCare";
-  // 注意: history/favorites/profile 使用 Drawer 模式，不新增 PageId
+  | 'dashboard'
+  | 'chat'
+  | 'clm'
+  | 'aicall'
+  | 'tools'
+  | 'workflow'
+  | 'insights'
+  | 'settings'
+  | 'logs'
+  | 'forms'
+  | 'contacts'
+  | 'customerCare'
+// 注意: history/favorites/profile 使用 Drawer 模式，不新增 PageId
 
 // 新增 Context
 // chat-sessions-context.tsx — 管理多个聊天会话
@@ -617,28 +644,28 @@ export type PageId =
 // 新增 localStorage Keys
 const STORAGE_KEYS = {
   // 已有
-  app_state: "yyc3_app_state",
-  theme: "yyc3_theme",
-  onboarding: "yyc3_onboarding_done",
-  contacts: "yyc3_contacts",
-  contacts_deleted: "yyc3_contacts_deleted",
-  ai_models: "yyc3_ai_models",
-  active_model: "yyc3_active_model_id",
-  form_submissions: "yyc3_form_submissions",
-  custom_templates: "yyc3_custom_templates",
-  locale: "yyc3_locale",
-  ui_theme: "yyc3_ui_theme",
-  app_version: "yyc_app_version",
+  app_state: 'yyc3_app_state',
+  theme: 'yyc3_theme',
+  onboarding: 'yyc3_onboarding_done',
+  contacts: 'yyc3_contacts',
+  contacts_deleted: 'yyc3_contacts_deleted',
+  ai_models: 'yyc3_ai_models',
+  active_model: 'yyc3_active_model_id',
+  form_submissions: 'yyc3_form_submissions',
+  custom_templates: 'yyc3_custom_templates',
+  locale: 'yyc3_locale',
+  ui_theme: 'yyc3_ui_theme',
+  app_version: 'yyc_app_version',
 
   // v2.0 新增
-  chat_sessions: "yyc3_chat_sessions",     // 聊天会话列表
-  workflows: "yyc3_workflows",             // 工作流定义
-  browse_history: "yyc3_browse_history",   // 浏览历史
-  favorites: "yyc3_favorites",             // 收藏夹
-  layout_config: "yyc3_layout_config",     // 布局配置
-  search_history: "yyc3_search_history",   // 搜索历史
-  report_templates: "yyc3_report_templates", // 报告模板
-};
+  chat_sessions: 'yyc3_chat_sessions', // 聊天会话列表
+  workflows: 'yyc3_workflows', // 工作流定义
+  browse_history: 'yyc3_browse_history', // 浏览历史
+  favorites: 'yyc3_favorites', // 收藏夹
+  layout_config: 'yyc3_layout_config', // 布局配置
+  search_history: 'yyc3_search_history', // 搜索历史
+  report_templates: 'yyc3_report_templates', // 报告模板
+}
 ```
 
 ### 4.4 i18n Key 规划
@@ -676,14 +703,14 @@ Phase 2C 新增 (~40 keys):
 
 ## 五、风险评估与应对
 
-| 风险 | 概率 | 影响 | 应对措施 |
-|------|------|------|----------|
-| 工作流编辑器复杂度超预期 | 中 | 高 | 第一版仅支持线性流程，分支逻辑留 v2.2 |
-| AI 工具依赖 LLM 服务可用性 | 中 | 中 | 所有工具提供"离线模式" mock 响应 |
-| localStorage 容量限制 (5-10MB) | 低 | 高 | 实现 LRU 淘汰策略，老数据自动清理 |
-| i18n key 膨胀导致加载变慢 | 低 | 低 | 保持 lazy import，按页面分包 |
-| 双主题适配工作量翻倍 | 中 | 中 | 新组件统一使用 CSS 变量，主题切换自动生效 |
-| 移动端适配遗漏 | 中 | 中 | 每个新组件必须包含 < 768px 响应式断点 |
+| 风险                           | 概率 | 影响 | 应对措施                                  |
+| ------------------------------ | ---- | ---- | ----------------------------------------- |
+| 工作流编辑器复杂度超预期       | 中   | 高   | 第一版仅支持线性流程，分支逻辑留 v2.2     |
+| AI 工具依赖 LLM 服务可用性     | 中   | 中   | 所有工具提供"离线模式" mock 响应          |
+| localStorage 容量限制 (5-10MB) | 低   | 高   | 实现 LRU 淘汰策略，老数据自动清理         |
+| i18n key 膨胀导致加载变慢      | 低   | 低   | 保持 lazy import，按页面分包              |
+| 双主题适配工作量翻倍           | 中   | 中   | 新组件统一使用 CSS 变量，主题切换自动生效 |
+| 移动端适配遗漏                 | 中   | 中   | 每个新组件必须包含 < 768px 响应式断点     |
 
 ---
 
@@ -727,13 +754,13 @@ Phase 2C 新增 (~40 keys):
 
 ## 七、资源需求总结
 
-| 阶段 | 工期 | 新增文件 | 新增 i18n Keys | 新增 TS 接口 | 关键依赖 |
-|------|------|----------|---------------|-------------|----------|
-| v2.0 (P0) | 3-4 周 | ~10 | ~120 | ~15 | recharts, react-dnd |
-| v2.1 (P1) | 3-4 周 | ~6 | ~60 | ~12 | react-dnd, motion |
-| v2.2 (P2) | 2-3 周 | ~4 | ~40 | ~8 | recharts |
-| v3.0 (P3+) | 4+ 周 | ~8 | ~30 | ~20 | Supabase SDK |
-| **总计** | **12-15 周** | **~28** | **~250** | **~55** | — |
+| 阶段       | 工期         | 新增文件 | 新增 i18n Keys | 新增 TS 接口 | 关键依赖            |
+| ---------- | ------------ | -------- | -------------- | ------------ | ------------------- |
+| v2.0 (P0)  | 3-4 周       | ~10      | ~120           | ~15          | recharts, react-dnd |
+| v2.1 (P1)  | 3-4 周       | ~6       | ~60            | ~12          | react-dnd, motion   |
+| v2.2 (P2)  | 2-3 周       | ~4       | ~40            | ~8           | recharts            |
+| v3.0 (P3+) | 4+ 周        | ~8       | ~30            | ~20          | Supabase SDK        |
+| **总计**   | **12-15 周** | **~28**  | **~250**       | **~55**      | —                   |
 
 ---
 
@@ -741,4 +768,4 @@ Phase 2C 新增 (~40 keys):
 
 ---
 
-*YYC³ 言语智能 — Words Initiate Quadrants, Language Serves as Core for Future*
+_YYC³ 言语智能 — Words Initiate Quadrants, Language Serves as Core for Future_
