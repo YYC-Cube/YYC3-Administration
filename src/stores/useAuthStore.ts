@@ -111,8 +111,10 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
   login: async (credentials) => {
     const users = await loadUsers()
 
-    // Built-in admin account (for first-time setup + ghost mode)
-    if (users.length === 0) {
+    // Built-in demo accounts (admin/admin123 etc.) — DEV builds only.
+    // 生产构建中 import.meta.env.DEV 被静态替换为 false，本分支整体
+    // tree-shaking 移除，线上首次登录不再播种任何默认账户。
+    if (users.length === 0 && import.meta.env.DEV) {
       const adminHash = await hashPassword('admin123')
       const ghostAccounts: StoredUser[] = [
         {

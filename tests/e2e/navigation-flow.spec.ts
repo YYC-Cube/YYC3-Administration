@@ -1,84 +1,83 @@
 /**
  * E2E Test: 导航和页面切换流程
  * 使用 Playwright 测试导航系统
+ *
+ * 认证由 playwright webServer 的 VITE_E2E=true 旁路处理（AuthProvider
+ * 直接注入 admin 会话），此处无需登录步骤。
+ * 断言策略：全部落在 <main> 内容区，避免侧边栏标签文字造成假通过。
  */
 
 import { expect, test } from '@playwright/test'
 
+import { CATEGORY_ENTRY, openApp } from './helpers'
+
 test.describe('E2E-NAV: 导航流程', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/')
-    await page.waitForLoadState('load')
-    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
+    await openApp(page)
   })
 
   test('E2E-NAV-001: 仪表盘页面加载', async ({ page }) => {
-    // 验证 app 容器可见
     await expect(page.locator('[data-testid="app-container"]')).toBeVisible()
-    // 验证导航栏存在
-    const nav = page.locator('nav').or(page.locator('[data-testid="navigation"]'))
-    await expect(nav.first()).toBeVisible()
+    // 主内容区与导航区均应存在
+    await expect(page.locator('main[role="main"]')).toBeVisible()
+    await expect(page.locator('nav').first()).toBeVisible()
   })
 
   test('E2E-NAV-002: 切换到客户管理', async ({ page }) => {
-    await page.click('[data-nav-id="clm"]')
-    await page.waitForTimeout(500)
-    // 验证页面已切换
-    await expect(page.locator('body')).toContainText(/客户|CLM/i)
+    // clm 是 customer 分类首项，头部按钮直达
+    await page.click(`[data-nav-id="${CATEGORY_ENTRY.customer}"]`)
+    await expect(page.locator('main[role="main"] h1').first()).toContainText(/客户|CLM/i, {
+      timeout: 10000,
+    })
   })
 
   test('E2E-NAV-003: 切换到联系人', async ({ page }) => {
+    // contacts 非分类首项：先切 customer 分类，再点侧边栏子项
+    await page.click(`[data-nav-id="${CATEGORY_ENTRY.customer}"]`)
     await page.click('[data-nav-id="contacts"]')
-    await page.waitForTimeout(500)
-    await expect(page.locator('body')).toContainText(/联系人|联系/i)
+    await expect(page.locator('main[role="main"]')).toContainText(/联系人|联系/i, {
+      timeout: 10000,
+    })
   })
 
-  test('E2E-NAV-004: 导航分类展开/折叠', async ({ page }) => {
-    // 点击分类标题展开/折叠
-    const category = page
-      .locator('[data-cat-id="customer"]')
-      .or(page.locator('text=客户管理').first())
-    if (await category.isVisible()) {
-      await category.click()
-      await page.waitForTimeout(300)
-    }
+  test('E2E-NAV-004: 桌面头部分类按钮导航（回归 3af578b）', async ({ page }) => {
+    // 平台分类首项即 paramSettings，单步直达
+    await page.click(`[data-nav-id="${CATEGORY_ENTRY.platform}"]`)
+    await expect(page.locator('main[role="main"] h1').first()).toContainText(/参数|设置/i, {
+      timeout: 10000,
+    })
   })
 })
 
 test.describe('E2E-NAV: 主题切换', () => {
   test('E2E-NAV-005: 切换主题', async ({ page }) => {
-    await page.goto('/')
-    await page.waitForLoadState('load')
-    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
+    await openApp(page)
 
-    const themeSwitcher = page.locator('[data-testid="theme-switcher"]')
-    if (await themeSwitcher.isVisible()) {
-      await themeSwitcher.click()
-      await page.waitForTimeout(500)
-      const appStyle = await page.locator('[data-testid="app-container"]').evaluate((el) => {
-        return window.getComputedStyle(el).backgroundColor
-      })
-      // 主题切换后背景色应该定义
-      expect(appStyle).toBeDefined()
-    }
+    const themeSwitcher = page.locator('[data-testid="theme-switcher"]').first()
+    await expect(themeSwitcher).toBeVisible({ timeout: 10000 })
+
+    // 切换按钮的 title 随当前主题变化，是可靠的无侵入断言点
+    const titleBefore = await themeSwitcher.getAttribute('title')
+    expect(titleBefore).toBeTruthy()
+
+    await themeSwitcher.click()
+    await expect
+      .poll(async () => themeSwitcher.getAttribute('title'), { timeout: 5000 })
+      .not.toBe(titleBefore)
   })
 })
 
 test.describe('E2E-NAV: 响应式', () => {
   test('E2E-NAV-006: 移动端导航', async ({ page, isMobile }) => {
-    if (!isMobile) return
+    test.skip(!isMobile, '仅移动端视口执行')
 
-    await page.goto('/')
-    await page.waitForLoadState('load')
-    await page.waitForSelector('[data-testid="app-container"]', { timeout: 15000 }).catch(() => {})
+    await openApp(page)
 
-    // 移动端应该有汉堡菜单或侧边栏切换
+    // 移动端应有可打开的导航入口（汉堡菜单或底部导航）
     const menuButton = page
       .locator('[data-testid="menu-toggle"]')
-      .or(page.locator('[aria-label*="menu"]'))
-    if (await menuButton.isVisible()) {
-      await menuButton.click()
-      await page.waitForTimeout(300)
-    }
+      .or(page.locator('[aria-label*="menu" i]'))
+      .or(page.locator('[aria-label*="导航" i]'))
+    await expect(menuButton.first()).toBeVisible({ timeout: 10000 })
   })
 })

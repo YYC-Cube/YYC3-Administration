@@ -22,7 +22,9 @@ export default defineConfig({
   retries: process.env.CI ? 0 : 1,
 
   // 并发 worker 数量
-  workers: process.env.CI ? 2 : undefined,
+  // 本地默认（CPU 核数一半）会以 20+ 并发压垮 vite dev server（模块转换
+  // 排队导致整批假超时），限为 4；CI 维持 2
+  workers: process.env.CI ? 2 : 4,
 
   // 测试报告
   reporter: [
@@ -84,10 +86,14 @@ export default defineConfig({
   ],
 
   // Web Server 配置（自动启动开发服务器）
+  // VITE_E2E=true 启用测试认证旁路：AuthProvider 直接注入 admin 会话，
+  // 跳过登录墙（登录墙曾导致全部 E2E 用例失败，见审计报告 2.3 节）。
+  // 注意 reuseExistingServer 必须为 false：复用一台未注入 VITE_E2E 的
+  // 本地 dev server 会重新撞上登录墙，产生整批假失败。
   webServer: {
-    command: 'pnpm dev',
+    command: 'VITE_E2E=true pnpm dev',
     port: 3171,
     timeout: 180 * 1000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 });

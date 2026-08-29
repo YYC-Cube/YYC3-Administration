@@ -14,6 +14,20 @@
 // ── Vite 客户端类型 ──────────────────────────────────────────────
 /// <reference types="vite/client" />
 
+// ── 项目自定义环境变量（.env / 进程环境注入） ────────────────────
+interface ImportMetaEnv {
+  /** 演示一键登录开关，仅 DEV 构建生效 */
+  readonly VITE_GHOST_MODE?: string
+  /** E2E 测试自动登录旁路，仅 Playwright webServer 启动的 dev server 注入 */
+  readonly VITE_E2E?: string
+  /** 服务端 AI 代理地址；未配置时生产构建禁用带 key 的直连请求 */
+  readonly VITE_AI_PROXY_URL?: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+
 // ── 构建时注入元数据 ─────────────────────────────────────────────
 declare const __BUILD_ID__: string
 declare const __BUILD_TIME__: string

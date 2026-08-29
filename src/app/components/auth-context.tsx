@@ -25,9 +25,14 @@ import type { FormEvent } from 'react'
 // Constants
 // ==========================================
 
-const GHOST_MODE_ENABLED =
-  typeof import.meta !== 'undefined' &&
-  (import.meta as unknown as Record<string, Record<string, string>>).env?.VITE_GHOST_MODE === 'true'
+// Ghost Mode（演示一键登录）与 E2E 旁路均以 import.meta.env.DEV 双重门控：
+// 生产构建中 DEV 被静态替换为 false，整段代码被 tree-shaking 移除，
+// 凭据与旁路逻辑不会进入线上 bundle。
+
+const GHOST_MODE_ENABLED = import.meta.env.DEV && import.meta.env.VITE_GHOST_MODE === 'true'
+
+/** E2E 自动登录：仅当 Playwright webServer 以 VITE_E2E=true 启动 dev server 时生效 */
+const E2E_AUTO_LOGIN = import.meta.env.DEV && import.meta.env.VITE_E2E === 'true'
 
 const GHOST_ACCOUNTS = [
   { label: '管理员 Admin', username: 'admin', role: 'admin', password: 'admin123' },
@@ -555,7 +560,7 @@ function AuthPage() {
             </>
           )}
 
-          {mode === 'login' && (
+          {mode === 'login' && import.meta.env.DEV && (
             <div
               className="mt-4 px-3 py-2 rounded-lg text-xs flex items-center gap-2"
               style={{
@@ -565,7 +570,7 @@ function AuthPage() {
               }}
             >
               <KeyRound className="w-3 h-3 flex-shrink-0" />
-              <span>默认管理员: admin / admin123</span>
+              <span>开发环境默认管理员: admin / admin123</span>
             </div>
           )}
         </div>
@@ -617,6 +622,25 @@ function AuthLoading() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { status, checkSession } = useAuthStore()
   useEffect(() => {
+    if (E2E_AUTO_LOGIN) {
+      // 测试旁路：直接注入已认证的 admin 会话，跳过登录墙。
+      // storageState 方案不可行——secure-storage 的主密钥派生自
+      // sessionStorage 随机盐，加密数据无法跨浏览器上下文解密。
+      useAuthStore.setState({
+        user: {
+          id: 'u_e2e',
+          username: 'e2e-tester',
+          email: 'e2e@test.local',
+          role: 'admin',
+          displayName: 'E2E Tester',
+          createdAt: Date.now(),
+          lastLoginAt: Date.now(),
+        },
+        token: 'e2e-session-token',
+        status: 'authenticated',
+      })
+      return
+    }
     void checkSession()
   }, [checkSession])
   if (status === 'loading') return <AuthLoading />

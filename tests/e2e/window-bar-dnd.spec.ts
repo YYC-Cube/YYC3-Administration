@@ -15,6 +15,8 @@
 
 import { expect, type Page, test } from '@playwright/test'
 
+import { CATEGORY_ENTRY, dismissOnboarding, navigateTo } from './helpers'
+
 // ==========================================
 // 测试配置
 // ==========================================
@@ -22,27 +24,12 @@ import { expect, type Page, test } from '@playwright/test'
 const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3171'
 
 // 辅助函数：导航到开发者工作区
+// devWorkspace 非分类首项：先点 toolkit 分类（首项 aicall），再点侧边栏 devWorkspace
 async function navigateToDevWorkspace(page: Page) {
+  await dismissOnboarding(page)
   await page.goto(BASE_URL)
-  await page.waitForSelector("[data-testid='app-container']", {
-    timeout: 10000,
-  })
-  // Navigate to dev workspace via nav button
-  const devWorkspaceLink = page.locator('[data-nav-id="devWorkspace"]').first()
-  if (await devWorkspaceLink.isVisible({ timeout: 3000 }).catch(() => false)) {
-    await devWorkspaceLink.click()
-  } else {
-    const toolkitBtn = page.locator('[data-nav-id="aicall"]').first()
-    if (await toolkitBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await toolkitBtn.click()
-      await page.waitForTimeout(300)
-      const devWs = page.locator('[data-nav-id="devWorkspace"]').first()
-      if (await devWs.isVisible({ timeout: 2000 }).catch(() => false)) {
-        await devWs.click()
-      }
-    }
-  }
-  await page.waitForTimeout(500)
+  await expect(page.locator("[data-testid='app-container']")).toBeVisible({ timeout: 30000 })
+  await navigateTo(page, CATEGORY_ENTRY.toolkit, 'devWorkspace')
 }
 
 // 辅助函数：获取 WindowBar 容器
@@ -83,24 +70,30 @@ test.describe('WindowBar 拖放标签页重排', () => {
   test('应渲染至少一个窗口标签页', async ({ page }) => {
     const windowBar = getWindowBar(page)
     await expect(windowBar).toBeVisible()
+    // 全新档案下窗口列表为空，仅显示「新建窗口」按钮；先创建一个实例
+    await createNewWindow(page, '编辑器')
+    await page.waitForTimeout(300)
     const tabs = getWindowTabs(page)
     const count = await tabs.count()
     expect(count).toBeGreaterThanOrEqual(1)
   })
 
   test('窗口标签页应设置 draggable 属性', async ({ page }) => {
+    // 标签页仅在存在窗口实例时渲染，先创建一个
+    await createNewWindow(page, '编辑器')
+    await page.waitForTimeout(300)
     const tabs = getWindowTabs(page)
-    const count = await tabs.count()
-    if (count > 0) {
-      const draggable = await tabs.first().getAttribute('draggable')
-      expect(draggable).toBe('true')
-    }
+    await expect(tabs.first()).toBeVisible({ timeout: 5000 })
+    const draggable = await tabs.first().getAttribute('draggable')
+    expect(draggable).toBe('true')
   })
 
   test('应显示窗口计数指示器', async ({ page }) => {
-    // 查找包含 "个窗口" 的计数文本
+    // 计数徽标（N 个窗口）仅在存在窗口实例时渲染，先创建一个
+    await createNewWindow(page, '编辑器')
+    await page.waitForTimeout(300)
     const countBadge = page.locator("span:has-text('个窗口')")
-    await expect(countBadge).toBeVisible()
+    await expect(countBadge.first()).toBeVisible({ timeout: 5000 })
   })
 
   test('创建新窗口后标签页数量增加', async ({ page }) => {

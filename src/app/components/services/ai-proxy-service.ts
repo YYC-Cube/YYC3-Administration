@@ -73,16 +73,15 @@ interface CacheEntry {
 // ==========================================
 
 /**
- * 🔒 SECURITY: In production, replace this with your actual backend proxy URL.
- * The proxy server should:
- * 1. Store API keys server-side (never expose to browser)
- * 2. Validate/sign requests
- * 3. Implement rate limiting
- * 4. Log and monitor API usage
+ * 🔒 SECURITY: Server-side proxy endpoint (edge-proxy-server.ts is the reference
+ * implementation). Configure at build time via VITE_AI_PROXY_URL — keys stay
+ * server-side and the browser never talks to the AI vendor directly.
  *
- * Example: PROXY_BASE_URL = "https://api.yourdomain.com/ai-proxy"
+ * When unset:
+ *   - DEV builds  → fall back to direct browser calls (key exposed, dev only)
+ *   - PROD builds → requests with an apiKey FAIL LOUDLY (no silent key leak)
  */
-const PROXY_BASE_URL = '__PROXY_BASE_URL__' // Replace with your backend endpoint
+const PROXY_BASE_URL = import.meta.env.VITE_AI_PROXY_URL || '__PROXY_BASE_URL__'
 
 const PROVIDER_ENDPOINTS: Record<AIProviderType, { chatPath: string; defaultBaseUrl: string }> = {
   mock: { chatPath: '', defaultBaseUrl: '' },
@@ -246,8 +245,15 @@ class AIProxyService {
     let content: string
     if (PROXY_BASE_URL !== '__PROXY_BASE_URL__') {
       content = await this.callViaProxy(request, config, signal)
-    } else {
+    } else if (import.meta.env.DEV) {
+      // ⚠️ DEV-only fallback：浏览器持 key 直连（密钥暴露，仅限本地开发）
       content = await this.callDirect(config, messages, signal)
+    } else {
+      // 生产构建禁止浏览器直连（审计报告 SEC-010/SEC-011）：
+      // 未配置代理时宁可失败，也不静默把用户的 API Key 发往第三方。
+      throw new Error(
+        'AI 服务代理未配置：请在构建时设置 VITE_AI_PROXY_URL 指向服务端代理，或改用 mock 提供方。',
+      )
     }
 
     // Cache successful responses

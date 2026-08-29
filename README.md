@@ -28,7 +28,7 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-React-000000?style=flat-square)](https://ui.shadcn.com)
 [![Radix UI](https://img.shields.io/badge/Radix_UI-Primitives-8b5cf6?style=flat-square)](https://www.radix-ui.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-ff69b4?style=flat-square&logo=framer)](https://motion.dev)
-[![Vitest](https://img.shields.io/badge/Vitest-864_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
+[![Vitest](https://img.shields.io/badge/Vitest-954_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E-2ead33?style=flat-square&logo=playwright)](https://playwright.dev)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://www.docker.com)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=flat-square&logo=pwa)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
@@ -38,7 +38,7 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![ESLint](https://img.shields.io/badge/ESLint-0_errors-4b32c3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Prettier](https://img.shields.io/badge/Prettier-formatted-ff69b4?style=flat-square)](https://prettier.io)
 [![TypeCheck](https://img.shields.io/badge/TypeCheck-passing-00e676?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![Test Coverage](https://img.shields.io/badge/Tests-864%2F864-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
+[![Test Coverage](https://img.shields.io/badge/Tests-954%2F954_Unit%2BE2E-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
 [![Multi-End](https://img.shields.io/badge/Multi_End-PWA%7CH5%7CDesktop-brightgreen?style=flat-square)](./docs/YYC3-M13-MultiEnd-多端适配/)
 [![PRs Welcome](https://img.shields.io/badge/🤝_PRs-Welcome-ff69b4?style=flat-square)](./CONTRIBUTING.md)
 [![Stars](https://img.shields.io/github/stars/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Stars)](https://github.com/YYC-Cube/YYC3-Administration)
@@ -216,7 +216,7 @@ flowchart LR
     C --> Q1[TypeCheck]
     C --> Q2[ESLint]
     C --> Q3[Prettier]
-    C --> Q4[Vitest 864 tests]
+    C --> Q4[Vitest 954 tests]
     C --> Q5[Build]
     Q1 & Q2 & Q3 & Q4 & Q5 --> F{All Pass?}
     F -->|✅| E2E[E2E Tests]
@@ -545,7 +545,7 @@ pnpm test:e2e
 pnpm test:e2e:ui
 ```
 
-- **Vitest**: 单元测试 + 组件测试（47 文件 / 864 用例 / 0 失败）
+- **Vitest**: 单元测试 + 组件测试（52 文件 / 954 用例 / 0 失败）
 - **Playwright**: E2E 测试（5 文件 / 62 用例 / Chromium）
 - **多端适配测试**: 36 用例覆盖断点系统、平台检测、离线存储
 - **覆盖率**: `@vitest/coverage-istanbul`，阶梯式阈值递增（当前 22% → 目标 85%）
@@ -594,7 +594,7 @@ pnpm build
 | 版本   | 日期       | 说明                                               |
 | :----- | :--------- | :------------------------------------------------- |
 | v1.0.2 | 2026-07-11 | 文档对齐：更新 CI/CD 工作流、修复 Docker Node 版本 |
-| v1.0.1 | 2026-Q2    | 财务/薪资模块集成 + 测试覆盖 864 用例              |
+| v1.0.1 | 2026-Q2    | 财务/薪资模块集成 + 测试覆盖 954 用例              |
 | v1.0.0 | 2026-Q2    | 初始发布：核心模块 + 双主题 + AI + CI/CD 流水线    |
 
 > 详见 [CHANGELOG](./CHANGELOG.md)

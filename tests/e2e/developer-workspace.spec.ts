@@ -18,6 +18,8 @@
 
 import { expect, type Page, test } from '@playwright/test'
 
+import { CATEGORY_ENTRY, dismissOnboarding, navigateTo } from './helpers'
+
 // ==========================================
 // Test Configuration
 // ==========================================
@@ -26,29 +28,12 @@ const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3171'
 const _DEV_WORKSPACE_NAV = 'Developer Workspace' // nav item text or PageId
 
 // Helper: navigate to Developer Workspace page
+// devWorkspace 非分类首项：先点 toolkit 分类（首项 aicall），再点侧边栏 devWorkspace
 async function navigateToDevWorkspace(page: Page) {
+  await dismissOnboarding(page)
   await page.goto(BASE_URL)
-  // Wait for app to load
-  await page.waitForSelector("[data-testid='app-container']", {
-    timeout: 10000,
-  })
-  const devWorkspaceLink = page.locator('[data-nav-id="devWorkspace"]').first()
-  if (await devWorkspaceLink.isVisible({ timeout: 3000 }).catch(() => false)) {
-    await devWorkspaceLink.click()
-  } else {
-    // Desktop: click header category first, then sidebar item
-    const toolkitBtn = page.locator('[data-nav-id="aicall"]').first()
-    if (await toolkitBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await toolkitBtn.click()
-      await page.waitForTimeout(300)
-      const devWs = page.locator('[data-nav-id="devWorkspace"]').first()
-      if (await devWs.isVisible({ timeout: 2000 }).catch(() => false)) {
-        await devWs.click()
-      }
-    }
-  }
-  // Wait for workspace to render
-  await page.waitForTimeout(500)
+  await expect(page.locator("[data-testid='app-container']")).toBeVisible({ timeout: 30000 })
+  await navigateTo(page, CATEGORY_ENTRY.toolkit, 'devWorkspace')
 }
 
 // ==========================================

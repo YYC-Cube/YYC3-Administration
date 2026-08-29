@@ -1,0 +1,2 @@
+# 提交前质量门：lint-staged（eslint --fix + prettier）
+pnpm lint-staged
