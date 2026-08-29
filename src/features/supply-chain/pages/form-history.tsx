@@ -11,8 +11,9 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
+import { FORM_STORAGE_KEY, formTemplates } from './smart-form-data'
+
 import { NeonCard } from '@/app/components/neon-card'
-import { FORM_STORAGE_KEY, formTemplates } from '@/features/supply-chain/pages/smart-form-system'
 
 // ==========================================
 // YYC³ 表单历史记录 — Form Submission History

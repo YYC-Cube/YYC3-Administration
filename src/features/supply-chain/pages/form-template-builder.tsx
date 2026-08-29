@@ -23,12 +23,9 @@ import {
 } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 
+import { CUSTOM_TEMPLATES_KEY, type FieldDef, type FieldType } from './smart-form-data'
+
 import { NeonCard } from '@/app/components/neon-card'
-import {
-  CUSTOM_TEMPLATES_KEY,
-  type FieldDef,
-  type FieldType,
-} from '@/features/supply-chain/pages/smart-form-system'
 
 // ==========================================
 // YYC³ 自定义模板构建器 — Template Builder
