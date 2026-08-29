@@ -39,7 +39,8 @@ import {
 } from 'lucide-react'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { type AIModel, useAIModel } from './ai-model-context'
+import { type AIModel, useAIModel } from '../../stores/useAIModelStore'
+
 import { useThemeTokens } from './hooks/use-theme-tokens'
 import { useI18n } from './i18n-context'
 

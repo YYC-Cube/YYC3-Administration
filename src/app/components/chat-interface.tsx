@@ -22,7 +22,8 @@ import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import remarkGfm from 'remark-gfm'
 
-import { useAIModel } from './ai-model-context'
+import { useAIModel } from '../../stores/useAIModelStore'
+
 import { useApp } from './app-context'
 import { useChatSession } from './hooks/use-chat-session'
 import { useChatStream } from './hooks/use-chat-stream'

@@ -369,13 +369,6 @@ describe('PanelStore', () => {
       favoriteFiles: [],
       aiMessages: [],
       searchHistory: [],
-      aiProviderConfig: {
-        provider: 'mock',
-        apiKey: '',
-        model: 'mock-v1',
-        temperature: 0.7,
-        maxTokens: 2048,
-      },
       fileTree: [],
     })
   })
@@ -462,14 +455,6 @@ describe('PanelStore', () => {
     }
     expect(usePanelStore.getState().searchHistory.length).toBe(10)
     expect(usePanelStore.getState().searchHistory[0]).toBe('query11')
-  })
-
-  it('should update AI provider config', () => {
-    usePanelStore.getState().setAIProviderConfig({ provider: 'openai', model: 'gpt-4' })
-    const config = usePanelStore.getState().aiProviderConfig
-    expect(config.provider).toBe('openai')
-    expect(config.model).toBe('gpt-4')
-    expect(config.temperature).toBe(0.7) // unchanged
   })
 
   it('should manage file tree CRUD', () => {

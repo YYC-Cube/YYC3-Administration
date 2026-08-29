@@ -16,6 +16,7 @@ import { Check, Code, Monitor, Palette, RotateCcw, Settings, Zap } from 'lucide-
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
+import { useActiveModel } from '../../../stores/useAIModelStore'
 import { useSettingsStore } from '../../../stores/useSettingsStore'
 import { useI18n } from '../i18n-context'
 import { useThemeSwitcher } from '../theme-switcher-context'
@@ -31,12 +32,8 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
   const updateGeneralSettings = useSettingsStore((s) => s.updateGeneralSettings)
   const { theme, setTheme } = useThemeSwitcher()
   const { locale, setLocale } = useI18n()
-  const {
-    aiProviderConfig,
-    setAIProviderConfig: _setAIProviderConfig,
-    panelWidth,
-    setPanelWidth,
-  } = usePanelStore()
+  const { panelWidth, setPanelWidth } = usePanelStore()
+  const activeModel = useActiveModel()
   const [activeSection, setActiveSection] = useState<SettingsSection>('editor')
 
   const { general } = settings
@@ -274,27 +271,25 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                       background: tc.bgInput,
                     }}
                   >
-                    {aiProviderConfig.provider === 'mock'
-                      ? '模拟（内置）'
-                      : aiProviderConfig.provider.toUpperCase()}
+                    {activeModel ? activeModel.provider.toUpperCase() : '模拟（内置）'}
                   </span>
                 </SettingRow>
 
                 <SettingRow label="模型" tc={tc}>
                   <span className="text-[10px]" style={{ color: tc.textSecondary }}>
-                    {aiProviderConfig.model}
+                    {activeModel?.name ?? 'mock-v1'}
                   </span>
                 </SettingRow>
 
                 <SettingRow label="温度" tc={tc}>
                   <span className="text-[10px]" style={{ color: tc.textSecondary }}>
-                    {aiProviderConfig.temperature.toFixed(1)}
+                    0.7
                   </span>
                 </SettingRow>
 
                 <SettingRow label="最大令牌数" tc={tc}>
                   <span className="text-[10px]" style={{ color: tc.textSecondary }}>
-                    {aiProviderConfig.maxTokens}
+                    4096
                   </span>
                 </SettingRow>
 

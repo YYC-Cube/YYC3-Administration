@@ -46,7 +46,8 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { useAIModel } from './ai-model-context'
+import { useAIModel } from '../../stores/useAIModelStore'
+
 import { ApiDocs } from './api-docs'
 import { type PageId, useApp, useRealtimeSimulation } from './app-context'
 import { ChatInterface } from './chat-interface'

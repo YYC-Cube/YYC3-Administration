@@ -58,7 +58,6 @@ export function searchSettings(settings: Settings, query: string): SearchResult[
   searchMCPs(settings.mcpConfigs, lowerQuery, results)
 
   // 搜索模型
-  searchModels(settings.models, lowerQuery, results)
 
   // 搜索上下文设置
   searchContextSettings(settings.context, lowerQuery, results)
@@ -188,27 +187,6 @@ function searchMCPs(
         value: mcp,
         type: 'mcp',
         category: 'MCP 连接',
-      })
-    }
-  }
-}
-
-/**
- * 搜索模型
- */
-function searchModels(models: Settings['models'], query: string, results: SearchResult[]): void {
-  for (const model of models) {
-    if (
-      model.provider.toLowerCase().includes(query) ||
-      model.model.toLowerCase().includes(query) ||
-      (model.baseUrl && model.baseUrl.toLowerCase().includes(query))
-    ) {
-      results.push({
-        path: `models.${model.id}`,
-        title: `${model.provider} - ${model.model}`,
-        value: model,
-        type: 'model',
-        category: '模型配置',
       })
     }
   }

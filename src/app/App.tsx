@@ -1,6 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from 'react'
+import { HashRouter } from 'react-router'
 
-import { AIModelProvider } from './components/ai-model-context'
 import { AppProvider, useApp } from './components/app-context'
 import { AuthProvider } from './components/auth-context'
 import { ContactsProvider } from './components/contacts-context'
@@ -9,6 +9,7 @@ import { CyberpunkWidget } from './components/cyberpunk-widget'
 import { I18nProvider } from './components/i18n-context'
 import { LiquidGlassWrapper } from './components/liquid-glass-wrapper'
 import { PWAInstallPrompt } from './components/pwa-install'
+import { RouteSync } from './components/route-sync'
 import { ThemeSwitcherProvider } from './components/theme-switcher-context'
 import { Toaster } from './components/ui'
 import { APP_VERSION } from './version'
@@ -106,19 +107,20 @@ function AppContent() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <ThemeSwitcherProvider>
-        <I18nProvider>
-          <AuthProvider>
-            <AppProvider>
-              <ContactsProvider>
-                <AIModelProvider>
+      <HashRouter>
+        <ThemeSwitcherProvider>
+          <I18nProvider>
+            <AuthProvider>
+              <AppProvider>
+                <RouteSync />
+                <ContactsProvider>
                   <AppContent />
-                </AIModelProvider>
-              </ContactsProvider>
-            </AppProvider>
-          </AuthProvider>
-        </I18nProvider>
-      </ThemeSwitcherProvider>
+                </ContactsProvider>
+              </AppProvider>
+            </AuthProvider>
+          </I18nProvider>
+        </ThemeSwitcherProvider>
+      </HashRouter>
     </ErrorBoundary>
   )
 }

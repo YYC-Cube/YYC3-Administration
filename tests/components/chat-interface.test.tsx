@@ -9,7 +9,6 @@
 import { render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { AIModelProvider } from '../../src/app/components/ai-model-context'
 import { AppProvider } from '../../src/app/components/app-context'
 import { I18nProvider } from '../../src/app/components/i18n-context'
 import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
@@ -19,9 +18,7 @@ import type { ReactNode } from 'react'
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <ThemeSwitcherProvider defaultTheme="cyberpunk">
     <I18nProvider>
-      <AppProvider>
-        <AIModelProvider>{children}</AIModelProvider>
-      </AppProvider>
+      <AppProvider>{children}</AppProvider>
     </I18nProvider>
   </ThemeSwitcherProvider>
 )

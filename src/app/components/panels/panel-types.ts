@@ -16,17 +16,6 @@ export type PanelType =
   | 'git-integration'
   | 'settings'
 
-export type AIProviderType = 'mock' | 'openai' | 'claude' | 'deepseek'
-
-export interface AIProviderConfig {
-  provider: AIProviderType
-  apiKey: string
-  model: string
-  temperature: number
-  maxTokens: number
-  baseUrl?: string
-}
-
 export interface FileNode {
   id: string
   type: 'file' | 'directory'

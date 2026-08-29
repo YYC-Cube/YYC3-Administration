@@ -131,18 +131,6 @@ export interface MCPConfig {
 /**
  * 模型配置
  */
-export interface ModelConfig {
-  id: string
-  provider: string
-  model: string
-  apiKey: string
-  enabled: boolean
-  baseUrl?: string
-  maxTokens?: number
-  temperature?: number
-  createdAt?: string
-}
-
 /**
  * 上下文设置
  */
@@ -262,7 +250,6 @@ export interface Settings {
   /** MCP 列表 */
   mcpConfigs: MCPConfig[]
   /** 模型列表 */
-  models: ModelConfig[]
   /** 上下文设置 */
   context: ContextSettings
   /** 对话流设置 */

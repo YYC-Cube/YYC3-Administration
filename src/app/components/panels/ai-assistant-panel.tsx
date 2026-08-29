@@ -33,12 +33,17 @@ import {
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import {
+  toProviderRequestConfig,
+  useActiveModel,
+  useAIModelStore,
+} from '../../../stores/useAIModelStore'
 import { aiProxyService } from '../services/ai-proxy-service'
 
-import { AI_PROVIDER_MODELS, AI_SUGGESTIONS_POOL, timeAgo } from './panel-helpers'
+import { AI_SUGGESTIONS_POOL, timeAgo } from './panel-helpers'
 import { usePanelStore } from './panel-store'
 
-import type { AIChatMessage, AIProviderType, AISuggestion } from './panel-types'
+import type { AIChatMessage, AISuggestion } from './panel-types'
 import type { ThemeColors } from '../hooks/use-theme-colors'
 
 // ==========================================
@@ -80,14 +85,15 @@ export function AIAssistantPanel({
   editorContentGetter,
   editorInsertRef,
 }: AIAssistantPanelProps) {
-  const { aiMessages, addAIMessage, clearAIMessages, aiProviderConfig, setAIProviderConfig } =
-    usePanelStore()
+  const { aiMessages, addAIMessage, clearAIMessages } = usePanelStore()
+  const activeModel = useActiveModel()
+  const providerConfig = toProviderRequestConfig(activeModel)
+  const openModelSettings = useAIModelStore((s) => s.openModelSettings)
   const [input, setInput] = useState('')
   const [processing, setProcessing] = useState(false)
   const [streamingContent, setStreamingContent] = useState('')
   const [suggestions, setSuggestions] = useState<AISuggestion[]>([])
   const [showConfig, setShowConfig] = useState(false)
-  const [showApiKey, setShowApiKey] = useState(false)
   const [showStats, setShowStats] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -101,8 +107,7 @@ export function AIAssistantPanel({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [aiMessages, streamingContent])
 
-  const providerInfo = AI_PROVIDER_MODELS[aiProviderConfig.provider]
-  const isRealProvider = aiProviderConfig.provider !== 'mock' && aiProviderConfig.apiKey.length > 0
+  const isRealProvider = !!activeModel && activeModel.apiKey.length > 0
 
   // 累计 token 统计
   const totalStats = tokenHistory.reduce(
@@ -148,7 +153,7 @@ export function AIAssistantPanel({
           : undefined
 
       const stream = aiProxyService.chatStream(
-        aiProviderConfig,
+        providerConfig,
         history,
         abortRef.current.signal,
         fileContext,
@@ -171,8 +176,8 @@ export function AIAssistantPanel({
         totalTokens: promptTokens + completionTokens,
         latencyMs,
         tokensPerSecond,
-        provider: aiProviderConfig.provider,
-        model: aiProviderConfig.model,
+        provider: providerConfig.provider,
+        model: providerConfig.model,
         timestamp: Date.now(),
       }
       setCurrentStats(stats)
@@ -211,7 +216,7 @@ export function AIAssistantPanel({
     processing,
     addAIMessage,
     aiMessages,
-    aiProviderConfig,
+    providerConfig,
     selectedFile,
     editorContentGetter,
   ])
@@ -266,7 +271,7 @@ export function AIAssistantPanel({
               border: `1px solid ${isRealProvider ? 'rgba(34,197,94,0.2)' : 'rgba(139,92,246,0.2)'}`,
             }}
           >
-            {isRealProvider ? providerInfo.label : 'Mock'}
+            {isRealProvider ? providerConfig.model : 'Mock'}
           </span>
           {processing && streamingContent && (
             <span
@@ -473,143 +478,51 @@ export function AIAssistantPanel({
             className="overflow-hidden border-b"
             style={{ borderColor: tc.borderSubtle }}
           >
-            <div className="px-3 py-2 space-y-2">
+            <div className="px-3 py-2 space-y-2" data-testid="ai-config-panel">
               <p className="text-[9px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-                提供商配置
+                AI 模型(全局统一配置)
               </p>
-              <div>
-                <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                  提供商
-                </label>
-                <select
-                  value={aiProviderConfig.provider}
-                  onChange={(e) => {
-                    const p = e.target.value as AIProviderType
-                    setAIProviderConfig({
-                      provider: p,
-                      model: AI_PROVIDER_MODELS[p].models[0].id,
-                      baseUrl: AI_PROVIDER_MODELS[p].defaultBaseUrl,
-                    })
-                  }}
-                  className="w-full text-[10px] px-2 py-1.5 rounded-lg border outline-none"
-                  style={{
-                    background: tc.bgInput,
-                    borderColor: tc.borderDefault,
-                    color: tc.textPrimary,
-                  }}
+              {activeModel ? (
+                <div
+                  className="rounded-lg px-2.5 py-2 border"
+                  style={{ borderColor: tc.borderSubtle, background: tc.bgCard }}
                 >
-                  {Object.entries(AI_PROVIDER_MODELS).map(([key, val]) => (
-                    <option key={key} value={key}>
-                      {val.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                  模型
-                </label>
-                <select
-                  value={aiProviderConfig.model}
-                  onChange={(e) => setAIProviderConfig({ model: e.target.value })}
-                  className="w-full text-[10px] px-2 py-1.5 rounded-lg border outline-none"
-                  style={{
-                    background: tc.bgInput,
-                    borderColor: tc.borderDefault,
-                    color: tc.textPrimary,
-                  }}
-                >
-                  {providerInfo.models.map((m) => (
-                    <option key={m.id} value={m.id}>
-                      {m.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {aiProviderConfig.provider !== 'mock' && (
-                <div>
-                  <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                    API 密钥
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showApiKey ? 'text' : 'password'}
-                      value={aiProviderConfig.apiKey}
-                      onChange={(e) => setAIProviderConfig({ apiKey: e.target.value })}
-                      placeholder="YOUR_API_KEY_HERE"
-                      className="w-full text-[10px] px-2 py-1.5 pr-7 rounded-lg border outline-none font-mono"
-                      style={{
-                        background: tc.bgInput,
-                        borderColor: tc.borderDefault,
-                        color: tc.textPrimary,
-                      }}
-                    />
-                    <button
-                      onClick={() => setShowApiKey(!showApiKey)}
-                      className="absolute right-1.5 top-1/2 -translate-y-1/2"
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-medium" style={{ color: tc.textPrimary }}>
+                      {activeModel.name}
+                    </span>
+                    <span
+                      className="text-[8px] px-1.5 py-0.5 rounded"
+                      style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e' }}
                     >
-                      <Eye className="w-3 h-3" style={{ color: tc.textMuted }} />
-                    </button>
+                      已激活
+                    </span>
                   </div>
-                  <p className="text-[8px] mt-0.5" style={{ color: tc.textMuted }}>
-                    ⚠️ API 密钥存储在 localStorage。生产环境请配置服务端代理。
+                  <p className="text-[8px] mt-1 truncate" style={{ color: tc.textMuted }}>
+                    {activeModel.provider} · {activeModel.endpoint}
                   </p>
                 </div>
+              ) : (
+                <p className="text-[9px] py-1" style={{ color: tc.textMuted }}>
+                  未配置模型 — 当前使用内置模拟引擎
+                </p>
               )}
-              {aiProviderConfig.provider !== 'mock' && (
-                <div>
-                  <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                    基础 URL（可选）
-                  </label>
-                  <input
-                    type="text"
-                    value={aiProviderConfig.baseUrl ?? ''}
-                    onChange={(e) => setAIProviderConfig({ baseUrl: e.target.value })}
-                    placeholder={providerInfo.defaultBaseUrl}
-                    className="w-full text-[10px] px-2 py-1.5 rounded-lg border outline-none font-mono"
-                    style={{
-                      background: tc.bgInput,
-                      borderColor: tc.borderDefault,
-                      color: tc.textPrimary,
-                    }}
-                  />
-                </div>
-              )}
-              <div>
-                <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                  温度: {aiProviderConfig.temperature.toFixed(1)}
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="2"
-                  step="0.1"
-                  value={aiProviderConfig.temperature}
-                  onChange={(e) => setAIProviderConfig({ temperature: parseFloat(e.target.value) })}
-                  className="w-full h-1 rounded-full appearance-none cursor-pointer"
-                  style={{
-                    background: `linear-gradient(to right, ${tc.primary} 0%, ${tc.primary} ${(aiProviderConfig.temperature / 2) * 100}%, ${tc.borderDefault} ${(aiProviderConfig.temperature / 2) * 100}%, ${tc.borderDefault} 100%)`,
-                  }}
-                />
-              </div>
-              <div>
-                <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                  最大令牌数
-                </label>
-                <input
-                  type="number"
-                  value={aiProviderConfig.maxTokens}
-                  onChange={(e) =>
-                    setAIProviderConfig({ maxTokens: parseInt(e.target.value) || 2048 })
-                  }
-                  className="w-full text-[10px] px-2 py-1.5 rounded-lg border outline-none"
-                  style={{
-                    background: tc.bgInput,
-                    borderColor: tc.borderDefault,
-                    color: tc.textPrimary,
-                  }}
-                />
-              </div>
+              <button
+                type="button"
+                onClick={() => openModelSettings()}
+                data-testid="open-model-settings"
+                className="w-full text-[10px] px-2 py-1.5 rounded-lg border transition-all hover:opacity-80"
+                style={{
+                  borderColor: tc.borderDefault,
+                  color: tc.primary,
+                  background: tc.bgInput,
+                }}
+              >
+                ⚙️ 打开模型设置
+              </button>
+              <p className="text-[8px]" style={{ color: tc.textMuted }}>
+                模型、密钥与多服务商配置已收敛至全局模型设置(加密存储)
+              </p>
             </div>
           </motion.div>
         )}
@@ -625,7 +538,7 @@ export function AIAssistantPanel({
             </p>
             <p className="text-[9px] mb-2" style={{ color: tc.textMuted }}>
               {isRealProvider
-                ? `已连接 ${providerInfo.label} (${aiProviderConfig.model})`
+                ? `已连接 ${providerConfig.provider} (${providerConfig.model})`
                 : '使用模拟引擎 — 通过 ⚙️ 配置真实提供商'}
             </p>
             <p className="text-[8px] mb-3" style={{ color: tc.textMuted }}>
@@ -682,8 +595,8 @@ export function AIAssistantPanel({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
                 <p className="text-[9px]" style={{ color: tc.textMuted }}>
-                  {msg.role === 'user' ? '你' : isRealProvider ? aiProviderConfig.model : '模拟 AI'}{' '}
-                  · {timeAgo(msg.timestamp)}
+                  {msg.role === 'user' ? '你' : isRealProvider ? providerConfig.model : '模拟 AI'} ·{' '}
+                  {timeAgo(msg.timestamp)}
                 </p>
                 {/* Actions for assistant messages */}
                 {msg.role === 'assistant' && (
@@ -732,7 +645,7 @@ export function AIAssistantPanel({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[9px] flex items-center gap-1" style={{ color: tc.textMuted }}>
-                {isRealProvider ? aiProviderConfig.model : '模拟 AI'} · 生成中
+                {isRealProvider ? providerConfig.model : '模拟 AI'} · 生成中
                 <Loader2 className="w-2.5 h-2.5 animate-spin" style={{ color: '#a78bfa' }} />
                 <span className="text-[8px]" style={{ color: '#eab308' }}>
                   ~{estimateTokens(streamingContent)} tokens
@@ -842,7 +755,7 @@ export function AIAssistantPanel({
             onKeyDown={handleKeyDown}
             placeholder={
               isRealProvider
-                ? `向 ${providerInfo.label} 提问（流式响应）...`
+                ? `向 ${isRealProvider ? providerConfig.model : 'AI'} 提问（流式响应）...`
                 : '向 AI 提问（模拟流式响应）...'
             }
             rows={2}

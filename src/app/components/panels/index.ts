@@ -14,8 +14,6 @@
 // Types
 export type {
   PanelType,
-  AIProviderType,
-  AIProviderConfig,
   FileNode,
   SearchResult,
   AIChatMessage,
@@ -35,7 +33,6 @@ export {
   getGitStatusStyle,
   formatFileSize,
   timeAgo,
-  AI_PROVIDER_MODELS,
   MOCK_FILE_TREE,
   MOCK_GIT_STATUS,
   MOCK_GIT_LOG,

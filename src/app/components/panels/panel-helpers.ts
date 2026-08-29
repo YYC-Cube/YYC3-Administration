@@ -14,14 +14,7 @@
 
 import { File, FileCode, FileImage, FileJson, FileText } from 'lucide-react'
 
-import type {
-  AIProviderType,
-  AISuggestion,
-  FileNode,
-  GitCommitItem,
-  GitStatus,
-  SearchResult,
-} from './panel-types'
+import type { AISuggestion, FileNode, GitCommitItem, GitStatus, SearchResult } from './panel-types'
 
 // ==========================================
 // File Icon Mapping
@@ -70,48 +63,6 @@ export function timeAgo(ts?: number): string {
   if (diff < 3600000) return `${Math.floor(diff / 60000)}分钟前`
   if (diff < 86400000) return `${Math.floor(diff / 3600000)}小时前`
   return `${Math.floor(diff / 86400000)}天前`
-}
-
-// ==========================================
-// AI Provider Models Config
-// ==========================================
-
-export const AI_PROVIDER_MODELS: Record<
-  AIProviderType,
-  { label: string; models: { id: string; name: string }[]; defaultBaseUrl: string }
-> = {
-  mock: {
-    label: '模拟（内置）',
-    models: [{ id: 'mock-v1', name: 'YYC³ 模拟引擎' }],
-    defaultBaseUrl: '',
-  },
-  openai: {
-    label: 'OpenAI',
-    models: [
-      { id: 'gpt-4o', name: 'GPT-4o' },
-      { id: 'gpt-4o-mini', name: 'GPT-4o Mini' },
-      { id: 'gpt-4-turbo', name: 'GPT-4 Turbo' },
-      { id: 'gpt-3.5-turbo', name: 'GPT-3.5 Turbo' },
-    ],
-    defaultBaseUrl: 'https://api.openai.com/v1',
-  },
-  claude: {
-    label: 'Anthropic Claude',
-    models: [
-      { id: 'claude-sonnet-4-20250514', name: 'Claude Sonnet 4' },
-      { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet' },
-      { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku' },
-    ],
-    defaultBaseUrl: 'https://api.anthropic.com/v1',
-  },
-  deepseek: {
-    label: 'DeepSeek',
-    models: [
-      { id: 'deepseek-chat', name: 'DeepSeek Chat' },
-      { id: 'deepseek-coder', name: 'DeepSeek Coder' },
-    ],
-    defaultBaseUrl: 'https://api.deepseek.com/v1',
-  },
 }
 
 // ==========================================

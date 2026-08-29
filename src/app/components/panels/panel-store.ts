@@ -10,13 +10,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import type {
-  AIChatMessage,
-  AIProviderConfig,
-  FileNode,
-  PanelType,
-  QuickAccessItem,
-} from './panel-types'
+import type { AIChatMessage, FileNode, PanelType, QuickAccessItem } from './panel-types'
 
 // ==========================================
 // Store Interface
@@ -32,7 +26,6 @@ export interface PanelStoreState {
   favoriteFiles: QuickAccessItem[]
   aiMessages: AIChatMessage[]
   searchHistory: string[]
-  aiProviderConfig: AIProviderConfig
   fileTree: FileNode[]
 }
 
@@ -47,7 +40,6 @@ export interface PanelStoreActions {
   addAIMessage: (msg: AIChatMessage) => void
   clearAIMessages: () => void
   addSearchHistory: (q: string) => void
-  setAIProviderConfig: (config: Partial<AIProviderConfig>) => void
   setFileTree: (tree: FileNode[]) => void
   addFileNode: (parentPath: string, node: FileNode) => void
   deleteFileNode: (path: string) => void
@@ -70,13 +62,6 @@ export const usePanelStore = create<PanelStoreState & PanelStoreActions>()(
       favoriteFiles: [],
       aiMessages: [],
       searchHistory: [],
-      aiProviderConfig: {
-        provider: 'mock',
-        apiKey: '',
-        model: 'mock-v1',
-        temperature: 0.7,
-        maxTokens: 2048,
-      },
       fileTree: [],
 
       setActivePanel: (panel) => set({ activePanel: panel }),
@@ -108,8 +93,6 @@ export const usePanelStore = create<PanelStoreState & PanelStoreActions>()(
         set((s) => ({
           searchHistory: [q, ...s.searchHistory.filter((h) => h !== q)].slice(0, 10),
         })),
-      setAIProviderConfig: (config) =>
-        set((s) => ({ aiProviderConfig: { ...s.aiProviderConfig, ...config } })),
       setFileTree: (tree) => set({ fileTree: tree }),
       addFileNode: (parentPath, node) =>
         set((s) => {
@@ -159,7 +142,6 @@ export const usePanelStore = create<PanelStoreState & PanelStoreActions>()(
         favoriteFiles: s.favoriteFiles,
         aiMessages: s.aiMessages,
         searchHistory: s.searchHistory,
-        aiProviderConfig: s.aiProviderConfig,
       }),
     },
   ),

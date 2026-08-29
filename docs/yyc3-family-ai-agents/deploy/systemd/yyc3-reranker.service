@@ -1,0 +1,22 @@
+[Unit]
+Description=YYC3 Reranker Service (Qwen3-Reranker-8B)
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=yyc3
+Group=yyc3
+Environment=RERANKER_MODEL_PATH=/home/yyc3/models/Qwen3-Reranker-8B
+Environment=RERANKER_PORT=8101
+ExecStart=/home/yyc3/llama-factory-env/bin/python3 /home/yyc3/yyc3-102-projects/reranker_server.py
+WorkingDirectory=/home/yyc3/yyc3-102-projects
+Restart=always
+RestartSec=10
+StandardOutput=append:/home/yyc3/yyc3-102-projects/logs/reranker.log
+StandardError=append:/home/yyc3/yyc3-102-projects/logs/reranker.log
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

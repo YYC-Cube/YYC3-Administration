@@ -13,13 +13,7 @@
 
 import { useSettingsStore } from '../stores/useSettingsStore'
 
-import type {
-  AgentConfig,
-  MCPConfig,
-  ModelConfig,
-  RuleConfig,
-  SkillConfig,
-} from '../types/settings'
+import type { AgentConfig, MCPConfig, RuleConfig, SkillConfig } from '../types/settings'
 
 /**
  * 账号服务类
@@ -215,61 +209,6 @@ export class MCPService {
 }
 
 /**
- * 模型服务类
- */
-export class ModelService {
-  /**
-   * 添加模型
-   */
-  async addModel(model: Omit<ModelConfig, 'id'>): Promise<ModelConfig> {
-    const { addModel } = useSettingsStore.getState()
-    const newModel: ModelConfig = {
-      ...model,
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-    }
-    addModel(newModel)
-    return newModel
-  }
-
-  /**
-   * 更新模型
-   */
-  async updateModel(id: string, updates: Partial<ModelConfig>): Promise<void> {
-    const { updateModel } = useSettingsStore.getState()
-    updateModel(id, updates)
-  }
-
-  /**
-   * 删除模型
-   */
-  async deleteModel(id: string): Promise<void> {
-    const { removeModel } = useSettingsStore.getState()
-    removeModel(id)
-  }
-
-  /**
-   * 获取所有模型
-   */
-  getModels(): ModelConfig[] {
-    const { settings } = useSettingsStore.getState()
-    return settings.models
-  }
-
-  /**
-   * 测试模型连接 (Mock)
-   */
-  async testConnection(_id: string): Promise<{ success: boolean; message: string }> {
-    // Mock 实现
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    return {
-      success: true,
-      message: '连接成功',
-    }
-  }
-}
-
-/**
  * 规则服务类
  */
 export class RuleService {
@@ -361,6 +300,5 @@ export class SkillService {
 export const accountService = new AccountService()
 export const agentService = new AgentService()
 export const mcpService = new MCPService()
-export const modelService = new ModelService()
 export const ruleService = new RuleService()
 export const skillService = new SkillService()

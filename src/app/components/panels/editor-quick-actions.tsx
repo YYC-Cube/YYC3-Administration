@@ -34,12 +34,13 @@ import {
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useRef, useState } from 'react'
 
+import { toProviderRequestConfig, useActiveModel } from '../../../stores/useAIModelStore'
 import { aiProxyService } from '../services/ai-proxy-service'
 
 import { usePanelStore } from './panel-store'
 
 import type { ThemeColors } from '../hooks/use-theme-colors'
-import type { AIProviderConfig, ChatMessage } from '../services/ai-proxy-service'
+import type { ChatMessage } from '../services/ai-proxy-service'
 
 // ==========================================
 // 类型 & 配置
@@ -244,7 +245,9 @@ export function EditorQuickActions({
   editorContentGetter,
   editorInsertRef,
 }: EditorQuickActionsProps) {
-  const { addAIMessage, aiProviderConfig } = usePanelStore()
+  const { addAIMessage } = usePanelStore()
+  const activeModel = useActiveModel()
+  const providerConfig = toProviderRequestConfig(activeModel)
   const [activeAction, setActiveAction] = useState<string | null>(null)
   const [result, setResult] = useState<{
     action: string
@@ -258,7 +261,7 @@ export function EditorQuickActions({
   const abortRef = useRef<AbortController | null>(null)
   const [_streamContent, setStreamContent] = useState('')
 
-  const isRealProvider = aiProviderConfig.provider !== 'mock' && aiProviderConfig.apiKey.length > 0
+  const isRealProvider = !!activeModel && activeModel.apiKey.length > 0
 
   const executeAction = useCallback(
     async (action: QuickAction) => {
@@ -317,12 +320,12 @@ export function EditorQuickActions({
             content: '',
             isAI: true,
             streaming: true,
-            provider: aiProviderConfig.provider,
+            provider: providerConfig.provider,
           })
 
           // Use streaming API
           const stream = aiProxyService.chatStream(
-            aiProviderConfig as AIProviderConfig,
+            providerConfig,
             messages,
             abortRef.current.signal,
             { filePath, content: content.substring(0, 6000) },
@@ -341,7 +344,7 @@ export function EditorQuickActions({
             content: fullContent,
             isAI: true,
             latencyMs,
-            provider: aiProviderConfig.provider,
+            provider: providerConfig.provider,
             streaming: false,
           })
 
@@ -349,7 +352,7 @@ export function EditorQuickActions({
           addAIMessage({
             id: crypto.randomUUID(),
             role: 'user',
-            content: `[快捷操作: ${action.label}] ${fileName} (${isRealProvider ? `${aiProviderConfig.provider}/${aiProviderConfig.model}` : '模拟'})`,
+            content: `[快捷操作: ${action.label}] ${fileName} (${isRealProvider ? `${providerConfig.provider}/${providerConfig.model}` : '模拟'})`,
             timestamp: Date.now(),
           })
           addAIMessage({
@@ -379,7 +382,7 @@ export function EditorQuickActions({
 
       setActiveAction(null)
     },
-    [filePath, editorContentGetter, addAIMessage, aiProviderConfig, isRealProvider],
+    [filePath, editorContentGetter, addAIMessage, providerConfig, isRealProvider],
   )
 
   const handleCancel = useCallback(() => {
@@ -415,7 +418,7 @@ export function EditorQuickActions({
                 color: isActive ? action.color : tc.textMuted,
                 opacity: activeAction && !isActive ? 0.4 : 1,
               }}
-              title={`${action.description}${action.isAI && isRealProvider ? ` (${aiProviderConfig.provider} 流式)` : action.isAI ? ' (模拟)' : ''}`}
+              title={`${action.description}${action.isAI && isRealProvider ? ` (${providerConfig.provider} 流式)` : action.isAI ? ' (模拟)' : ''}`}
             >
               {isActive ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -452,7 +455,7 @@ export function EditorQuickActions({
               color: isRealProvider ? '#f59e0b' : tc.textMuted,
             }}
           >
-            {isRealProvider ? `${aiProviderConfig.provider} 流式` : '模拟'}
+            {isRealProvider ? `${providerConfig.provider} 流式` : '模拟'}
           </span>
         )}
       </div>

@@ -259,21 +259,30 @@ test.describe('AI Assistant', () => {
     }
   })
 
-  test('should toggle AI configuration panel', async ({ page }) => {
-    const configBtn = page
-      .locator("[title*='config'], [title*='Config'], button:has(svg)")
-      .filter({ hasText: /⚙️|Config/ })
-      .first()
-    if (await configBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await configBtn.click()
-      await page.waitForTimeout(200)
-    }
+  test('should toggle AI configuration panel (unified model source)', async ({ page }) => {
+    // ⚙️ 按钮展开统一模型信息卡(P2-① 收敛后不再有独立 provider 表单)
+    const configBtn = page.locator("button[title='提供商设置']")
+    await expect(configBtn).toBeVisible({ timeout: 10000 })
+    await configBtn.click()
+    await expect(page.locator('[data-testid="ai-config-panel"]')).toBeVisible({ timeout: 5000 })
   })
 
-  test('should show provider selector in config', async ({ page }) => {
-    const providerSelect = page.locator('text=/OpenAI|Claude|DeepSeek|Mock/').first()
-    const _visible = await providerSelect.isVisible({ timeout: 2000 }).catch(() => false)
-    // Provider options should be available somewhere in the panel
+  test('should open unified model settings from AI panel', async ({ page }) => {
+    // 信息卡的「打开模型设置」应唤起全局 ModelSettings 浮层(z-[100])
+    const configBtn = page.locator("button[title='提供商设置']")
+    await expect(configBtn).toBeVisible({ timeout: 10000 })
+    await configBtn.click()
+    const openBtn = page.locator('[data-testid="open-model-settings"]')
+    await expect(openBtn).toBeVisible({ timeout: 5000 })
+    await openBtn.click()
+
+    const modal = page.locator('div[class*="z-[100]"]')
+    await expect(modal).toBeVisible({ timeout: 5000 })
+    await modal
+      .locator('.absolute.inset-0')
+      .first()
+      .click({ position: { x: 8, y: 8 } })
+    await expect(modal).toBeHidden({ timeout: 5000 })
   })
 })
 

@@ -11,13 +11,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import { useSettingsStore } from '../../src/stores/useSettingsStore'
 
-import type {
-  AgentConfig,
-  MCPConfig,
-  ModelConfig,
-  RuleConfig,
-  SkillConfig,
-} from '../../src/types/settings'
+import type { AgentConfig, MCPConfig, RuleConfig, SkillConfig } from '../../src/types/settings'
 
 beforeEach(() => {
   useSettingsStore.setState({
@@ -110,37 +104,6 @@ describe('useSettingsStore — MCP Configs CRUD', () => {
     useSettingsStore.getState().addMCP(mockMCP)
     useSettingsStore.getState().removeMCP('mcp-1')
     expect(useSettingsStore.getState().settings.mcpConfigs).toHaveLength(0)
-  })
-})
-
-describe('useSettingsStore — Models CRUD', () => {
-  const mockModel: ModelConfig = {
-    id: 'model-1',
-    provider: 'openai',
-    model: 'gpt-4o',
-    apiKey: 'sk-test',
-    baseUrl: 'https://api.openai.com/v1',
-    temperature: 0.7,
-    maxTokens: 4096,
-    enabled: true,
-    createdAt: new Date().toISOString(),
-  }
-
-  it('adds a new model', () => {
-    useSettingsStore.getState().addModel(mockModel)
-    expect(useSettingsStore.getState().settings.models).toHaveLength(1)
-  })
-
-  it('updates a model', () => {
-    useSettingsStore.getState().addModel(mockModel)
-    useSettingsStore.getState().updateModel('model-1', { temperature: 0.5 })
-    expect(useSettingsStore.getState().settings.models[0].temperature).toBe(0.5)
-  })
-
-  it('removes a model', () => {
-    useSettingsStore.getState().addModel(mockModel)
-    useSettingsStore.getState().removeModel('model-1')
-    expect(useSettingsStore.getState().settings.models).toHaveLength(0)
   })
 })
 

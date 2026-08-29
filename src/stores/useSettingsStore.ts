@@ -21,7 +21,6 @@ import type {
   GeneralSettings,
   ImportSettings,
   MCPConfig,
-  ModelConfig,
   RuleConfig,
   Settings,
   SkillConfig,
@@ -57,11 +56,8 @@ interface SettingsActions {
   /** 删除 MCP */
   removeMCP: (id: string) => void
   /** 添加模型 */
-  addModel: (model: ModelConfig) => void
   /** 更新模型 */
-  updateModel: (id: string, model: Partial<ModelConfig>) => void
   /** 删除模型 */
-  removeModel: (id: string) => void
   /** 更新上下文设置 */
   updateContextSettings: (settings: Partial<ContextSettings>) => void
   /** 更新对话流设置 */
@@ -118,7 +114,6 @@ const defaultSettings: Settings = {
   },
   agents: [],
   mcpConfigs: [],
-  models: [],
   context: {
     indexStatus: 'idle',
     ignoreRules: ['node_modules', 'dist', 'build', '.git'],
@@ -234,33 +229,6 @@ export const useSettingsStore = create<SettingsState & SettingsActions>()(
           settings: {
             ...state.settings,
             mcpConfigs: state.settings.mcpConfigs.filter((m) => m.id !== id),
-          },
-        }))
-      },
-
-      addModel: (model) => {
-        set((state) => ({
-          settings: {
-            ...state.settings,
-            models: [...state.settings.models, model],
-          },
-        }))
-      },
-
-      updateModel: (id, model) => {
-        set((state) => ({
-          settings: {
-            ...state.settings,
-            models: state.settings.models.map((m) => (m.id === id ? { ...m, ...model } : m)),
-          },
-        }))
-      },
-
-      removeModel: (id) => {
-        set((state) => ({
-          settings: {
-            ...state.settings,
-            models: state.settings.models.filter((m) => m.id !== id),
           },
         }))
       },
