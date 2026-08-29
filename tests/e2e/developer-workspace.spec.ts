@@ -400,11 +400,15 @@ test.describe('Full Workflow: File → Edit → AI → Git', () => {
       await page.waitForTimeout(300)
     }
 
-    // Step 2: Click a file to open in editor
-    const fileItem = page.locator('text=App.tsx').first()
-    if (await fileItem.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await fileItem.click()
-      await page.waitForTimeout(1000)
+    // Step 2: Click a file to open in editor(作用域到文件树容器,
+    // 全页 text=App.tsx 会与编辑器标签同名互串且受布局抖动影响)
+    const tree = page.locator('[data-testid="file-explorer"]')
+    if (await tree.isVisible({ timeout: 5000 }).catch(() => false)) {
+      const fileItem = tree.locator('span', { hasText: 'App.tsx' }).first()
+      if (await fileItem.isVisible({ timeout: 5000 }).catch(() => false)) {
+        await fileItem.click()
+        await page.waitForTimeout(1000)
+      }
     }
 
     // Step 3: Switch to AI panel
