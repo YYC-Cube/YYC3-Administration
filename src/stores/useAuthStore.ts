@@ -10,10 +10,6 @@
 
 import { create } from 'zustand'
 
-import { generateSecureToken, hashPassword, verifyPassword } from '../lib/crypto'
-import { getSecure, removeSecure, setSecure } from '../lib/secure-storage'
-import { hasPermission, ROLE_PERMISSIONS } from '../types/auth'
-
 import type {
   AuthStatus,
   LoginCredentials,
@@ -21,7 +17,11 @@ import type {
   RegisterInfo,
   User,
   UserRole,
-} from '../types/auth'
+} from '@/types/auth'
+
+import { generateSecureToken, hashPassword, verifyPassword } from '@/lib/crypto'
+import { getSecure, removeSecure, setSecure } from '@/lib/secure-storage'
+import { hasPermission, ROLE_PERMISSIONS } from '@/types/auth'
 
 // ==========================================
 // Types

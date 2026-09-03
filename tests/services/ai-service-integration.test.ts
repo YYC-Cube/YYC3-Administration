@@ -8,12 +8,9 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { aiProxyService } from '../../src/app/components/services/ai-proxy-service'
+import type { AIProviderConfig, ChatMessage } from '@/services/ai-proxy-service'
 
-import type {
-  AIProviderConfig,
-  ChatMessage,
-} from '../../src/app/components/services/ai-proxy-service'
+import { aiProxyService } from '@/services/ai-proxy-service'
 
 // Use short messages to minimize mock delay
 const SHORT_MSG: ChatMessage[] = [{ role: 'user', content: 'Hi' }]

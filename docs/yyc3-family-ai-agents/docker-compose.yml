@@ -1,0 +1,410 @@
+# =============================================================================
+# YYC³ FAmily-AI Agent 全Agent Docker Compose v3.0
+# 适配 DGX Spark N2 (yyc3-102) 实际环境
+#
+# 8个Agent服务端口规划 (遵循5位结构 25XXY):
+#   元启·天枢 25600  言启·千行 25601  语枢·万物 25602
+#   预见·先知 25603  知遇·伯乐 25604  智云·守护 25605
+#   格物·宗师 25606  创想·灵韵 25607
+#
+# 推理后端: 本地 vLLM (Qwen3.6-27B-FP8, Port 8000)
+# 安全沙箱: OpenShell Gateway (Port 8080)
+# =============================================================================
+# 版本: v3.0.0 | 日期: 2026-07-28 | 五高架构对齐
+# =============================================================================
+
+version: "3.8"
+
+networks:
+  yyc3-agent-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.29.0.0/16
+
+  # ==========================================================================
+  # 治理中枢 (Governance Hub) — 行为审计/预算管理/协同规则/ACS策略 | 25700
+  # P0-1: 行为审计 + Kill Switch
+  # P0-2: Token 预算 + 成本追踪
+  # P0-3: 协同触发规则
+  # P1-1: ACS 治理标准映射
+  # P1-2: 上下文图谱基础
+  # ==========================================================================
+  governance-hub:
+    image: python:3.12-slim
+    container_name: yyc3-governance-hub
+    hostname: governance-hub
+    ports:
+      - "25700:25700"
+    volumes:
+      - yyc3-shared-data:/data
+      - ./governance_hub.py:/workspace/governance_hub.py:ro
+    environment:
+      - GOVERNANCE_DB=/data/governance.db
+      - GOVERNANCE_PORT=25700
+      - LOG_LEVEL=INFO
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests &&
+             python governance_hub.py"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:25700/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+
+volumes:
+  yyc3-shared-prompts:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/yyc3/.nemoclaw/agent-prompts/v3
+  yyc3-shared-data:
+    driver: local
+
+services:
+  # ==========================================================================
+  # 元启·天枢 (总指挥) — 全局编排与战略决策 | 端口 25600
+  # ==========================================================================
+  yuanqi-tianshu:
+    image: python:3.12-slim
+    container_name: agent-yuanqi-tianshu
+    hostname: yuanqi-tianshu
+    ports:
+      - "25600:6000"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/yuanqi-tianshu:/workspace
+    environment: &agent-env-base
+      - AGENT_NAME=yuanqi_tianshu
+      - AGENT_ROLE=coordinator
+      - AGENT_LABEL=元启天枢
+      - AGENT_PHONE=0379-0206
+      - PORT=6000
+      - LOG_LEVEL=INFO
+      - VLLM_ENDPOINT=http://host.docker.internal:8000/v1
+      - VLLM_MODEL=Qwen/Qwen3.6-27B-FP8
+      - SYSTEM_PROMPT_PATH=/prompts/main-system.md
+      - OPENCLAW_GATEWAY=http://host.docker.internal:18789
+      - GOVERNANCE_ENDPOINT=http://governance-hub:25700
+      - TZ=Asia/Shanghai
+      - LANG=zh_CN.UTF-8
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai &&
+             cp /prompts/main-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6000 --role tianshu"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6000/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+
+  # ==========================================================================
+  # 言启·千行 (导航员) — 意图识别与任务路由 | 端口 25601
+  # ==========================================================================
+  yanqi-qianhang:
+    image: python:3.12-slim
+    container_name: agent-yanqi-qianhang
+    hostname: yanqi-qianhang
+    ports:
+      - "25601:6001"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/yanqi-qianhang:/workspace
+    environment:
+      <<: *agent-env-base
+      AGENT_NAME: yanqi_qianhang
+      AGENT_ROLE: navigator
+      AGENT_LABEL: 言启千行
+      AGENT_PHONE: "0379-0106"
+      PORT: "6001"
+      SYSTEM_PROMPT_PATH: /prompts/navigator-system.md
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai &&
+             cp /prompts/navigator-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6001 --role navigator"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6001/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2G
+
+  # ==========================================================================
+  # 语枢·万物 (思考者) — 数据分析与统计建模 | 端口 25602
+  # ==========================================================================
+  yushu-wanwu:
+    image: python:3.12-slim
+    container_name: agent-yushu-wanwu
+    hostname: yushu-wanwu
+    ports:
+      - "25602:6002"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/yushu-wanwu:/workspace
+    environment:
+      <<: *agent-env-base
+      AGENT_NAME: yushu_wanwu
+      AGENT_ROLE: thinker
+      AGENT_LABEL: 语枢万物
+      AGENT_PHONE: "0379-0107"
+      PORT: "6002"
+      SYSTEM_PROMPT_PATH: /prompts/research-system.md
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai pandas numpy &&
+             cp /prompts/research-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6002 --role thinker"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6002/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+
+  # ==========================================================================
+  # 预见·先知 (预言家) — 趋势预测与风险预警 | 端口 25603
+  # ==========================================================================
+  yujian-xianzhi:
+    image: python:3.12-slim
+    container_name: agent-yujian-xianzhi
+    hostname: yujian-xianzhi
+    ports:
+      - "25603:6003"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/yujian-xianzhi:/workspace
+    environment:
+      <<: *agent-env-base
+      AGENT_NAME: yujian_xianzhi
+      AGENT_ROLE: prophet
+      AGENT_LABEL: 预见先知
+      AGENT_PHONE: "0379-0108"
+      PORT: "6003"
+      SYSTEM_PROMPT_PATH: /prompts/prophet-system.md
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai numpy scipy &&
+             cp /prompts/prophet-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6003 --role prophet"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6003/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+
+  # ==========================================================================
+  # 知遇·伯乐 (推荐官) — 个性化推荐与用户画像 | 端口 25604
+  # ==========================================================================
+  zhiyu-bole:
+    image: python:3.12-slim
+    container_name: agent-zhiyu-bole
+    hostname: zhiyu-bole
+    ports:
+      - "25604:6004"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/zhiyu-bole:/workspace
+    environment:
+      <<: *agent-env-base
+      AGENT_NAME: zhiyu_bole
+      AGENT_ROLE: recommender
+      AGENT_LABEL: 知遇伯乐
+      AGENT_PHONE: "0379-0109"
+      PORT: "6004"
+      SYSTEM_PROMPT_PATH: /prompts/bole-system.md
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai scikit-learn &&
+             cp /prompts/bole-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6004 --role recommender"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6004/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2G
+
+  # ==========================================================================
+  # 智云·守护 (安全官) — 安全审计与行为监控 | 端口 25605
+  # ==========================================================================
+  zhiyun-shouhu:
+    image: python:3.12-slim
+    container_name: agent-zhiyun-shouhu
+    hostname: zhiyun-shouhu
+    ports:
+      - "25605:6005"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/zhiyun-shouhu:/workspace
+    environment:
+      <<: *agent-env-base
+      AGENT_NAME: zhiyun_shouhu
+      AGENT_ROLE: security_officer
+      AGENT_LABEL: 智云守护
+      AGENT_PHONE: "0379-0207"
+      PORT: "6005"
+      SYSTEM_PROMPT_PATH: /prompts/sentinel-system.md
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai &&
+             cp /prompts/sentinel-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6005 --role sentinel"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6005/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2G
+
+  # ==========================================================================
+  # 格物·宗师 (质量官) — 代码审查与质量保障 | 端口 25606
+  # ==========================================================================
+  gewu-zongshi:
+    image: python:3.12-slim
+    container_name: agent-gewu-zongshi
+    hostname: gewu-zongshi
+    ports:
+      - "25606:6006"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/gewu-zongshi:/workspace
+    environment:
+      <<: *agent-env-base
+      AGENT_NAME: gewu_zongshi
+      AGENT_ROLE: quality_officer
+      AGENT_LABEL: 格物宗师
+      AGENT_PHONE: "0379-0208"
+      PORT: "6006"
+      SYSTEM_PROMPT_PATH: /prompts/coder-system.md
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai &&
+             cp /prompts/coder-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6006 --role master"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6006/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+
+  # ==========================================================================
+  # 创想·灵韵 (创意官) — 内容创作与创新孵化 | 端口 25607
+  # ==========================================================================
+  chuangxiang-lingyun:
+    image: python:3.12-slim
+    container_name: agent-chuangxiang-lingyun
+    hostname: chuangxiang-lingyun
+    ports:
+      - "25607:6007"
+    volumes:
+      - yyc3-shared-prompts:/prompts:ro
+      - yyc3-shared-data:/data
+      - ./agents/chuangxiang-lingyun:/workspace
+    environment:
+      <<: *agent-env-base
+      AGENT_NAME: chuangxiang_lingyun
+      AGENT_ROLE: creative_director
+      AGENT_LABEL: 创想灵韵
+      AGENT_PHONE: "0379-0209"
+      PORT: "6007"
+      SYSTEM_PROMPT_PATH: /prompts/muse-system.md
+    working_dir: /workspace
+    command: >-
+      sh -c "pip install --quiet flask requests openai &&
+             cp /prompts/muse-system.md /workspace/SYSTEM.md &&
+             python agent_server.py --port 6007 --role muse"
+    networks:
+      - yyc3-agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:6007/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2G

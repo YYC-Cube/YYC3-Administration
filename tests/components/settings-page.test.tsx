@@ -12,9 +12,9 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
-
 import type { ReactNode } from 'react'
+
+import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
 
 // In-memory "translations" for tests. The real zh.ts stg.* keys are unfilled (key = value),
 // so we provide a proper dict so tests can assert against expected Chinese text.
@@ -42,7 +42,7 @@ const MOCK_MESSAGES: Record<string, string> = {
 }
 
 // Mock the i18n-context module so the component tree gets resolved Chinese text.
-vi.mock('../../src/app/components/i18n-context', () => ({
+vi.mock('@/app/components/i18n-context', () => ({
   I18nProvider: ({ children }: { children: ReactNode }) => <>{children}</>,
   useI18n: () => ({
     t: (key: string) => MOCK_MESSAGES[key] ?? key,
@@ -61,7 +61,7 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 
 describe('SettingsPage — Navigation Sidebar', () => {
   it('renders all category buttons in sidebar', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     // "通用设置" appears both in sidebar + heading, use getAllByText
@@ -77,14 +77,14 @@ describe('SettingsPage — Navigation Sidebar', () => {
 
 describe('SettingsPage — Search Input', () => {
   it('renders search placeholder', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     expect(screen.getByPlaceholderText('搜索设置...')).toBeTruthy()
   })
 
   it('accepts typed search text', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     const input = screen.getByPlaceholderText('搜索设置...') as HTMLInputElement
@@ -95,7 +95,7 @@ describe('SettingsPage — Search Input', () => {
 
 describe('SettingsPage — Theme Cards', () => {
   it('renders both theme option cards', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     expect(screen.getByText('Cyberpunk')).toBeTruthy()
@@ -103,7 +103,7 @@ describe('SettingsPage — Theme Cards', () => {
   })
 
   it('renders theme descriptions in Chinese', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     expect(screen.getByText('赛博朋克风格')).toBeTruthy()
@@ -113,7 +113,7 @@ describe('SettingsPage — Theme Cards', () => {
 
 describe('SettingsPage — Language Selector', () => {
   it('shows Chinese as default language', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     expect(screen.getByText('简体中文')).toBeTruthy()
@@ -122,7 +122,7 @@ describe('SettingsPage — Language Selector', () => {
 
 describe('SettingsPage — Quick Action Buttons', () => {
   it('renders export/import/reset buttons', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     expect(screen.getByText('导出配置')).toBeTruthy()
@@ -133,14 +133,14 @@ describe('SettingsPage — Quick Action Buttons', () => {
 
 describe('SettingsPage — General Settings Content', () => {
   it('renders page title', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     expect(screen.getByText('系统设置')).toBeTruthy()
   })
 
   it('renders general settings section heading', async () => {
-    const { SettingsPage } = await import('../../src/app/components/settings-page-standalone')
+    const { SettingsPage } = await import('@/features/settings/pages/settings-page-standalone')
     render(<SettingsPage />, { wrapper: TestWrapper })
 
     // Default active tab is "通用设置" which shows the heading

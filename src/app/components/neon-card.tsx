@@ -10,8 +10,8 @@
 import * as React from 'react'
 import { memo, useEffect, useRef, useState } from 'react'
 
-import { getThemeNavColor, useThemeColors } from './hooks/use-theme-colors'
-import { useThemeSwitcher } from './theme-switcher-context'
+import { useThemeSwitcher } from '@/app/components/theme-switcher-context'
+import { getThemeNavColor, useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 interface NeonCardProps {
   children: React.ReactNode

@@ -10,10 +10,13 @@
 
 import { useCallback } from 'react'
 
-import { useCodeAnalyzerStore } from '../advanced-stores'
-import { codeAnalyzer, generateDemoAnalysis } from '../services/code-analyzer-service'
+import type { AnalysisScope, CodeFix } from '@/app/components/advanced/advanced-types'
 
-import type { AnalysisScope, CodeFix } from '../advanced-types'
+import { useCodeAnalyzerStore } from '@/app/components/advanced/advanced-stores'
+import {
+  codeAnalyzer,
+  generateDemoAnalysis,
+} from '@/app/components/advanced/services/code-analyzer-service'
 
 export function useCodeAnalyzer() {
   const {

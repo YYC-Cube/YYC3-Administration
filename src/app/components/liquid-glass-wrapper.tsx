@@ -7,7 +7,7 @@
 
 import { type ReactNode, useEffect } from 'react'
 
-import { useThemeSwitcher } from './theme-switcher-context'
+import { useThemeSwitcher } from '@/app/components/theme-switcher-context'
 
 interface LiquidGlassWrapperProps {
   children: ReactNode

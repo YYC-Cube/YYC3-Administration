@@ -17,14 +17,14 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 
-import { useApp } from './app-context'
-import { useThemeColors } from './hooks/use-theme-colors'
-import { useI18n } from './i18n-context'
-import { NeonCard } from './neon-card'
-import { useThemeSwitcher } from './theme-switcher-context'
-
-import type { ThemeConfig } from './app-context'
+import type { ThemeConfig } from '@/app/components/app-context'
 import type { ReactNode } from 'react'
+
+import { useApp } from '@/app/components/app-context'
+import { useI18n } from '@/app/components/i18n-context'
+import { NeonCard } from '@/app/components/neon-card'
+import { useThemeSwitcher } from '@/app/components/theme-switcher-context'
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 // ==========================================
 // YYC³ 主题配置面板 — Theme Config Panel

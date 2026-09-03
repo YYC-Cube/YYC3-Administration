@@ -11,7 +11,7 @@ import {
   findNavItem,
   getCategoryItems,
   NAV_CATEGORIES,
-} from '../../src/app/components/nav-config'
+} from '@/app/components/nav-config'
 
 describe('NAV_CATEGORIES — 导航分类结构', () => {
   it('包含所有主要分类', () => {

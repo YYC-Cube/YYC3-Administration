@@ -8,9 +8,9 @@ import userEvent from '@testing-library/user-event'
 import { ReactNode } from 'react'
 import { describe, expect, it } from 'vitest'
 
-import { ApiDocs } from '../../src/app/components/api-docs'
-import { I18nProvider } from '../../src/app/components/i18n-context'
-import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
+import { I18nProvider } from '@/app/components/i18n-context'
+import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
+import { ApiDocs } from '@/features/toolkit/pages/api-docs'
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <ThemeSwitcherProvider defaultTheme="cyberpunk">

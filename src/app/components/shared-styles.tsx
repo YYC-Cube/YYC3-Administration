@@ -1,6 +1,6 @@
-import { useThemeColors } from './hooks/use-theme-colors'
-
 import type { ReactNode } from 'react'
+
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 export interface PageHeaderProps {
   title: string

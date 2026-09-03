@@ -6,7 +6,7 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { cn } from '../../src/app/components/ui/utils'
+import { cn } from '@/shared/ui/utils'
 
 describe('cn — Tailwind 类名合并', () => {
   it('合并简单类名', () => {

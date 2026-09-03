@@ -28,8 +28,8 @@ import {
 import { motion } from 'motion/react'
 import { useState } from 'react'
 
-import { useThemeColors } from './hooks/use-theme-colors'
-import { useI18n } from './i18n-context'
+import { useI18n } from '@/app/components/i18n-context'
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 /**
  * 临时设置页面 - 快速修复版本

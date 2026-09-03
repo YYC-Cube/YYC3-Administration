@@ -17,18 +17,18 @@ export {
   useIsTablet,
   useIsDesktop,
   useIsTouchDevice,
-} from './breakpoints'
-export type { Breakpoint } from './breakpoints'
+} from '@/multi-end/breakpoints'
+export type { Breakpoint } from '@/multi-end/breakpoints'
 
 // 平台检测
-export { detectPlatform, getPlatformCapabilities, getPlatformLabel } from './platform'
-export type { Platform, PlatformCapabilities } from './platform'
+export { detectPlatform, getPlatformCapabilities, getPlatformLabel } from '@/multi-end/platform'
+export type { Platform, PlatformCapabilities } from '@/multi-end/platform'
 
 // 离线存储
-export { offlineStorage, OfflineStorage } from './storage'
+export { offlineStorage, OfflineStorage } from '@/multi-end/storage'
 
 // 平台感知组件
-export { PlatformAware, MobileOnly, DesktopOnly, BreakpointAware } from './PlatformAware'
+export { PlatformAware, MobileOnly, DesktopOnly, BreakpointAware } from '@/multi-end/PlatformAware'
 
 // 移动端底部导航
-export { MobileBottomNav } from './MobileBottomNav'
+export { MobileBottomNav } from '@/multi-end/MobileBottomNav'

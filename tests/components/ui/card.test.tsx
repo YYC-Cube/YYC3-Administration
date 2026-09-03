@@ -14,7 +14,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '../../../src/app/components/ui/card'
+} from '@/shared/ui/card'
 
 describe('Card Component', () => {
   describe('Card主组件', () => {

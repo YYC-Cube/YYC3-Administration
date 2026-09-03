@@ -10,7 +10,7 @@
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { useChatStream } from '../../src/app/components/hooks/use-chat-stream'
+import { useChatStream } from '@/shared/hooks/use-chat-stream'
 
 // ==========================================
 // Real SSE Stream (test these first — no fake timers needed)

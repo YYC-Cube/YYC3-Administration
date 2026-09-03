@@ -14,12 +14,13 @@ import { Eye, EyeOff, Ghost, KeyRound, Loader2, LogIn, UserPlus, X } from 'lucid
 import { AnimatePresence, motion } from 'motion/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { useAuthStore } from '../../stores/useAuthStore'
-
-import { useThemeColors } from './hooks/use-theme-colors'
-import { useI18n } from './i18n-context'
-
+import type { User } from '@/types/auth'
 import type { FormEvent } from 'react'
+
+import { useI18n } from '@/app/components/i18n-context'
+import { isSupabaseConfigured, supabase } from '@/lib/supabase-client'
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
+import { useAuthStore } from '@/stores/useAuthStore'
 
 // ==========================================
 // Constants
@@ -83,7 +84,27 @@ function AuthPage() {
       setError(null)
       setLoading(true)
       try {
-        if (mode === 'login') {
+        if (isSupabaseConfigured && supabase) {
+          // P3-11.1:真实认证(PKCE;错误信息来自 Supabase)
+          const { error: authError } =
+            mode === 'login'
+              ? await supabase.auth.signInWithPassword({
+                  email: email.trim() || `${username.trim()}@users.yyc3`,
+                  password,
+                })
+              : await supabase.auth.signUp({
+                  email: email.trim(),
+                  password,
+                  options: {
+                    data: {
+                      username: username.trim(),
+                      display_name: displayName.trim() || username.trim(),
+                    },
+                  },
+                })
+          if (authError) setError(authError.message)
+          // 成功路径由 onAuthStateChange 统一驱动状态
+        } else if (mode === 'login') {
           const result = await login({ username: username.trim(), password, rememberMe })
           if (!result.success) setError(result.error || '登录失败 / Login failed')
         } else {
@@ -619,9 +640,55 @@ function AuthLoading() {
   )
 }
 
+/** 将 Supabase 会话用户映射为应用 User(RBAC 角色取自 app_metadata.role) */
+function mapSupabaseUser(u: {
+  id: string
+  email?: string | null
+  user_metadata?: Record<string, unknown> | null
+  app_metadata?: Record<string, unknown> | null
+}): User {
+  const meta = u.user_metadata ?? {}
+  const appMeta = u.app_metadata ?? {}
+  return {
+    id: u.id,
+    username: (meta.username as string) || u.email?.split('@')[0] || 'user',
+    email: u.email ?? '',
+    role: (appMeta.role as User['role']) || 'viewer',
+    displayName: (meta.display_name as string) || (meta.username as string) || u.email || 'User',
+    createdAt: Date.now(),
+    lastLoginAt: Date.now(),
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { status, checkSession } = useAuthStore()
   useEffect(() => {
+    // P3-11.1:配置 Supabase 后会话由真实后端管理(PKCE,httpOnly 由 SDK 托管)
+    if (isSupabaseConfigured && supabase) {
+      void supabase.auth.getSession().then(({ data }) => {
+        if (data.session?.user) {
+          useAuthStore.setState({
+            user: mapSupabaseUser(data.session.user),
+            token: data.session.access_token,
+            status: 'authenticated',
+          })
+        } else {
+          useAuthStore.setState({ user: null, token: null, status: 'unauthenticated' })
+        }
+      })
+      const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+        if (session?.user) {
+          useAuthStore.setState({
+            user: mapSupabaseUser(session.user),
+            token: session.access_token,
+            status: 'authenticated',
+          })
+        } else if (event === 'SIGNED_OUT') {
+          useAuthStore.setState({ user: null, token: null, status: 'unauthenticated' })
+        }
+      })
+      return () => sub.subscription.unsubscribe()
+    }
     if (E2E_AUTO_LOGIN) {
       // 测试旁路：直接注入已认证的 admin 会话，跳过登录墙。
       // storageState 方案不可行——secure-storage 的主密钥派生自
@@ -646,4 +713,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   if (status === 'loading') return <AuthLoading />
   if (status === 'unauthenticated') return <AuthPage />
   return <>{children}</>
+}
+
+/** 统一登出:真实模式同时销毁 Supabase 会话;本地模式仅清演示状态 */
+export async function unifiedLogout(): Promise<void> {
+  if (isSupabaseConfigured && supabase) await supabase.auth.signOut()
+  useAuthStore.getState().logout()
 }

@@ -11,28 +11,19 @@ import { render, screen } from '@testing-library/react'
 import { createContext, useContext } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
+import type { Breakpoint, PlatformCapabilities } from '@/multi-end'
+import type { ReactNode } from 'react'
+
 import {
   BREAKPOINTS,
   useBreakpoint,
   useIsDesktop,
   useIsMobile,
   useIsTablet,
-} from '../../src/multi-end/breakpoints'
-import { MobileBottomNav } from '../../src/multi-end/MobileBottomNav'
-import {
-  detectPlatform,
-  getPlatformCapabilities,
-  getPlatformLabel,
-} from '../../src/multi-end/platform'
-import {
-  BreakpointAware,
-  DesktopOnly,
-  MobileOnly,
-  PlatformAware,
-} from '../../src/multi-end/PlatformAware'
-
-import type { Breakpoint, PlatformCapabilities } from '../../src/multi-end'
-import type { ReactNode } from 'react'
+} from '@/multi-end/breakpoints'
+import { MobileBottomNav } from '@/multi-end/MobileBottomNav'
+import { detectPlatform, getPlatformCapabilities, getPlatformLabel } from '@/multi-end/platform'
+import { BreakpointAware, DesktopOnly, MobileOnly, PlatformAware } from '@/multi-end/PlatformAware'
 
 // ==========================================
 // Mock app-context & i18n-context for MobileBottomNav
@@ -43,12 +34,12 @@ const MockAppContext = createContext<{ activePage: string; setActivePage: (p: st
   setActivePage: () => {},
 })
 
-vi.mock('../../src/app/components/app-context', () => ({
+vi.mock('@/app/components/app-context', () => ({
   useApp: () => useContext(MockAppContext),
   AppProvider: ({ children }: { children: ReactNode }) => children,
 }))
 
-vi.mock('../../src/app/components/i18n-context', () => ({
+vi.mock('@/app/components/i18n-context', () => ({
   useI18n: () => ({
     t: (key: string) => key,
     locale: 'zh-CN',

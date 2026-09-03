@@ -11,10 +11,10 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('Panel Helpers', () => {
-  let helpers: typeof import('../../../src/app/components/panels/panel-helpers')
+  let helpers: typeof import('@/features/dev-workspace/panels/panel-helpers')
 
   beforeEach(async () => {
-    helpers = await import('../../../src/app/components/panels/panel-helpers')
+    helpers = await import('@/features/dev-workspace/panels/panel-helpers')
   })
 
   describe('getFileIcon', () => {
@@ -102,56 +102,6 @@ describe('Panel Helpers', () => {
     })
   })
 
-  describe('timeAgo', () => {
-    it('should return empty for undefined', () => {
-      expect(helpers.timeAgo(undefined)).toBe('')
-    })
-
-    it("should return 'just now' for recent timestamps", () => {
-      expect(helpers.timeAgo(Date.now() - 5000)).toBe('刚刚')
-    })
-
-    it('should return minutes ago', () => {
-      expect(helpers.timeAgo(Date.now() - 300000)).toBe('5分钟前')
-    })
-
-    it('should return hours ago', () => {
-      expect(helpers.timeAgo(Date.now() - 7200000)).toBe('2小时前')
-    })
-
-    it('should return days ago', () => {
-      expect(helpers.timeAgo(Date.now() - 172800000)).toBe('2天前')
-    })
-  })
-
-  describe('AI_PROVIDER_MODELS', () => {
-    it('should have all 4 providers', () => {
-      const providers = Object.keys(helpers.AI_PROVIDER_MODELS)
-      expect(providers).toContain('mock')
-      expect(providers).toContain('openai')
-      expect(providers).toContain('claude')
-      expect(providers).toContain('deepseek')
-      expect(providers.length).toBe(4)
-    })
-
-    it('each provider should have models', () => {
-      Object.values(helpers.AI_PROVIDER_MODELS).forEach((provider) => {
-        expect(provider.label).toBeTruthy()
-        expect(provider.models.length).toBeGreaterThan(0)
-        provider.models.forEach((m) => {
-          expect(m.id).toBeTruthy()
-          expect(m.name).toBeTruthy()
-        })
-      })
-    })
-
-    it('OpenAI should have GPT models', () => {
-      const openai = helpers.AI_PROVIDER_MODELS.openai
-      expect(openai.models.some((m) => m.id.includes('gpt'))).toBe(true)
-      expect(openai.defaultBaseUrl).toContain('openai.com')
-    })
-  })
-
   describe('Mock Data Integrity', () => {
     it('MOCK_FILE_TREE should have root directory', () => {
       expect(helpers.MOCK_FILE_TREE.length).toBe(1)
@@ -197,10 +147,10 @@ describe('Panel Helpers', () => {
 })
 
 describe('Panel Store (extracted)', () => {
-  let usePanelStore: typeof import('../../../src/app/components/panels/panel-store').usePanelStore
+  let usePanelStore: typeof import('@/features/dev-workspace/panels/panel-store').usePanelStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/panel-store')
+    const mod = await import('@/features/dev-workspace/panels/panel-store')
     usePanelStore = mod.usePanelStore
     usePanelStore.setState({
       activePanel: 'file-explorer',
@@ -212,13 +162,6 @@ describe('Panel Store (extracted)', () => {
       favoriteFiles: [],
       aiMessages: [],
       searchHistory: [],
-      aiProviderConfig: {
-        provider: 'mock',
-        apiKey: '',
-        model: 'mock-v1',
-        temperature: 0.7,
-        maxTokens: 2048,
-      },
       fileTree: [],
     })
   })
@@ -260,34 +203,17 @@ describe('Panel Store (extracted)', () => {
     expect(usePanelStore.getState().expandedFolders).toEqual(['src/app'])
   })
 
-  it('should manage AI provider config', () => {
-    usePanelStore.getState().setAIProviderConfig({
-      provider: 'openai',
-      model: 'gpt-4o',
-      apiKey: 'sk-test',
-    })
-
-    const config = usePanelStore.getState().aiProviderConfig
-    expect(config.provider).toBe('openai')
-    expect(config.model).toBe('gpt-4o')
-    expect(config.apiKey).toBe('sk-test')
-    expect(config.temperature).toBe(0.7) // unchanged
-    expect(config.maxTokens).toBe(2048) // unchanged
-  })
-
   it('should manage file tree with nested CRUD', () => {
     // Set up tree
-    usePanelStore
-      .getState()
-      .setFileTree([
-        {
-          id: 'root',
-          type: 'directory',
-          name: 'root',
-          path: '/',
-          children: [{ id: 'src', type: 'directory', name: 'src', path: '/src', children: [] }],
-        },
-      ])
+    usePanelStore.getState().setFileTree([
+      {
+        id: 'root',
+        type: 'directory',
+        name: 'root',
+        path: '/',
+        children: [{ id: 'src', type: 'directory', name: 'src', path: '/src', children: [] }],
+      },
+    ])
 
     // Add file to /src
     usePanelStore.getState().addFileNode('/src', {

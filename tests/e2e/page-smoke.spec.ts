@@ -82,6 +82,13 @@ test.describe('E2E-SMOKE: 全页面渲染', () => {
           await item.click()
         }
 
+        // 断言 URL hash 同步(路由化后 URL 即状态源)
+        try {
+          await expect(page).toHaveURL(new RegExp(`#/${pid}$`), { timeout: 5000 })
+        } catch {
+          failures.push(pid + '(url)')
+        }
+
         // 断言内容区渲染出非空内容(懒加载 chunk 拉取 + Suspense 完成)
         try {
           await expect

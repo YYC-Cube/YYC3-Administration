@@ -12,10 +12,10 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { useApp } from './app-context'
-import { useI18n } from './i18n-context'
-
 import type { ReactNode } from 'react'
+
+import { useApp } from '@/app/components/app-context'
+import { useI18n } from '@/app/components/i18n-context'
 
 // ==========================================
 // YYC³ 新手引导教程 — Onboarding Tutorial
