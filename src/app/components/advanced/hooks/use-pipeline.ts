@@ -10,10 +10,17 @@
 
 import { useCallback, useRef } from 'react'
 
-import { usePipelineStore } from '../advanced-stores'
-import { createDemoPipeline, pipelineExecutor } from '../services/pipeline-executor-service'
+import type {
+  LogEntry,
+  PipelineDefinition,
+  StageRun,
+} from '@/app/components/advanced/advanced-types'
 
-import type { LogEntry, PipelineDefinition, StageRun } from '../advanced-types'
+import { usePipelineStore } from '@/app/components/advanced/advanced-stores'
+import {
+  createDemoPipeline,
+  pipelineExecutor,
+} from '@/app/components/advanced/services/pipeline-executor-service'
 
 export function usePipeline() {
   const {

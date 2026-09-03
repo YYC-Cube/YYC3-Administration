@@ -9,6 +9,8 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
+import type { LayoutPreset } from '@/features/dev-workspace/panels/layout-presets'
+
 import {
   deleteCustomPreset,
   getAllPresets,
@@ -16,9 +18,7 @@ import {
   LAYOUT_PRESETS,
   loadCustomPresets,
   saveCustomPreset,
-} from '../../src/app/components/panels/layout-presets'
-
-import type { LayoutPreset } from '../../src/app/components/panels/layout-presets'
+} from '@/features/dev-workspace/panels/layout-presets'
 
 // ==========================================
 // Setup

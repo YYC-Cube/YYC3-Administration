@@ -24,7 +24,7 @@ import {
   Zap,
 } from 'lucide-react'
 
-import type { PageId } from './app-context'
+import type { PageId } from '@/app/components/app-context'
 
 export interface NavCategory {
   id: string

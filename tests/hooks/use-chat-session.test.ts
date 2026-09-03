@@ -10,9 +10,9 @@
 import { act, renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-import { useChatSession } from '../../src/app/components/hooks/use-chat-session'
+import type { ChatMessage } from '@/shared/hooks/use-chat-session'
 
-import type { ChatMessage } from '../../src/app/components/hooks/use-chat-session'
+import { useChatSession } from '@/shared/hooks/use-chat-session'
 
 // ==========================================
 // Helpers

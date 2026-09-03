@@ -14,7 +14,7 @@ import {
   useDebouncedCallback,
   useDebouncedValue,
   useThrottledCallback,
-} from '../../src/app/components/hooks/use-debounce'
+} from '@/shared/hooks/use-debounce'
 
 // ==========================================
 // Setup / Teardown

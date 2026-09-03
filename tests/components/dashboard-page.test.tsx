@@ -10,10 +10,10 @@ import { render, screen } from '@testing-library/react'
 import { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { AppProvider } from '../../src/app/components/app-context'
-import { DashboardPage } from '../../src/app/components/dashboard-page'
-import { I18nProvider } from '../../src/app/components/i18n-context'
-import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
+import { AppProvider } from '@/app/components/app-context'
+import { I18nProvider } from '@/app/components/i18n-context'
+import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
+import { DashboardPage } from '@/features/overview/pages/dashboard-page'
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <ThemeSwitcherProvider defaultTheme="cyberpunk">

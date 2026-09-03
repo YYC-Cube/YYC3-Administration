@@ -94,6 +94,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.8
         version: 1.2.16(@types/react-dom@18.3.7(@types/react@18.3.30))(@types/react@18.3.30)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@supabase/supabase-js':
+        specifier: ^2.112.4
+        version: 2.112.4
       '@yyc3/i18n-core':
         specifier: ^2.4.2
         version: 2.4.2(lit@3.3.3)
@@ -152,8 +155,8 @@ importers:
         specifier: ^2.1.7
         version: 2.1.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router:
-        specifier: 7.15.1
-        version: 7.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 7.18.2
+        version: 7.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       recharts:
         specifier: 3.9.2
         version: 3.9.2(@types/react@18.3.30)(react-dom@18.3.1(react@18.3.1))(react-is@19.2.6)(react@18.3.1)(redux@5.0.1)
@@ -211,10 +214,10 @@ importers:
         version: 18.3.7(@types/react@18.3.30)
       '@vitejs/plugin-react':
         specifier: 4.7.0
-        version: 4.7.0(supports-color@7.2.0)(vite@6.4.3(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))
+        version: 4.7.0(supports-color@7.2.0)(vite@6.4.3(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))
       '@vitest/coverage-istanbul':
         specifier: ^3.2.7
-        version: 3.2.7(supports-color@7.2.0)(vitest@3.2.7(@types/debug@4.1.13)(@types/node@26.3.0)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0))
+        version: 3.2.7(supports-color@7.2.0)(vitest@3.2.7(@types/debug@4.1.13)(@types/node@20.19.41)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0))
       eslint:
         specifier: ^9.39.4
         version: 9.39.4(jiti@2.7.0)(supports-color@7.2.0)
@@ -271,10 +274,10 @@ importers:
         version: 6.4.3(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0)
       vite-plugin-pwa:
         specifier: ^1.3.0
-        version: 1.3.0(supports-color@7.2.0)(vite@6.4.3(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1(@types/babel__core@7.20.5)(supports-color@7.2.0))(workbox-window@7.4.1)
+        version: 1.3.0(supports-color@7.2.0)(vite@6.4.3(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1(@types/babel__core@7.20.5)(supports-color@7.2.0))(workbox-window@7.4.1)
       vitest:
         specifier: ^3.2.7
-        version: 3.2.7(@types/debug@4.1.13)(@types/node@26.3.0)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0)
+        version: 3.2.7(@types/debug@4.1.13)(@types/node@20.19.41)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0)
       webpack-bundle-analyzer:
         specifier: ^5.3.0
         version: 5.3.0
@@ -2320,6 +2323,38 @@ packages:
   '@standard-schema/utils@0.3.0':
     resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
+  '@supabase/auth-js@2.112.4':
+    resolution: {integrity: sha512-z8DesgwLzKM5PiT0yNmJU8VJyh1zAhYi+20Z7drdJQLXg/wWW4yGt/un+He5ERYUo94Vz66t5aeyr1DIDemI5A==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/functions-js@2.112.4':
+    resolution: {integrity: sha512-DQ0aVH8wSQAccVqNoEkec62qCu2QRNyoGN53RqsVZ1k6F1zq4/v8scrlR6LNT2RJmT97apiTmORijPVhErCS2g==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/phoenix@0.4.5':
+    resolution: {integrity: sha512-aAn9H9ovVyeApKy11OWOrrOGq8DV68yWeH4ud2lN9fzn4aO8Zb5GLL9m1pUg9nLqIcT+ZDfAcsZe0E/nqdv2lw==}
+
+  '@supabase/postgrest-js@2.112.4':
+    resolution: {integrity: sha512-uaubtPSeg2TR4wrtfQoQWgkTAe+a0qWX2KhmwvTfNl5mGN9+U7owiJt6abk3o/V6O899PSRD1yzxs5RlF4xTug==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/realtime-js@2.112.4':
+    resolution: {integrity: sha512-vZ+j079SKrM0Xiq7MJCvQKLDpaH2kfKfLY68xuQE1sqsCsMmx1CyrDBJHsxZ3cX01VOs5SI9igmoZAF3BmdZxw==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/storage-js@2.112.4':
+    resolution: {integrity: sha512-lQ0JemuTlMIXVKgSci1qez8yPnM5hyDngeAfEBjZS2Om4D+Cus0EE5BE6glFobrxdyii1OF4UzWfF0zcQgDq5A==}
+    engines: {node: '>=22.0.0'}
+
+  '@supabase/supabase-js@2.112.4':
+    resolution: {integrity: sha512-UiCX1udlFY1fQQrO7Z3GU7obQsju0w5Vk9mOOwalfo/+Gy+tahWVenSSuu5E/GTy/q//HxvGv2IrCdW66/61kw==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0'
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+
   '@tailwindcss/node@4.1.12':
     resolution: {integrity: sha512-3hm9brwvQkZFe++SBt+oLjo4OLDtkvlE8q2WalaD/7QWaeM7KEJbAiY/LJZUaCs7Xa8aUu4xy3uoyX4q54UVdQ==}
 
@@ -3851,6 +3886,10 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  iceberg-js@0.8.1:
+    resolution: {integrity: sha512-1dhVQZXhcHje7798IVM+xoo/1ZdVfzOMIc8/rgVSijRK38EDqOJoGula9N/8ZI5RD8QTxNQtK/Gozpr+qUqRRA==}
+    engines: {node: '>=20.0.0'}
+
   iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
@@ -4993,8 +5032,8 @@ packages:
       react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
-  react-router@7.15.1:
-    resolution: {integrity: sha512-R8rl9HhgikFYoPJymnUtPXWbnDb3oget6lQnfIoupbt61aT9aOhRkDsY2XRhZRyX1Z/8a5sL74fXmFNm3NRK5A==}
+  react-router@7.18.2:
+    resolution: {integrity: sha512-aUVMjFm3GAPTTZL7oYr5E7ETiqfQCHRLH+B+5afnICvf0r7kkK4eR6SMuwbSTJw/7t+12khT/Kahij49fqOCIg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -8050,6 +8089,38 @@ snapshots:
 
   '@standard-schema/utils@0.3.0': {}
 
+  '@supabase/auth-js@2.112.4':
+    dependencies:
+      tslib: 2.8.1
+
+  '@supabase/functions-js@2.112.4':
+    dependencies:
+      tslib: 2.8.1
+
+  '@supabase/phoenix@0.4.5': {}
+
+  '@supabase/postgrest-js@2.112.4':
+    dependencies:
+      tslib: 2.8.1
+
+  '@supabase/realtime-js@2.112.4':
+    dependencies:
+      '@supabase/phoenix': 0.4.5
+      tslib: 2.8.1
+
+  '@supabase/storage-js@2.112.4':
+    dependencies:
+      iceberg-js: 0.8.1
+      tslib: 2.8.1
+
+  '@supabase/supabase-js@2.112.4':
+    dependencies:
+      '@supabase/auth-js': 2.112.4
+      '@supabase/functions-js': 2.112.4
+      '@supabase/postgrest-js': 2.112.4
+      '@supabase/realtime-js': 2.112.4
+      '@supabase/storage-js': 2.112.4
+
   '@tailwindcss/node@4.1.12':
     dependencies:
       '@jridgewell/remapping': 2.3.5
@@ -8415,7 +8486,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.1': {}
 
-  '@vitejs/plugin-react@4.7.0(supports-color@7.2.0)(vite@6.4.3(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))':
+  '@vitejs/plugin-react@4.7.0(supports-color@7.2.0)(vite@6.4.3(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/plugin-transform-react-jsx-self': 7.29.7(@babel/core@7.29.7(supports-color@7.2.0))
@@ -8427,7 +8498,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-istanbul@3.2.7(supports-color@7.2.0)(vitest@3.2.7(@types/debug@4.1.13)(@types/node@26.3.0)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0))':
+  '@vitest/coverage-istanbul@3.2.7(supports-color@7.2.0)(vitest@3.2.7(@types/debug@4.1.13)(@types/node@20.19.41)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0))':
     dependencies:
       '@istanbuljs/schema': 0.1.6
       debug: 4.4.3(supports-color@7.2.0)
@@ -8439,7 +8510,7 @@ snapshots:
       magicast: 0.3.5
       test-exclude: 7.0.2
       tinyrainbow: 2.0.0
-      vitest: 3.2.7(@types/debug@4.1.13)(@types/node@26.3.0)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0)
+      vitest: 3.2.7(@types/debug@4.1.13)(@types/node@20.19.41)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -9848,6 +9919,8 @@ snapshots:
 
   husky@9.1.7: {}
 
+  iceberg-js@0.8.1: {}
+
   iconv-lite@0.6.3:
     dependencies:
       safer-buffer: 2.1.2
@@ -11197,7 +11270,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  react-router@7.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-router@7.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       cookie: 1.1.1
       react: 18.3.1
@@ -12090,7 +12163,7 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  vite-node@3.2.4(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0):
+  vite-node@3.2.4(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3(supports-color@7.2.0)
@@ -12111,12 +12184,12 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-pwa@1.3.0(supports-color@7.2.0)(vite@6.4.3(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1(@types/babel__core@7.20.5)(supports-color@7.2.0))(workbox-window@7.4.1):
+  vite-plugin-pwa@1.3.0(supports-color@7.2.0)(vite@6.4.3(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1(@types/babel__core@7.20.5)(supports-color@7.2.0))(workbox-window@7.4.1):
     dependencies:
       debug: 4.4.3(supports-color@7.2.0)
       pretty-bytes: 6.1.1
       tinyglobby: 0.2.17
-      vite: 6.4.3(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0)
+      vite: 6.4.3(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0)
       workbox-build: 7.4.1(@types/babel__core@7.20.5)(supports-color@7.2.0)
       workbox-window: 7.4.1
     transitivePeerDependencies:
@@ -12138,7 +12211,7 @@ snapshots:
       terser: 5.49.0
       yaml: 2.9.0
 
-  vitest@3.2.7(@types/debug@4.1.13)(@types/node@26.3.0)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0):
+  vitest@3.2.7(@types/debug@4.1.13)(@types/node@20.19.41)(jiti@2.7.0)(jsdom@24.1.3(supports-color@7.2.0))(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.7
@@ -12160,12 +12233,12 @@ snapshots:
       tinyglobby: 0.2.17
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 6.4.3(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0)
-      vite-node: 3.2.4(@types/node@26.3.0)(jiti@2.7.0)(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0)
+      vite: 6.4.3(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(terser@5.49.0)(yaml@2.9.0)
+      vite-node: 3.2.4(@types/node@20.19.41)(jiti@2.7.0)(lightningcss@1.30.1)(supports-color@7.2.0)(terser@5.49.0)(yaml@2.9.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.13
-      '@types/node': 26.3.0
+      '@types/node': 20.19.41
       jsdom: 24.1.3(supports-color@7.2.0)
     transitivePeerDependencies:
       - jiti

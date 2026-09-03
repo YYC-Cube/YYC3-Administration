@@ -108,22 +108,46 @@ test.describe('File Explorer', () => {
   })
 
   test('should expand folder on click', async ({ page }) => {
-    const folderItem = page.locator('text=src').first()
-    if (await folderItem.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await folderItem.click()
-      await page.waitForTimeout(200)
+    // 作用域到文件树容器(全页 text=src 会命中 Git/状态栏等同名文本)
+    const tree = page.locator('[data-testid="file-explorer"]')
+    await expect(tree).toBeVisible({ timeout: 10000 })
+    const components = tree.locator('span', { hasText: /^components$/ }).first()
+    // 默认展开链已含 src/app/components;点击 components 触发 toggle(折叠),
+    // 子项应从 DOM 移除——展开/折叠共用同一代码路径,单次断言即覆盖语义
+    if (await components.isVisible().catch(() => false)) {
+      const child = tree.locator('span', { hasText: 'cyberpunk-standalone.tsx' }).first()
+      await expect(child).toBeVisible({ timeout: 3000 })
+      // CI 下偶发透明浮层拦截指针;force 绕过拦截,DOM onClick 仍触发
+      await components.click({ force: true })
+      await expect(child).toBeHidden({ timeout: 5000 })
     }
   })
 
   test('should open file in editor when clicked', async ({ page }) => {
-    const fileItem = page.locator('text=App.tsx').first()
-    if (await fileItem.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await fileItem.click()
-      await page.waitForTimeout(500)
-      // Editor should show the file tab
-      const tab = page.locator('text=App.tsx')
-      await expect(tab.first()).toBeVisible()
-    }
+    // 作用域到文件树容器:全页 text=App.tsx 会与编辑器标签同名互串,
+    // 且实时通知引发的重渲染会让无作用域定位解析到易失节点(element detached)
+    const tree = page.locator('[data-testid="file-explorer"]')
+    await expect(tree).toBeVisible({ timeout: 10000 })
+    const fileItem = tree.locator('span', { hasText: 'App.tsx' }).first()
+
+    // 默认展开链 ['root','src','src/app',...] 已使 App.tsx 可见
+    // (勿点击文件夹——toggle 语义会折叠)
+    await expect(fileItem).toBeVisible({ timeout: 10000 })
+    await fileItem.click({ force: true })
+
+    // 断言编辑器随点击载入:Monaco 挂载即证明文件打开
+    // (末尾不再复检树行——满载并行下选中后的树布局抖动会偶发移除 span)
+    await expect
+      .poll(
+        async () =>
+          page
+            .locator('.monaco-editor')
+            .first()
+            .isVisible()
+            .catch(() => false),
+        { timeout: 15000 },
+      )
+      .toBe(true)
   })
 
   test('should show right-click context menu', async ({ page }) => {
@@ -224,11 +248,11 @@ test.describe('Code Editor', () => {
 test.describe('AI Assistant', () => {
   test.beforeEach(async ({ page }) => {
     await navigateToDevWorkspace(page)
-    const aiButton = page.locator('button').filter({ hasText: /^AI$/ }).first()
-    if (await aiButton.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await aiButton.click()
-      await page.waitForTimeout(300)
-    }
+    // 活动栏按钮已带 title;真实断言取代条件跳过
+    const aiButton = page.locator("button[title='AI Assistant']").first()
+    await expect(aiButton).toBeVisible({ timeout: 10000 })
+    await aiButton.click()
+    await page.waitForTimeout(300)
   })
 
   test('should display AI assistant panel', async ({ page }) => {
@@ -259,21 +283,30 @@ test.describe('AI Assistant', () => {
     }
   })
 
-  test('should toggle AI configuration panel', async ({ page }) => {
-    const configBtn = page
-      .locator("[title*='config'], [title*='Config'], button:has(svg)")
-      .filter({ hasText: /⚙️|Config/ })
-      .first()
-    if (await configBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await configBtn.click()
-      await page.waitForTimeout(200)
-    }
+  test('should toggle AI configuration panel (unified model source)', async ({ page }) => {
+    // ⚙️ 按钮展开统一模型信息卡(P2-① 收敛后不再有独立 provider 表单)
+    const configBtn = page.locator("button[title='提供商设置']")
+    await expect(configBtn).toBeVisible({ timeout: 10000 })
+    await configBtn.click()
+    await expect(page.locator('[data-testid="ai-config-panel"]')).toBeVisible({ timeout: 5000 })
   })
 
-  test('should show provider selector in config', async ({ page }) => {
-    const providerSelect = page.locator('text=/OpenAI|Claude|DeepSeek|Mock/').first()
-    const _visible = await providerSelect.isVisible({ timeout: 2000 }).catch(() => false)
-    // Provider options should be available somewhere in the panel
+  test('should open unified model settings from AI panel', async ({ page }) => {
+    // 信息卡的「打开模型设置」应唤起全局 ModelSettings 浮层(z-[100])
+    const configBtn = page.locator("button[title='提供商设置']")
+    await expect(configBtn).toBeVisible({ timeout: 10000 })
+    await configBtn.click()
+    const openBtn = page.locator('[data-testid="open-model-settings"]')
+    await expect(openBtn).toBeVisible({ timeout: 5000 })
+    await openBtn.click()
+
+    const modal = page.locator('div[class*="z-[100]"]')
+    await expect(modal).toBeVisible({ timeout: 5000 })
+    await modal
+      .locator('.absolute.inset-0')
+      .first()
+      .click({ position: { x: 8, y: 8 } })
+    await expect(modal).toBeHidden({ timeout: 5000 })
   })
 })
 
@@ -375,11 +408,15 @@ test.describe('Full Workflow: File → Edit → AI → Git', () => {
       await page.waitForTimeout(300)
     }
 
-    // Step 2: Click a file to open in editor
-    const fileItem = page.locator('text=App.tsx').first()
-    if (await fileItem.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await fileItem.click()
-      await page.waitForTimeout(1000)
+    // Step 2: Click a file to open in editor(作用域到文件树容器,
+    // 全页 text=App.tsx 会与编辑器标签同名互串且受布局抖动影响)
+    const tree = page.locator('[data-testid="file-explorer"]')
+    if (await tree.isVisible({ timeout: 5000 }).catch(() => false)) {
+      const fileItem = tree.locator('span', { hasText: 'App.tsx' }).first()
+      if (await fileItem.isVisible({ timeout: 5000 }).catch(() => false)) {
+        await fileItem.click({ force: true })
+        await page.waitForTimeout(1000)
+      }
     }
 
     // Step 3: Switch to AI panel

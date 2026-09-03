@@ -9,8 +9,8 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { useAuthStore } from '../../src/stores/useAuthStore'
-import { hasPermission, ROLE_PERMISSIONS } from '../../src/types/auth'
+import { useAuthStore } from '@/stores/useAuthStore'
+import { hasPermission, ROLE_PERMISSIONS } from '@/types/auth'
 
 // ==========================================
 // Setup

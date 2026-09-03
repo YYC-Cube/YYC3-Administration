@@ -26,7 +26,7 @@ import type {
   PipelineDefinition,
   PipelineRun,
   ToolChain,
-} from './advanced-types'
+} from '@/app/components/advanced/advanced-types'
 
 // ==========================================
 // AF-01: Code Analyzer Store

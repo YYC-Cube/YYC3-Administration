@@ -1,7 +1,7 @@
 import { Download, Smartphone, WifiOff, X } from 'lucide-react'
 import { memo, useCallback, useEffect, useState } from 'react'
 
-import { useI18n } from './i18n-context'
+import { useI18n } from '@/app/components/i18n-context'
 
 // ==========================================
 // YYC³ PWA 安装提示 + 离线状态指示器

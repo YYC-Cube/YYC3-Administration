@@ -8,8 +8,8 @@ import userEvent from '@testing-library/user-event'
 import { ReactNode } from 'react'
 import { describe, expect, it } from 'vitest'
 
-import { NeonCard } from '../../src/app/components/neon-card'
-import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
+import { NeonCard } from '@/app/components/neon-card'
+import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
 
 // Test wrapper with theme provider
 const TestWrapper = ({

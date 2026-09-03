@@ -8,7 +8,7 @@
 
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 
-import { OfflineStorage } from '../../src/multi-end/storage'
+import { OfflineStorage } from '@/multi-end/storage'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 

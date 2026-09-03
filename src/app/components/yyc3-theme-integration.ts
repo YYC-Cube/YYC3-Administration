@@ -3,7 +3,7 @@
  * @description YYC³ 主题系统集成配置 — 将 @yyc3/ui 2.0.0 主题系统与 My-mgmt 现有主题融合
  */
 
-import type { ThemeConfig } from './app-context'
+import type { ThemeConfig } from '@/app/components/app-context'
 
 // ==========================================
 // YYC³ 主题预设定义

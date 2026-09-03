@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useRef } from 'react'
 
-import { useApp } from './app-context'
+import { useApp } from '@/app/components/app-context'
 
 // ==========================================
 // YYC³ 粒子背景系统 — Phase 5

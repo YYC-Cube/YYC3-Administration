@@ -9,11 +9,11 @@
 import { render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { AppProvider } from '../../src/app/components/app-context'
-import { I18nProvider } from '../../src/app/components/i18n-context'
-import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
-
 import type { ReactNode } from 'react'
+
+import { AppProvider } from '@/app/components/app-context'
+import { I18nProvider } from '@/app/components/i18n-context'
+import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
 
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <ThemeSwitcherProvider defaultTheme="cyberpunk">
@@ -25,7 +25,7 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 
 describe('CommandPalette — Smoke', () => {
   it('renders without crashing when open', async () => {
-    const { CommandPalette } = await import('../../src/app/components/command-palette')
+    const { CommandPalette } = await import('@/app/components/command-palette')
     const { container } = render(<CommandPalette open={true} onClose={() => {}} />, {
       wrapper: TestWrapper,
     })
@@ -33,7 +33,7 @@ describe('CommandPalette — Smoke', () => {
   })
 
   it('renders without crashing when closed', async () => {
-    const { CommandPalette } = await import('../../src/app/components/command-palette')
+    const { CommandPalette } = await import('@/app/components/command-palette')
     const { container } = render(<CommandPalette open={false} onClose={() => {}} />, {
       wrapper: TestWrapper,
     })

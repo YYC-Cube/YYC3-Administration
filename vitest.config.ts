@@ -21,15 +21,15 @@ export default defineConfig({
         '**/dist/**',
         '**/coverage/**',
         'src/app/version.ts',
-        'src/imports/**',
-        // 大型 UI 页面组件（E2E 覆盖，单元测试代价过高）
-        'src/app/components/**/dashboard*.tsx',
-        'src/app/components/**/chat-interface*.tsx',
+        // 大型 UI 页面组件(E2E 覆盖,单元测试代价过高)——P2-④ 重组后路径
+        'src/features/**/pages/**',
+        'src/features/**/chat-interface*.tsx',
+        'src/features/dev-workspace/left-panel-page.tsx',
+        'src/features/dev-workspace/window-bar.tsx',
+        'src/features/dev-workspace/panels/**',
+        'src/features/settings/model-settings/**',
         'src/app/components/**/command-palette*.tsx',
         'src/app/components/**/cyberpunk-*.tsx',
-        'src/app/components/**/left-panel-page.tsx',
-        'src/app/components/**/window-bar.tsx',
-        'src/app/components/**/*-page.tsx',
         // 入口文件
         'src/app/App.tsx',
         'src/main.tsx',
@@ -37,14 +37,14 @@ export default defineConfig({
       ],
       include: ['src/**/*.{ts,tsx}'],
       all: true,
-      // Phase 3 阶梯式阈值递增：当前 25% → 40% → 60% → 85%
-      // 基线 = 当前实际覆盖率（22-25%），先设为略低于实际值确保 CI 通过
-      // 后续逐步提升：每阶段 +15%
+      // 基线棘轮 = 当前实际覆盖率(P2-④ 重组+排除语义对齐后实测:
+      // statements 28.63 / branches 17.02 / functions 30.4 / lines 29.28),取整略低防抖动;只升不降,
+      // P2 目标:核心路径 ≥60%(见审计报告 7.3-4)
       thresholds: {
-        statements: 22,
-        branches: 13,
-        functions: 19,
-        lines: 22,
+        statements: 31,
+        branches: 19,
+        functions: 34,
+        lines: 31,
       },
     },
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],

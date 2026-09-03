@@ -10,7 +10,7 @@
 import { act, renderHook } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { useUndoRedo } from '../../src/app/components/hooks/use-undo-redo'
+import { useUndoRedo } from '@/shared/hooks/use-undo-redo'
 
 // ==========================================
 // Initial State

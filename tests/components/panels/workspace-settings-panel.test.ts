@@ -15,10 +15,10 @@ import { beforeEach, describe, expect, it } from 'vitest'
 // ==========================================
 
 describe('WorkspaceSettingsPanel — Settings Store Integration', () => {
-  let useSettingsStore: typeof import('../../../src/stores/useSettingsStore').useSettingsStore
+  let useSettingsStore: typeof import('@/stores/useSettingsStore').useSettingsStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/stores/useSettingsStore')
+    const mod = await import('@/stores/useSettingsStore')
     useSettingsStore = mod.useSettingsStore
     // Reset to defaults
     useSettingsStore.getState().resetSettings()
@@ -110,48 +110,18 @@ describe('WorkspaceSettingsPanel — Settings Store Integration', () => {
 })
 
 // ==========================================
-// Test: Panel Store AI Config (used by Settings Panel)
+// Test: Panel Store Width (used by Settings Panel)
 // ==========================================
 
-describe('WorkspaceSettingsPanel — Panel Store AI Config', () => {
-  let usePanelStore: typeof import('../../../src/app/components/panels/panel-store').usePanelStore
+describe('WorkspaceSettingsPanel — Panel Store Width', () => {
+  let usePanelStore: typeof import('@/features/dev-workspace/panels/panel-store').usePanelStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/panel-store')
+    const mod = await import('@/features/dev-workspace/panels/panel-store')
     usePanelStore = mod.usePanelStore
     usePanelStore.setState({
-      aiProviderConfig: {
-        provider: 'mock',
-        apiKey: '',
-        model: 'mock-v1',
-        temperature: 0.7,
-        maxTokens: 2048,
-      },
       panelWidth: 300,
     })
-  })
-
-  it('WSP-020: should display current AI provider info', () => {
-    const { aiProviderConfig } = usePanelStore.getState()
-    expect(aiProviderConfig.provider).toBe('mock')
-    expect(aiProviderConfig.model).toBe('mock-v1')
-    expect(aiProviderConfig.temperature).toBe(0.7)
-    expect(aiProviderConfig.maxTokens).toBe(2048)
-  })
-
-  it('WSP-021: should reflect updated AI provider config', () => {
-    usePanelStore.getState().setAIProviderConfig({
-      provider: 'openai',
-      model: 'gpt-4o',
-      apiKey: 'sk-test-key',
-    })
-    const { aiProviderConfig } = usePanelStore.getState()
-    expect(aiProviderConfig.provider).toBe('openai')
-    expect(aiProviderConfig.model).toBe('gpt-4o')
-    expect(aiProviderConfig.apiKey).toBe('sk-test-key')
-    // Unchanged fields
-    expect(aiProviderConfig.temperature).toBe(0.7)
-    expect(aiProviderConfig.maxTokens).toBe(2048)
   })
 
   it('WSP-022: should update panel width', () => {
@@ -231,10 +201,10 @@ describe('WorkspaceSettingsPanel — Section Configuration', () => {
 // ==========================================
 
 describe('WorkspaceSettingsPanel — Window Reorder (DnD support)', () => {
-  let useWindowStore: typeof import('../../../src/app/components/services/multi-instance/window-manager').useWindowStore
+  let useWindowStore: typeof import('@/features/dev-workspace/multi-instance/window-manager').useWindowStore
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/services/multi-instance/window-manager')
+    const mod = await import('@/features/dev-workspace/multi-instance/window-manager')
     useWindowStore = mod.useWindowStore
     useWindowStore.setState({ instances: [], activeInstanceId: null, mainInstanceId: null })
   })

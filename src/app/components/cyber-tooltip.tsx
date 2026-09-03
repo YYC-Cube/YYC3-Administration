@@ -3,7 +3,7 @@
  * Renders with Cyberpunk neon or Liquid Glass styling
  * depending on the active UI theme.
  */
-import { useThemeColors } from './hooks/use-theme-colors'
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 /** Recharts tooltip payload entry */
 export interface CyberTooltipPayload {
