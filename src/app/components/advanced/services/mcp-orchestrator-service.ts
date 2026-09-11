@@ -8,7 +8,13 @@
  * @tags advanced,mcp,orchestrator
  */
 
-import type { ChainStep, ExecutionTrace, MCPTool, StepTrace, ToolChain } from '../advanced-types'
+import type {
+  ChainStep,
+  ExecutionTrace,
+  MCPTool,
+  StepTrace,
+  ToolChain,
+} from '@/app/components/advanced/advanced-types'
 
 // ==========================================
 // Default MCP Tools Registry

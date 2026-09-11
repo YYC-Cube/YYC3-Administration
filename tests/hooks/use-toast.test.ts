@@ -6,7 +6,7 @@
 import { renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { useToast } from '../../src/app/components/ui/use-toast'
+import { useToast } from '@/shared/ui/use-toast'
 
 // Mock sonner toast
 vi.mock('sonner', () => ({

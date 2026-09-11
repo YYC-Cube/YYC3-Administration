@@ -10,10 +10,10 @@
 
 import { useCallback } from 'react'
 
-import { useOrchestratorStore } from '../advanced-stores'
-import { mcpOrchestrator } from '../services/mcp-orchestrator-service'
+import type { MCPTool, ToolChain } from '@/app/components/advanced/advanced-types'
 
-import type { MCPTool, ToolChain } from '../advanced-types'
+import { useOrchestratorStore } from '@/app/components/advanced/advanced-stores'
+import { mcpOrchestrator } from '@/app/components/advanced/services/mcp-orchestrator-service'
 
 export function useMCPOrchestrator() {
   const {

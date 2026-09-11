@@ -9,7 +9,7 @@
 
 import { expect, test } from '@playwright/test'
 
-import { CATEGORY_ENTRY, openApp } from './helpers'
+import { CATEGORY_ENTRY, dismissOnboarding, openApp } from './helpers'
 
 test.describe('E2E-NAV: 导航流程', () => {
   test.beforeEach(async ({ page }) => {
@@ -46,6 +46,33 @@ test.describe('E2E-NAV: 导航流程', () => {
     await expect(page.locator('main[role="main"] h1').first()).toContainText(/参数|设置/i, {
       timeout: 10000,
     })
+  })
+})
+
+test.describe('E2E-NAV: 路由同步(P2-②)', () => {
+  test('E2E-NAV-007: 浏览器后退/前进还原页面', async ({ page }) => {
+    await openApp(page)
+    // dashboard → clm → 后退应回 dashboard,再前进回 clm
+    await page.click(`[data-nav-id="${CATEGORY_ENTRY.customer}"]`)
+    await expect(page).toHaveURL(/#\/clm$/)
+    await page.goBack()
+    await expect(page).toHaveURL(/#\/dashboard$/)
+    // 后退后内容区应回到仪表盘(状态随 URL 还原)
+    await expect(page.locator('main[role="main"]')).toBeVisible()
+    await page.goForward()
+    await expect(page).toHaveURL(/#\/clm$/)
+  })
+
+  test('E2E-NAV-008: 深链直达页面', async ({ page }) => {
+    await dismissOnboarding(page)
+    await page.goto('/#/taskBoard')
+    await expect(page.locator('[data-testid="app-container"]')).toBeVisible({ timeout: 30000 })
+    // URL 深链应直接激活 taskBoard 并渲染内容
+    await expect
+      .poll(async () => (await page.locator('main[role="main"]').innerText()).trim().length, {
+        timeout: 15000,
+      })
+      .toBeGreaterThan(10)
   })
 })
 

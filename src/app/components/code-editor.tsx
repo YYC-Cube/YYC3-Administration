@@ -10,13 +10,22 @@
  * @tags P1,frontend,editor,monaco,intellisense
  */
 
-import Editor, { type Monaco, type OnMount } from '@monaco-editor/react'
+import Editor, { loader, type Monaco, type OnMount } from '@monaco-editor/react'
 import { Copy, Loader2, Minus, Plus, Save, Type, WrapText } from 'lucide-react'
+// 本地打包 Monaco,摆脱 @monaco-editor/react 默认 CDN 加载器(jsdelivr 弱网下
+// 永远停在 "Loading Monaco Editor...");editor.api 核心 + basic-languages 语法
+// 高亮,避免全量入口拖入 7MB ts.worker —— monaco 独立懒加载 chunk
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
+import 'monaco-editor/esm/vs/basic-languages/_.contribution.js'
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { useThemeColors } from './hooks/use-theme-colors'
+self.MonacoEnvironment = { getWorker: () => new editorWorker() }
+loader.config({ monaco })
 
 import type { editor } from 'monaco-editor'
+
+import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 // ==========================================
 // Types
@@ -178,7 +187,7 @@ export function CodeEditor({
 
   const defaultContent =
     initialContent ??
-    `/**\n * @file ${filePath.split('/').pop()}\n * @description YYC³ Component\n * @author YanYuCloudCube Team <admin@0379.email>\n * @version v1.0.0\n */\n\nimport { useState, useCallback } from "react";\nimport { useThemeColors } from "./hooks/use-theme-colors";\nimport { motion } from "motion/react";\n\n/** Component props */\ninterface Props {\n  title?: string;\n  className?: string;\n}\n\n/** Main component */\nexport function Component({ title = "YYC³", className }: Props) {\n  const tc = useThemeColors();\n  const [count, setCount] = useState(0);\n\n  const handleClick = useCallback(() => {\n    setCount((prev) => prev + 1);\n  }, []);\n\n  return (\n    <motion.div\n      initial={{ opacity: 0, y: 20 }}\n      animate={{ opacity: 1, y: 0 }}\n      className={className}\n      style={{ background: tc.bgBase, color: tc.textPrimary }}\n    >\n      <h1>{title}</h1>\n      <p>Count: {count}</p>\n      <button onClick={handleClick}>Increment</button>\n    </motion.div>\n  );\n}\n`
+    `/**\n * @file ${filePath.split('/').pop()}\n * @description YYC³ Component\n * @author YanYuCloudCube Team <admin@0379.email>\n * @version v1.0.0\n */\n\nimport { useState, useCallback } from "react";\nimport { useThemeColors } from "@/shared/hooks/use-theme-colors";\nimport { motion } from "motion/react";\n\n/** Component props */\ninterface Props {\n  title?: string;\n  className?: string;\n}\n\n/** Main component */\nexport function Component({ title = "YYC³", className }: Props) {\n  const tc = useThemeColors();\n  const [count, setCount] = useState(0);\n\n  const handleClick = useCallback(() => {\n    setCount((prev) => prev + 1);\n  }, []);\n\n  return (\n    <motion.div\n      initial={{ opacity: 0, y: 20 }}\n      animate={{ opacity: 1, y: 0 }}\n      className={className}\n      style={{ background: tc.bgBase, color: tc.textPrimary }}\n    >\n      <h1>{title}</h1>\n      <p>Count: {count}</p>\n      <button onClick={handleClick}>Increment</button>\n    </motion.div>\n  );\n}\n`
 
   /** Called once Monaco is mounted */
   const handleEditorMount: OnMount = useCallback(

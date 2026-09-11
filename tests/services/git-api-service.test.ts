@@ -11,7 +11,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { gitAPIService } from '../../src/app/components/services/git-api-service'
+import { gitAPIService } from '@/services/git-api-service'
 
 // ==========================================
 // Test Suite: Configuration

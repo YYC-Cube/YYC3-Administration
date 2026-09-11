@@ -1,6 +1,6 @@
 import { type CSSProperties, memo, useCallback, useEffect, useRef, useState } from 'react'
 
-import { useApp } from './app-context'
+import { useApp } from '@/app/components/app-context'
 
 // ==========================================
 // YYC³ Glitch 文字动效组件 — Phase 5

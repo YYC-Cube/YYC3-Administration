@@ -553,12 +553,17 @@ const realtimeActivityPool: Array<Omit<ActivityItem, 'id' | 'timestamp'>> = [
  * Periodically injects notifications (every 15-25 s) and activities
  * (every 8-15 s) from a rotating pool of mock data.
  */
+const E2E_MODE = import.meta.env.DEV && import.meta.env.VITE_E2E === 'true'
+
 export function useRealtimeSimulation() {
   const { addNotification, addActivity } = useApp()
   const notifIdxRef = useRef(0)
   const actIdxRef = useRef(0)
 
   useEffect(() => {
+    // E2E 模式关停假数据流:定时通知/KPI 波动会引发全量重渲染,
+    // 使 motion 动画节点在 CI 慢机上永不稳定(E2E element detached 根源)
+    if (E2E_MODE) return
     // Push a random notification every 15-25s
     const notifTimer = setInterval(
       () => {
@@ -617,6 +622,7 @@ export function useLiveKPI(): LiveKPI {
   })
 
   useEffect(() => {
+    if (E2E_MODE) return // E2E:同上,关停 KPI 假波动
     const timer = setInterval(() => {
       setKpi((prev) => ({
         customers: prev.customers + Math.floor(Math.random() * 3) - (Math.random() > 0.7 ? 1 : 0),

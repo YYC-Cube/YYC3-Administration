@@ -1,0 +1,26 @@
+[Unit]
+Description=YYC3 FAmily-AI Agent (%i)
+After=network.target yyc3-governance.service docker.service
+Wants=network.target yyc3-governance.service
+
+[Service]
+Type=simple
+User=yyc3
+Group=yyc3
+Environment=AGENT_NAME=%i
+Environment=VLLM_ENDPOINT=http://127.0.0.1:8000/v1
+Environment=VLLM_MODEL=Qwen/Qwen3.6-27B-FP8
+Environment=SYSTEM_PROMPT_PATH=/home/yyc3/.nemoclaw/agents/soul/%i.md
+Environment=GOVERNANCE_ENDPOINT=http://127.0.0.1:25700
+Environment=PYTHONPATH=/home/yyc3/.nemoclaw/agents:/home/yyc3/.nemoclaw/memory
+ExecStart=/home/yyc3/llama-factory-env/bin/python3 /home/yyc3/yyc3-102-projects/yyc3-family-ai-agents/agent_server.py --port ${PORT} --role ${ROLE}
+WorkingDirectory=/home/yyc3/yyc3-102-projects/yyc3-family-ai-agents
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/yyc3/.nemoclaw/agents/logs/%i.log
+StandardError=append:/home/yyc3/.nemoclaw/agents/logs/%i.log
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -8,10 +8,7 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import {
-  useCodeAnalyzerStore,
-  usePipelineStore,
-} from '../../src/app/components/advanced/advanced-stores'
+import { useCodeAnalyzerStore, usePipelineStore } from '@/app/components/advanced/advanced-stores'
 
 beforeEach(() => {
   useCodeAnalyzerStore.setState({

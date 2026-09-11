@@ -9,13 +9,7 @@
 
 import { describe, expect, it } from 'vitest'
 
-import {
-  decrypt,
-  encrypt,
-  generateSecureToken,
-  hashPassword,
-  verifyPassword,
-} from '../../src/lib/crypto'
+import { decrypt, encrypt, generateSecureToken, hashPassword, verifyPassword } from '@/lib/crypto'
 
 // ==========================================
 // AES-GCM Encrypt/Decrypt

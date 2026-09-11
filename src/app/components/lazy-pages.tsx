@@ -13,9 +13,9 @@
 import { Loader2 } from 'lucide-react'
 import { type ComponentType, lazy, Suspense } from 'react'
 
-import { ErrorBoundary } from './error-boundary'
+import type { PageId } from '@/app/components/app-context'
 
-import type { PageId } from './app-context'
+import { ErrorBoundary } from '@/app/components/error-boundary'
 
 // ==========================================
 // Loading Placeholder
@@ -39,105 +39,167 @@ function PageLoadingFallback() {
 // Core pages — eagerly loaded (imported directly in cyberpunk-standalone.tsx)
 // Non-core pages — lazy loaded below
 
-const LazyCLMPage = lazy(() => import('./clm-page').then((m) => ({ default: m.CLMPage })))
-const LazyAICallPage = lazy(() => import('./ai-call-page').then((m) => ({ default: m.AICallPage })))
+const LazySmartFormPage = lazy(() =>
+  import('@/features/supply-chain/pages/smart-form-system').then((m) => ({
+    default: m.SmartFormPage,
+  })),
+)
+
+const LazyCLMPage = lazy(() =>
+  import('@/features/customer/pages/clm-page').then((m) => ({ default: m.CLMPage })),
+)
+const LazyAICallPage = lazy(() =>
+  import('@/features/toolkit/pages/ai-call-page').then((m) => ({ default: m.AICallPage })),
+)
 const LazyCustomerCarePage = lazy(() =>
-  import('./customer-care-page').then((m) => ({ default: m.CustomerCarePage })),
+  import('@/features/customer/pages/customer-care-page').then((m) => ({
+    default: m.CustomerCarePage,
+  })),
 )
 const LazyNumberDatabasePage = lazy(() =>
-  import('./number-database').then((m) => ({ default: m.NumberDatabasePage })),
+  import('@/features/customer/pages/number-database').then((m) => ({
+    default: m.NumberDatabasePage,
+  })),
 )
 const LazyAIToolsPage = lazy(() =>
-  import('./ai-tools-page').then((m) => ({ default: m.AIToolsPage })),
+  import('@/features/toolkit/pages/ai-tools-page').then((m) => ({ default: m.AIToolsPage })),
 )
 const LazyWorkflowPage = lazy(() =>
-  import('./workflow-page').then((m) => ({ default: m.WorkflowPage })),
+  import('@/features/toolkit/pages/workflow-page').then((m) => ({ default: m.WorkflowPage })),
 )
 const LazyActivityLogPage = lazy(() =>
-  import('./activity-log').then((m) => ({ default: m.ActivityLogPage })),
+  import('@/features/overview/pages/activity-log').then((m) => ({ default: m.ActivityLogPage })),
 )
 const LazyCollabCreationPage = lazy(() =>
-  import('./collab-creation-page').then((m) => ({ default: m.CollabCreationPage })),
+  import('@/features/toolkit/pages/collab-creation-page').then((m) => ({
+    default: m.CollabCreationPage,
+  })),
 )
 const LazyInsightsEnhancedPage = lazy(() =>
-  import('./insights-enhanced').then((m) => ({ default: m.InsightsEnhancedPage })),
+  import('@/features/overview/pages/insights-enhanced').then((m) => ({
+    default: m.InsightsEnhancedPage,
+  })),
 )
 const LazyQuickActionsPage = lazy(() =>
-  import('./quick-actions-page').then((m) => ({ default: m.QuickActionsPage })),
+  import('@/features/toolkit/pages/quick-actions-page').then((m) => ({
+    default: m.QuickActionsPage,
+  })),
 )
 const LazyTaskBoardPage = lazy(() =>
-  import('./task-board-page').then((m) => ({ default: m.TaskBoardPage })),
+  import('@/features/toolkit/pages/task-board-page').then((m) => ({ default: m.TaskBoardPage })),
 )
 const LazyLeftPanelPage = lazy(() =>
-  import('./left-panel-page').then((m) => ({ default: m.LeftPanelPage })),
+  import('@/features/dev-workspace/left-panel-page').then((m) => ({ default: m.LeftPanelPage })),
 )
 const LazyFinancePage = lazy(() =>
-  import('./finance-page').then((m) => ({ default: m.FinancePage })),
+  import('@/features/finance/pages/finance-page').then((m) => ({ default: m.FinancePage })),
 )
-const LazySalaryPage = lazy(() => import('./salary-page').then((m) => ({ default: m.SalaryPage })))
+const LazySalaryPage = lazy(() =>
+  import('@/features/finance/pages/salary-page').then((m) => ({ default: m.SalaryPage })),
+)
 
 // Platform Integration
 const LazyParameterSettingsPage = lazy(() =>
-  import('./parameter-settings-page').then((m) => ({ default: m.ParameterSettingsPage })),
+  import('@/features/platform/pages/parameter-settings-page').then((m) => ({
+    default: m.ParameterSettingsPage,
+  })),
 )
 const LazyPlatformSettingsPage = lazy(() =>
-  import('./platform-settings-page').then((m) => ({ default: m.PlatformSettingsPage })),
+  import('@/features/platform/pages/platform-settings-page').then((m) => ({
+    default: m.PlatformSettingsPage,
+  })),
 )
 const LazyWechatConfigPage = lazy(() =>
-  import('./wechat-config-page').then((m) => ({ default: m.WechatConfigPage })),
+  import('@/features/platform/pages/wechat-config-page').then((m) => ({
+    default: m.WechatConfigPage,
+  })),
 )
 const LazyChannelCenterPage = lazy(() =>
-  import('./channel-center-page').then((m) => ({ default: m.ChannelCenterPage })),
+  import('@/features/platform/pages/channel-center-page').then((m) => ({
+    default: m.ChannelCenterPage,
+  })),
 )
 const LazyDataIntegrationPage = lazy(() =>
-  import('./data-integration-page').then((m) => ({ default: m.DataIntegrationPage })),
+  import('@/features/platform/pages/data-integration-page').then((m) => ({
+    default: m.DataIntegrationPage,
+  })),
 )
 
 // AI Marketing
 const LazyMarketingStrategyPage = lazy(() =>
-  import('./marketing-strategy-page').then((m) => ({ default: m.MarketingStrategyPage })),
+  import('@/features/marketing/pages/marketing-strategy-page').then((m) => ({
+    default: m.MarketingStrategyPage,
+  })),
 )
 const LazyCampaignExecutionPage = lazy(() =>
-  import('./campaign-execution-page').then((m) => ({ default: m.CampaignExecutionPage })),
+  import('@/features/marketing/pages/campaign-execution-page').then((m) => ({
+    default: m.CampaignExecutionPage,
+  })),
 )
 const LazyMarketingAnalyticsPage = lazy(() =>
-  import('./marketing-analytics-page').then((m) => ({ default: m.MarketingAnalyticsPage })),
+  import('@/features/marketing/pages/marketing-analytics-page').then((m) => ({
+    default: m.MarketingAnalyticsPage,
+  })),
 )
 const LazyMarketingAssetsPage = lazy(() =>
-  import('./marketing-assets-page').then((m) => ({ default: m.MarketingAssetsPage })),
+  import('@/features/marketing/pages/marketing-assets-page').then((m) => ({
+    default: m.MarketingAssetsPage,
+  })),
 )
 const LazyCustomerAcquisitionPage = lazy(() =>
-  import('./customer-acquisition-page').then((m) => ({ default: m.CustomerAcquisitionPage })),
+  import('@/features/customer/pages/customer-acquisition-page').then((m) => ({
+    default: m.CustomerAcquisitionPage,
+  })),
 )
 const LazyBrandManagementPage = lazy(() =>
-  import('./brand-management-page').then((m) => ({ default: m.BrandManagementPage })),
+  import('@/features/customer/pages/brand-management-page').then((m) => ({
+    default: m.BrandManagementPage,
+  })),
 )
 const LazySmartOperationsPage = lazy(() =>
-  import('./smart-operations-page').then((m) => ({ default: m.SmartOperationsPage })),
+  import('@/features/platform/pages/smart-operations-page').then((m) => ({
+    default: m.SmartOperationsPage,
+  })),
 )
 const LazyPlatformIntegrationPage = lazy(() =>
-  import('./platform-integration-page').then((m) => ({ default: m.PlatformIntegrationPage })),
+  import('@/features/platform/pages/platform-integration-page').then((m) => ({
+    default: m.PlatformIntegrationPage,
+  })),
 )
 const LazySmartCreationPage = lazy(() =>
-  import('./smart-creation-page').then((m) => ({ default: m.SmartCreationPage })),
+  import('@/features/marketing/pages/smart-creation-page').then((m) => ({
+    default: m.SmartCreationPage,
+  })),
 )
 const LazySmartMarketingEnginePage = lazy(() =>
-  import('./smart-marketing-engine-page').then((m) => ({ default: m.SmartMarketingEnginePage })),
+  import('@/features/marketing/pages/smart-marketing-engine-page').then((m) => ({
+    default: m.SmartMarketingEnginePage,
+  })),
 )
 const LazyAppOverviewPage = lazy(() =>
-  import('./app-overview-page').then((m) => ({ default: m.AppOverviewPage })),
+  import('@/features/marketing/pages/app-overview-page').then((m) => ({
+    default: m.AppOverviewPage,
+  })),
 )
 const LazyDecisionSupportPage = lazy(() =>
-  import('./decision-support-page').then((m) => ({ default: m.DecisionSupportPage })),
+  import('@/features/marketing/pages/decision-support-page').then((m) => ({
+    default: m.DecisionSupportPage,
+  })),
 )
 const LazyNLPProcessingPage = lazy(() =>
-  import('./nlp-processing-page').then((m) => ({ default: m.NLPProcessingPage })),
+  import('@/features/marketing/pages/nlp-processing-page').then((m) => ({
+    default: m.NLPProcessingPage,
+  })),
 )
 const LazyProcurementPage = lazy(() =>
-  import('./procurement-page').then((m) => ({ default: m.ProcurementPage })),
+  import('@/features/supply-chain/pages/procurement-page').then((m) => ({
+    default: m.ProcurementPage,
+  })),
 )
 const LazyInventoryPage = lazy(() =>
-  import('./inventory-page').then((m) => ({ default: m.InventoryPage })),
+  import('@/features/supply-chain/pages/inventory-page').then((m) => ({
+    default: m.InventoryPage,
+  })),
 )
 
 // ==========================================
@@ -152,6 +214,7 @@ interface LazyPageEntry {
 /** Map of page IDs to their lazy-loaded components */
 const lazyPageRegistry: Partial<Record<PageId, LazyPageEntry>> = {
   clm: { component: LazyCLMPage, name: 'CLM' },
+  smartForm: { component: LazySmartFormPage, name: 'Smart Form' },
   aicall: { component: LazyAICallPage, name: 'AI Call' },
   customerCare: { component: LazyCustomerCarePage, name: 'Customer Care' },
   contacts: { component: LazyNumberDatabasePage, name: 'Contacts' },

@@ -15,10 +15,10 @@ import { beforeEach, describe, expect, it } from 'vitest'
 // ==========================================
 
 describe('EditorQuickActions — QUICK_ACTIONS Config', () => {
-  let QUICK_ACTIONS: typeof import('../../../src/app/components/panels/editor-quick-actions').QUICK_ACTIONS
+  let QUICK_ACTIONS: typeof import('@/features/dev-workspace/panels/editor-quick-actions').QUICK_ACTIONS
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/editor-quick-actions')
+    const mod = await import('@/features/dev-workspace/panels/editor-quick-actions')
     QUICK_ACTIONS = mod.QUICK_ACTIONS
   })
 
@@ -68,10 +68,10 @@ describe('EditorQuickActions — QUICK_ACTIONS Config', () => {
 // ==========================================
 
 describe('EditorQuickActions — buildActionPrompt', () => {
-  let buildActionPrompt: typeof import('../../../src/app/components/panels/editor-quick-actions').buildActionPrompt
+  let buildActionPrompt: typeof import('@/features/dev-workspace/panels/editor-quick-actions').buildActionPrompt
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/editor-quick-actions')
+    const mod = await import('@/features/dev-workspace/panels/editor-quick-actions')
     buildActionPrompt = mod.buildActionPrompt
   })
 
@@ -155,10 +155,10 @@ describe('EditorQuickActions — buildActionPrompt', () => {
 // ==========================================
 
 describe('EditorQuickActions — getMockResponse', () => {
-  let getMockResponse: typeof import('../../../src/app/components/panels/editor-quick-actions').getMockResponse
+  let getMockResponse: typeof import('@/features/dev-workspace/panels/editor-quick-actions').getMockResponse
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/editor-quick-actions')
+    const mod = await import('@/features/dev-workspace/panels/editor-quick-actions')
     getMockResponse = mod.getMockResponse
   })
 
@@ -202,10 +202,10 @@ describe('EditorQuickActions — getMockResponse', () => {
 // ==========================================
 
 describe('EditorQuickActions — AI Provider Integration', () => {
-  let QUICK_ACTIONS: typeof import('../../../src/app/components/panels/editor-quick-actions').QUICK_ACTIONS
+  let QUICK_ACTIONS: typeof import('@/features/dev-workspace/panels/editor-quick-actions').QUICK_ACTIONS
 
   beforeEach(async () => {
-    const mod = await import('../../../src/app/components/panels/editor-quick-actions')
+    const mod = await import('@/features/dev-workspace/panels/editor-quick-actions')
     QUICK_ACTIONS = mod.QUICK_ACTIONS
   })
 
@@ -221,7 +221,7 @@ describe('EditorQuickActions — AI Provider Integration', () => {
 
   it('EQA-032: each AI action should have a corresponding prompt template', async () => {
     const { buildActionPrompt } =
-      await import('../../../src/app/components/panels/editor-quick-actions')
+      await import('@/features/dev-workspace/panels/editor-quick-actions')
     const aiActions = QUICK_ACTIONS.filter((a) => a.isAI)
     aiActions.forEach((action) => {
       const msgs = buildActionPrompt(action.id, 'test.ts', 'const x = 1;')

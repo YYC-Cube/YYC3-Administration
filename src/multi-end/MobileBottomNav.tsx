@@ -11,13 +11,12 @@
 import { Bot, Code, LayoutDashboard, MessageCircle, Settings } from 'lucide-react'
 import { useCallback } from 'react'
 
-import { useApp } from '../app/components/app-context'
-import { useI18n } from '../app/components/i18n-context'
-
-import { useBreakpoint } from './breakpoints'
-
-import type { PageId } from '../app/components/app-context'
+import type { PageId } from '@/app/components/app-context'
 import type { ReactNode } from 'react'
+
+import { useApp } from '@/app/components/app-context'
+import { useI18n } from '@/app/components/i18n-context'
+import { useBreakpoint } from '@/multi-end/breakpoints'
 
 // ==========================================
 // 底部导航配置

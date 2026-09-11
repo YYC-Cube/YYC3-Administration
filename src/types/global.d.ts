@@ -22,6 +22,9 @@ interface ImportMetaEnv {
   readonly VITE_E2E?: string
   /** 服务端 AI 代理地址；未配置时生产构建禁用带 key 的直连请求 */
   readonly VITE_AI_PROXY_URL?: string
+  /** Supabase 项目 URL(认证后端,P3);两者齐备才启用真实认证 */
+  readonly VITE_SUPABASE_URL?: string
+  readonly VITE_SUPABASE_ANON_KEY?: string
 }
 
 interface ImportMeta {

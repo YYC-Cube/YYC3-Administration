@@ -54,6 +54,29 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // P2-④ 防回流:旧平铺目录已迁移 @/shared 与 @/features,禁止回流;
+      // 跨目录导入强制 '@/' 别名(移位稳定,见审计报告 7.3-④)
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '@/app/components/ui/*',
+                '@/app/components/hooks/*',
+                '@/app/components/services/*',
+                '@/app/components/panels/*',
+                '@/app/components/settings/*',
+              ],
+              message: '旧平铺目录已迁移:ui/hooks→@/shared,services→@/services,panels→@/features/dev-workspace,settings→@/features/settings',
+            },
+            {
+              regex: '^\.\./.+/',
+              message: "跨目录导入必须使用 '@/' 别名(仅同目录可用 './')",
+            },
+          ],
+        },
+      ],
       'import/order': [
         'error',
         {

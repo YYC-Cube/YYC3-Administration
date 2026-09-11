@@ -10,10 +10,13 @@
 
 import { useCallback, useEffect, useRef } from 'react'
 
-import { useMonitorStore } from '../advanced-stores'
-import { metricConfigs, performanceMonitor } from '../services/performance-monitor-service'
+import type { MetricName } from '@/app/components/advanced/advanced-types'
 
-import type { MetricName } from '../advanced-types'
+import { useMonitorStore } from '@/app/components/advanced/advanced-stores'
+import {
+  metricConfigs,
+  performanceMonitor,
+} from '@/app/components/advanced/services/performance-monitor-service'
 
 export function useMonitor() {
   const {

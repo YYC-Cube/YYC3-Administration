@@ -7,7 +7,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Button } from '../../../src/app/components/ui/button'
+import { Button } from '@/shared/ui/button'
 
 describe('Button Component', () => {
   describe('变体测试', () => {

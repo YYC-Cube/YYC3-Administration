@@ -11,13 +11,9 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { aiProxyService } from '../../src/app/components/services/ai-proxy-service'
+import type { AIProviderConfig, ChatMessage, ProxyResponse } from '@/services/ai-proxy-service'
 
-import type {
-  AIProviderConfig,
-  ChatMessage,
-  ProxyResponse,
-} from '../../src/app/components/services/ai-proxy-service'
+import { aiProxyService } from '@/services/ai-proxy-service'
 
 // ==========================================
 // Test Helpers

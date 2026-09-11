@@ -10,10 +10,10 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { IPCManager } from '../../src/app/components/services/multi-instance/ipc-manager'
-import { useSessionStore } from '../../src/app/components/services/multi-instance/session-manager'
-import { useWindowStore } from '../../src/app/components/services/multi-instance/window-manager'
-import { useWorkspaceStore } from '../../src/app/components/services/multi-instance/workspace-manager'
+import { IPCManager } from '@/features/dev-workspace/multi-instance/ipc-manager'
+import { useSessionStore } from '@/features/dev-workspace/multi-instance/session-manager'
+import { useWindowStore } from '@/features/dev-workspace/multi-instance/window-manager'
+import { useWorkspaceStore } from '@/features/dev-workspace/multi-instance/workspace-manager'
 
 // ==========================================
 // WindowManager Tests
@@ -354,10 +354,10 @@ describe('IPCManager', () => {
 
 describe('PanelStore', () => {
   // Import inline to avoid circular dependency issues
-  let usePanelStore: typeof import('../../src/app/components/panels/panel-store').usePanelStore
+  let usePanelStore: typeof import('@/features/dev-workspace/panels/panel-store').usePanelStore
 
   beforeEach(async () => {
-    const mod = await import('../../src/app/components/panels/panel-store')
+    const mod = await import('@/features/dev-workspace/panels/panel-store')
     usePanelStore = mod.usePanelStore
     usePanelStore.setState({
       activePanel: 'file-explorer',
@@ -369,13 +369,6 @@ describe('PanelStore', () => {
       favoriteFiles: [],
       aiMessages: [],
       searchHistory: [],
-      aiProviderConfig: {
-        provider: 'mock',
-        apiKey: '',
-        model: 'mock-v1',
-        temperature: 0.7,
-        maxTokens: 2048,
-      },
       fileTree: [],
     })
   })
@@ -462,14 +455,6 @@ describe('PanelStore', () => {
     }
     expect(usePanelStore.getState().searchHistory.length).toBe(10)
     expect(usePanelStore.getState().searchHistory[0]).toBe('query11')
-  })
-
-  it('should update AI provider config', () => {
-    usePanelStore.getState().setAIProviderConfig({ provider: 'openai', model: 'gpt-4' })
-    const config = usePanelStore.getState().aiProviderConfig
-    expect(config.provider).toBe('openai')
-    expect(config.model).toBe('gpt-4')
-    expect(config.temperature).toBe(0.7) // unchanged
   })
 
   it('should manage file tree CRUD', () => {

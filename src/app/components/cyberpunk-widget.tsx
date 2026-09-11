@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
-import { ChatInterface } from './chat-interface'
+import { ChatInterface } from '@/features/conversation/pages/chat-interface'
 
 type WidgetTab = 'chat' | 'clm' | 'aicall' | 'tools' | 'workflow' | 'insights'
 

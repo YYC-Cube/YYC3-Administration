@@ -7,12 +7,12 @@ import { renderHook } from '@testing-library/react'
 import { ReactNode } from 'react'
 import { describe, expect, it } from 'vitest'
 
+import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
 import {
   getThemeNavColor,
   LIQUID_GLASS_NAV_COLORS,
   useThemeColors,
-} from '../../src/app/components/hooks/use-theme-colors'
-import { ThemeSwitcherProvider } from '../../src/app/components/theme-switcher-context'
+} from '@/shared/hooks/use-theme-colors'
 
 // Mock wrapper for Context Provider
 const createWrapper = (initialTheme: 'cyberpunk' | 'liquidGlass' = 'cyberpunk') => {

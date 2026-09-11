@@ -17,7 +17,7 @@ import {
   MockTransport,
   type TextOperation,
   transformOperation,
-} from '../../src/app/components/services/collab-service'
+} from '@/services/collab-service'
 
 // ==========================================
 // Operation Application

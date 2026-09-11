@@ -14,7 +14,7 @@ import {
   DEFAULT_SHORTCUTS,
   formatCombo,
   useGlobalShortcuts,
-} from '../../src/app/components/hooks/use-global-shortcuts'
+} from '@/shared/hooks/use-global-shortcuts'
 
 // ==========================================
 // formatCombo

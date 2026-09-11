@@ -9,7 +9,7 @@
  * @tags security,storage,encryption
  */
 
-import { decrypt, encrypt } from './crypto'
+import { decrypt, encrypt } from '@/lib/crypto'
 
 // ==========================================
 // Types

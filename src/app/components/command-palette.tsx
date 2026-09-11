@@ -18,8 +18,8 @@ import {
 } from 'lucide-react'
 import { type CSSProperties, type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
-import { type PageId, useApp } from './app-context'
-import { useI18n } from './i18n-context'
+import { type PageId, useApp } from '@/app/components/app-context'
+import { useI18n } from '@/app/components/i18n-context'
 
 // ==========================================
 // YYC³ 命令面板 — Ctrl+K Command Palette

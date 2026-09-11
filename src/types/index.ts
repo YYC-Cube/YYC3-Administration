@@ -269,30 +269,6 @@ export interface CustomerCareRecord {
 /**
  * AI模型配置
  */
-export interface AIModelConfig {
-  /** 模型标识 */
-  id: AIModelType
-  /** 显示名称 */
-  name: string
-  /** 描述 */
-  description: string
-  /** 提供商 */
-  provider: string
-  /** 是否可用 */
-  available: boolean
-  /** 温度 (0-2) */
-  temperature: number
-  /** 最大令牌数 */
-  maxTokens: number
-  /** Top P (0-1) */
-  topP: number
-  /** 频率惩罚 (-2 to 2) */
-  frequencyPenalty: number
-  /** 存在惩罚 (-2 to 2) */
-  presencePenalty: number
-  /** 自定义系统提示 */
-  systemPrompt?: string
-}
 
 /**
  * 表单字段定义
@@ -592,18 +568,6 @@ export interface ContactsContextType {
 /**
  * AI模型Context类型
  */
-export interface AIModelContextType {
-  /** 当前选中的模型 */
-  selectedModel: AIModelType
-  /** 设置模型 */
-  setSelectedModel: (model: AIModelType) => void
-  /** 模型配置 */
-  modelConfig: AIModelConfig
-  /** 更新模型配置 */
-  updateModelConfig: (config: Partial<AIModelConfig>) => void
-  /** 可用模型列表 */
-  availableModels: AIModelConfig[]
-}
 
 /**
  * 主题切换Context类型

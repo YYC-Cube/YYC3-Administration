@@ -1,0 +1,23 @@
+[Unit]
+Description=YYC3 Vector Memory Service (ChromaDB)
+After=network.target yyc3-embedding.service
+Wants=network.target yyc3-embedding.service
+
+[Service]
+Type=simple
+User=yyc3
+Group=yyc3
+Environment=MEMORY_PORT=8102
+Environment=MEMORY_DB_PATH=/home/yyc3/yyc3-102-projects/data/chromadb
+Environment=EMBEDDING_ENDPOINT=http://localhost:8100/v1/embeddings
+ExecStart=/home/yyc3/llama-factory-env/bin/python3 /home/yyc3/yyc3-102-projects/memory_server.py
+WorkingDirectory=/home/yyc3/yyc3-102-projects
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/yyc3/yyc3-102-projects/logs/memory.log
+StandardError=append:/home/yyc3/yyc3-102-projects/logs/memory.log
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

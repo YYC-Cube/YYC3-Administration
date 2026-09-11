@@ -14,7 +14,7 @@ import type {
   AnalysisScope,
   AnalysisSummary,
   CodeFix,
-} from '../advanced-types'
+} from '@/app/components/advanced/advanced-types'
 
 // ==========================================
 // Analysis Rules Database

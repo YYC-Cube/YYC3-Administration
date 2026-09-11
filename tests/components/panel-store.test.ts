@@ -6,9 +6,9 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { usePanelStore } from '../../src/app/components/panels/panel-store'
+import type { FileNode, QuickAccessItem } from '@/features/dev-workspace/panels/panel-types'
 
-import type { FileNode, QuickAccessItem } from '../../src/app/components/panels/panel-types'
+import { usePanelStore } from '@/features/dev-workspace/panels/panel-store'
 
 // ==========================================
 // Helper: 重置 store 状态
@@ -25,13 +25,6 @@ beforeEach(() => {
     favoriteFiles: [],
     aiMessages: [],
     searchHistory: [],
-    aiProviderConfig: {
-      provider: 'mock',
-      apiKey: '',
-      model: 'mock-v1',
-      temperature: 0.7,
-      maxTokens: 2048,
-    },
     fileTree: [],
   })
 })
@@ -241,101 +234,3 @@ describe('PanelStore — 搜索历史', () => {
 // ==========================================
 // AI Provider 配置
 // ==========================================
-
-describe('PanelStore — AI Provider 配置', () => {
-  it('setAIProviderConfig 部分更新', () => {
-    usePanelStore.getState().setAIProviderConfig({ apiKey: 'sk-test' })
-    const config = usePanelStore.getState().aiProviderConfig
-    expect(config.apiKey).toBe('sk-test')
-    expect(config.provider).toBe('mock') // 未修改的保持不变
-  })
-
-  it('setAIProviderConfig 更新 provider 和 model', () => {
-    usePanelStore.getState().setAIProviderConfig({
-      provider: 'openai',
-      model: 'gpt-4',
-    })
-    const config = usePanelStore.getState().aiProviderConfig
-    expect(config.provider).toBe('openai')
-    expect(config.model).toBe('gpt-4')
-  })
-})
-
-// ==========================================
-// 文件树操作
-// ==========================================
-
-describe('PanelStore — 文件树操作', () => {
-  const mockTree: FileNode[] = [
-    {
-      id: 'root',
-      type: 'directory',
-      name: 'root',
-      path: 'root',
-      children: [
-        { id: 'file1', type: 'file', name: 'file1.ts', path: 'root/file1.ts' },
-        {
-          id: 'subdir',
-          type: 'directory',
-          name: 'subdir',
-          path: 'root/subdir',
-          children: [{ id: 'file2', type: 'file', name: 'file2.ts', path: 'root/subdir/file2.ts' }],
-        },
-      ],
-    },
-  ]
-
-  it('setFileTree 设置文件树', () => {
-    usePanelStore.getState().setFileTree(mockTree)
-    expect(usePanelStore.getState().fileTree).toEqual(mockTree)
-  })
-
-  it('addFileNode 在指定目录下添加节点', () => {
-    usePanelStore.getState().setFileTree(mockTree)
-    const newNode: FileNode = {
-      id: 'root/newfile.ts',
-      type: 'file',
-      name: 'newfile.ts',
-      path: 'root/newfile.ts',
-    }
-    usePanelStore.getState().addFileNode('root', newNode)
-    const root = usePanelStore.getState().fileTree[0]
-    expect(root.children?.find((c) => c.id === 'root/newfile.ts')).toBeDefined()
-  })
-
-  it('addFileNode 递归添加到嵌套目录', () => {
-    usePanelStore.getState().setFileTree(mockTree)
-    const newNode: FileNode = {
-      id: 'root/subdir/deep.ts',
-      type: 'file',
-      name: 'deep.ts',
-      path: 'root/subdir/deep.ts',
-    }
-    usePanelStore.getState().addFileNode('root/subdir', newNode)
-    const subdir = usePanelStore.getState().fileTree[0].children?.find((c) => c.id === 'subdir')
-    expect(subdir?.children?.find((c) => c.id === 'root/subdir/deep.ts')).toBeDefined()
-  })
-
-  it('deleteFileNode 移除指定节点', () => {
-    usePanelStore.getState().setFileTree(mockTree)
-    usePanelStore.getState().deleteFileNode('root/file1.ts')
-    const root = usePanelStore.getState().fileTree[0]
-    expect(root.children?.find((c) => c.path === 'root/file1.ts')).toBeUndefined()
-  })
-
-  it('deleteFileNode 移除选中文件时清除 selectedFile', () => {
-    usePanelStore.getState().setFileTree(mockTree)
-    usePanelStore.getState().selectFile('root/file1.ts')
-    usePanelStore.getState().deleteFileNode('root/file1.ts')
-    expect(usePanelStore.getState().selectedFile).toBeNull()
-  })
-
-  it('renameFileNode 重命名节点', () => {
-    usePanelStore.getState().setFileTree(mockTree)
-    usePanelStore.getState().renameFileNode('root/file1.ts', 'renamed.ts')
-    const root = usePanelStore.getState().fileTree[0]
-    const renamed = root.children?.find((c) => c.name === 'renamed.ts')
-    expect(renamed).toBeDefined()
-    expect(renamed?.path).toBe('root/renamed.ts')
-  })
-})
