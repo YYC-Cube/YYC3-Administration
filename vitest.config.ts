@@ -36,15 +36,16 @@ export default defineConfig({
         'src/vite-env.d.ts',
       ],
       include: ['src/**/*.{ts,tsx}'],
-      all: true,
-      // 基线棘轮 = 当前实际覆盖率(P2-④ 重组+排除语义对齐后实测:
-      // statements 28.63 / branches 17.02 / functions 30.4 / lines 29.28),取整略低防抖动;只升不降,
-      // P2 目标:核心路径 ≥60%(见审计报告 7.3-4)
+      // 注:vitest 4 移除 coverage.all 选项——include 列出的未测试文件
+      // 仍会计入分母(语义等价于 v3 的 all: true)
+      // 基线棘轮 = 当前实际覆盖率,只升不降。2026-09-26 F-06 死代码清理
+      // (46 文件/1.45 万行移出分母)后实测:statements 44.85 / branches 31.78 /
+      // functions 47.87 / lines 46.4,取整略低防抖动。P2 目标:核心路径 ≥60%
       thresholds: {
-        statements: 31,
-        branches: 19,
-        functions: 34,
-        lines: 31,
+        statements: 44,
+        branches: 31,
+        functions: 47,
+        lines: 46,
       },
     },
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],

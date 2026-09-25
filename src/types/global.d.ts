@@ -20,6 +20,8 @@ interface ImportMetaEnv {
   readonly VITE_GHOST_MODE?: string
   /** E2E 测试自动登录旁路，仅 Playwright webServer 启动的 dev server 注入 */
   readonly VITE_E2E?: string
+  /** 是否在生产/预览构建中启用假实时数据(KPI 波动、通知流)。DEV 默认开启,生产默认关闭 */
+  readonly VITE_ENABLE_MOCK?: string
   /** 服务端 AI 代理地址；未配置时生产构建禁用带 key 的直连请求 */
   readonly VITE_AI_PROXY_URL?: string
   /** Supabase 项目 URL(认证后端,P3);两者齐备才启用真实认证 */

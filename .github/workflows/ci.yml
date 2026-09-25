@@ -49,6 +49,30 @@ jobs:
       - name: Format check
         run: pnpm format:check
 
+      # ── 供应链门:生产依赖出现高危及以上漏洞即阻断(F-06/漏洞闭环) ──
+      - name: Supply-chain audit (prod deps)
+        run: pnpm audit --prod --audit-level high
+
+      # ── 死代码门:未引用文件/未用依赖必须为 0(F-06 防回流) ──
+      # 注:unimported 退出码含 1 条 monaco `?worker` unresolved 误报
+      # (Vite 构建期语法,实测有效),故以计数判定而非退出码;
+      # tw-animate-css 仅经 CSS @import 消费,已在 .unimportedrc.json 声明忽略
+      - name: Dead code & unused dependency gate (unimported)
+        run: |
+          npx unimported > unimported-report.txt || true
+          cat unimported-report.txt
+          UNUSED=$(awk '/^ *unused dependencies/{print $NF}' unimported-report.txt)
+          FILES=$(awk '/^ *unimported files/{print $NF}' unimported-report.txt)
+          echo "unused dependencies: ${UNUSED:-?} | unimported files: ${FILES:-?}"
+          if [ "$UNUSED" != "0" ] || [ "$FILES" != "0" ]; then
+            echo "::error::Dead code detected — remove unreferenced files/dependencies (see report above)"
+            exit 1
+          fi
+
+      # ── 循环依赖门:madge 检出循环即阻断 ──
+      - name: Circular dependency gate (madge)
+        run: npx madge --circular --extensions ts,tsx src/
+
       - name: Unit tests with coverage
         run: pnpm test:coverage
 

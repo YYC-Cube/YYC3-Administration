@@ -26,6 +26,7 @@ import type { ChatMessage } from '@/shared/hooks/use-chat-session'
 
 import { useApp } from '@/app/components/app-context'
 import { useI18n } from '@/app/components/i18n-context'
+import { isHost } from '@/lib/url-host'
 import { useChatSession } from '@/shared/hooks/use-chat-session'
 import { useChatStream } from '@/shared/hooks/use-chat-stream'
 import { useThemeColors } from '@/shared/hooks/use-theme-colors'
@@ -117,7 +118,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
               stream: false,
             }),
           })
-        } else if (endpoint.includes('anthropic.com')) {
+        } else if (isHost(endpoint, 'anthropic.com')) {
           resp = await fetch(endpoint, {
             method: 'POST',
             headers: {
@@ -159,7 +160,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
         const data = await resp.json().catch(() => null)
         if (provider === 'ollama')
           return data?.message?.content || data?.response || t('chat.fallbackReply')
-        if (endpoint.includes('anthropic.com'))
+        if (isHost(endpoint, 'anthropic.com'))
           return data?.content?.[0]?.text || t('chat.fallbackReply')
         return data?.choices?.[0]?.message?.content || data?.result || t('chat.fallbackReply')
       } catch (err: unknown) {

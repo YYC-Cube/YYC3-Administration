@@ -16,14 +16,31 @@
     <meta name="msapplication-TileColor" content="#0a0a0a" />
     <meta name="msapplication-TileImage" content="/yyc3-icons/Web App/android-chrome-192.png" />
 
-    <!-- CSP: Restrict resource loading for XSS/mixed-content protection -->
+    <!-- CSP: Restrict resource loading for XSS/mixed-content protection.
+         connect-src 含 *.supabase.co(P3 认证/数据面,未配置时无请求);
+         localhost/127.0.0.1 仅供 DEV(浏览器直连 AI/edge-proxy),
+         生产构建由 vite.config.ts 的 csp-harden 插件移除并注入
+         VITE_AI_PROXY_URL 代理域(F-03)。 -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.openai.com https://api.anthropic.com https://api.deepseek.com http://localhost:* http://127.0.0.1:*; worker-src 'self' blob:; manifest-src 'self';"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.openai.com https://api.anthropic.com https://api.deepseek.com https://*.supabase.co wss://*.supabase.co http://localhost:* http://127.0.0.1:*; worker-src 'self' blob:; manifest-src 'self';"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta name="X-Content-Type-Options" content="nosniff" />
-    <meta name="X-Frame-Options" content="DENY" />
+    <!-- 注:X-Frame-Options / X-Content-Type-Options / frame-ancestors
+         只能以 HTTP 头生效,meta 声明会被浏览器忽略(GitHub Pages 无法
+         下发 HTTP 头,此前 meta 声明属伪安全,已移除)。
+         点击劫持防护由下方内联 frame-busting 兜底(F-03 过渡方案);
+         根治需迁移至支持 _headers/边缘配置的托管(见审计报告 12.4)。 -->
+    <script>
+      if (window.top !== window.self) {
+        try {
+          window.top.location.href = window.self.location.href
+        } catch (e) {
+          // 被沙箱拦截无法跳顶时,至少不向嵌入方暴露内容
+          document.documentElement.style.display = 'none'
+        }
+      }
+    </script>
 
     <link rel="icon" type="image/png" sizes="16x16" href="/yyc3-icons/Web App/favicon-16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/yyc3-icons/Web App/favicon-32.png" />

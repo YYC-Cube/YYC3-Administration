@@ -14,6 +14,7 @@
 import { create } from 'zustand'
 
 import { getSecure, migrateToSecure, setSecure } from '@/lib/secure-storage'
+import { isHost } from '@/lib/url-host'
 
 // ==========================================
 // Types
@@ -206,10 +207,10 @@ export function toProviderRequestConfig(model: AIModel | null): AIProviderReques
   if (model.provider === 'ollama') {
     provider = 'openai'
     baseUrl = model.endpoint.replace(/\/api\/chat\/?$/, '').replace(/\/v1\/?$/, '') + '/v1'
-  } else if (model.endpoint.includes('anthropic.com')) {
+  } else if (isHost(model.endpoint, 'anthropic.com')) {
     provider = 'claude'
     baseUrl = model.endpoint.replace(/\/messages\/?$/, '')
-  } else if (model.endpoint.includes('deepseek.com')) {
+  } else if (isHost(model.endpoint, 'deepseek.com')) {
     provider = 'deepseek'
     baseUrl = model.endpoint.replace(/\/chat\/completions\/?$/, '').replace(/\/v1\/?$/, '')
   }

@@ -5,6 +5,7 @@ import { AppProvider, useApp } from '@/app/components/app-context'
 import { AuthProvider } from '@/app/components/auth-context'
 import { CyberpunkStandalone } from '@/app/components/cyberpunk-standalone'
 import { CyberpunkWidget } from '@/app/components/cyberpunk-widget'
+import { DemoEnvironmentBanner } from '@/app/components/demo-environment-banner'
 import { I18nProvider } from '@/app/components/i18n-context'
 import { LiquidGlassWrapper } from '@/app/components/liquid-glass-wrapper'
 import { PWAInstallPrompt } from '@/app/components/pwa-install'
@@ -102,7 +103,8 @@ function AppContent() {
 
 /**
  * Root application component.
- * Wraps the component tree with ThemeSwitcher → I18n → App → Contacts → AIModel providers
+ * Wraps the component tree with ThemeSwitcher → I18n → Auth → App → Contacts providers,
+ * mounts RouteSync (hash ↔ state) and UserDataSync (P3 Supabase settings sync lifecycle),
  * and an error boundary for resilient rendering.
  */
 export default function App() {
@@ -110,10 +112,16 @@ export default function App() {
     <ErrorBoundary>
       <HashRouter>
         <ThemeSwitcherProvider>
+          {/* 演示环境警示:Supabase 未配置时于所有页面(含登录页)展示,
+              激活真实后端后自动隐藏(F-02) */}
+          <DemoEnvironmentBanner />
           <I18nProvider>
             <AuthProvider>
               <AppProvider>
                 <RouteSync />
+                {/* P3 数据面挂载件:未配置 Supabase 时返回 null,零副作用;
+                    必须置于 AuthProvider 内(详见组件 @file 说明) */}
+                <UserDataSync />
                 <ContactsProvider>
                   <AppContent />
                 </ContactsProvider>

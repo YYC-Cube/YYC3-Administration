@@ -21,14 +21,14 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 
 [![React](https://img.shields.io/badge/React-18.3.1-61dafb?style=flat-square&logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![Vite](https://img.shields.io/badge/Vite-6.3.5-646cff?style=flat-square&logo=vite)](https://vitejs.dev)
+[![Vite](https://img.shields.io/badge/Vite-6.4.3-646cff?style=flat-square&logo=vite)](https://vitejs.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
 [![pnpm](https://img.shields.io/badge/pnpm-≥11-f69220?style=flat-square&logo=pnpm)](https://pnpm.io)
 [![Zustand](https://img.shields.io/badge/Zustand-5.0-orange?style=flat-square)](https://zustand-demo.pmnd.rs)
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-React-000000?style=flat-square)](https://ui.shadcn.com)
 [![Radix UI](https://img.shields.io/badge/Radix_UI-Primitives-8b5cf6?style=flat-square)](https://www.radix-ui.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-ff69b4?style=flat-square&logo=framer)](https://motion.dev)
-[![Vitest](https://img.shields.io/badge/Vitest-954_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
+[![Vitest](https://img.shields.io/badge/Vitest-557_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E-2ead33?style=flat-square&logo=playwright)](https://playwright.dev)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://www.docker.com)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=flat-square&logo=pwa)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
@@ -38,7 +38,7 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![ESLint](https://img.shields.io/badge/ESLint-0_errors-4b32c3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Prettier](https://img.shields.io/badge/Prettier-formatted-ff69b4?style=flat-square)](https://prettier.io)
 [![TypeCheck](https://img.shields.io/badge/TypeCheck-passing-00e676?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![Test Coverage](https://img.shields.io/badge/Tests-954%2F954_Unit%2BE2E-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
+[![Test Coverage](https://img.shields.io/badge/Tests-557_Unit_%2B_56_E2E-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
 [![Multi-End](https://img.shields.io/badge/Multi_End-PWA%7CH5%7CDesktop-brightgreen?style=flat-square)](./docs/YYC3-M13-MultiEnd-多端适配/)
 [![PRs Welcome](https://img.shields.io/badge/🤝_PRs-Welcome-ff69b4?style=flat-square)](./CONTRIBUTING.md)
 [![Stars](https://img.shields.io/github/stars/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Stars)](https://github.com/YYC-Cube/YYC3-Administration)
@@ -129,20 +129,20 @@ _High Availability · High Performance · High Security · High Scalability · H
 
 #### 核心特性
 
-| 特性                          | 描述                                                                           |
-| :---------------------------- | :----------------------------------------------------------------------------- |
-| 🤖 **多模型 AI 集成**         | OpenAI / Claude / DeepSeek / Qwen 多模型切换，流式响应，智能体编排             |
-| 🎨 **双主题引擎**             | Cyberpunk 霓虹风格 + Liquid Glass 液态玻璃，支持实时切换与深度定制             |
-| 📊 **全维度数据驾驶舱**       | 实时 KPI 监控、趋势分析、多维度可视化，支持 10+ 图表类型                       |
-| 💬 **客户生命周期管理 (CLM)** | 五阶段闭环：获客 → 转化 → 成交 → 服务 → 忠诚                                   |
-| 🧑‍🤝‍🧑 **客户关怀系统**           | 智能通知引擎、自动化关怀任务、全渠道触达                                       |
-| 📝 **智能表单系统**           | 可视化构建器、条件逻辑引擎、模板库、跨设备适配                                 |
-| 💰 **财务管理**               | 收支追踪、发票管理、预算控制、财务报表                                         |
-| 💳 **薪资系统**               | 薪资核算、税务计算、社保管理、工资单生成                                       |
-| 🔧 **开发者工作区**           | Monaco 编辑器、Git 集成、6 面板拖拽布局、终端模拟器                            |
-| 🌍 **国际化 (i18n)**          | 10 种语言（zh/zh-TW/en/ja/ko/ar/de/es/fr/pt-BR）实时切换，ICU 消息格式，懒加载 |
-| ⚡ **高性能架构**             | Zustand 轻量状态管理、虚拟滚动、懒加载、memo 优化                              |
-| 📱 **PWA 全端适配**           | 可安装至桌面/移动端，离线支持，全平台 Logo 适配（Android/iOS/macOS/watchOS）   |
+| 特性                          | 描述                                                                                               |
+| :---------------------------- | :------------------------------------------------------------------------------------------------- |
+| 🤖 **多模型 AI 集成**         | OpenAI / Claude / DeepSeek / Qwen 多模型切换，流式响应，智能体编排                                 |
+| 🎨 **双主题引擎**             | Cyberpunk 霓虹风格 + Liquid Glass 液态玻璃，支持实时切换与深度定制                                 |
+| 📊 **全维度数据驾驶舱**       | 实时 KPI 监控、趋势分析、多维度可视化，支持 10+ 图表类型                                           |
+| 💬 **客户生命周期管理 (CLM)** | 五阶段闭环：获客 → 转化 → 成交 → 服务 → 忠诚                                                       |
+| 🧑‍🤝‍🧑 **客户关怀系统**           | 智能通知引擎、自动化关怀任务、全渠道触达                                                           |
+| 📝 **智能表单系统**           | 可视化构建器、条件逻辑引擎、模板库、跨设备适配                                                     |
+| 💰 **财务管理**               | 收支追踪、发票管理、预算控制、财务报表                                                             |
+| 💳 **薪资系统**               | 薪资核算、税务计算、社保管理、工资单生成                                                           |
+| 🔧 **开发者工作区**           | Monaco 编辑器、Git 集成、6 面板拖拽布局、终端模拟器                                                |
+| 🌍 **国际化 (i18n)**          | 中英双语（zh-CN / en）完整覆盖；`@yyc3/i18n-core` 引擎支持多语言扩展（ICU 消息格式、插件化、缓存） |
+| ⚡ **高性能架构**             | Zustand 轻量状态管理、虚拟滚动、懒加载、memo 优化                                                  |
+| 📱 **PWA 全端适配**           | 可安装至桌面/移动端，离线支持，全平台 Logo 适配（Android/iOS/macOS/watchOS）                       |
 
 ---
 
@@ -183,16 +183,23 @@ mindmap
 
 ```
 ErrorBoundary
- └── ThemeSwitcherProvider       # 双主题引擎（Cyberpunk / Liquid Glass）
-      └── I18nProvider            # 国际化上下文
-           └── AppProvider        # 应用全局状态
-                └── ContactsProvider   # CRM 客户数据
-                     └── AIModelProvider    # AI 多模型管理
-                          └── LiquidGlassWrapper   # 液态玻璃特效层
-                               └── Page Router (Standalone / Widget)
-                                    ├── 导航系统（分类标签 + 侧边栏）
-                                    ├── 命令面板（Ctrl+K）
-                                    └── 50+ 页面组件
+ └── HashRouter               # react-router 7（HashRouter，GitHub Pages 静态托管友好）
+      └── ThemeSwitcherProvider    # 双主题引擎（Cyberpunk / Liquid Glass）
+      │    └── DemoEnvironmentBanner  # 演示环境警示横幅（Supabase 未配置时展示）
+           └── I18nProvider       # 国际化上下文（@yyc3/i18n-core）
+                └── AuthProvider  # 认证上下文（Supabase PKCE / 本地演示模式双轨）
+                     └── AppProvider   # 应用全局状态（页面/主题/通知）
+                     │    ├── RouteSync     # hash ↔ activePage 双向同步（URL 即状态源）
+                     │    └── UserDataSync  # P3 数据面挂载件（登录水合 + 设置云同步）
+                          └── ContactsProvider   # CRM 客户数据
+                               └── LiquidGlassWrapper   # 液态玻璃特效层
+                                    └── Page Router (Standalone / Widget)
+                                         ├── 导航系统（分类标签 + 侧边栏）
+                                         ├── 命令面板（Ctrl+K）
+                                         └── 41 个路由页面（lazy 注册表按需加载）
+
+> AI 多模型配置已收敛为 Zustand 单一真源 `useAIModelStore`（加密持久化），
+> 不再以 Provider 形式挂载。
 ```
 
 #### 单元自治原则
@@ -216,7 +223,7 @@ flowchart LR
     C --> Q1[TypeCheck]
     C --> Q2[ESLint]
     C --> Q3[Prettier]
-    C --> Q4[Vitest 954 tests]
+    C --> Q4[Vitest 557 tests]
     C --> Q5[Build]
     Q1 & Q2 & Q3 & Q4 & Q5 --> F{All Pass?}
     F -->|✅| E2E[E2E Tests]
@@ -241,13 +248,14 @@ graph TD
     AC[app-context.tsx]
     IC[i18n-context.tsx]
     CC[contacts-context.tsx]
-    AI[ai-model-context.tsx]
+    AIM[useAIModelStore · Zustand]
   end
   subgraph UI Layer
     CP[cyberpunk-standalone.tsx]
-    NAV[nav-config.tsx]
+    NAV[nav-config.ts]
     CPalette[command-palette.tsx]
     EB[error-boundary.tsx]
+    RS[route-sync.tsx]
   end
   subgraph Multi-End Layer
     BP[breakpoints.ts]
@@ -265,10 +273,11 @@ graph TD
   AC --> CP
   IC --> CP
   CC --> CP
-  AI --> CP
+  AIM --> CP
   NAV --> CP
   CP --> CPalette
   EB --> CP
+  RS --> CP
 
   BP --> PA
   BP --> MBN
@@ -289,7 +298,7 @@ graph TD
 | :--------- | :--------------------- | :----- | :------------------------------- |
 | **框架**   | React                  | 18.3.1 | StrictMode + ErrorBoundary 嵌套  |
 | **语言**   | TypeScript             | 5.x    | 严格模式，零 `any` 策略          |
-| **构建**   | Vite                   | 6.3.5  | SWC 编译、缓存哈希、Manifest     |
+| **构建**   | Vite                   | 6.4.3  | 缓存哈希、Manifest、PWA 插件     |
 | **样式**   | Tailwind CSS v4        | 4.1.12 | @tailwindcss/vite 插件、CSS 变量 |
 | **状态**   | Zustand                | 5.0.12 | 轻量全局状态、不可变更新         |
 | **UI**     | shadcn/ui + Radix UI   | latest | 无障碍（WCAG）、全键盘导航       |
@@ -355,17 +364,16 @@ pnpm preview
 cp .env.example .env
 ```
 
-| 变量名                     | 说明                                 | 默认值                         |
-| :------------------------- | :----------------------------------- | :----------------------------- |
-| `VITE_APP_TITLE`           | 应用标题                             | YYC³ AI Marketing Terminal     |
-| `VITE_AI_API_BASE_URL`     | AI API 地址                          | `http://localhost:3001/api/ai` |
-| `VITE_GITHUB_API_BASE_URL` | GitHub API 地址                      | `https://api.github.com`       |
-| `VITE_ENABLE_DEV_TOOLS`    | 开发者工具开关                       | `true`                         |
-| `VITE_ENABLE_ANALYTICS`    | 分析统计开关                         | `false`                        |
-| `VITE_DEFAULT_THEME`       | 默认主题（cyberpunk / liquid-glass） | `cyberpunk`                    |
-| `VITE_DEFAULT_LANGUAGE`    | 默认语言（zh-CN / en-US）            | `zh-CN`                        |
-| `VITE_CACHE_TTL`           | 缓存时间（ms）                       | `3600000`                      |
-| `VITE_RATE_LIMIT_RPS`      | 请求限流（次/秒）                    | `10`                           |
+| 变量名                   | 说明                                                         | 默认值                      |
+| :----------------------- | :----------------------------------------------------------- | :-------------------------- |
+| `VITE_GHOST_MODE`        | 演示一键登录开关（仅 DEV 构建生效）                          | `true`（仅开发）            |
+| `VITE_E2E`               | E2E 自动登录旁路（由 Playwright webServer 注入，勿手动开启） | –                           |
+| `VITE_ENABLE_MOCK`       | 生产构建启用假实时数据（KPI 波动/通知流）；默认仅 DEV 开启   | `false`（生产）             |
+| `VITE_AI_PROXY_URL`      | 服务端 AI 代理地址；生产构建自动注入 CSP connect-src         | 未配置（见 `.env.example`） |
+| `VITE_SUPABASE_URL`      | Supabase 认证/数据面（P3）；与 ANON_KEY 齐备才激活真实认证   | 未配置（本地演示模式）      |
+| `VITE_SUPABASE_ANON_KEY` | 同上                                                         | 未配置                      |
+
+> 历史上文档化但源码未消费的变量（`VITE_AI_API_BASE_URL`/`VITE_CACHE_TTL`/`VITE_RATE_LIMIT_RPS` 等）已从 `.env.example` 移除（2026-09-26 文档对齐）。
 
 > **安全提示**：不要在 `VITE_` 前缀变量中放置敏感信息（API Key、Token 等），它们会在构建时被嵌入前端代码。生产环境应使用后端代理。
 
@@ -375,51 +383,32 @@ cp .env.example .env
 
 ```
 src/
-├── app/
-│   ├── components/          # 130+ 页面和 UI 组件
-│   │   ├── ui/              # shadcn/ui 组件库（48 个）
-│   │   ├── panels/          # 开发工作台面板（7 个）
-│   │   ├── settings/        # 设置面板（10 个）
-│   │   ├── services/        # 服务层（AI 代理/Git/同步/多实例）
-│   │   ├── advanced/        # 高级功能（代码分析/流水线/监控/编排）
-│   │   ├── hooks/           # 自定义 Hooks（8 个）
-│   │   ├── figma/           # 设计资产组件
-│   │   ├── *.tsx            # 各功能页面组件
-│   │   ├── app-context.tsx   # 全局状态管理
-│   │   ├── i18n-context.tsx  # 国际化上下文
-│   │   ├── auth-context.tsx  # 认证上下文
-│   │   ├── contacts-context.tsx # CRM 上下文
-│   │   ├── ai-model-context.tsx # AI 模型管理
-│   │   ├── nav-config.ts    # 导航配置中心
-│   │   ├── error-boundary.tsx # 错误边界
-│   │   └── ...
-│   └── locales/             # 应用层国际化（zh/en）
-├── lib/i18n/                # i18n 核心引擎
-│   ├── registry.ts          # 注册表 + 懒加载
-│   ├── formatter.ts         # ICU 消息格式化
-│   ├── detector.ts          # 语言检测
-│   ├── plugins.ts           # 插件系统
-│   ├── security/            # 安全模块（正则/密钥）
-│   ├── utils/               # 工具函数
-│   └── locales/             # 10 种语言包
-├── multi-end/               # 多端适配模块
-│   ├── breakpoints.ts       # 5 级响应式断点系统
-│   ├── platform.ts          # 平台检测与能力清单
-│   ├── storage.ts           # IndexedDB 离线存储
-│   ├── PlatformAware.tsx    # 条件渲染组件
-│   ├── MobileBottomNav.tsx  # 移动端底部导航栏
-│   └── index.ts             # 统一导出
-├── stores/                  # Zustand 全局状态
-│   ├── useSettingsStore.ts  # 设置 Store（5 类配置）
-│   └── useAuthStore.ts      # 认证 Store
-├── services/                # 全局服务
-│   ├── settings-services.ts  # 设置 CRUD
-│   └── settings-search.ts    # 设置搜索引擎
-├── types/                   # 全局类型声明
-├── hooks/                   # 全局自定义 Hooks
-├── utils/                   # 工具函数
-├── main.tsx                 # 应用入口
-└── index.css                # 全局样式
+├── app/                      # 应用壳层
+│   ├── components/           # 壳组件：cyberpunk-standalone/widget、route-sync、
+│   │   │                     # user-data-sync、demo-environment-banner、auth/i18n/app-context、
+│   │   │                     # nav-config（导航单一真源）等
+│   └── locales/              # 应用层词条（zh / en）
+├── features/                 # 业务域（P2-④ 分域重组，10 域 41 页）
+│   ├── toolkit/              # 任务看板、智能表单、AI 工具
+│   ├── dev-workspace/        # 开发者工作台（Monaco 编辑器/Git/6 面板布局）
+│   ├── customer/             # 客户域（号码库/联系人/CLM）
+│   ├── platform/             # 平台域（参数/日志/渠道）
+│   ├── settings/             # 设置域（模型配置/账户）
+│   ├── supply-chain/         # 供应链（库存/采购）
+│   ├── marketing/            # 智能营销（9 页）
+│   ├── overview/             # 数据驾驶舱
+│   ├── finance/              # 财务/薪资
+│   └── conversation/         # 对话域
+├── shared/                   # 跨域共享
+│   ├── ui/                   # shadcn/ui 存活组件（13 个）
+│   └── hooks/                # 共享 Hooks
+├── stores/                   # Zustand 单一真源（auth / settings / ai-model）
+├── services/                 # 全局服务（ai-proxy / git-api / user-data-sync / settings-* / collab）
+├── lib/                      # 基础库（crypto / secure-storage / supabase-client）
+├── multi-end/                # 多端适配（断点 / 平台检测 / IndexedDB 离线存储）
+├── types/                    # 全局类型声明（global.d.ts 统一入口）
+├── styles/                   # 全局样式（tailwind / theme / cyberpunk / liquid-glass）
+└── main.tsx                  # 应用入口
 ```
 
 ---
@@ -500,11 +489,10 @@ xl: 1280 // 桌面大屏
 
 ### 🌍 国际化
 
-- 支持语言：**中文 (zh)** · **繁体中文 (zh-TW)** · **English (en)** · **日本語 (ja)** · **한국어 (ko)** · **العربية (ar)** · **Deutsch (de)** · **Español (es)** · **Français (fr)** · **Português (pt-BR)**
-- 基于 React Context 的 `useI18n()` 钩子
-- ICU 消息格式（复数/性别/选择），插件化架构
+- 支持语言：**简体中文 (zh-CN)** · **English (en)**（完整词条覆盖；其余语种词条待补，选择后回落中文）
+- 引擎：`@yyc3/i18n-core` npm 包（ICU 消息格式、插件化、缓存），`useI18n()` 钩子消费
 - 1000+ 翻译键覆盖全平台
-- 懒加载语言包，按需加载
+- 扩展新语言仅需注册词条包（`engine.registerTranslation`），无需改引擎
 
 ---
 
@@ -522,10 +510,11 @@ xl: 1280 // 桌面大屏
 
 ### 🔐 安全
 
-- 所有 API Key 仅存储在 LocalStorage，不上传服务端
-- 严格的 CSP 标头配置
-- 依赖安全审计 (`pnpm audit`)
-- 无第三方跟踪或分析脚本
+- AI API Key 经 `secure-storage` AES-GCM 加密存储（PBKDF2 派生密钥），并自动迁移清除历史明文
+- 生产构建无代理配置时禁用带 Key 的直连请求（宁可失败，不静默泄露）
+- CSP 由构建期 `csp-harden` 插件加固：生产移除 localhost 回环、按需注入 AI 代理域；含 Supabase 域预授权
+- 演示模式（Supabase 未配置）全站展示双语警示横幅，提示勿输入真实凭据
+- 依赖安全审计（`pnpm audit` + CodeQL + Dependabot），无第三方跟踪脚本
 
 ---
 
@@ -545,11 +534,12 @@ pnpm test:e2e
 pnpm test:e2e:ui
 ```
 
-- **Vitest**: 单元测试 + 组件测试（52 文件 / 954 用例 / 0 失败）
-- **Playwright**: E2E 测试（5 文件 / 62 用例 / Chromium）
-- **多端适配测试**: 36 用例覆盖断点系统、平台检测、离线存储
-- **覆盖率**: `@vitest/coverage-istanbul`，阶梯式阈值递增（当前 22% → 目标 85%）
-- **CI/CD**: GitHub Actions 自动运行 — 详见 [CI 工作流](.github/workflows/ci.yml) / [Deploy 工作流](.github/workflows/deploy.yml)
+- **Vitest**: 单元测试 + 组件测试（39 文件 / 557 用例 / 0 失败；F-06 死代码清理后净删 94 个死代码用例）
+- **Playwright**: E2E 测试（6 个 spec / 65 用例，Chromium 全绿 56 + 跳过 9；CI 含 PR 触发）
+- **多端适配测试**: 覆盖断点系统、平台检测、离线存储
+- **覆盖率**: `@vitest/coverage-istanbul`，棘轮阈值只升不降（当前 S 44.9% / L 46.4%，口径已排除 E2E 覆盖的大型 UI 页面组件；目标核心路径 ≥60%）
+- **静态门禁（CI）**: unimported 死代码/死依赖 0 容忍、madge 循环依赖 0 容忍、`pnpm audit --prod --audit-level high` 供应链门
+- **CI/CD**: GitHub Actions 自动运行 — 详见 [CI 工作流](.github/workflows/ci.yml) / [Deploy 工作流](.github/workflows/deploy.yml)（部署仅在 CI 全绿后触发）
 
 ---
 
@@ -591,11 +581,12 @@ pnpm build
 
 ### 📝 更新日志
 
-| 版本   | 日期       | 说明                                               |
-| :----- | :--------- | :------------------------------------------------- |
-| v1.0.2 | 2026-07-11 | 文档对齐：更新 CI/CD 工作流、修复 Docker Node 版本 |
-| v1.0.1 | 2026-Q2    | 财务/薪资模块集成 + 测试覆盖 954 用例              |
-| v1.0.0 | 2026-Q2    | 初始发布：核心模块 + 双主题 + AI + CI/CD 流水线    |
+| 版本   | 日期       | 说明                                                           |
+| :----- | :--------- | :------------------------------------------------------------- |
+| v1.0.4 | 2026-09-26 | P0 安全/性能修复（挂载缺口、演示声明、CSP、PWA）+ 文档全面对齐 |
+| v1.0.3 | 2026-07-12 | Docker Node 22 对齐、文档更新                                  |
+| v1.0.2 | 2026-03-14 | 版本缓存清理机制、依赖预打包优化                               |
+| v1.0.0 | 2026-Q2    | 初始发布：核心模块 + 双主题 + AI + CI/CD 流水线                |
 
 > 详见 [CHANGELOG](./CHANGELOG.md)
 
@@ -625,20 +616,20 @@ The platform follows the **"Five Highs · Five Standards · Five Transformations
 
 #### Core Features
 
-| Feature                            | Description                                                                          |
-| :--------------------------------- | :----------------------------------------------------------------------------------- |
-| 🤖 **Multi-Model AI**              | OpenAI / Claude / DeepSeek / Qwen, streaming, agent orchestration                    |
-| 🎨 **Dual Theme Engine**           | Cyberpunk Neon + Liquid Glass, real-time switching, deep customization               |
-| 📊 **Full-Dimension Data Cockpit** | Real-time KPIs, trend analysis, 10+ chart types                                      |
-| 💬 **CLM (Customer Lifecycle)**    | 5-stage closed loop: Acquisition → Conversion → Deal → Service → Loyalty             |
-| 🧑‍🤝‍🧑 **Customer Care System**        | Smart notification engine, automated care tasks, omnichannel reach                   |
-| 📝 **Smart Form System**           | Visual builder, conditional logic, template library                                  |
-| 💰 **Finance Management**          | Income/expense tracking, invoice management, budget control                          |
-| 💳 **Salary System**               | Payroll, tax calculation, social insurance, pay slip generation                      |
-| 🔧 **Developer Workspace**         | Monaco editor, Git integration, 6-panel drag layout, terminal                        |
-| 🌍 **i18n**                        | 10 languages (zh/zh-TW/en/ja/ko/ar/de/es/fr/pt-BR), ICU message format, lazy loading |
-| ⚡ **High Performance**            | Zustand state management, virtual scroll, lazy loading, memo                         |
-| 📱 **PWA Ready**                   | Installable, offline support, cross-platform Logo (Android/iOS/macOS/watchOS)        |
+| Feature                            | Description                                                                                                |
+| :--------------------------------- | :--------------------------------------------------------------------------------------------------------- |
+| 🤖 **Multi-Model AI**              | OpenAI / Claude / DeepSeek / Qwen, streaming, agent orchestration                                          |
+| 🎨 **Dual Theme Engine**           | Cyberpunk Neon + Liquid Glass, real-time switching, deep customization                                     |
+| 📊 **Full-Dimension Data Cockpit** | Real-time KPIs, trend analysis, 10+ chart types                                                            |
+| 💬 **CLM (Customer Lifecycle)**    | 5-stage closed loop: Acquisition → Conversion → Deal → Service → Loyalty                                   |
+| 🧑‍🤝‍🧑 **Customer Care System**        | Smart notification engine, automated care tasks, omnichannel reach                                         |
+| 📝 **Smart Form System**           | Visual builder, conditional logic, template library                                                        |
+| 💰 **Finance Management**          | Income/expense tracking, invoice management, budget control                                                |
+| 💳 **Salary System**               | Payroll, tax calculation, social insurance, pay slip generation                                            |
+| 🔧 **Developer Workspace**         | Monaco editor, Git integration, 6-panel drag layout, terminal                                              |
+| 🌍 **i18n**                        | Full zh-CN / en coverage; `@yyc3/i18n-core` engine with multi-locale extension (ICU format, plugin system) |
+| ⚡ **High Performance**            | Zustand state management, virtual scroll, lazy loading, memo                                               |
+| 📱 **PWA Ready**                   | Installable, offline support, cross-platform Logo (Android/iOS/macOS/watchOS)                              |
 
 ---
 
@@ -648,16 +639,23 @@ The platform follows the **"Five Highs · Five Standards · Five Transformations
 
 ```
 ErrorBoundary
- └── ThemeSwitcherProvider       # Dual theme engine
-      └── I18nProvider            # i18n context
-           └── AppProvider        # Global app state
-                └── ContactsProvider   # CRM data
-                     └── AIModelProvider    # AI model management
-                          └── LiquidGlassWrapper   # Liquid Glass effects
-                               └── Page Router (Standalone / Widget)
-                                    ├── Navigation (category tabs + sidebar)
-                                    ├── Command Palette (Ctrl+K)
-                                    └── 50+ page components
+ └── HashRouter               # react-router 7 (HashRouter, static-host friendly)
+      └── ThemeSwitcherProvider    # Dual theme engine
+      │    └── DemoEnvironmentBanner  # Demo environment notice (when Supabase unconfigured)
+           └── I18nProvider       # i18n context (@yyc3/i18n-core)
+                └── AuthProvider  # Auth context (Supabase PKCE / local demo mode)
+                     └── AppProvider   # Global app state
+                     │    ├── RouteSync     # hash ↔ activePage two-way sync
+                     │    └── UserDataSync  # P3 data-plane mount (hydrate + settings sync)
+                          └── ContactsProvider   # CRM data
+                               └── LiquidGlassWrapper   # Liquid Glass effects
+                                    └── Page Router (Standalone / Widget)
+                                         ├── Navigation (category tabs + sidebar)
+                                         ├── Command Palette (Ctrl+K)
+                                         └── 41 routed pages (lazy registry)
+
+> AI model config lives in the Zustand store `useAIModelStore` (encrypted persistence),
+> no longer mounted as a Provider.
 ```
 
 #### Unit Autonomy Principle
@@ -677,7 +675,7 @@ Each module follows **Unit Autonomy** design:
 | :------------ | :--------------------- | :------ | :---------------------------------- |
 | **Framework** | React                  | 18.3.1  | StrictMode + ErrorBoundary          |
 | **Language**  | TypeScript             | 5.x     | Strict mode, zero `any` policy      |
-| **Build**     | Vite                   | 6.3.5   | SWC compile, cache hash, Manifest   |
+| **Build**     | Vite                   | 6.4.3   | Cache hash, Manifest, PWA plugin    |
 | **Styling**   | Tailwind CSS v4        | 4.1.12  | @tailwindcss/vite plugin            |
 | **State**     | Zustand                | 5.0.12  | Lightweight global state            |
 | **UI**        | shadcn/ui + Radix UI   | latest  | WCAG accessible, full keyboard nav  |
@@ -735,17 +733,16 @@ Copy `.env.example` to `.env` and adjust as needed:
 cp .env.example .env
 ```
 
-| Variable                   | Description                                  | Default                        |
-| :------------------------- | :------------------------------------------- | :----------------------------- |
-| `VITE_APP_TITLE`           | Application title                            | YYC³ AI Marketing Terminal     |
-| `VITE_AI_API_BASE_URL`     | AI API endpoint                              | `http://localhost:3001/api/ai` |
-| `VITE_GITHUB_API_BASE_URL` | GitHub API endpoint                          | `https://api.github.com`       |
-| `VITE_ENABLE_DEV_TOOLS`    | Enable dev tools                             | `true`                         |
-| `VITE_ENABLE_ANALYTICS`    | Enable analytics                             | `false`                        |
-| `VITE_DEFAULT_THEME`       | Default theme (`cyberpunk` / `liquid-glass`) | `cyberpunk`                    |
-| `VITE_DEFAULT_LANGUAGE`    | Default language (`zh-CN` / `en-US`)         | `zh-CN`                        |
-| `VITE_CACHE_TTL`           | Cache TTL (ms)                               | `3600000`                      |
-| `VITE_RATE_LIMIT_RPS`      | Rate limit (req/s)                           | `10`                           |
+| Variable                 | Description                                                        | Default                    |
+| :----------------------- | :----------------------------------------------------------------- | :------------------------- |
+| `VITE_GHOST_MODE`        | Demo one-click login (DEV builds only)                             | `true` (dev only)          |
+| `VITE_E2E`               | E2E auto-login bypass (injected by Playwright webServer)           | –                          |
+| `VITE_ENABLE_MOCK`       | Enable mock realtime data in production builds (DEV on by default) | `false` (production)       |
+| `VITE_AI_PROXY_URL`      | Server-side AI proxy; auto-injected into CSP connect-src on build  | unset (see `.env.example`) |
+| `VITE_SUPABASE_URL`      | Supabase auth/data plane (P3); real auth only when both are set    | unset (local demo mode)    |
+| `VITE_SUPABASE_ANON_KEY` | See above                                                          | unset                      |
+
+> Variables historically documented but never consumed in source (`VITE_AI_API_BASE_URL`/`VITE_CACHE_TTL`/`VITE_RATE_LIMIT_RPS`, etc.) were removed from `.env.example` (2026-09-26 doc alignment).
 
 > **Security**: Never place secrets (API keys, tokens) in `VITE_` prefixed variables — they are embedded at build time. Use a backend proxy in production.
 
@@ -755,51 +752,32 @@ cp .env.example .env
 
 ```
 src/
-├── app/
-│   ├── components/          # 130+ page & UI components
-│   │   ├── ui/              # shadcn/ui library (48 components)
-│   │   ├── panels/          # Dev workspace panels (7)
-│   │   ├── settings/        # Settings panels (10)
-│   │   ├── services/        # Service layer (AI proxy/Git/sync/multi-instance)
-│   │   ├── advanced/        # Advanced features (analyzer/pipeline/monitor/orchestrator)
-│   │   ├── hooks/           # Custom Hooks (8)
-│   │   ├── figma/           # Design assets
-│   │   ├── *.tsx            # Feature page components
-│   │   ├── app-context.tsx   # Global state
-│   │   ├── i18n-context.tsx  # i18n context
-│   │   ├── auth-context.tsx  # Auth context
-│   │   ├── contacts-context.tsx # CRM context
-│   │   ├── ai-model-context.tsx # AI model management
-│   │   ├── nav-config.ts    # Navigation config
-│   │   ├── error-boundary.tsx # Error boundary
-│   │   └── ...
-│   └── locales/             # App-layer i18n (zh/en)
-├── lib/i18n/                # i18n core engine
-│   ├── registry.ts          # Registry + lazy loading
-│   ├── formatter.ts         # ICU message formatting
-│   ├── detector.ts          # Language detection
-│   ├── plugins.ts           # Plugin system
-│   ├── security/            # Security modules (regex/secrets)
-│   ├── utils/               # Utilities
-│   └── locales/             # 10 language bundles
-├── multi-end/               # Multi-end adaptation
-│   ├── breakpoints.ts       # 5-level responsive breakpoints
-│   ├── platform.ts          # Platform detection
-│   ├── storage.ts           # IndexedDB offline storage
-│   ├── PlatformAware.tsx    # Conditional render components
-│   ├── MobileBottomNav.tsx  # Mobile bottom navigation
-│   └── index.ts             # Unified exports
-├── stores/                  # Zustand global state
-│   ├── useSettingsStore.ts  # Settings store (5 config types)
-│   └── useAuthStore.ts      # Auth store
-├── services/                # Global services
-│   ├── settings-services.ts  # Settings CRUD
-│   └── settings-search.ts    # Settings search engine
-├── types/                   # Global type declarations
-├── hooks/                   # Global custom hooks
-├── utils/                   # Utilities
-├── main.tsx                 # App entry
-└── index.css                # Global styles
+├── app/                      # App shell layer
+│   ├── components/           # Shell components: cyberpunk-standalone/widget, route-sync,
+│   │   │                     # user-data-sync, demo-environment-banner, auth/i18n/app-context,
+│   │   │                     # nav-config (single source of navigation), etc.
+│   └── locales/              # App-layer messages (zh / en)
+├── features/                 # Business domains (10 domains / 41 pages)
+│   ├── toolkit/              # Task board, smart forms, AI tools
+│   ├── dev-workspace/        # Developer workspace (Monaco editor / Git / 6-panel layout)
+│   ├── customer/             # Customer domain (number DB / contacts / CLM)
+│   ├── platform/             # Platform domain (params / logs / channels)
+│   ├── settings/             # Settings domain (model config / account)
+│   ├── supply-chain/         # Supply chain (inventory / procurement)
+│   ├── marketing/            # Smart marketing (9 pages)
+│   ├── overview/             # Data cockpit
+│   ├── finance/              # Finance / salary
+│   └── conversation/         # Conversation domain
+├── shared/                   # Cross-domain shared
+│   ├── ui/                   # shadcn/ui surviving components (13)
+│   └── hooks/                # Shared hooks
+├── stores/                   # Zustand single source of truth (auth / settings / ai-model)
+├── services/                 # Global services (ai-proxy / git-api / user-data-sync / settings-* / collab)
+├── lib/                      # Foundation libs (crypto / secure-storage / supabase-client)
+├── multi-end/                # Multi-end adaptation (breakpoints / platform / IndexedDB storage)
+├── types/                    # Global type declarations (global.d.ts unified entry)
+├── styles/                   # Global styles (tailwind / theme / cyberpunk / liquid-glass)
+└── main.tsx                  # App entry
 ```
 
 ---
@@ -852,11 +830,10 @@ src/
 
 ### 🌍 Internationalization
 
-- Supported: **Chinese (zh)** · **Traditional Chinese (zh-TW)** · **English (en)** · **Japanese (ja)** · **Korean (ko)** · **Arabic (ar)** · **German (de)** · **Spanish (es)** · **French (fr)** · **Portuguese (pt-BR)**
-- `useI18n()` hook via React Context
-- ICU message format (plural/gender/select), plugin architecture
-- 1000+ translation keys covering the entire platform
-- Lazy-loaded locale bundles
+- Supported: **Simplified Chinese (zh-CN)** · **English (en)** (full coverage; other locales fall back to Chinese until bundles are added)
+- Engine: `@yyc3/i18n-core` npm package (ICU message format, plugins, cache), consumed via `useI18n()`
+- 1000+ translation keys covering the platform
+- Adding a locale = registering a translation bundle (`engine.registerTranslation`)
 
 ---
 
@@ -874,10 +851,11 @@ src/
 
 ### 🔐 Security
 
-- All API keys stored in LocalStorage only, never uploaded
-- Strict CSP headers
-- Dependency security audit (`pnpm audit`)
-- No third-party tracking or analytics scripts
+- AI API keys encrypted at rest via `secure-storage` (AES-GCM, PBKDF2-derived key); legacy plaintext auto-migrated
+- Production builds refuse key-bearing direct requests when no proxy is configured (fail over leak)
+- CSP hardened at build time by the `csp-harden` plugin: localhost loopback removed in prod, AI proxy origin auto-injected; Supabase domains pre-authorized
+- Demo mode (Supabase unconfigured) shows a bilingual warning banner across all pages
+- Dependency auditing (`pnpm audit` + CodeQL + Dependabot), no third-party tracking
 
 ---
 
@@ -897,10 +875,11 @@ pnpm test:e2e
 pnpm test:e2e:ui
 ```
 
-- **Vitest**: Unit + component tests (47 files / 864 tests / 0 failures)
-- **Playwright**: Cross-browser E2E (Chromium / Firefox / WebKit / Mobile)
-- **Coverage**: `@vitest/coverage-istanbul`, tiered threshold progression (current 22% → target 85%)
-- **CI/CD**: GitHub Actions automated pipeline (TypeCheck → Lint → Unit tests + Coverage → Build → E2E)
+- **Vitest**: Unit + component tests (39 files / 557 tests / 0 failures; 94 dead-code cases removed with F-06 cleanup)
+- **Playwright**: E2E (6 specs / 65 cases; Chromium 56 green + 9 skipped; CI runs on PRs too)
+- **Coverage**: `@vitest/coverage-istanbul`, ratchet thresholds only go up (currently S 44.9% / L 46.4%, excluding large UI page components covered by E2E; target ≥60% for core paths)
+- **Static gates (CI)**: unimported dead-code/unused-deps zero tolerance, madge circular-dependency zero tolerance, `pnpm audit --prod --audit-level high` supply-chain gate
+- **CI/CD**: GitHub Actions automated pipeline (TypeCheck → Lint → Audit → Dead-code/Circular gates → Unit tests + Coverage → Build → E2E → Deploy-after-CI-green)
 
 ---
 
@@ -939,13 +918,14 @@ pnpm build
 
 ### 📝 Changelog
 
-| Version | Date    | Description                        |
-| :------ | :------ | :--------------------------------- |
-| v1.0.x  | 2026-Q2 | Initial: core + dual theme + AI    |
-| v1.1.x  | 2026-Q3 | Finance/Salary + Smart Forms 2.0   |
-| v2.0.x  | 2026-Q4 | Agent orchestration + multi-tenant |
+| Version | Date       | Description                                                                    |
+| :------ | :--------- | :----------------------------------------------------------------------------- |
+| v1.0.4  | 2026-09-26 | P0 security/perf fixes (mount gap, demo notice, CSP, PWA) + full doc alignment |
+| v1.0.3  | 2026-07-12 | Docker Node 22 alignment, docs update                                          |
+| v1.0.2  | 2026-03-14 | Version cache busting, dep pre-bundling                                        |
+| v1.0.0  | 2026-Q2    | Initial: core + dual theme + AI                                                |
 
-> See [CHANGELOG.md](./CHANGELOG.md) (planned)
+> See [CHANGELOG.md](./CHANGELOG.md)
 
 ---
 

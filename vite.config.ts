@@ -2,7 +2,7 @@ import path from 'path'
 
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 import type { Plugin } from 'vite'
@@ -24,7 +24,44 @@ const buildIdPlugin: Plugin = {
     ),
 }
 
-export default defineConfig({
+/**
+ * CSP 构建期加固(F-03):
+ * - 生产构建移除 connect-src 中的 localhost/127.0.0.1 回环白名单
+ *   (浏览器直连 AI/edge-proxy 仅限 DEV);
+ * - 若配置 VITE_AI_PROXY_URL,自动将其源(origin)注入 connect-src
+ *   (幂等:已包含时不重复追加)。
+ * index.html 中的静态 CSP 为 DEV 基线(保留回环 + *.supabase.co);
+ * *.supabase.co 在生产也保留——未配置 VITE_SUPABASE_* 时零请求、零影响,
+ * 配置后无需再改 CSP(P3 激活的前置阻断已解除)。
+ */
+const cspHardenPlugin = (env: Record<string, string>): Plugin => ({
+  name: 'csp-harden',
+  apply: 'build',
+  transformIndexHtml: (html) => {
+    // 从构建环境(含 .env.production)读取代理地址
+    const proxy = env.VITE_AI_PROXY_URL?.trim() ?? ''
+    const originMatch = proxy.match(/^https?:\/\/[^/\s]+/i)
+    const proxyOrigin = originMatch ? originMatch[0] : ''
+    return html.replace(
+      /(<meta\s+http-equiv="Content-Security-Policy"[^>]*content=")([^"]*)(")/,
+      (_m, head: string, csp: string, tail: string) => {
+        let next = csp
+          .replace(/\s*http:\/\/localhost:\*/g, '')
+          .replace(/\s*http:\/\/127\.0\.0\.1:\*/g, '')
+        if (proxyOrigin && !next.includes(proxyOrigin)) {
+          next = next.replace(/connect-src [^;]*/, (d) => `${d} ${proxyOrigin}`)
+        }
+        return `${head}${next}${tail}`
+      },
+    )
+  },
+})
+
+export default defineConfig(({ mode }) => {
+  // 供 csp-harden 等插件读取 .env[.production] 中的 VITE_ 变量
+  const env = loadEnv(mode, process.cwd(), '')
+
+  return {
   // Custom domain: admin.yyc3.vip — use root-relative paths
   base: '/',
 
@@ -39,6 +76,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     buildIdPlugin,
+    cspHardenPlugin(env),
     // PWA 多端适配 — Service Worker 离线缓存 + 安装引导
     VitePWA({
       registerType: 'autoUpdate',
@@ -62,9 +100,14 @@ export default defineConfig({
       workbox: {
         // Clean up old precaches on new SW activation
         cleanupOutdatedCaches: true,
-        // vendor-monaco(~4MB,懒加载)超出默认 2MiB 预缓存上限
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        // F-04: 恢复 2MiB 单文件预缓存上限(此前为容纳 vendor-monaco 放宽到
+        // 5MiB,导致首访强制预缓存 3.7MB 编辑器——绝大多数用户用不到)
+        maximumFileSizeToCacheInBytes: 2 * 1024 * 1024,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
+        // F-04: monaco 懒加载 chunk(js+css)显式排除预缓存;
+        // 首次使用编辑器后由下方 runtimeCaching(static-assets-*)
+        // CacheFirst 按需缓存,用过即离线可用
+        globIgnores: ['**/vendor-monaco*'],
         runtimeCaching: [
           {
             urlPattern: /\.(js|css|woff2)$/i,
@@ -174,4 +217,5 @@ export default defineConfig({
 
   // Clear cache on startup
   cacheDir: '.vite',
+  }
 })

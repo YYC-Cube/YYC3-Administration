@@ -555,15 +555,30 @@ const realtimeActivityPool: Array<Omit<ActivityItem, 'id' | 'timestamp'>> = [
  */
 const E2E_MODE = import.meta.env.DEV && import.meta.env.VITE_E2E === 'true'
 
+/**
+ * 假实时数据(KPI 随机波动 / 通知活动流)启用开关。
+ *
+ * 语义:
+ * - E2E 测试一律关闭(定时重渲染会让 motion 动画节点在 CI 慢机上不稳定);
+ * - 生产构建默认关闭——公网用户不应把随机演示数据误认为真实业务数据;
+ * - DEV 默认开启(本地开发可见实时效果);
+ * - 若需在生产/预览环境展示演示效果,显式设置 VITE_ENABLE_MOCK=true。
+ *
+ * 见审计报告 F-02(2026-09-26):此前仅以 E2E_MODE 门控,导致生产持续运行假数据。
+ */
+export const MOCK_REALTIME_ENABLED =
+  !E2E_MODE && (import.meta.env.DEV || import.meta.env.VITE_ENABLE_MOCK === 'true')
+
 export function useRealtimeSimulation() {
   const { addNotification, addActivity } = useApp()
   const notifIdxRef = useRef(0)
   const actIdxRef = useRef(0)
 
   useEffect(() => {
-    // E2E 模式关停假数据流:定时通知/KPI 波动会引发全量重渲染,
-    // 使 motion 动画节点在 CI 慢机上永不稳定(E2E element detached 根源)
-    if (E2E_MODE) return
+    // 仅 DEV 或显式 VITE_ENABLE_MOCK 时注入假数据;生产默认关闭,
+    // 避免公网用户把随机演示数据误认为真实业务数据。
+    // E2E 同样关闭(MOCK_REALTIME_ENABLED 已含 !E2E_MODE)。
+    if (!MOCK_REALTIME_ENABLED) return
     // Push a random notification every 15-25s
     const notifTimer = setInterval(
       () => {
@@ -622,7 +637,7 @@ export function useLiveKPI(): LiveKPI {
   })
 
   useEffect(() => {
-    if (E2E_MODE) return // E2E:同上,关停 KPI 假波动
+    if (!MOCK_REALTIME_ENABLED) return // 生产默认关闭假 KPI 波动;DEV/VITE_ENABLE_MOCK 才运行
     const timer = setInterval(() => {
       setKpi((prev) => ({
         customers: prev.customers + Math.floor(Math.random() * 3) - (Math.random() > 0.7 ? 1 : 0),

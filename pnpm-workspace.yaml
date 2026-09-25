@@ -2,10 +2,19 @@ allowBuilds:
   "@tailwindcss/oxide": true
   esbuild: true
 
-minimumReleaseAge: 0
+# 供应链冷却期(F-08):新发布包需满 24h 才可被解析安装(防投毒)
+minimumReleaseAge: 1440
 
+# 传递依赖漏洞钉扎(2026-09-26 漏洞闭环修复,来源 GitHub Advisories)
 overrides:
   minimatch@9: 9.0.9
-  dompurify: 3.4.11
   form-data: 4.0.6
-
+  dompurify@<=3.4.12: 3.4.13
+  js-yaml@<4.3.2: 4.3.2
+  fast-uri@<3.1.6: 3.1.6
+  postcss@<=8.5.22: 8.5.23
+  brace-expansion@<1.1.18: 1.1.18
+  brace-expansion@>=2.0.0 <2.1.4: 2.1.4
+  brace-expansion@>=4.0.0 <5.0.9: 5.0.9
+  tar@<=7.5.20: 7.5.21
+  nanoid@<3.3.18: 3.3.18

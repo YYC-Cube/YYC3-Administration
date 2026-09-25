@@ -1,17 +1,17 @@
 /**
  * @file multi-instance.test.ts
- * @description YYC³ Multi-Instance System — Comprehensive Vitest Unit Tests
- *   Covers: WindowManager, WorkspaceManager, SessionManager, IPCManager
+ * @description YYC³ Multi-Instance System — Vitest Unit Tests
+ *   Covers: WindowManager, WorkspaceManager, PanelStore
+ *   (SessionManager/IPCManager 为 Electron 时代遗留死代码,已随 F-06 清理删除)
  * @author YanYuCloudCube Team <admin@0379.email>
- * @version v1.0.0
+ * @version v1.1.0
  * @created 2026-03-18
+ * @updated 2026-09-26
  * @tags P2,testing,multi-instance
  */
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
-import { IPCManager } from '@/features/dev-workspace/multi-instance/ipc-manager'
-import { useSessionStore } from '@/features/dev-workspace/multi-instance/session-manager'
 import { useWindowStore } from '@/features/dev-workspace/multi-instance/window-manager'
 import { useWorkspaceStore } from '@/features/dev-workspace/multi-instance/workspace-manager'
 
@@ -204,149 +204,9 @@ describe('WorkspaceManager', () => {
 })
 
 // ==========================================
-// SessionManager Tests
+// SessionManager / IPCManager Tests — 已删除
+// (Electron 时代遗留死代码,源文件随 F-06 死代码清理移除,2026-09-26)
 // ==========================================
-
-describe('SessionManager', () => {
-  beforeEach(() => {
-    useSessionStore.setState({ sessions: [], activeSessionId: null, filter: {} })
-  })
-
-  it('should create a session', () => {
-    const session = useSessionStore.getState().createSession('Chat 1', 'ai-chat', 'ws-1')
-    expect(session.name).toBe('Chat 1')
-    expect(session.type).toBe('ai-chat')
-    expect(session.status).toBe('active')
-    expect(session.workspaceId).toBe('ws-1')
-  })
-
-  it('should create session with initial data', () => {
-    const session = useSessionStore.getState().createSession('Edit', 'code-edit', 'ws-1', {
-      editedFiles: [{ path: '/test.ts', content: 'hello' }],
-    })
-    expect(session.data.editedFiles?.length).toBe(1)
-  })
-
-  it('should update session', () => {
-    const s = useSessionStore.getState().createSession('S1', 'ai-chat', 'ws-1')
-    useSessionStore.getState().updateSession(s.id, { name: 'Updated' })
-    expect(useSessionStore.getState().sessions[0].name).toBe('Updated')
-  })
-
-  it('should delete session', () => {
-    const s = useSessionStore.getState().createSession('S1', 'ai-chat', 'ws-1')
-    useSessionStore.getState().deleteSession(s.id)
-    expect(useSessionStore.getState().sessions.length).toBe(0)
-  })
-
-  it('should activate and suspend session', () => {
-    const s = useSessionStore.getState().createSession('S1', 'ai-chat', 'ws-1')
-    useSessionStore.getState().suspendSession(s.id)
-    expect(useSessionStore.getState().sessions[0].status).toBe('suspended')
-    useSessionStore.getState().resumeSession(s.id)
-    expect(useSessionStore.getState().sessions[0].status).toBe('active')
-  })
-
-  it('should update session data', () => {
-    const s = useSessionStore.getState().createSession('S1', 'ai-chat', 'ws-1')
-    useSessionStore.getState().updateSessionData(s.id, {
-      aiMessages: [{ role: 'user', content: 'Hello' }],
-    })
-    expect(useSessionStore.getState().sessions[0].data.aiMessages?.length).toBe(1)
-  })
-
-  it('should get workspace sessions', () => {
-    useSessionStore.getState().createSession('S1', 'ai-chat', 'ws-1')
-    useSessionStore.getState().createSession('S2', 'code-edit', 'ws-2')
-    useSessionStore.getState().createSession('S3', 'debug', 'ws-1')
-    const ws1Sessions = useSessionStore.getState().getWorkspaceSessions('ws-1')
-    expect(ws1Sessions.length).toBe(2)
-  })
-
-  it('should get active sessions', () => {
-    const s1 = useSessionStore.getState().createSession('S1', 'ai-chat', 'ws-1')
-    useSessionStore.getState().createSession('S2', 'code-edit', 'ws-1')
-    useSessionStore.getState().suspendSession(s1.id)
-    const active = useSessionStore.getState().getActiveSessions()
-    expect(active.length).toBe(1)
-  })
-
-  it('should clear activeSessionId when deleting active session', () => {
-    const s = useSessionStore.getState().createSession('S1', 'ai-chat', 'ws-1')
-    useSessionStore.getState().activateSession(s.id)
-    expect(useSessionStore.getState().activeSessionId).toBe(s.id)
-    useSessionStore.getState().deleteSession(s.id)
-    expect(useSessionStore.getState().activeSessionId).toBeNull()
-  })
-})
-
-// ==========================================
-// IPCManager Tests
-// ==========================================
-
-describe('IPCManager', () => {
-  let ipc: IPCManager
-
-  beforeEach(() => {
-    ipc = new IPCManager()
-  })
-
-  afterEach(() => {
-    ipc.destroy()
-  })
-
-  it('should have a unique instance ID', () => {
-    expect(ipc.getInstanceId()).toBeTruthy()
-    expect(typeof ipc.getInstanceId()).toBe('string')
-    expect(ipc.getInstanceId().length).toBeGreaterThan(10)
-  })
-
-  it('should generate unique IDs per instance', () => {
-    const ipc2 = new IPCManager()
-    expect(ipc.getInstanceId()).not.toBe(ipc2.getInstanceId())
-    ipc2.destroy()
-  })
-
-  it('should register and unregister handlers', () => {
-    const handler = vi.fn()
-    const unsub = ipc.on('state-sync', handler)
-    expect(typeof unsub).toBe('function')
-    unsub()
-    // Handler should be removed
-  })
-
-  it('should broadcast without error', async () => {
-    await expect(ipc.broadcast('state-sync', { test: true })).resolves.toBeUndefined()
-  })
-
-  it('should send to instance without error', async () => {
-    await expect(
-      ipc.sendToInstance('some-id', 'clipboard-share', { text: 'hello' }),
-    ).resolves.toBeUndefined()
-  })
-
-  it('should not broadcast after destroy', async () => {
-    ipc.destroy()
-    await expect(ipc.broadcast('state-sync', {})).resolves.toBeUndefined()
-  })
-
-  it('should handle multiple handlers for same type', () => {
-    const h1 = vi.fn()
-    const h2 = vi.fn()
-    ipc.on('state-sync', h1)
-    ipc.on('state-sync', h2)
-    // Both handlers registered successfully
-  })
-
-  it('should unsubscribe specific handler', () => {
-    const h1 = vi.fn()
-    const h2 = vi.fn()
-    const unsub1 = ipc.on('state-sync', h1)
-    ipc.on('state-sync', h2)
-    unsub1()
-    // h1 removed, h2 still active
-  })
-})
 
 // ==========================================
 // Panel Store Tests
