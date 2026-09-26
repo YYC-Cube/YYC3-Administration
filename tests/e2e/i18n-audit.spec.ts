@@ -213,6 +213,9 @@ test.describe('E2E-I18N: 语言切换可用性', () => {
 })
 
 test.describe('E2E-I18N: 全页面覆盖审计', () => {
+  // 37 页 × 2 语言遍历:本地 ~24s,CI 慢机(2 CPU)可能 >2x,默认 30s 必超时
+  test.setTimeout(180_000)
+
   test('I18N-COVER-zh: 中文遍历 37 页无原始 key 泄漏', async ({ page }) => {
     await openApp(page)
     await page.evaluate(() => localStorage.setItem('yyc3_locale', 'zh'))
