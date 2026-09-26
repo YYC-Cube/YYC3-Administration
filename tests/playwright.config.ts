@@ -20,7 +20,7 @@ export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
     ["html", { open: "never" }],
@@ -58,11 +58,14 @@ export default defineConfig({
     },
   ],
   webServer: {
-    // VITE_E2E=true:注入 E2E 认证旁路并关闭演示横幅/mock 实时数据——
-    // 与 spec 文件头注释的契约一致(specs 通过 config baseURL/相对路径访问本服务)
-    command: "VITE_E2E=true pnpm dev",
+    // 生产构建 + vite preview 静态服务(Playwright 官方最佳实践):
+    // - vite dev 按需编译在 CI(2C/7G)上会因 page-smoke 全页遍历触发全模块编译,
+    //   内存峰值导致 dev server 被 OOM 杀死 → 后续用例 ERR_CONNECTION_REFUSED
+    // - preview 无按需编译,内存平稳,且测的是真实生产 bundle
+    // VITE_E2E=true 于 build 时静态内联:注入 E2E 认证旁路并关演示横幅/mock 实时数据
+    command: "VITE_E2E=true pnpm build && VITE_E2E=true pnpm preview --port 5173 --strictPort",
     url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI,
-    timeout: 30000,
+    timeout: 240_000, // 含 build 时长(CI 2 核约 1~2 分钟)
   },
 });
