@@ -15,9 +15,10 @@ import { Copy, Loader2, Minus, Plus, Save, Type, WrapText } from 'lucide-react'
 // 本地打包 Monaco,摆脱 @monaco-editor/react 默认 CDN 加载器(jsdelivr 弱网下
 // 永远停在 "Loading Monaco Editor...");editor.api 核心 + basic-languages 语法
 // 高亮,避免全量入口拖入 7MB ts.worker —— monaco 独立懒加载 chunk
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js'
-import 'monaco-editor/esm/vs/basic-languages/_.contribution.js'
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+// monaco-editor 0.56 起定义 exports 字段,深路径需按 "./*" → "./esm/vs/*" 映射
+import * as monaco from 'monaco-editor/editor/editor.api.js'
+import 'monaco-editor/basic-languages/monaco.contribution.js'
+import editorWorker from 'monaco-editor/editor/editor.worker?worker'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 self.MonacoEnvironment = { getWorker: () => new editorWorker() }
