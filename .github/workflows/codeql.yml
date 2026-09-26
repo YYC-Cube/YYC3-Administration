@@ -12,7 +12,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: '0 4 * * 1' # 每周一 04:00
+    - cron: "0 4 * * 1" # 每周一 04:00
 
 jobs:
   analyze:
@@ -27,7 +27,18 @@ jobs:
         uses: github/codeql-action/init@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
         with:
           languages: javascript-typescript
-          config: .github/codeql/config.yml
+          # ⚠ v3.38 起 config 输入仅接受内联 YAML(路径字符串会被当配置内容写盘)
+          # docs/**(历史粘贴归档)与测试产物不参与安全分析——示例密钥/URL 会产生
+          # 不可行动误报(2026-09-26 漏洞闭环)
+          config: |
+            paths-ignore:
+              - docs/**
+              - tests/**
+              - '**/*.test.*'
+              - '**/*.spec.*'
+              - playwright-report/**
+              - coverage/**
+              - dist/**
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
@@ -35,4 +46,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
         with:
-          category: '/language:javascript-typescript'
+          category: "/language:javascript-typescript"
