@@ -32,12 +32,7 @@ import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 // ==========================================
 
 type SettingTab =
-  | 'overview'
-  | 'interface'
-  | 'integration'
-  | 'security'
-  | 'performance'
-  | 'monitoring'
+  'overview' | 'interface' | 'integration' | 'security' | 'performance' | 'monitoring'
 
 export function PlatformSettingsPage() {
   const tc = useThemeColors()
