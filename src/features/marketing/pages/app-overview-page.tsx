@@ -14,48 +14,54 @@ export function AppOverviewPage() {
   const { t } = useI18n()
 
   const coreMetrics = [
-    { label: '总营收', value: '¥2.48M', change: '+28.5%', icon: DollarSign, color: tc.success },
-    { label: '总用户', value: '125.8K', change: '+18.3%', icon: Users, color: tc.primary },
-    { label: '转化率', value: '24.6%', change: '+5.2%', icon: Target, color: tc.secondary },
-    { label: '活跃度', value: '68.9%', change: '+3.8%', icon: Activity, color: tc.accent },
+    { label: 'appov.metric.revenue', value: '¥2.48M', change: '+28.5%', icon: DollarSign, color: tc.success },
+    { label: 'appov.metric.users', value: '125.8K', change: '+18.3%', icon: Users, color: tc.primary },
+    { label: 'appov.metric.conversion', value: '24.6%', change: '+5.2%', icon: Target, color: tc.secondary },
+    { label: 'appov.metric.activity', value: '68.9%', change: '+3.8%', icon: Activity, color: tc.accent },
   ]
 
   const channelData = [
-    { channel: '微信', revenue: 890000, users: 45000, conversion: 28.5, color: tc.success },
-    { channel: '抖音', revenue: 720000, users: 38000, conversion: 25.2, color: tc.primary },
-    { channel: '小红书', revenue: 480000, users: 25000, conversion: 22.8, color: tc.secondary },
-    { channel: '百度', revenue: 390000, users: 17800, conversion: 18.9, color: tc.accent },
+    { channel: 'appov.channel.wechat', revenue: 890000, users: 45000, conversion: 28.5, color: tc.success },
+    { channel: 'appov.channel.douyin', revenue: 720000, users: 38000, conversion: 25.2, color: tc.primary },
+    { channel: 'appov.channel.xiaohongshu', revenue: 480000, users: 25000, conversion: 22.8, color: tc.secondary },
+    { channel: 'appov.channel.baidu', revenue: 390000, users: 17800, conversion: 18.9, color: tc.accent },
   ]
 
   const recentActivities = [
     {
       id: 'ACT001',
       type: 'campaign',
-      title: '618大促活动已启动',
-      time: '5分钟前',
+      title: 'appov.activity.act001.title',
+      time: 'appov.activity.act001.time',
       status: 'success',
     },
-    { id: 'ACT002', type: 'lead', title: '新增高价值线索 +12', time: '15分钟前', status: 'info' },
+    {
+      id: 'ACT002',
+      type: 'lead',
+      title: 'appov.activity.act002.title',
+      time: 'appov.activity.act002.time',
+      status: 'info',
+    },
     {
       id: 'ACT003',
       type: 'alert',
-      title: '营销预算使用率达85%',
-      time: '1小时前',
+      title: 'appov.activity.act003.title',
+      time: 'appov.activity.act003.time',
       status: 'warning',
     },
     {
       id: 'ACT004',
       type: 'report',
-      title: '周度营销报告已生成',
-      time: '2小时前',
+      title: 'appov.activity.act004.title',
+      time: 'appov.activity.act004.time',
       status: 'success',
     },
   ]
 
   const topPerformers = [
-    { name: '产品A - 618促销', revenue: 520000, conversion: 32.5, roi: 4.8 },
-    { name: '品牌故事传播', revenue: 385000, conversion: 28.2, roi: 4.2 },
-    { name: '会员专属福利', revenue: 298000, conversion: 25.8, roi: 3.9 },
+    { name: 'appov.performer.p1', revenue: 520000, conversion: 32.5, roi: 4.8 },
+    { name: 'appov.performer.p2', revenue: 385000, conversion: 28.2, roi: 4.2 },
+    { name: 'appov.performer.p3', revenue: 298000, conversion: 25.8, roi: 3.9 },
   ]
 
   return (
@@ -66,7 +72,7 @@ export function AppOverviewPage() {
             {t('nav.appOverview')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            全局数据 · 核心指标 · 实时监控
+            {t('appov.subtitle')}
           </p>
         </div>
         <div
@@ -78,7 +84,7 @@ export function AppOverviewPage() {
             style={{ background: tc.success, boxShadow: `0 0 8px ${tc.success}` }}
           />
           <span className="text-sm font-medium" style={{ color: tc.success }}>
-            实时更新
+            {t('appov.liveUpdate')}
           </span>
         </div>
       </div>
@@ -98,7 +104,7 @@ export function AppOverviewPage() {
                 </div>
               </div>
               <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-                {metric.label}
+                {t(metric.label)}
               </p>
               <p className="text-2xl font-bold" style={{ color: tc.textPrimary }}>
                 {metric.value}
@@ -111,7 +117,7 @@ export function AppOverviewPage() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <NeonCard className="p-6">
           <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-            渠道营收占比
+            {t('appov.channelRevenue')}
           </h2>
           <div className="space-y-4">
             {channelData.map((channel) => {
@@ -121,7 +127,7 @@ export function AppOverviewPage() {
                 <div key={channel.channel}>
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium" style={{ color: tc.textPrimary }}>
-                      {channel.channel}
+                      {t(channel.channel)}
                     </span>
                     <span className="text-sm font-medium" style={{ color: channel.color }}>
                       ¥{(channel.revenue / 1000).toFixed(0)}K ({percentage}%)
@@ -148,7 +154,7 @@ export function AppOverviewPage() {
 
         <NeonCard className="p-6">
           <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-            最近动态
+            {t('appov.recentActivity')}
           </h2>
           <div className="space-y-3">
             {recentActivities.map((activity) => (
@@ -170,10 +176,10 @@ export function AppOverviewPage() {
                 />
                 <div className="flex-1">
                   <p className="font-medium text-sm" style={{ color: tc.textPrimary }}>
-                    {activity.title}
+                    {t(activity.title)}
                   </p>
                   <p className="text-xs" style={{ color: tc.textMuted }}>
-                    {activity.time}
+                    {t(activity.time)}
                   </p>
                 </div>
               </div>
@@ -184,7 +190,7 @@ export function AppOverviewPage() {
 
       <NeonCard className="p-6">
         <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-          表现最佳项目
+          {t('appov.topPerformers')}
         </h2>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -194,19 +200,19 @@ export function AppOverviewPage() {
                   className="text-left py-3 px-4 text-sm font-medium"
                   style={{ color: tc.textMuted }}
                 >
-                  项目名称
+                  {t('appov.th.projectName')}
                 </th>
                 <th
                   className="text-right py-3 px-4 text-sm font-medium"
                   style={{ color: tc.textMuted }}
                 >
-                  营收
+                  {t('appov.th.revenue')}
                 </th>
                 <th
                   className="text-right py-3 px-4 text-sm font-medium"
                   style={{ color: tc.textMuted }}
                 >
-                  转化率
+                  {t('appov.th.conversion')}
                 </th>
                 <th
                   className="text-right py-3 px-4 text-sm font-medium"
@@ -238,7 +244,7 @@ export function AppOverviewPage() {
                         {idx + 1}
                       </div>
                       <span className="font-medium" style={{ color: tc.textPrimary }}>
-                        {project.name}
+                        {t(project.name)}
                       </span>
                     </div>
                   </td>

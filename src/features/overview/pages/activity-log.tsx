@@ -322,9 +322,9 @@ export function ActivityLogPage() {
                       {/* Action & Target */}
                       <div className="flex-1 min-w-0">
                         <p className="text-xs text-white/60">
-                          <span style={{ color: `${act.color}` }}>{act.action}</span>
+                          <span style={{ color: `${act.color}` }}>{t(act.action)}</span>
                           <span className="text-white/15"> · </span>
-                          <span className="text-white/35">{act.target}</span>
+                          <span className="text-white/35">{t(act.target)}</span>
                         </p>
                       </div>
 

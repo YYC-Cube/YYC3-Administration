@@ -52,55 +52,55 @@ export function DataIntegrationPage() {
   const dataSources: DataSource[] = [
     {
       id: 'mysql-1',
-      name: '主业务数据库',
+      name: t('dip.source.mainDb'),
       type: 'MySQL',
       status: 'connected',
-      lastSync: '1分钟前',
+      lastSync: t('dip.time.minAgo', { n: 1 }),
       records: 2840000,
       quality: 98,
     },
     {
       id: 'pg-1',
-      name: '分析数据库',
+      name: t('dip.source.analyticsDb'),
       type: 'PostgreSQL',
       status: 'connected',
-      lastSync: '3分钟前',
+      lastSync: t('dip.time.minAgo', { n: 3 }),
       records: 1560000,
       quality: 95,
     },
     {
       id: 'redis-1',
-      name: '缓存数据库',
+      name: t('dip.source.cacheDb'),
       type: 'Redis',
       status: 'connected',
-      lastSync: '实时',
+      lastSync: t('dip.time.realtime'),
       records: 128000,
       quality: 100,
     },
     {
       id: 'mongo-1',
-      name: '文档数据库',
+      name: t('dip.source.docDb'),
       type: 'MongoDB',
       status: 'connected',
-      lastSync: '5分钟前',
+      lastSync: t('dip.time.minAgo', { n: 5 }),
       records: 890000,
       quality: 92,
     },
     {
       id: 'kafka-1',
-      name: '消息队列',
+      name: t('dip.source.mq'),
       type: 'Kafka',
       status: 'connected',
-      lastSync: '实时',
+      lastSync: t('dip.time.realtime'),
       records: 56000,
       quality: 97,
     },
     {
       id: 'api-1',
-      name: '外部API',
+      name: t('dip.source.externalApi'),
       type: 'REST API',
       status: 'error',
-      lastSync: '2小时前',
+      lastSync: t('dip.time.hoursAgo', { n: 2 }),
       records: 0,
       quality: 0,
     },
@@ -158,7 +158,7 @@ export function DataIntegrationPage() {
       case 'disconnected':
         return t('di.status.disconnected')
       default:
-        return '未知'
+        return t('dip.status.unknown')
     }
   }
 
@@ -223,20 +223,20 @@ export function DataIntegrationPage() {
           {[
             {
               label: t('di.stat.sources'),
-              value: '15个',
+              value: t('dip.stat.countValue', { n: 15 }),
               trend: t('di.stat.thisMonth'),
               trendUp: true,
               color: '#06b6d4',
             },
             {
               label: t('di.stat.syncTasks'),
-              value: '48个',
+              value: t('dip.stat.countValue', { n: 48 }),
               trend: t('di.status.running'),
               color: '#22c55e',
             },
             {
               label: t('di.stat.dataQuality'),
-              value: '94分',
+              value: t('dip.stat.qualityValue', { n: 94 }),
               trend: t('di.stat.plus3'),
               trendUp: true,
               color: '#8b5cf6',
@@ -350,12 +350,17 @@ export function DataIntegrationPage() {
                       <div className="flex items-center gap-4 text-[9px] text-white/40">
                         <span className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
-                          最近同步: {source.lastSync}
+                          {t('dip.lastSync')}: {source.lastSync}
                         </span>
                         {source.records > 0 && (
                           <>
-                            <span>记录数: {source.records.toLocaleString()}</span>
-                            <span>质量: {source.quality}分</span>
+                            <span>
+                              {t('dip.recordCount')}: {source.records.toLocaleString()}
+                            </span>
+                            <span>
+                              {t('dip.quality')}: {source.quality}
+                              {t('dip.unit.points')}
+                            </span>
                           </>
                         )}
                       </div>
@@ -371,7 +376,7 @@ export function DataIntegrationPage() {
                         color: tc.secondary,
                       }}
                     >
-                      配置
+                      {t('dip.action.configure')}
                     </button>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
@@ -382,7 +387,7 @@ export function DataIntegrationPage() {
                         color: tc.accent,
                       }}
                     >
-                      测试
+                      {t('dip.action.test')}
                     </button>
                   </div>
                 </div>
@@ -396,36 +401,36 @@ export function DataIntegrationPage() {
             <NeonCard color={tc.primary}>
               <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
                 <Activity className="w-4 h-4" style={{ color: tc.primary }} />
-                同步任务列表
+                {t('dip.sync.taskList')}
               </h3>
               <div className="space-y-3">
                 {[
                   {
-                    name: '用户数据同步',
+                    name: t('dip.sync.userSync'),
                     source: 'MySQL',
                     target: 'PostgreSQL',
-                    mode: '实时CDC',
+                    mode: t('dip.mode.realtimeCdc'),
                     status: 'running',
                   },
                   {
-                    name: '订单数据同步',
+                    name: t('dip.sync.orderSync'),
                     source: 'MySQL',
                     target: 'MongoDB',
-                    mode: '增量同步',
+                    mode: t('dip.mode.incremental'),
                     status: 'running',
                   },
                   {
-                    name: '日志数据归档',
+                    name: t('dip.sync.logArchive'),
                     source: 'Kafka',
                     target: 'S3',
-                    mode: '批量同步',
+                    mode: t('dip.mode.batch'),
                     status: 'running',
                   },
                   {
-                    name: '分析数据更新',
+                    name: t('dip.sync.analyticsUpdate'),
                     source: 'PostgreSQL',
                     target: 'Redis',
-                    mode: '定时同步',
+                    mode: t('dip.mode.scheduled'),
                     status: 'paused',
                   },
                 ].map((task, idx) => (
@@ -482,7 +487,7 @@ export function DataIntegrationPage() {
 
             {/* Sync Throughput */}
             <NeonCard color={tc.accent}>
-              <h3 className="text-[12px] text-white/60 mb-3">同步吞吐量 (记录/小时)</h3>
+              <h3 className="text-[12px] text-white/60 mb-3">{t('dip.sync.throughput')}</h3>
               <div className="h-48">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={syncThroughputData}>
@@ -527,24 +532,34 @@ export function DataIntegrationPage() {
           <NeonCard color={tc.secondary}>
             <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
               <Cpu className="w-4 h-4" style={{ color: tc.secondary }} />
-              数据转换规则
+              {t('dip.transform.rules')}
             </h3>
             <div className="space-y-3">
               {[
                 {
-                  name: '用户数据脱敏',
-                  type: '数据脱敏',
+                  name: t('dip.transform.masking'),
+                  type: t('dip.transformType.masking'),
                   fields: ['phone', 'email', 'idCard'],
                   status: 'active',
                 },
-                { name: '订单金额转换', type: '格式转换', fields: ['amount'], status: 'active' },
                 {
-                  name: '时间戳标准化',
-                  type: '类型转换',
+                  name: t('dip.transform.amountConvert'),
+                  type: t('dip.transformType.format'),
+                  fields: ['amount'],
+                  status: 'active',
+                },
+                {
+                  name: t('dip.transform.timestampNorm'),
+                  type: t('dip.transformType.type'),
                   fields: ['createdAt', 'updatedAt'],
                   status: 'active',
                 },
-                { name: '地址信息清洗', type: '数据清洗', fields: ['address'], status: 'inactive' },
+                {
+                  name: t('dip.transform.addressClean'),
+                  type: t('dip.transformType.clean'),
+                  fields: ['address'],
+                  status: 'inactive',
+                },
               ].map((rule, idx) => (
                 <div
                   key={idx}
@@ -557,7 +572,9 @@ export function DataIntegrationPage() {
                   <div className="flex items-center justify-between mb-2">
                     <div>
                       <h4 className="text-[11px] text-white/60">{rule.name}</h4>
-                      <p className="text-[9px] text-white/30">字段: {rule.fields.join(', ')}</p>
+                      <p className="text-[9px] text-white/30">
+                        {t('dip.transform.fields')}: {rule.fields.join(', ')}
+                      </p>
                     </div>
                     <div className="flex items-center gap-2">
                       <span
@@ -581,7 +598,9 @@ export function DataIntegrationPage() {
                           border: `1px solid ${tc.alpha(rule.status === 'active' ? tc.success : tc.muted, 0.2)}`,
                         }}
                       >
-                        {rule.status === 'active' ? '已启用' : '已禁用'}
+                        {rule.status === 'active'
+                          ? t('dip.state.enabled')
+                          : t('dip.state.disabled')}
                       </span>
                     </div>
                   </div>
@@ -596,9 +615,24 @@ export function DataIntegrationPage() {
             {/* Quality Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { dimension: '完整性', score: 94, threshold: 90, color: tc.success },
-                { dimension: '准确性', score: 91, threshold: 85, color: tc.success },
-                { dimension: '一致性', score: 88, threshold: 85, color: tc.warning },
+                {
+                  dimension: t('dip.quality.completeness'),
+                  score: 94,
+                  threshold: 90,
+                  color: tc.success,
+                },
+                {
+                  dimension: t('dip.quality.accuracy'),
+                  score: 91,
+                  threshold: 85,
+                  color: tc.success,
+                },
+                {
+                  dimension: t('dip.quality.consistency'),
+                  score: 88,
+                  threshold: 85,
+                  color: tc.warning,
+                },
               ].map((item, idx) => (
                 <NeonCard key={idx} color={item.color}>
                   <div className="text-center">
@@ -611,9 +645,12 @@ export function DataIntegrationPage() {
                       }}
                     >
                       {item.score}
-                      <span className="text-lg">分</span>
+                      <span className="text-lg">{t('dip.unit.points')}</span>
                     </p>
-                    <p className="text-[9px] text-white/30">阈值: {item.threshold}分</p>
+                    <p className="text-[9px] text-white/30">
+                      {t('dip.quality.threshold')}: {item.threshold}
+                      {t('dip.unit.points')}
+                    </p>
                   </div>
                 </NeonCard>
               ))}
@@ -621,7 +658,7 @@ export function DataIntegrationPage() {
 
             {/* Quality Trend */}
             <NeonCard color={tc.accent}>
-              <h3 className="text-[12px] text-white/60 mb-3">数据质量趋势</h3>
+              <h3 className="text-[12px] text-white/60 mb-3">{t('dip.quality.trend')}</h3>
               <div className="h-48">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={qualityTrendData}>
@@ -657,7 +694,7 @@ export function DataIntegrationPage() {
           <NeonCard color={tc.warning}>
             <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
               <GitBranch className="w-4 h-4" style={{ color: tc.warning }} />
-              数据血缘关系
+              {t('dip.lineage.title')}
             </h3>
             <div className="space-y-4">
               {[
@@ -695,7 +732,7 @@ export function DataIntegrationPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-[9px] text-white/30 mb-2">上游数据源</p>
+                      <p className="text-[9px] text-white/30 mb-2">{t('dip.lineage.upstream')}</p>
                       <div className="space-y-1">
                         {lineage.upstream.map((source, sidx) => (
                           <div
@@ -712,7 +749,7 @@ export function DataIntegrationPage() {
                       </div>
                     </div>
                     <div>
-                      <p className="text-[9px] text-white/30 mb-2">下游数据表</p>
+                      <p className="text-[9px] text-white/30 mb-2">{t('dip.lineage.downstream')}</p>
                       <div className="space-y-1">
                         {lineage.downstream.map((target, tidx) => (
                           <div
@@ -740,10 +777,25 @@ export function DataIntegrationPage() {
             {/* Real-time Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {[
-                { metric: '吞吐量', value: '8.5K/s', status: 'good', icon: Activity },
-                { metric: '延迟', value: '45ms', status: 'good', icon: Clock },
-                { metric: '错误率', value: '0.02%', status: 'good', icon: CheckCircle2 },
-                { metric: '队列积压', value: '128', status: 'warning', icon: AlertTriangle },
+                {
+                  metric: t('dip.metric.throughput'),
+                  value: '8.5K/s',
+                  status: 'good',
+                  icon: Activity,
+                },
+                { metric: t('dip.metric.latency'), value: '45ms', status: 'good', icon: Clock },
+                {
+                  metric: t('dip.metric.errorRate'),
+                  value: '0.02%',
+                  status: 'good',
+                  icon: CheckCircle2,
+                },
+                {
+                  metric: t('dip.metric.queueBacklog'),
+                  value: '128',
+                  status: 'warning',
+                  icon: AlertTriangle,
+                },
               ].map((item, idx) => (
                 <NeonCard key={idx} color={item.status === 'good' ? tc.success : tc.warning}>
                   <div className="flex items-start justify-between">
@@ -777,19 +829,34 @@ export function DataIntegrationPage() {
             <NeonCard color={tc.destructive}>
               <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" style={{ color: tc.destructive }} />
-                告警规则
+                {t('dip.alert.rules')}
               </h3>
               <div className="space-y-3">
                 {[
                   {
-                    name: '同步延迟过高',
-                    condition: '> 1分钟',
+                    name: t('dip.alert.syncLatency'),
+                    condition: t('dip.alert.cond.latency'),
                     severity: 'critical',
                     enabled: true,
                   },
-                  { name: '错误率异常', condition: '> 1%', severity: 'warning', enabled: true },
-                  { name: '数据质量下降', condition: '< 85分', severity: 'warning', enabled: true },
-                  { name: '吞吐量下降', condition: '< 1K/s', severity: 'info', enabled: false },
+                  {
+                    name: t('dip.alert.errorRate'),
+                    condition: '> 1%',
+                    severity: 'warning',
+                    enabled: true,
+                  },
+                  {
+                    name: t('dip.alert.qualityDrop'),
+                    condition: t('dip.alert.cond.quality'),
+                    severity: 'warning',
+                    enabled: true,
+                  },
+                  {
+                    name: t('dip.alert.throughputDrop'),
+                    condition: '< 1K/s',
+                    severity: 'info',
+                    enabled: false,
+                  },
                 ].map((rule, idx) => (
                   <div
                     key={idx}
@@ -830,10 +897,10 @@ export function DataIntegrationPage() {
                           }}
                         >
                           {rule.severity === 'critical'
-                            ? '严重'
+                            ? t('dip.severity.critical')
                             : rule.severity === 'warning'
-                              ? '警告'
-                              : '信息'}
+                              ? t('dip.severity.warning')
+                              : t('dip.severity.info')}
                         </span>
                         <span
                           className="px-2 py-0.5 rounded-md text-[8px]"
@@ -843,11 +910,13 @@ export function DataIntegrationPage() {
                             border: `1px solid ${tc.alpha(rule.enabled ? tc.success : tc.muted, 0.2)}`,
                           }}
                         >
-                          {rule.enabled ? '已启用' : '已禁用'}
+                          {rule.enabled ? t('dip.state.enabled') : t('dip.state.disabled')}
                         </span>
                       </div>
                     </div>
-                    <p className="text-[9px] text-white/30">触发条件: {rule.condition}</p>
+                    <p className="text-[9px] text-white/30">
+                      {t('dip.alert.triggerCondition')}: {rule.condition}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -862,17 +931,17 @@ export function DataIntegrationPage() {
           <div className="flex items-start gap-3">
             <TrendingUp className="w-5 h-5 shrink-0" style={{ color: tc.accent }} />
             <div>
-              <h4 className="text-[11px] text-white/60 mb-2">AI 智能特性</h4>
+              <h4 className="text-[11px] text-white/60 mb-2">{t('dip.ai.features')}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                 {[
-                  '连接池大小AI动态调整',
-                  '同步性能AI优化',
-                  '数据冲突AI智能解决',
-                  '转换规则AI智能推荐',
-                  '数据质量AI评分',
-                  '血缘关系AI自动发现',
-                  '异常检测AI算法',
-                  '智能映射字段推荐',
+                  t('dip.ai.connPool'),
+                  t('dip.ai.syncPerf'),
+                  t('dip.ai.conflictResolve'),
+                  t('dip.ai.ruleRecommend'),
+                  t('dip.ai.qualityScore'),
+                  t('dip.ai.lineageDiscovery'),
+                  t('dip.ai.anomalyDetection'),
+                  t('dip.ai.fieldMapping'),
                 ].map((cap, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <div

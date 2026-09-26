@@ -6,7 +6,7 @@ import { AuthProvider } from '@/app/components/auth-context'
 import { CyberpunkStandalone } from '@/app/components/cyberpunk-standalone'
 import { CyberpunkWidget } from '@/app/components/cyberpunk-widget'
 import { DemoEnvironmentBanner } from '@/app/components/demo-environment-banner'
-import { I18nProvider } from '@/app/components/i18n-context'
+import { I18nProvider, useI18n } from '@/app/components/i18n-context'
 import { LiquidGlassWrapper } from '@/app/components/liquid-glass-wrapper'
 import { PWAInstallPrompt } from '@/app/components/pwa-install'
 import { RouteSync } from '@/app/components/route-sync'
@@ -31,6 +31,43 @@ if (typeof window !== 'undefined') {
 }
 
 // Error Boundary to catch dynamic import errors
+
+/**
+ * Localized error-fallback UI. Rendered by ErrorBoundary inside its own
+ * `<I18nProvider>` because the boundary itself sits above the app-level provider
+ * in the tree, so `useI18n()` would otherwise have no context to read from.
+ */
+function ErrorFallback() {
+  const { t } = useI18n()
+  return (
+    <div
+      className="flex items-center justify-center min-h-screen p-4"
+      style={{ background: '#0a0a0a', color: '#ffffff' }}
+    >
+      <div className="text-center">
+        <h1 className="text-2xl font-bold mb-4" style={{ color: '#00f0ff' }}>
+          {t('app.loadErrorTitle')}
+        </h1>
+        <p className="mb-4" style={{ color: 'rgba(255,255,255,0.5)' }}>
+          {t('app.loadErrorDesc')}
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-6 py-2 rounded transition-colors"
+          style={{
+            background: '#00f0ff',
+            color: '#0a0a0a',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = '#00d4ff')}
+          onMouseLeave={(e) => (e.currentTarget.style.background = '#00f0ff')}
+        >
+          {t('app.refreshPage')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 class ErrorBoundary extends Component<
   { children: ReactNode },
   { hasError: boolean; error?: Error }
@@ -51,31 +88,9 @@ class ErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div
-          className="flex items-center justify-center min-h-screen p-4"
-          style={{ background: '#0a0a0a', color: '#ffffff' }}
-        >
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4" style={{ color: '#00f0ff' }}>
-              加载错误 / Loading Error
-            </h1>
-            <p className="mb-4" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              请刷新页面重试 / Please refresh the page
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-6 py-2 rounded transition-colors"
-              style={{
-                background: '#00f0ff',
-                color: '#0a0a0a',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = '#00d4ff')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = '#00f0ff')}
-            >
-              刷新页面 / Refresh
-            </button>
-          </div>
-        </div>
+        <I18nProvider>
+          <ErrorFallback />
+        </I18nProvider>
       )
     }
 
@@ -112,10 +127,10 @@ export default function App() {
     <ErrorBoundary>
       <HashRouter>
         <ThemeSwitcherProvider>
-          {/* 演示环境警示:Supabase 未配置时于所有页面(含登录页)展示,
-              激活真实后端后自动隐藏(F-02) */}
-          <DemoEnvironmentBanner />
           <I18nProvider>
+            {/* 演示环境警示:Supabase 未配置时于所有页面(含登录页)展示,
+                激活真实后端后自动隐藏(F-02);置于 I18nProvider 内以使用 useI18n */}
+            <DemoEnvironmentBanner />
             <AuthProvider>
               <AppProvider>
                 <RouteSync />

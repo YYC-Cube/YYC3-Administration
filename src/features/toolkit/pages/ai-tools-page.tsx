@@ -136,7 +136,7 @@ const toolConfigs: ToolConfig[] = [
     color: '#00ffcc',
     detailIcon: Lock,
     metrics: [
-      { label: 'tools.metrics.securityScore', value: 'A+', change: '+1级', positive: true },
+      { label: 'tools.metrics.securityScore', value: 'A+', change: 'atp.levelUp', positive: true },
       { label: 'tools.metrics.vulnerabilities', value: '0', change: '-3', positive: true },
       { label: 'tools.metrics.protectionRate', value: '99.97%', change: '+0.02%', positive: true },
       { label: 'tools.metrics.scanCount', value: '1,247', change: '+89', positive: true },
@@ -173,7 +173,12 @@ const toolConfigs: ToolConfig[] = [
       { label: 'tools.metrics.knowledgeNodes', value: '24.6K', change: '+1.2K', positive: true },
       { label: 'tools.metrics.relevance', value: '94.8%', change: '+3.1%', positive: true },
       { label: 'tools.metrics.querySpeed', value: '8ms', change: '-4ms', positive: true },
-      { label: 'tools.metrics.updateFreq', value: '实时', change: '实时', positive: true },
+      {
+        label: 'tools.metrics.updateFreq',
+        value: 'atp.realtime',
+        change: 'atp.realtime',
+        positive: true,
+      },
     ],
     capabilities: [
       'tools.cap.knowledgeGraph',
@@ -661,7 +666,7 @@ export function AIToolsPage() {
               className="text-xl"
               style={{ color: activeTool.color, textShadow: `0 0 10px ${activeTool.color}50` }}
             >
-              {m.value}
+              {t(m.value)}
             </p>
             <p
               className="text-[10px] mt-2 flex items-center gap-1"
@@ -672,7 +677,7 @@ export function AIToolsPage() {
               ) : (
                 <ArrowDownRight className="w-3 h-3" />
               )}
-              {m.change}
+              {t(m.change)}
             </p>
           </NeonCard>
         ))}
@@ -915,7 +920,7 @@ export function AIToolsPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-white/25">{t('tools.execEngine')}</span>
-                <span className="text-[10px] text-white/40">五维闭环 v1.8</span>
+                <span className="text-[10px] text-white/40">{t('atp.engineName')}</span>
               </div>
               {status === 'running' && (
                 <div className="mt-2">

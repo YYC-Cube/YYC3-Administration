@@ -13,9 +13,11 @@ import { useTaskStore } from '../task-board-store'
 
 import type { ReminderType } from '../task-board-data'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 export function RemindersPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+  const { t } = useI18n()
   const reminders = useTaskStore((s) => s.reminders)
   const tasks = useTaskStore((s) => s.tasks)
   const dismissReminder = useTaskStore((s) => s.dismissReminder)
@@ -62,11 +64,11 @@ export function RemindersPanel({ tc }: { tc: ReturnType<typeof useThemeColors> }
               />
               <div>
                 <p className="text-[11px]" style={{ color: tc.textSecondary }}>
-                  {r.message}
+                  {t(r.message)}
                 </p>
                 {task && (
                   <p className="text-[9px] mt-0.5" style={{ color: tc.textMuted }}>
-                    {task.title}
+                    {t(task.title)}
                   </p>
                 )}
               </div>

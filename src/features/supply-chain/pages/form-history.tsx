@@ -13,6 +13,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { FORM_STORAGE_KEY, formTemplates } from './smart-form-data'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { NeonCard } from '@/app/components/neon-card'
 
 // ==========================================
@@ -41,6 +42,7 @@ const templateColorMap: Record<string, string> = {
  * with expandable JSON preview and deletion capability.
  */
 export function FormHistory() {
+  const { t } = useI18n()
   const [submissions, setSubmissions] = useState<SubmissionEntry[]>([])
   const [search, setSearch] = useState('')
   const [filterTemplate, setFilterTemplate] = useState<string>('all')
@@ -72,12 +74,12 @@ export function FormHistory() {
       const q = search.toLowerCase()
       list = list.filter(
         (s) =>
-          s.templateTitle.toLowerCase().includes(q) ||
+          t(s.templateTitle).toLowerCase().includes(q) ||
           JSON.stringify(s.values).toLowerCase().includes(q),
       )
     }
     return list
-  }, [submissions, filterTemplate, search])
+  }, [submissions, filterTemplate, search, t])
 
   // Delete single
   const handleDelete = useCallback(
@@ -113,16 +115,16 @@ export function FormHistory() {
     filtered.forEach((s) => Object.keys(s.values).forEach((k) => allKeys.add(k)))
     const keys = Array.from(allKeys)
 
-    const headers = ['ID', '模板', '提交时间', ...keys]
+    const headers = ['ID', t('fhis.csv.template'), t('fhis.csv.submittedAt'), ...keys]
     const rows = filtered.map((s) => [
       s.id,
-      s.templateTitle,
+      t(s.templateTitle),
       new Date(s.submittedAt).toLocaleString('zh-CN'),
       ...keys.map((k) => {
         const v = s.values[k]
         if (Array.isArray(v)) return v.join('; ')
-        if (v === true) return '是'
-        if (v === false) return '否'
+        if (v === true) return t('fhis.csv.yes')
+        if (v === false) return t('fhis.csv.no')
         return String(v ?? '')
       }),
     ])
@@ -138,16 +140,16 @@ export function FormHistory() {
     a.download = `yyc3_form_export_${Date.now()}.csv`
     a.click()
     URL.revokeObjectURL(url)
-  }, [filtered])
+  }, [filtered, t])
 
   function formatTime(iso: string) {
     try {
       const d = new Date(iso)
       const now = Date.now()
       const diff = now - d.getTime()
-      if (diff < 60000) return '刚刚'
-      if (diff < 3600000) return `${Math.floor(diff / 60000)} 分钟前`
-      if (diff < 86400000) return `${Math.floor(diff / 3600000)} 小时前`
+      if (diff < 60000) return t('fhis.time.justNow')
+      if (diff < 3600000) return t('fhis.time.minutesAgo', { n: Math.floor(diff / 60000) })
+      if (diff < 86400000) return t('fhis.time.hoursAgo', { n: Math.floor(diff / 3600000) })
       return d.toLocaleDateString('zh-CN', {
         month: 'short',
         day: 'numeric',
@@ -179,7 +181,7 @@ export function FormHistory() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="搜索表单内容…"
+            placeholder={t('fhis.search.placeholder')}
             className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl"
             style={{
               background: 'rgba(10,10,10,0.6)',
@@ -211,11 +213,11 @@ export function FormHistory() {
             }}
           >
             <option value="all" style={{ background: '#0a0a0a' }}>
-              全部模板 ({submissions.length})
+              {t('fhis.allTemplates', { n: submissions.length })}
             </option>
-            {formTemplates.map((t) => (
-              <option key={t.id} value={t.id} style={{ background: '#0a0a0a' }}>
-                {t.title} ({templateCounts[t.id] || 0})
+            {formTemplates.map((tpl) => (
+              <option key={tpl.id} value={tpl.id} style={{ background: '#0a0a0a' }}>
+                {t(tpl.title)} ({templateCounts[tpl.id] || 0})
               </option>
             ))}
           </select>
@@ -242,8 +244,8 @@ export function FormHistory() {
         <NeonCard color="#008b9d" hoverable={false}>
           <div className="text-center py-12">
             <ClipboardList className="w-10 h-10 text-white/10 mx-auto mb-3" />
-            <p className="text-sm text-white/30 mb-1">暂无表单记录</p>
-            <p className="text-[10px] text-white/15">提交表单后，历史记录将在此显示</p>
+            <p className="text-sm text-white/30 mb-1">{t('fhis.empty.title')}</p>
+            <p className="text-[10px] text-white/15">{t('fhis.empty.hint')}</p>
           </div>
         </NeonCard>
       )}
@@ -253,7 +255,7 @@ export function FormHistory() {
         <NeonCard color="#008b9d" hoverable={false}>
           <div className="text-center py-8">
             <Search className="w-8 h-8 text-white/10 mx-auto mb-2" />
-            <p className="text-sm text-white/30">没有匹配的记录</p>
+            <p className="text-sm text-white/30">{t('fhis.noMatch')}</p>
           </div>
         </NeonCard>
       )}
@@ -289,7 +291,7 @@ export function FormHistory() {
                     <FileText className="w-4 h-4" style={{ color: `${color}80` }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-white/60 truncate">{sub.templateTitle}</p>
+                    <p className="text-xs text-white/60 truncate">{t(sub.templateTitle)}</p>
                     <p className="text-[9px] text-white/20 flex items-center gap-1.5">
                       <Clock className="w-2.5 h-2.5" />
                       {formatTime(sub.submittedAt)}
@@ -303,7 +305,7 @@ export function FormHistory() {
                       border: '1px solid rgba(255,255,255,0.05)',
                     }}
                   >
-                    {Object.keys(sub.values).length} 字段
+                    {t('fhis.fieldCount', { n: Object.keys(sub.values).length })}
                   </span>
                   {isExpanded ? (
                     <ChevronDown className="w-4 h-4 text-white/20 shrink-0" />
@@ -357,7 +359,9 @@ export function FormHistory() {
                             className="flex items-center gap-1.5"
                             style={{ animation: 'spring-in 0.2s var(--spring-easing) both' }}
                           >
-                            <span className="text-[9px] text-[#005f73]">确认删除？</span>
+                            <span className="text-[9px] text-[#005f73]">
+                              {t('fhis.confirmDelete')}
+                            </span>
                             <button
                               onClick={() => handleDelete(sub.id)}
                               className="px-2 py-1 rounded-lg text-[9px] transition-all"
@@ -367,7 +371,7 @@ export function FormHistory() {
                                 color: '#005f73',
                               }}
                             >
-                              删除
+                              {t('fhis.delete')}
                             </button>
                             <button
                               onClick={() => setConfirmDeleteId(null)}
@@ -377,7 +381,7 @@ export function FormHistory() {
                                 border: '1px solid rgba(255,255,255,0.06)',
                               }}
                             >
-                              取消
+                              {t('fhis.cancel')}
                             </button>
                           </div>
                         ) : (
@@ -405,7 +409,7 @@ export function FormHistory() {
           style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
         >
           <span className="text-[10px] text-white/15">
-            共 {submissions.length} 条记录 · 显示 {filtered.length} 条
+            {t('fhis.recordStats', { total: submissions.length, shown: filtered.length })}
           </span>
           {submissions.length > 0 && (
             <button
@@ -413,7 +417,7 @@ export function FormHistory() {
               className="text-[10px] text-white/15 hover:text-[#005f73] transition-colors flex items-center gap-1"
             >
               <Trash2 className="w-3 h-3" />
-              清空全部
+              {t('fhis.clearAll')}
             </button>
           )}
         </div>

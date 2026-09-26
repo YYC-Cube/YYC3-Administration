@@ -34,6 +34,10 @@ function userMessage(content: string): ChatMessage {
   return { role: 'user', content }
 }
 
+// mock 内容现以 i18n 键存储；测试注入 t 返回含原始关键词的长句以校验 mock 通路
+const mockT = (k: string) =>
+  '建议使用 useMemo、immer 与 useThemeColors，观察 useWebSocket 及 AbortController，系统检测 react-window 性能'
+
 // ==========================================
 // Test Suite: Mock Provider
 // ==========================================
@@ -77,7 +81,13 @@ describe('AIProxyService — Mock Provider', () => {
 
   it('should return one of the predefined mock responses', async () => {
     const config = mockConfig()
-    const result = await aiProxyService.chat(config, [userMessage('Any question')])
+    const result = await aiProxyService.chat(
+      config,
+      [userMessage('Any question')],
+      undefined,
+      undefined,
+      mockT,
+    )
 
     // All mock responses contain Chinese characters or code blocks
     expect(
@@ -330,9 +340,13 @@ describe('AIProxyService — chatStream Mock Streaming', () => {
   it('should reconstruct full content from streamed tokens', async () => {
     const config = mockConfig()
     let fullContent = ''
-    for await (const chunk of aiProxyService.chatStream(config, [
-      userMessage('Tell me about hooks'),
-    ])) {
+    for await (const chunk of aiProxyService.chatStream(
+      config,
+      [userMessage('Tell me about hooks')],
+      undefined,
+      undefined,
+      mockT,
+    )) {
       if (!chunk.done) fullContent += chunk.token
     }
     expect(fullContent.length).toBeGreaterThan(10)
@@ -427,7 +441,13 @@ describe('AIProxyService — chatStream Mock Streaming', () => {
   it('should yield non-empty tokens before done signal', async () => {
     const config = mockConfig()
     const nonEmptyTokens: string[] = []
-    for await (const chunk of aiProxyService.chatStream(config, [userMessage('Test')])) {
+    for await (const chunk of aiProxyService.chatStream(
+      config,
+      [userMessage('Test')],
+      undefined,
+      undefined,
+      mockT,
+    )) {
       if (!chunk.done && chunk.token.length > 0) {
         nonEmptyTokens.push(chunk.token)
       }
@@ -440,7 +460,13 @@ describe('AIProxyService — chatStream Mock Streaming', () => {
     const config = mockConfig()
     const start = Date.now()
     let tokenCount = 0
-    for await (const chunk of aiProxyService.chatStream(config, [userMessage('Test')])) {
+    for await (const chunk of aiProxyService.chatStream(
+      config,
+      [userMessage('Test')],
+      undefined,
+      undefined,
+      mockT,
+    )) {
       tokenCount++
       if (chunk.done) break
     }
@@ -495,7 +521,13 @@ describe('AIProxyService — chatStream Token Estimation', () => {
   it('should produce content that can be used for token estimation', async () => {
     const config = mockConfig()
     let fullContent = ''
-    for await (const chunk of aiProxyService.chatStream(config, [userMessage('Test')])) {
+    for await (const chunk of aiProxyService.chatStream(
+      config,
+      [userMessage('Test')],
+      undefined,
+      undefined,
+      mockT,
+    )) {
       if (!chunk.done) fullContent += chunk.token
     }
 

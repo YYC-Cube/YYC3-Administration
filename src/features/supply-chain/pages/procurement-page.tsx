@@ -55,11 +55,13 @@ interface PurchaseOrder {
   priority: 'high' | 'medium' | 'low'
 }
 
+// Mock display strings (name/category/title/supplier) are i18n keys (pcp.*);
+// render points must wrap them with t(). Non-key legacy values fall through t() unchanged.
 const mockSuppliers: Supplier[] = [
   {
     id: 'S001',
-    name: '华科电子科技',
-    category: '电子元器件',
+    name: 'pcp.supplier.huake',
+    category: 'pcp.cat.electronics',
     rating: 4.8,
     status: 'active',
     orderCount: 156,
@@ -68,8 +70,8 @@ const mockSuppliers: Supplier[] = [
   },
   {
     id: 'S002',
-    name: '鼎新制造集团',
-    category: '机械零部件',
+    name: 'pcp.supplier.dingxin',
+    category: 'pcp.cat.mechanical',
     rating: 4.6,
     status: 'active',
     orderCount: 89,
@@ -78,8 +80,8 @@ const mockSuppliers: Supplier[] = [
   },
   {
     id: 'S003',
-    name: '远航物流供应链',
-    category: '物流服务',
+    name: 'pcp.supplier.yuanhang',
+    category: 'pcp.cat.logistics',
     rating: 4.5,
     status: 'active',
     orderCount: 234,
@@ -88,8 +90,8 @@ const mockSuppliers: Supplier[] = [
   },
   {
     id: 'S004',
-    name: '瑞丰包装材料',
-    category: '包装材料',
+    name: 'pcp.supplier.ruifeng',
+    category: 'pcp.cat.packaging',
     rating: 4.3,
     status: 'pending',
     orderCount: 45,
@@ -98,8 +100,8 @@ const mockSuppliers: Supplier[] = [
   },
   {
     id: 'S005',
-    name: '星辰软件开发',
-    category: 'IT服务',
+    name: 'pcp.supplier.xingchen',
+    category: 'pcp.cat.itServices',
     rating: 4.7,
     status: 'active',
     orderCount: 67,
@@ -108,8 +110,8 @@ const mockSuppliers: Supplier[] = [
   },
   {
     id: 'S006',
-    name: '恒达化工原料',
-    category: '化工原料',
+    name: 'pcp.supplier.hengda',
+    category: 'pcp.cat.chemicals',
     rating: 3.9,
     status: 'suspended',
     orderCount: 23,
@@ -121,8 +123,8 @@ const mockSuppliers: Supplier[] = [
 const mockOrders: PurchaseOrder[] = [
   {
     id: 'PO-2026-001',
-    title: 'Q3 电子元件批量采购',
-    supplier: '华科电子科技',
+    title: 'pcp.order.electronicsBulk',
+    supplier: 'pcp.supplier.huake',
     amount: '¥580,000',
     status: 'approved',
     date: '2026-07-15',
@@ -130,8 +132,8 @@ const mockOrders: PurchaseOrder[] = [
   },
   {
     id: 'PO-2026-002',
-    title: '精密轴承采购订单',
-    supplier: '鼎新制造集团',
+    title: 'pcp.order.bearingOrder',
+    supplier: 'pcp.supplier.dingxin',
     amount: '¥245,000',
     status: 'inProgress',
     date: '2026-07-14',
@@ -139,8 +141,8 @@ const mockOrders: PurchaseOrder[] = [
   },
   {
     id: 'PO-2026-003',
-    title: '办公设备更新采购',
-    supplier: '星辰软件开发',
+    title: 'pcp.order.officeEquipment',
+    supplier: 'pcp.supplier.xingchen',
     amount: '¥180,000',
     status: 'pending',
     date: '2026-07-13',
@@ -148,8 +150,8 @@ const mockOrders: PurchaseOrder[] = [
   },
   {
     id: 'PO-2026-004',
-    title: '包装材料季度采购',
-    supplier: '瑞丰包装材料',
+    title: 'pcp.order.packagingQuarterly',
+    supplier: 'pcp.supplier.ruifeng',
     amount: '¥95,000',
     status: 'completed',
     date: '2026-07-12',
@@ -157,8 +159,8 @@ const mockOrders: PurchaseOrder[] = [
   },
   {
     id: 'PO-2026-005',
-    title: '实验室试剂采购',
-    supplier: '恒达化工原料',
+    title: 'pcp.order.labReagents',
+    supplier: 'pcp.supplier.hengda',
     amount: '¥320,000',
     status: 'rejected',
     date: '2026-07-11',
@@ -166,8 +168,8 @@ const mockOrders: PurchaseOrder[] = [
   },
   {
     id: 'PO-2026-006',
-    title: '物流服务年度合同',
-    supplier: '远航物流供应链',
+    title: 'pcp.order.logisticsAnnual',
+    supplier: 'pcp.supplier.yuanhang',
     amount: '¥150,000',
     status: 'inProgress',
     date: '2026-07-10',
@@ -403,10 +405,10 @@ export function ProcurementPage() {
                           </div>
                           <div>
                             <p className="text-xs font-medium" style={{ color: tc.textPrimary }}>
-                              {order.title}
+                              {t(order.title)}
                             </p>
                             <p className="text-[10px]" style={{ color: tc.textMuted }}>
-                              {order.supplier} · {order.date}
+                              {t(order.supplier)} · {order.date}
                             </p>
                           </div>
                         </div>
@@ -463,7 +465,7 @@ export function ProcurementPage() {
               </button>
             </div>
             {mockSuppliers
-              .filter((s) => !searchQuery || s.name.includes(searchQuery))
+              .filter((s) => !searchQuery || t(s.name).includes(searchQuery))
               .map((supplier) => {
                 const cfg = statusConfig[supplier.status]
                 return (
@@ -479,7 +481,7 @@ export function ProcurementPage() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-medium" style={{ color: tc.textPrimary }}>
-                              {supplier.name}
+                              {t(supplier.name)}
                             </p>
                             <span
                               className="px-1.5 py-0.5 rounded text-[10px]"
@@ -489,7 +491,7 @@ export function ProcurementPage() {
                             </span>
                           </div>
                           <p className="text-[10px]" style={{ color: tc.textMuted }}>
-                            {supplier.category} · {t('prc.rating')}: {supplier.rating}
+                            {t(supplier.category)} · {t('prc.rating')}: {supplier.rating}
                           </p>
                         </div>
                       </div>
@@ -544,7 +546,7 @@ export function ProcurementPage() {
                       </span>
                     </div>
                     <p className="text-sm font-medium mb-1" style={{ color: tc.textPrimary }}>
-                      {order.title}
+                      {t(order.title)}
                     </p>
                     <div
                       className="flex items-center gap-3 text-[10px]"
@@ -552,7 +554,7 @@ export function ProcurementPage() {
                     >
                       <span className="flex items-center gap-1">
                         <Building2 className="w-3 h-3" />
-                        {order.supplier}
+                        {t(order.supplier)}
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />

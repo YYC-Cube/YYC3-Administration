@@ -18,10 +18,12 @@ import { useCallback } from 'react'
 import type { QuickAccessItem } from '@/features/dev-workspace/panels/panel-types'
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { getFileIcon, timeAgo } from '@/features/dev-workspace/panels/panel-helpers'
 import { usePanelStore } from '@/features/dev-workspace/panels/panel-store'
 
 export function QuickAccessPanel({ tc }: { tc: ThemeColors }) {
+  const { t } = useI18n()
   const { recentFiles, favoriteFiles, toggleFavorite, selectFile, addRecentFile } = usePanelStore()
 
   const handleOpen = useCallback(
@@ -56,7 +58,7 @@ export function QuickAccessPanel({ tc }: { tc: ThemeColors }) {
             className="text-[8px] opacity-0 group-hover:opacity-60 transition-opacity"
             style={{ color: tc.textMuted }}
           >
-            {timeAgo(item.lastAccessed)}
+            {timeAgo(item.lastAccessed, t)}
           </span>
           {showFavBtn && (
             <button
@@ -87,7 +89,7 @@ export function QuickAccessPanel({ tc }: { tc: ThemeColors }) {
         style={{ borderColor: tc.borderSubtle }}
       >
         <span className="text-[11px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-          快捷访问
+          {t('qa.title')}
         </span>
       </div>
       <div className="flex-1 overflow-y-auto">
@@ -96,7 +98,7 @@ export function QuickAccessPanel({ tc }: { tc: ThemeColors }) {
             <div className="flex items-center gap-1.5 px-3 mb-1">
               <Star className="w-3 h-3" style={{ color: '#eab308' }} />
               <span className="text-[9px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-                收藏 ({favoriteFiles.length})
+                {t('qa.favorites', { n: favoriteFiles.length })}
               </span>
             </div>
             {favoriteFiles.map((f) => renderItem(f, true))}
@@ -107,7 +109,7 @@ export function QuickAccessPanel({ tc }: { tc: ThemeColors }) {
             <div className="flex items-center gap-1.5 px-3 mb-1">
               <Clock className="w-3 h-3" style={{ color: '#3b82f6' }} />
               <span className="text-[9px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-                最近 ({recentFiles.length})
+                {t('qa.recent', { n: recentFiles.length })}
               </span>
             </div>
             {recentFiles.slice(0, 10).map((f) => renderItem(f))}
@@ -117,10 +119,10 @@ export function QuickAccessPanel({ tc }: { tc: ThemeColors }) {
           <div className="flex flex-col items-center justify-center py-8 opacity-40">
             <Star className="w-6 h-6 mb-1" style={{ color: tc.textMuted }} />
             <span className="text-[10px]" style={{ color: tc.textMuted }}>
-              暂无最近或收藏文件
+              {t('qa.empty')}
             </span>
             <span className="text-[8px] mt-0.5" style={{ color: tc.textMuted }}>
-              从文件浏览器打开文件后，将在此显示
+              {t('qa.emptyHint')}
             </span>
           </div>
         )}

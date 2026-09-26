@@ -31,43 +31,43 @@ export function NLPProcessingPage() {
   const analyses: TextAnalysis[] = [
     {
       id: 'T001',
-      text: '这个产品真的太好用了！客服态度也特别好，五星好评！',
+      text: 'nlp.review.t1',
       sentiment: 'positive',
       score: 96,
-      keywords: ['产品', '好用', '客服', '好评'],
-      category: '产品反馈',
-      source: '微信评论',
-      timestamp: '5分钟前',
+      keywords: ['nlp.kw.product', 'nlp.kw.easyToUse', 'nlp.kw.cs', 'nlp.kw.praise'],
+      category: 'nlp.cat.productFeedback',
+      source: 'nlp.src.wechat',
+      timestamp: 'nlp.time.5min',
     },
     {
       id: 'T002',
-      text: '活动力度还可以，但物流速度有待提升，希望能改进。',
+      text: 'nlp.review.t2',
       sentiment: 'neutral',
       score: 62,
-      keywords: ['活动', '物流', '速度', '改进'],
-      category: '服务建议',
-      source: '抖音评论',
-      timestamp: '12分钟前',
+      keywords: ['nlp.kw.campaign', 'nlp.kw.logistics', 'nlp.kw.speed', 'nlp.kw.improve'],
+      category: 'nlp.cat.serviceSuggestion',
+      source: 'nlp.src.douyin',
+      timestamp: 'nlp.time.12min',
     },
     {
       id: 'T003',
-      text: '收到的商品和描述不符，非常失望，要求退货！',
+      text: 'nlp.review.t3',
       sentiment: 'negative',
       score: 15,
-      keywords: ['商品', '描述不符', '失望', '退货'],
-      category: '投诉建议',
-      source: '小红书评论',
-      timestamp: '25分钟前',
+      keywords: ['nlp.kw.goods', 'nlp.kw.mismatch', 'nlp.kw.disappointed', 'nlp.kw.refund'],
+      category: 'nlp.cat.complaint',
+      source: 'nlp.src.xiaohongshu',
+      timestamp: 'nlp.time.25min',
     },
     {
       id: 'T004',
-      text: '品牌理念很赞，产品质量优秀，会继续支持！',
+      text: 'nlp.review.t4',
       sentiment: 'positive',
       score: 92,
-      keywords: ['品牌', '理念', '质量', '支持'],
-      category: '品牌认知',
-      source: '微博评论',
-      timestamp: '1小时前',
+      keywords: ['nlp.kw.brand', 'nlp.kw.concept', 'nlp.kw.quality', 'nlp.kw.support'],
+      category: 'nlp.cat.brandAwareness',
+      source: 'nlp.src.weibo',
+      timestamp: 'nlp.time.1hour',
     },
   ]
 
@@ -77,54 +77,54 @@ export function NLPProcessingPage() {
 
   const stats = [
     {
-      label: '已处理文本',
+      label: 'nlp.stat.processed',
       value: '128.5K',
       change: '+32.8%',
       icon: MessageSquare,
       color: tc.primary,
     },
-    { label: '积极情感', value: '78.2%', change: '+5.3%', icon: Heart, color: tc.success },
-    { label: '分类准确率', value: '94.6%', change: '+2.1%', icon: Tag, color: tc.secondary },
-    { label: '响应速度', value: '0.3s', change: '-18.5%', icon: Sparkles, color: tc.accent },
+    { label: 'nlp.stat.positive', value: '78.2%', change: '+5.3%', icon: Heart, color: tc.success },
+    { label: 'nlp.stat.accuracy', value: '94.6%', change: '+2.1%', icon: Tag, color: tc.secondary },
+    { label: 'nlp.stat.responseSpeed', value: '0.3s', change: '-18.5%', icon: Sparkles, color: tc.accent },
   ]
 
   const keywordCloud = [
-    { word: '产品', count: 1250, sentiment: 'positive' },
-    { word: '服务', count: 980, sentiment: 'positive' },
-    { word: '质量', count: 850, sentiment: 'positive' },
-    { word: '物流', count: 620, sentiment: 'neutral' },
-    { word: '客服', count: 580, sentiment: 'positive' },
-    { word: '价格', count: 450, sentiment: 'neutral' },
-    { word: '体验', count: 420, sentiment: 'positive' },
-    { word: '速度', count: 380, sentiment: 'neutral' },
+    { word: 'nlp.kw.product', count: 1250, sentiment: 'positive' },
+    { word: 'nlp.kw.service', count: 980, sentiment: 'positive' },
+    { word: 'nlp.kw.quality', count: 850, sentiment: 'positive' },
+    { word: 'nlp.kw.logistics', count: 620, sentiment: 'neutral' },
+    { word: 'nlp.kw.cs', count: 580, sentiment: 'positive' },
+    { word: 'nlp.kw.price', count: 450, sentiment: 'neutral' },
+    { word: 'nlp.kw.experience', count: 420, sentiment: 'positive' },
+    { word: 'nlp.kw.speed', count: 380, sentiment: 'neutral' },
   ]
 
   const categories = [
-    { name: '产品反馈', count: 3580, positive: 82, neutral: 15, negative: 3 },
-    { name: '服务建议', count: 2150, positive: 68, neutral: 28, negative: 4 },
-    { name: '投诉建议', count: 890, positive: 12, neutral: 25, negative: 63 },
-    { name: '品牌认知', count: 1420, positive: 88, neutral: 10, negative: 2 },
+    { name: 'nlp.cat.productFeedback', count: 3580, positive: 82, neutral: 15, negative: 3 },
+    { name: 'nlp.cat.serviceSuggestion', count: 2150, positive: 68, neutral: 28, negative: 4 },
+    { name: 'nlp.cat.complaint', count: 890, positive: 12, neutral: 25, negative: 63 },
+    { name: 'nlp.cat.brandAwareness', count: 1420, positive: 88, neutral: 10, negative: 2 },
   ]
 
   const getSentimentConfig = (sentiment: TextAnalysis['sentiment']) => {
     switch (sentiment) {
       case 'positive':
         return {
-          label: '积极',
+          label: t('nlp.sentiment.positive'),
           color: tc.success,
           icon: ThumbsUp,
           bgColor: tc.alpha(tc.success, 0.1),
         }
       case 'neutral':
         return {
-          label: '中性',
+          label: t('nlp.sentiment.neutral'),
           color: tc.textMuted,
           icon: MessageSquare,
           bgColor: tc.alpha(tc.textMuted, 0.1),
         }
       case 'negative':
         return {
-          label: '消极',
+          label: t('nlp.sentiment.negative'),
           color: tc.danger,
           icon: ThumbsDown,
           bgColor: tc.alpha(tc.danger, 0.1),
@@ -140,7 +140,7 @@ export function NLPProcessingPage() {
             {t('nav.nlpProcessing')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            情感分析 · 智能分类 · 关键词提取
+            {t('nlp.subtitle')}
           </p>
         </div>
         <div
@@ -149,7 +149,7 @@ export function NLPProcessingPage() {
         >
           <Brain className="w-5 h-5 animate-pulse" style={{ color: tc.primary }} />
           <span className="text-sm font-medium" style={{ color: tc.primary }}>
-            实时分析中
+            {t('nlp.liveAnalysis')}
           </span>
         </div>
       </div>
@@ -166,12 +166,12 @@ export function NLPProcessingPage() {
                   style={{
                     background:
                       stat.change.startsWith('+') ||
-                      (stat.change.startsWith('-') && stat.label === '响应速度')
+                      (stat.change.startsWith('-') && stat.label === 'nlp.stat.responseSpeed')
                         ? tc.alpha(tc.success, 0.1)
                         : tc.alpha(tc.danger, 0.1),
                     color:
                       stat.change.startsWith('+') ||
-                      (stat.change.startsWith('-') && stat.label === '响应速度')
+                      (stat.change.startsWith('-') && stat.label === 'nlp.stat.responseSpeed')
                         ? tc.success
                         : tc.danger,
                   }}
@@ -180,7 +180,7 @@ export function NLPProcessingPage() {
                 </div>
               </div>
               <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-                {stat.label}
+                {t(stat.label)}
               </p>
               <p className="text-2xl font-bold" style={{ color: tc.textPrimary }}>
                 {stat.value}
@@ -193,7 +193,7 @@ export function NLPProcessingPage() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <NeonCard className="p-6">
           <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-            热门关键词
+            {t('nlp.hotKeywords')}
           </h2>
           <div className="flex flex-wrap gap-3">
             {keywordCloud.map((keyword) => {
@@ -213,7 +213,7 @@ export function NLPProcessingPage() {
                     fontWeight: 600,
                   }}
                 >
-                  {keyword.word}
+                  {t(keyword.word)}
                   <span className="ml-2 text-xs" style={{ color: tc.textMuted }}>
                     {keyword.count}
                   </span>
@@ -225,17 +225,17 @@ export function NLPProcessingPage() {
 
         <NeonCard className="p-6">
           <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-            文本分类统计
+            {t('nlp.categoryStats')}
           </h2>
           <div className="space-y-4">
             {categories.map((category) => (
               <div key={category.name}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium" style={{ color: tc.textPrimary }}>
-                    {category.name}
+                    {t(category.name)}
                   </span>
                   <span className="text-sm" style={{ color: tc.textMuted }}>
-                    {category.count} 条
+                    {t('nlp.countUnit', { count: category.count })}
                   </span>
                 </div>
                 <div
@@ -256,9 +256,15 @@ export function NLPProcessingPage() {
                   />
                 </div>
                 <div className="flex items-center gap-4 mt-2 text-xs">
-                  <span style={{ color: tc.success }}>积极 {category.positive}%</span>
-                  <span style={{ color: tc.textMuted }}>中性 {category.neutral}%</span>
-                  <span style={{ color: tc.danger }}>消极 {category.negative}%</span>
+                  <span style={{ color: tc.success }}>
+                    {t('nlp.positivePct', { p: category.positive })}
+                  </span>
+                  <span style={{ color: tc.textMuted }}>
+                    {t('nlp.neutralPct', { p: category.neutral })}
+                  </span>
+                  <span style={{ color: tc.danger }}>
+                    {t('nlp.negativePct', { p: category.negative })}
+                  </span>
                 </div>
               </div>
             ))}
@@ -280,7 +286,7 @@ export function NLPProcessingPage() {
             }}
           >
             {sentiment === 'all'
-              ? '全部'
+              ? t('nlp.all')
               : getSentimentConfig(sentiment as TextAnalysis['sentiment']).label}
           </button>
         ))}
@@ -288,7 +294,7 @@ export function NLPProcessingPage() {
 
       <NeonCard className="p-6">
         <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-          文本分析结果
+          {t('nlp.analysisResults')}
         </h2>
         <div className="space-y-4">
           {filteredAnalyses.map((analysis) => {
@@ -315,17 +321,17 @@ export function NLPProcessingPage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-semibold" style={{ color: tc.textPrimary }}>
-                          {analysis.category}
+                          {t(analysis.category)}
                         </span>
                         <span
                           className="px-2 py-0.5 rounded text-xs font-medium"
                           style={{ background: tc.bgInput, color: tc.textSecondary }}
                         >
-                          {analysis.source}
+                          {t(analysis.source)}
                         </span>
                       </div>
                       <p className="text-xs" style={{ color: tc.textMuted }}>
-                        {analysis.timestamp}
+                        {t(analysis.timestamp)}
                       </p>
                     </div>
                   </div>
@@ -340,13 +346,13 @@ export function NLPProcessingPage() {
                       className="px-3 py-1 rounded-full text-sm font-bold"
                       style={{ background: tc.alpha(tc.primary, 0.15), color: tc.primary }}
                     >
-                      {analysis.score}分
+                      {t('nlp.scoreUnit', { score: analysis.score })}
                     </div>
                   </div>
                 </div>
 
                 <p className="mb-4 text-sm" style={{ color: tc.textPrimary }}>
-                  {analysis.text}
+                  {t(analysis.text)}
                 </p>
 
                 <div className="flex flex-wrap gap-2">
@@ -360,7 +366,7 @@ export function NLPProcessingPage() {
                         border: `1px solid ${tc.alpha(tc.primary, 0.2)}`,
                       }}
                     >
-                      #{keyword}
+                      #{t(keyword)}
                     </span>
                   ))}
                 </div>

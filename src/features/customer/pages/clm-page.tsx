@@ -49,99 +49,99 @@ export function CLMPage() {
   const customers: Customer[] = [
     {
       id: 'C001',
-      name: '张明远',
-      company: '星际科技有限公司',
+      name: 'clm.c1.name',
+      company: 'clm.c1.company',
       phone: '138-0000-1234',
       email: 'zhangmy@startech.com',
       stage: 'loyalty',
       value: 580000,
       healthScore: 92,
-      lastContact: '2天前',
-      nextFollowUp: '本周',
+      lastContact: 'clm.c1.lastContact',
+      nextFollowUp: 'clm.c1.nextFollowUp',
     },
     {
       id: 'C002',
-      name: '李思琪',
-      company: '云端数据服务',
+      name: 'clm.c2.name',
+      company: 'clm.c2.company',
       phone: '139-1111-5678',
       email: 'lisq@clouddata.cn',
       stage: 'closing',
       value: 320000,
       healthScore: 85,
-      lastContact: '昨天',
-      nextFollowUp: '明天',
+      lastContact: 'clm.c2.lastContact',
+      nextFollowUp: 'clm.c2.nextFollowUp',
     },
     {
       id: 'C003',
-      name: '王建华',
-      company: '量子计算科技',
+      name: 'clm.c3.name',
+      company: 'clm.c3.company',
       phone: '137-2222-9012',
       email: 'wangjh@quantum.cn',
       stage: 'conversion',
       value: 180000,
       healthScore: 78,
-      lastContact: '5天前',
-      nextFollowUp: '下周',
+      lastContact: 'clm.c3.lastContact',
+      nextFollowUp: 'clm.c3.nextFollowUp',
     },
     {
       id: 'C004',
-      name: '陈雅文',
-      company: '智链网络科技',
+      name: 'clm.c4.name',
+      company: 'clm.c4.company',
       phone: '136-3333-3456',
       email: 'chenyw@smartchain.com',
       stage: 'service',
       value: 420000,
       healthScore: 95,
-      lastContact: '1天前',
-      nextFollowUp: '本月',
+      lastContact: 'clm.c4.lastContact',
+      nextFollowUp: 'clm.c4.nextFollowUp',
     },
     {
       id: 'C005',
-      name: '赵鹏飞',
-      company: '未来能源集团',
+      name: 'clm.c5.name',
+      company: 'clm.c5.company',
       phone: '135-4444-7890',
       email: 'zhaopf@futureenergy.cn',
       stage: 'acquisition',
       value: 95000,
       healthScore: 65,
-      lastContact: '刚刚',
-      nextFollowUp: '明天',
+      lastContact: 'clm.c5.lastContact',
+      nextFollowUp: 'clm.c5.nextFollowUp',
     },
     {
       id: 'C006',
-      name: '刘雨晴',
-      company: '智云科技有限公司',
+      name: 'clm.c6.name',
+      company: 'clm.c6.company',
       phone: '134-5555-2345',
       email: 'liuyq@smartcloud.com',
       stage: 'loyalty',
       value: 680000,
       healthScore: 98,
-      lastContact: '3天前',
-      nextFollowUp: '下月',
+      lastContact: 'clm.c6.lastContact',
+      nextFollowUp: 'clm.c6.nextFollowUp',
     },
     {
       id: 'C007',
-      name: '孙伟强',
-      company: '创新工坊',
+      name: 'clm.c7.name',
+      company: 'clm.c7.company',
       phone: '133-6666-6789',
       email: 'sunwq@innovation.cn',
       stage: 'conversion',
       value: 150000,
       healthScore: 72,
-      lastContact: '1周前',
-      nextFollowUp: '本周',
+      lastContact: 'clm.c7.lastContact',
+      nextFollowUp: 'clm.c7.nextFollowUp',
     },
     {
       id: 'C008',
-      name: '周婷婷',
-      company: '数字未来科技',
+      name: 'clm.c8.name',
+      company: 'clm.c8.company',
       phone: '132-7777-0123',
       email: 'zhoutt@digitalfuture.com',
       stage: 'closing',
       value: 280000,
       healthScore: 88,
-      lastContact: '昨天',
-      nextFollowUp: '今天',
+      lastContact: 'clm.c8.lastContact',
+      nextFollowUp: 'clm.c8.nextFollowUp',
     },
   ]
 
@@ -163,8 +163,8 @@ export function CLMPage() {
   const filteredCustomers = customers.filter((customer) => {
     const matchesStage = activeStage === 'all' || customer.stage === activeStage
     const matchesSearch =
-      customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      customer.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      translate(customer.name).toLowerCase().includes(searchQuery.toLowerCase()) ||
+      translate(customer.company).toLowerCase().includes(searchQuery.toLowerCase()) ||
       customer.phone.includes(searchQuery)
     return matchesStage && matchesSearch
   })
@@ -177,7 +177,7 @@ export function CLMPage() {
             {translate('clm.title')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            全周期客户管理系统 · AI驱动价值提升
+            {translate('clm.subtitle')}
           </p>
         </div>
         <button
@@ -353,10 +353,10 @@ export function CLMPage() {
                 </div>
 
                 <h3 className="font-semibold mb-1" style={{ color: tc.textPrimary }}>
-                  {customer.name}
+                  {translate(customer.name)}
                 </h3>
                 <p className="text-sm mb-3" style={{ color: tc.textSecondary }}>
-                  {customer.company}
+                  {translate(customer.company)}
                 </p>
 
                 <div
@@ -386,7 +386,9 @@ export function CLMPage() {
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span style={{ color: tc.textMuted }}>{translate('clm.nextFollowUp')}</span>
-                    <span style={{ color: tc.textSecondary }}>{customer.nextFollowUp}</span>
+                    <span style={{ color: tc.textSecondary }}>
+                      {translate(customer.nextFollowUp)}
+                    </span>
                   </div>
                 </div>
 
@@ -403,7 +405,7 @@ export function CLMPage() {
                     }}
                   >
                     <Phone className="w-3 h-3" />
-                    呼叫
+                    {translate('clm.call')}
                   </button>
                   <button
                     className="flex-1 flex items-center justify-center gap-1 py-2 rounded-lg text-xs"
@@ -414,7 +416,7 @@ export function CLMPage() {
                     }}
                   >
                     <Mail className="w-3 h-3" />
-                    邮件
+                    {translate('clm.email')}
                   </button>
                 </div>
               </div>

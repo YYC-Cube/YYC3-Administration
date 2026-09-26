@@ -52,15 +52,15 @@ export function ContactsTab({
       const q = search.toLowerCase()
       r = r.filter(
         (c) =>
-          c.name.toLowerCase().includes(q) ||
-          c.company.toLowerCase().includes(q) ||
+          t(c.name).toLowerCase().includes(q) ||
+          t(c.company).toLowerCase().includes(q) ||
           c.phone.includes(q) ||
-          c.tags.some((t) => t.includes(q)),
+          c.tags.some((tag) => tag.includes(q)),
       )
     }
     if (filterStage) r = r.filter((c) => c.stage === filterStage)
     return r.sort((a, b) => b.aiScore - a.aiScore)
-  }, [contacts, search, filterStage])
+  }, [contacts, search, filterStage, t])
 
   const selected = useMemo(() => contacts.find((c) => c.id === selectedId), [contacts, selectedId])
 
@@ -233,11 +233,11 @@ export function ContactsTab({
                   className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background: `${sm.color}15`, border: `1px solid ${sm.color}25` }}
                 >
-                  <span className="text-[11px] text-white/70">{c.name[0]}</span>
+                  <span className="text-[11px] text-white/70">{t(c.name).charAt(0)}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-white/80 truncate">{c.name}</span>
+                    <span className="text-sm text-white/80 truncate">{t(c.name)}</span>
                     {c.tags.slice(0, 1).map((tag) => (
                       <span
                         key={tag}
@@ -252,7 +252,7 @@ export function ContactsTab({
                     ))}
                   </div>
                   <p className="text-[10px] text-white/25 truncate">
-                    {c.position} · {c.company}
+                    {t(c.position)} · {t(c.company)}
                   </p>
                 </div>
                 <span
@@ -271,7 +271,9 @@ export function ContactsTab({
                 <span className="text-xs text-[#00ffc8] tabular-nums hidden lg:block">
                   ¥{(c.totalValue / 1000).toFixed(0)}K
                 </span>
-                <span className="text-[10px] text-white/15 hidden xl:block">{c.lastContact}</span>
+                <span className="text-[10px] text-white/15 hidden xl:block">
+                  {t(c.lastContact)}
+                </span>
                 {/* Inline actions */}
                 {!batchMode && (
                   <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
@@ -360,11 +362,11 @@ export function ContactsTab({
                 border: `2px solid ${STAGE_META[selected.stage].color}40`,
               }}
             >
-              <span className="text-lg text-white/80">{selected.name[0]}</span>
+              <span className="text-lg text-white/80">{t(selected.name).charAt(0)}</span>
             </div>
-            <h3 className="text-white/90 tracking-wider">{selected.name}</h3>
+            <h3 className="text-white/90 tracking-wider">{t(selected.name)}</h3>
             <p className="text-[10px] text-white/30">
-              {selected.position} · {selected.company}
+              {t(selected.position)} · {t(selected.company)}
             </p>
             <div className="flex justify-center gap-2 mt-3">
               <button
@@ -391,7 +393,12 @@ export function ContactsTab({
             {[
               { label: t('ndb.phone'), value: selected.phone, icon: Phone, color: '#00ffcc' },
               { label: t('ndb.email'), value: selected.email, icon: Mail, color: '#00f0ff' },
-              { label: t('ndb.address'), value: selected.source, icon: MapPin, color: '#00ffc8' },
+              {
+                label: t('ndb.address'),
+                value: t(selected.source),
+                icon: MapPin,
+                color: '#00ffc8',
+              },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2">
                 <item.icon className="w-3 h-3 shrink-0" style={{ color: `${item.color}60` }} />
@@ -441,7 +448,7 @@ export function ContactsTab({
           </div>
           <div className="px-4 pb-4">
             <p className="text-[9px] text-white/20 mb-1">{t('ndb.notes')}</p>
-            <p className="text-[10px] text-white/35">{selected.notes}</p>
+            <p className="text-[10px] text-white/35">{t(selected.notes)}</p>
           </div>
         </div>
       )}

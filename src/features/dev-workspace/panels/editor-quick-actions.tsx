@@ -37,6 +37,7 @@ import { useCallback, useRef, useState } from 'react'
 import type { ChatMessage } from '@/services/ai-proxy-service'
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { usePanelStore } from '@/features/dev-workspace/panels/panel-store'
 import { aiProxyService } from '@/services/ai-proxy-service'
 import { toProviderRequestConfig, useActiveModel } from '@/stores/useAIModelStore'
@@ -57,59 +58,66 @@ export interface QuickAction {
 export const QUICK_ACTIONS: QuickAction[] = [
   {
     id: 'copy',
-    label: '复制',
+    label: 'eq.action.copy.label',
     icon: Copy,
     color: '#6b7280',
-    description: '复制到剪贴板',
+    description: 'eq.action.copy.desc',
     isAI: false,
   },
   {
     id: 'format',
-    label: '格式化',
+    label: 'eq.action.format.label',
     icon: AlignLeft,
     color: '#3b82f6',
-    description: '格式化代码',
+    description: 'eq.action.format.desc',
     isAI: false,
   },
   {
     id: 'explain',
-    label: '解释',
+    label: 'eq.action.explain.label',
     icon: MessageSquare,
     color: '#a78bfa',
-    description: 'AI 代码解释',
+    description: 'eq.action.explain.desc',
     isAI: true,
   },
   {
     id: 'refactor',
-    label: '重构',
+    label: 'eq.action.refactor.label',
     icon: RefreshCw,
     color: '#22c55e',
-    description: 'AI 重构建议',
+    description: 'eq.action.refactor.desc',
     isAI: true,
   },
   {
     id: 'test',
-    label: '测试',
+    label: 'eq.action.test.label',
     icon: TestTube,
     color: '#f97316',
-    description: '生成测试',
+    description: 'eq.action.test.desc',
     isAI: true,
   },
   {
     id: 'docs',
-    label: '文档',
+    label: 'eq.action.docs.label',
     icon: BookOpen,
     color: '#eab308',
-    description: '生成文档',
+    description: 'eq.action.docs.desc',
     isAI: true,
   },
-  { id: 'debug', label: '调试', icon: Bug, color: '#ef4444', description: '查找问题', isAI: true },
+  {
+    id: 'debug',
+    label: 'eq.action.debug.label',
+    icon: Bug,
+    color: '#ef4444',
+    description: 'eq.action.debug.desc',
+    isAI: true,
+  },
   {
     id: 'optimize',
-    label: '优化',
+    label: 'eq.action.optimize.label',
     icon: Wand2,
     color: '#ec4899',
-    description: 'AI 优化',
+    description: 'eq.action.optimize.desc',
     isAI: true,
   },
 ]
@@ -213,18 +221,36 @@ ${codeSnippet}
 // Mock 回退响应
 // ==========================================
 
-export function getMockResponse(actionId: string, fileName: string, contentLength: number): string {
-  const responses: Record<string, string> = {
-    copy: '已复制到剪贴板！',
-    format: `已格式化 ${fileName} — 应用 Prettier 规则 (printWidth: 100, semi: true, singleQuote: false)`,
-    explain: `**${fileName}** 分析：\n• 此模块导出一个使用 Hooks 模式的 React 组件\n• 使用 Zustand 进行状态管理（含 persist 中间件）\n• 使用 Tailwind CSS 工具类实现响应式布局\n• 包含约 ${Math.floor(contentLength / 40)} 个逻辑块`,
-    refactor: `${fileName} 重构建议：\n• 将内联样式抽取为 CSS 变量\n• 使用 useCallback 记忆化回调函数\n• 拆分为更小的子组件\n• 添加错误边界提高健壮性`,
-    test: `${fileName} 测试大纲：\n• 单元测试：组件正常渲染\n• 单元测试：交互时状态正确更新\n• 集成测试：跨 Store 同步正常\n• 快照测试：UI 匹配预期输出`,
-    docs: `${fileName} 文档已生成：\n• 添加了 JSDoc 注解\n• 生成了 README 使用示例\n• 为复杂逻辑添加了行内注释\n• TypeScript 接口文档已更新`,
-    debug: `${fileName} 发现的问题：\n• ⚠️ 异步操作缺少错误处理\n• ⚠️ 潜在内存泄漏：事件监听器清理\n• ℹ️ 建议添加加载状态\n• ✅ 类型安全性良好`,
-    optimize: `${fileName} 优化建议：\n• 懒加载重型依赖（Monaco 等）\n• 对纯展示组件使用 React.memo\n• 对搜索/过滤操作添加防抖\n• 预计包体积缩减约 ${Math.floor(Math.random() * 15 + 5)}%`,
+export function getMockResponse(
+  actionId: string,
+  fileName: string,
+  contentLength: number,
+  t?: (key: string, params?: Record<string, string | number>) => string,
+): string {
+  if (!t) {
+    const responses: Record<string, string> = {
+      copy: '已复制到剪贴板！',
+      format: `已格式化 ${fileName} — 应用 Prettier 规则 (printWidth: 100, semi: true, singleQuote: false)`,
+      explain: `**${fileName}** 分析：\n• 此模块导出一个使用 Hooks 模式的 React 组件\n• 使用 Zustand 进行状态管理（含 persist 中间件）\n• 使用 Tailwind CSS 工具类实现响应式布局\n• 包含约 ${Math.floor(contentLength / 40)} 个逻辑块`,
+      refactor: `${fileName} 重构建议：\n• 将内联样式抽取为 CSS 变量\n• 使用 useCallback 记忆化回调函数\n• 拆分为更小的子组件\n• 添加错误边界提高健壮性`,
+      test: `${fileName} 测试大纲：\n• 单元测试：组件正常渲染\n• 单元测试：交互时状态正确更新\n• 集成测试：跨 Store 同步正常\n• 快照测试：UI 匹配预期输出`,
+      docs: `${fileName} 文档已生成：\n• 添加了 JSDoc 注解\n• 生成了 README 使用示例\n• 为复杂逻辑添加了行内注释\n• TypeScript 接口文档已更新`,
+      debug: `${fileName} 发现的问题：\n• ⚠️ 异步操作缺少错误处理\n• ⚠️ 潜在内存泄漏：事件监听器清理\n• ℹ️ 建议添加加载状态\n• ✅ 类型安全性良好`,
+      optimize: `${fileName} 优化建议：\n• 懒加载重型依赖（Monaco 等）\n• 对纯展示组件使用 React.memo\n• 对搜索/过滤操作添加防抖\n• 预计包体积缩减约 ${Math.floor(Math.random() * 15 + 5)}%`,
+    }
+    return responses[actionId] ?? '操作已完成。'
   }
-  return responses[actionId] ?? '操作已完成。'
+  const responses: Record<string, string> = {
+    copy: t('eq.mock.copy'),
+    format: t('eq.mock.format', { fileName }),
+    explain: t('eq.mock.explain', { fileName, blocks: Math.floor(contentLength / 40) }),
+    refactor: t('eq.mock.refactor', { fileName }),
+    test: t('eq.mock.test', { fileName }),
+    docs: t('eq.mock.docs', { fileName }),
+    debug: t('eq.mock.debug', { fileName }),
+    optimize: t('eq.mock.optimize', { fileName, pct: Math.floor(Math.random() * 15 + 5) }),
+  }
+  return responses[actionId] ?? t('eq.mock.fallback')
 }
 
 // ==========================================
@@ -245,6 +271,7 @@ export function EditorQuickActions({
   editorInsertRef,
 }: EditorQuickActionsProps) {
   const { addAIMessage } = usePanelStore()
+  const { t } = useI18n()
   const activeModel = useActiveModel()
   const providerConfig = toProviderRequestConfig(activeModel)
   const [activeAction, setActiveAction] = useState<string | null>(null)
@@ -281,7 +308,7 @@ export function EditorQuickActions({
         } catch {
           /* fallback */
         }
-        setResult({ action: action.id, content: '已复制到剪贴板！', isAI: false })
+        setResult({ action: action.id, content: t('eq.mock.copy'), isAI: false })
         setActiveAction(null)
         return
       }
@@ -290,7 +317,7 @@ export function EditorQuickActions({
         await new Promise((r) => setTimeout(r, 300))
         setResult({
           action: action.id,
-          content: `已格式化 ${fileName} — 应用 Prettier 规则 (printWidth: 100, semi: true, singleQuote: false)`,
+          content: t('eq.mock.format', { fileName }),
           isAI: false,
         })
         setActiveAction(null)
@@ -305,7 +332,7 @@ export function EditorQuickActions({
           if (messages.length === 0) {
             setResult({
               action: action.id,
-              content: getMockResponse(action.id, fileName, content.length),
+              content: getMockResponse(action.id, fileName, content.length, t),
               isAI: false,
             })
             setActiveAction(null)
@@ -328,6 +355,7 @@ export function EditorQuickActions({
             messages,
             abortRef.current.signal,
             { filePath, content: content.substring(0, 6000) },
+            t,
           )
 
           for await (const chunk of stream) {
@@ -351,7 +379,7 @@ export function EditorQuickActions({
           addAIMessage({
             id: crypto.randomUUID(),
             role: 'user',
-            content: `[快捷操作: ${action.label}] ${fileName} (${isRealProvider ? `${providerConfig.provider}/${providerConfig.model}` : '模拟'})`,
+            content: `[${t('eq.chatPrefix', { label: t(action.label) })}] ${fileName} (${isRealProvider ? `${providerConfig.provider}/${providerConfig.model}` : t('eq.mock')})`,
             timestamp: Date.now(),
           })
           addAIMessage({
@@ -361,14 +389,14 @@ export function EditorQuickActions({
             timestamp: Date.now(),
           })
         } catch (err: unknown) {
-          const errorMessage = err instanceof Error ? err.message : 'AI 请求失败。'
+          const errorMessage = err instanceof Error ? err.message : t('eq.errorRequestFailed')
           if (err instanceof Error && err.name === 'AbortError') {
-            setError('操作已取消。')
+            setError(t('eq.errorCancelled'))
           } else {
             setError(errorMessage)
             setResult({
               action: action.id,
-              content: getMockResponse(action.id, fileName, content.length),
+              content: getMockResponse(action.id, fileName, content.length, t),
               isAI: false,
             })
           }
@@ -381,7 +409,7 @@ export function EditorQuickActions({
 
       setActiveAction(null)
     },
-    [filePath, editorContentGetter, addAIMessage, providerConfig, isRealProvider],
+    [filePath, editorContentGetter, addAIMessage, providerConfig, isRealProvider, t],
   )
 
   const handleCancel = useCallback(() => {
@@ -417,7 +445,7 @@ export function EditorQuickActions({
                 color: isActive ? action.color : tc.textMuted,
                 opacity: activeAction && !isActive ? 0.4 : 1,
               }}
-              title={`${action.description}${action.isAI && isRealProvider ? ` (${providerConfig.provider} 流式)` : action.isAI ? ' (模拟)' : ''}`}
+              title={`${t(action.description)}${action.isAI && isRealProvider ? ` (${t('eq.providerStreaming', { provider: providerConfig.provider })})` : action.isAI ? ` (${t('eq.mock')})` : ''}`}
             >
               {isActive ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -426,7 +454,7 @@ export function EditorQuickActions({
               ) : (
                 <Icon className="w-3 h-3" />
               )}
-              {action.label}
+              {t(action.label)}
               {action.isAI && isRealProvider && (
                 <Zap className="w-2 h-2 ml-0.5" style={{ color: '#f59e0b' }} />
               )}
@@ -441,7 +469,7 @@ export function EditorQuickActions({
             className="text-[8px] px-1.5 py-0.5 rounded-md hover:bg-white/5 shrink-0 ml-auto"
             style={{ color: '#ef4444' }}
           >
-            取消
+            {t('eq.cancel')}
           </button>
         )}
 
@@ -454,7 +482,9 @@ export function EditorQuickActions({
               color: isRealProvider ? '#f59e0b' : tc.textMuted,
             }}
           >
-            {isRealProvider ? `${providerConfig.provider} 流式` : '模拟'}
+            {isRealProvider
+              ? t('eq.providerStreaming', { provider: providerConfig.provider })
+              : t('eq.mock')}
           </span>
         )}
       </div>
@@ -510,7 +540,7 @@ export function EditorQuickActions({
                     >
                       {result.provider}{' '}
                       {result.streaming
-                        ? '· 流式传输中...'
+                        ? `· ${t('eq.streaming')}`
                         : result.latencyMs
                           ? `· ${result.latencyMs}ms`
                           : ''}
@@ -540,10 +570,10 @@ export function EditorQuickActions({
                     onClick={handleInsertToEditor}
                     className="text-[7px] px-1.5 py-0.5 rounded-md border transition-all hover:bg-white/5 flex items-center gap-0.5"
                     style={{ borderColor: `${tc.primary}30`, color: tc.primary }}
-                    title="插入到编辑器光标位置"
+                    title={t('eq.insertTooltip')}
                   >
                     <ArrowDownToLine className="w-2.5 h-2.5" />
-                    插入
+                    {t('eq.insert')}
                   </button>
                 )}
                 <button

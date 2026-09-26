@@ -6,10 +6,12 @@
 import { Droplets, Palette } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { useThemeSwitcher } from '@/app/components/theme-switcher-context'
 
 export function ThemeSwitcherButton() {
   const { theme, toggleTheme } = useThemeSwitcher()
+  const { t } = useI18n()
   const isCyberpunk = theme === 'cyberpunk'
 
   return (
@@ -19,7 +21,7 @@ export function ThemeSwitcherButton() {
       className="relative group"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      title={isCyberpunk ? '切换到液态玻璃主题' : '切换到赛博朋克主题'}
+      title={isCyberpunk ? t('tsb.switchToLiquid') : t('tsb.switchToCyberpunk')}
       style={{
         background: isCyberpunk
           ? 'linear-gradient(135deg, rgba(0,240,255,0.15), rgba(0,212,255,0.1))'
@@ -73,7 +75,7 @@ export function ThemeSwitcherButton() {
           border: `1px solid ${isCyberpunk ? 'rgba(0,240,255,0.2)' : 'rgba(0,255,135,0.2)'}`,
         }}
       >
-        {isCyberpunk ? '赛博朋克' : '液态玻璃'}
+        {isCyberpunk ? t('tsb.themeCyberpunk') : t('tsb.themeLiquid')}
       </span>
 
       {/* 悬停光晕 */}
@@ -95,6 +97,7 @@ export function ThemeSwitcherButton() {
  */
 export function ThemeSwitcherButtonCompact() {
   const { theme, toggleTheme } = useThemeSwitcher()
+  const { t } = useI18n()
   const isCyberpunk = theme === 'cyberpunk'
 
   return (
@@ -104,7 +107,7 @@ export function ThemeSwitcherButtonCompact() {
       data-testid="theme-switcher"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      title={isCyberpunk ? '切换到液态玻璃主题' : '切换到赛博朋克主题'}
+      title={isCyberpunk ? t('tsb.switchToLiquid') : t('tsb.switchToCyberpunk')}
       style={{
         background: isCyberpunk ? 'rgba(0,240,255,0.1)' : 'rgba(0,255,135,0.1)',
         border: `1px solid ${isCyberpunk ? 'rgba(0,240,255,0.3)' : 'rgba(0,255,135,0.3)'}`,

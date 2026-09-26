@@ -43,12 +43,12 @@ export function CustomerAcquisitionPage() {
   const leads: Lead[] = [
     {
       id: 'L001',
-      name: '张明',
-      company: '某科技有限公司',
-      position: '市场总监',
+      name: 'acq.lead1.name',
+      company: 'acq.lead1.company',
+      position: 'acq.lead1.position',
       email: 'zhang.ming@example.com',
       phone: '138****5678',
-      source: '抖音广告',
+      source: 'acq.source.douyin',
       score: 92,
       status: 'qualified',
       createdAt: '2024-06-03 14:30',
@@ -56,12 +56,12 @@ export function CustomerAcquisitionPage() {
     },
     {
       id: 'L002',
-      name: '李娜',
-      company: '某电商平台',
-      position: '运营经理',
+      name: 'acq.lead2.name',
+      company: 'acq.lead2.company',
+      position: 'acq.lead2.position',
       email: 'li.na@example.com',
       phone: '139****8765',
-      source: '微信公众号',
+      source: 'acq.source.wechat',
       score: 88,
       status: 'contacted',
       createdAt: '2024-06-03 10:15',
@@ -69,12 +69,12 @@ export function CustomerAcquisitionPage() {
     },
     {
       id: 'L003',
-      name: '王强',
-      company: '某零售集团',
-      position: '数字化主管',
+      name: 'acq.lead3.name',
+      company: 'acq.lead3.company',
+      position: 'acq.lead3.position',
       email: 'wang.qiang@example.com',
       phone: '136****4321',
-      source: '小红书',
+      source: 'acq.source.xiaohongshu',
       score: 85,
       status: 'new',
       createdAt: '2024-06-03 09:20',
@@ -82,12 +82,12 @@ export function CustomerAcquisitionPage() {
     },
     {
       id: 'L004',
-      name: '陈静',
-      company: '某连锁品牌',
-      position: '品牌经理',
+      name: 'acq.lead4.name',
+      company: 'acq.lead4.company',
+      position: 'acq.lead4.position',
       email: 'chen.jing@example.com',
       phone: '137****9012',
-      source: '百度搜索',
+      source: 'acq.source.baidu',
       score: 78,
       status: 'new',
       createdAt: '2024-06-02 16:45',
@@ -102,28 +102,28 @@ export function CustomerAcquisitionPage() {
 
   const stats = [
     {
-      label: '新增线索',
+      label: t('acq.stats.newLeads'),
       value: '247',
       change: '+18.5%',
       icon: UserPlus,
       color: tc.primary,
     },
     {
-      label: '转化率',
+      label: t('acq.stats.convRate'),
       value: '24.8%',
       change: '+3.2%',
       icon: Target,
       color: tc.success,
     },
     {
-      label: '获客成本',
+      label: t('acq.stats.cac'),
       value: '¥156',
       change: '-12.3%',
       icon: DollarSign,
       color: tc.secondary,
     },
     {
-      label: '预计价值',
+      label: t('acq.stats.estValue'),
       value: '¥2.4M',
       change: '+25.6%',
       icon: TrendingUp,
@@ -132,22 +132,38 @@ export function CustomerAcquisitionPage() {
   ]
 
   const sourceStats = [
-    { source: '抖音广告', leads: 82, conversion: 28, cost: 145, color: tc.primary },
-    { source: '微信公众号', leads: 65, conversion: 22, cost: 98, color: tc.secondary },
-    { source: '小红书', leads: 48, conversion: 18, cost: 178, color: tc.accent },
-    { source: '百度搜索', leads: 52, conversion: 15, cost: 220, color: tc.warning },
+    { source: 'acq.source.douyin', leads: 82, conversion: 28, cost: 145, color: tc.primary },
+    { source: 'acq.source.wechat', leads: 65, conversion: 22, cost: 98, color: tc.secondary },
+    { source: 'acq.source.xiaohongshu', leads: 48, conversion: 18, cost: 178, color: tc.accent },
+    { source: 'acq.source.baidu', leads: 52, conversion: 15, cost: 220, color: tc.warning },
   ]
 
   const getStatusConfig = (status: Lead['status']) => {
     switch (status) {
       case 'new':
-        return { label: '新线索', color: tc.primary, bgColor: tc.alpha(tc.primary, 0.15) }
+        return {
+          label: t('acq.status.new'),
+          color: tc.primary,
+          bgColor: tc.alpha(tc.primary, 0.15),
+        }
       case 'contacted':
-        return { label: '已联系', color: tc.secondary, bgColor: tc.alpha(tc.secondary, 0.15) }
+        return {
+          label: t('acq.status.contacted'),
+          color: tc.secondary,
+          bgColor: tc.alpha(tc.secondary, 0.15),
+        }
       case 'qualified':
-        return { label: '已认证', color: tc.success, bgColor: tc.alpha(tc.success, 0.15) }
+        return {
+          label: t('acq.status.qualified'),
+          color: tc.success,
+          bgColor: tc.alpha(tc.success, 0.15),
+        }
       case 'converted':
-        return { label: '已转化', color: tc.accent, bgColor: tc.alpha(tc.accent, 0.15) }
+        return {
+          label: t('acq.status.converted'),
+          color: tc.accent,
+          bgColor: tc.alpha(tc.accent, 0.15),
+        }
     }
   }
 
@@ -167,7 +183,7 @@ export function CustomerAcquisitionPage() {
             {t('nav.customerAcquisition')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            AI智能获客 · 精准定向 · 成本优化
+            {t('acq.subtitle')}
           </p>
         </div>
         <button
@@ -179,7 +195,7 @@ export function CustomerAcquisitionPage() {
           }}
         >
           <UserPlus className="w-5 h-5" />
-          添加线索
+          {t('acq.addLead')}
         </button>
       </div>
 
@@ -219,7 +235,7 @@ export function CustomerAcquisitionPage() {
         <div className="flex items-center gap-3 mb-6">
           <Brain className="w-6 h-6" style={{ color: tc.primary }} />
           <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-            AI获客洞察
+            {t('acq.insight.title')}
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -233,11 +249,11 @@ export function CustomerAcquisitionPage() {
             <div className="flex items-center gap-2 mb-3">
               <Zap className="w-5 h-5" style={{ color: tc.primary }} />
               <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                最佳获客时段
+                {t('acq.insight.bestTime')}
               </h3>
             </div>
             <p className="text-sm" style={{ color: tc.textSecondary }}>
-              周二、周四上午10:00-11:30转化率提升35%，建议优先投放
+              {t('acq.insight.bestTimeDesc')}
             </p>
           </div>
           <div
@@ -250,11 +266,11 @@ export function CustomerAcquisitionPage() {
             <div className="flex items-center gap-2 mb-3">
               <Target className="w-5 h-5" style={{ color: tc.secondary }} />
               <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                高价值人群
+                {t('acq.insight.highValue')}
               </h3>
             </div>
             <p className="text-sm" style={{ color: tc.textSecondary }}>
-              30-45岁企业决策者转化价值高出平均值2.8倍，建议精准定向
+              {t('acq.insight.highValueDesc')}
             </p>
           </div>
           <div
@@ -267,11 +283,11 @@ export function CustomerAcquisitionPage() {
             <div className="flex items-center gap-2 mb-3">
               <Award className="w-5 h-5" style={{ color: tc.success }} />
               <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                优质渠道组合
+                {t('acq.insight.bestChannel')}
               </h3>
             </div>
             <p className="text-sm" style={{ color: tc.textSecondary }}>
-              抖音+微信组合投放ROI提升42%，建议增加跨渠道协同策略
+              {t('acq.insight.bestChannelDesc')}
             </p>
           </div>
         </div>
@@ -280,7 +296,7 @@ export function CustomerAcquisitionPage() {
       {/* 渠道表现 */}
       <NeonCard className="p-6">
         <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-          获客渠道表现
+          {t('acq.channelPerformance')}
         </h2>
         <div className="space-y-4">
           {sourceStats.map((source) => {
@@ -296,7 +312,7 @@ export function CustomerAcquisitionPage() {
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                    {source.source}
+                    {t(source.source)}
                   </h3>
                   <div
                     className="px-3 py-1 rounded-full text-sm font-bold"
@@ -305,13 +321,13 @@ export function CustomerAcquisitionPage() {
                       color: source.color,
                     }}
                   >
-                    转化率 {conversionRate}%
+                    {t('acq.conversionRate', { rate: conversionRate })}
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <div>
                     <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                      线索数量
+                      {t('acq.leadCount')}
                     </p>
                     <p className="text-lg font-bold" style={{ color: tc.textPrimary }}>
                       {source.leads}
@@ -319,7 +335,7 @@ export function CustomerAcquisitionPage() {
                   </div>
                   <div>
                     <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                      转化数
+                      {t('acq.conversions')}
                     </p>
                     <p className="text-lg font-bold" style={{ color: tc.success }}>
                       {source.conversion}
@@ -327,7 +343,7 @@ export function CustomerAcquisitionPage() {
                   </div>
                   <div>
                     <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                      获客成本
+                      {t('acq.cost')}
                     </p>
                     <p className="text-lg font-bold" style={{ color: tc.secondary }}>
                       ¥{source.cost}
@@ -354,7 +370,7 @@ export function CustomerAcquisitionPage() {
               boxShadow: selectedStatus === status ? tc.neonGlow(tc.primary, 0.3) : 'none',
             }}
           >
-            {status === 'all' ? '全部线索' : getStatusConfig(status as Lead['status']).label}
+            {status === 'all' ? t('acq.allLeads') : getStatusConfig(status as Lead['status']).label}
           </button>
         ))}
       </div>
@@ -387,14 +403,14 @@ export function CustomerAcquisitionPage() {
                             color: tc.primary,
                           }}
                         >
-                          {lead.name.charAt(0)}
+                          {t(lead.name).charAt(0)}
                         </div>
                         <div>
                           <h3 className="font-bold" style={{ color: tc.textPrimary }}>
-                            {lead.name}
+                            {t(lead.name)}
                           </h3>
                           <p className="text-sm" style={{ color: tc.textSecondary }}>
-                            {lead.position} · {lead.company}
+                            {t(lead.position)} · {t(lead.company)}
                           </p>
                         </div>
                       </div>
@@ -416,7 +432,7 @@ export function CustomerAcquisitionPage() {
                     <div className="space-y-3">
                       <div>
                         <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                          线索状态
+                          {t('acq.leadStatus')}
                         </p>
                         <div
                           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium"
@@ -430,7 +446,7 @@ export function CustomerAcquisitionPage() {
                       </div>
                       <div>
                         <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                          来源渠道
+                          {t('acq.sourceChannel')}
                         </p>
                         <span
                           className="inline-block px-3 py-1 rounded text-sm font-medium"
@@ -439,7 +455,7 @@ export function CustomerAcquisitionPage() {
                             color: tc.textPrimary,
                           }}
                         >
-                          {lead.source}
+                          {t(lead.source)}
                         </span>
                       </div>
                     </div>
@@ -450,7 +466,7 @@ export function CustomerAcquisitionPage() {
                     <div className="space-y-3">
                       <div>
                         <p className="text-xs mb-2" style={{ color: tc.textMuted }}>
-                          AI评分
+                          {t('acq.aiScore')}
                         </p>
                         <div className="flex items-center gap-3">
                           <div
@@ -473,7 +489,7 @@ export function CustomerAcquisitionPage() {
                       </div>
                       <div>
                         <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                          预计价值
+                          {t('acq.estValue')}
                         </p>
                         <p className="text-xl font-bold" style={{ color: tc.primary }}>
                           ¥{lead.value.toLocaleString()}
@@ -490,7 +506,7 @@ export function CustomerAcquisitionPage() {
                         }}
                       >
                         <MessageSquare className="w-4 h-4" />
-                        联系
+                        {t('acq.contact')}
                       </button>
                       <button
                         className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
@@ -500,7 +516,7 @@ export function CustomerAcquisitionPage() {
                           border: `1px solid ${tc.borderSubtle}`,
                         }}
                       >
-                        详情
+                        {t('acq.details')}
                       </button>
                     </div>
                   </div>

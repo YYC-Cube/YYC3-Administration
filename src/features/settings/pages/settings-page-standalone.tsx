@@ -55,14 +55,6 @@ interface LangOption {
 const LANGUAGES: LangOption[] = [
   { code: 'zh', label: '简体中文', englishLabel: 'Chinese (Simplified)', flag: '🇨🇳' },
   { code: 'en', label: 'English', englishLabel: 'English', flag: '🇺🇸' },
-  { code: 'ja', label: '日本語', englishLabel: 'Japanese', flag: '🇯🇵' },
-  { code: 'zh-TW', label: '繁體中文', englishLabel: 'Chinese (Traditional)', flag: '🇹🇼' },
-  { code: 'ko', label: '한국어', englishLabel: 'Korean', flag: '🇰🇷' },
-  { code: 'fr', label: 'Français', englishLabel: 'French', flag: '🇫🇷' },
-  { code: 'de', label: 'Deutsch', englishLabel: 'German', flag: '🇩🇪' },
-  { code: 'es', label: 'Español', englishLabel: 'Spanish', flag: '🇪🇸' },
-  { code: 'ar', label: 'العربية', englishLabel: 'Arabic', flag: '🇸🇦', dir: 'rtl' },
-  { code: 'pt-BR', label: 'Português (BR)', englishLabel: 'Portuguese (Brazil)', flag: '🇧🇷' },
 ]
 
 // ==========================================

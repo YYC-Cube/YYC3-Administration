@@ -61,76 +61,78 @@ interface InOutRecord {
   note: string
 }
 
+// Mock display strings (name/category/warehouse/unit/operator/note) are i18n keys (ivp.*);
+// render points must wrap them with t(). Non-key legacy values fall through t() unchanged.
 const mockInventory: InventoryItem[] = [
   {
     id: 'I001',
-    name: '精密轴承 6205',
+    name: 'ivp.item.bearing6205',
     sku: 'BRG-6205-001',
-    category: '机械零部件',
-    warehouse: 'A-主仓库',
+    category: 'ivp.cat.mechanical',
+    warehouse: 'ivp.wh.main',
     quantity: 1250,
     safetyStock: 500,
-    unit: '个',
+    unit: 'ivp.unit.piece',
     status: 'normal',
     lastUpdated: '2026-07-15',
   },
   {
     id: 'I002',
-    name: 'MCU 控制芯片 STM32',
+    name: 'ivp.item.mcuChip',
     sku: 'IC-STM32-002',
-    category: '电子元器件',
-    warehouse: 'B-电子仓',
+    category: 'ivp.cat.electronics',
+    warehouse: 'ivp.wh.electronics',
     quantity: 320,
     safetyStock: 500,
-    unit: '片',
+    unit: 'ivp.unit.sheet',
     status: 'low',
     lastUpdated: '2026-07-15',
   },
   {
     id: 'I003',
-    name: '工业级电源模块 24V',
+    name: 'ivp.item.powerModule',
     sku: 'PWR-24V-003',
-    category: '电子元器件',
-    warehouse: 'B-电子仓',
+    category: 'ivp.cat.electronics',
+    warehouse: 'ivp.wh.electronics',
     quantity: 0,
     safetyStock: 200,
-    unit: '个',
+    unit: 'ivp.unit.piece',
     status: 'outOfStock',
     lastUpdated: '2026-07-14',
   },
   {
     id: 'I004',
-    name: '高强度螺栓 M10',
+    name: 'ivp.item.boltM10',
     sku: 'BLT-M10-004',
-    category: '紧固件',
-    warehouse: 'A-主仓库',
+    category: 'ivp.cat.fasteners',
+    warehouse: 'ivp.wh.main',
     quantity: 8500,
     safetyStock: 2000,
-    unit: '个',
+    unit: 'ivp.unit.piece',
     status: 'normal',
     lastUpdated: '2026-07-15',
   },
   {
     id: 'I005',
-    name: '防静电包装袋',
+    name: 'ivp.item.esdBag',
     sku: 'PKG-ESD-005',
-    category: '包装材料',
-    warehouse: 'C-包装仓',
+    category: 'ivp.cat.packaging',
+    warehouse: 'ivp.wh.packaging',
     quantity: 15000,
     safetyStock: 5000,
-    unit: '个',
+    unit: 'ivp.unit.piece',
     status: 'overstock',
     lastUpdated: '2026-07-14',
   },
   {
     id: 'I006',
-    name: '导热硅脂 100g',
+    name: 'ivp.item.thermalPaste',
     sku: 'THM-GRS-006',
-    category: '化工材料',
-    warehouse: 'D-化工仓',
+    category: 'ivp.cat.chemicals',
+    warehouse: 'ivp.wh.chemicals',
     quantity: 85,
     safetyStock: 100,
-    unit: '支',
+    unit: 'ivp.unit.tube',
     status: 'low',
     lastUpdated: '2026-07-13',
   },
@@ -140,52 +142,52 @@ const mockRecords: InOutRecord[] = [
   {
     id: 'R001',
     type: 'in',
-    itemName: '精密轴承 6205',
+    itemName: 'ivp.item.bearing6205',
     quantity: 500,
-    unit: '个',
-    operator: '张工',
+    unit: 'ivp.unit.piece',
+    operator: 'ivp.op.zhang',
     date: '2026-07-15 14:30',
-    note: '采购入库 PO-2026-001',
+    note: 'ivp.note.purchaseIn1',
   },
   {
     id: 'R002',
     type: 'out',
-    itemName: 'MCU 控制芯片 STM32',
+    itemName: 'ivp.item.mcuChip',
     quantity: 200,
-    unit: '片',
-    operator: '李工',
+    unit: 'ivp.unit.sheet',
+    operator: 'ivp.op.li',
     date: '2026-07-15 10:15',
-    note: '生产领料 WO-2026-089',
+    note: 'ivp.note.productionOut',
   },
   {
     id: 'R003',
     type: 'in',
-    itemName: '高强度螺栓 M10',
+    itemName: 'ivp.item.boltM10',
     quantity: 3000,
-    unit: '个',
-    operator: '王工',
+    unit: 'ivp.unit.piece',
+    operator: 'ivp.op.wang',
     date: '2026-07-14 16:00',
-    note: '采购入库 PO-2026-004',
+    note: 'ivp.note.purchaseIn2',
   },
   {
     id: 'R004',
     type: 'out',
-    itemName: '工业级电源模块 24V',
+    itemName: 'ivp.item.powerModule',
     quantity: 150,
-    unit: '个',
-    operator: '赵工',
+    unit: 'ivp.unit.piece',
+    operator: 'ivp.op.zhao',
     date: '2026-07-14 09:30',
-    note: '研发领用 RD-2026-045',
+    note: 'ivp.note.rdUse',
   },
   {
     id: 'R005',
     type: 'out',
-    itemName: '导热硅脂 100g',
+    itemName: 'ivp.item.thermalPaste',
     quantity: 25,
-    unit: '支',
-    operator: '孙工',
+    unit: 'ivp.unit.tube',
+    operator: 'ivp.op.sun',
     date: '2026-07-13 11:00',
-    note: '维修领用 MT-2026-023',
+    note: 'ivp.note.maintenanceUse',
   },
 ]
 
@@ -419,10 +421,10 @@ export function InventoryPage() {
                             </div>
                             <div>
                               <p className="text-xs font-medium" style={{ color: tc.textPrimary }}>
-                                {item.name}
+                                {t(item.name)}
                               </p>
                               <p className="text-[10px]" style={{ color: tc.textMuted }}>
-                                {item.sku} · {item.warehouse}
+                                {item.sku} · {t(item.warehouse)}
                               </p>
                             </div>
                           </div>
@@ -431,7 +433,7 @@ export function InventoryPage() {
                               className="text-xs font-semibold"
                               style={{ color: item.quantity === 0 ? '#ef4444' : tc.textPrimary }}
                             >
-                              {item.quantity} {item.unit}
+                              {item.quantity} {t(item.unit)}
                             </p>
                             <p className="text-[10px]" style={{ color: tc.textMuted }}>
                               {t('inv.safetyStock')}: {item.safetyStock}
@@ -480,7 +482,8 @@ export function InventoryPage() {
             </div>
             {mockInventory
               .filter(
-                (s) => !searchQuery || s.name.includes(searchQuery) || s.sku.includes(searchQuery),
+                (s) =>
+                  !searchQuery || t(s.name).includes(searchQuery) || s.sku.includes(searchQuery),
               )
               .map((item) => {
                 const cfg = statusConfig[item.status]
@@ -497,7 +500,7 @@ export function InventoryPage() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-medium" style={{ color: tc.textPrimary }}>
-                              {item.name}
+                              {t(item.name)}
                             </p>
                             <span
                               className="px-1.5 py-0.5 rounded text-[10px]"
@@ -507,13 +510,13 @@ export function InventoryPage() {
                             </span>
                           </div>
                           <p className="text-[10px]" style={{ color: tc.textMuted }}>
-                            {item.sku} · {item.category} · {item.warehouse}
+                            {item.sku} · {t(item.category)} · {t(item.warehouse)}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
                         <p className="text-xs font-semibold" style={{ color: tc.textPrimary }}>
-                          {item.quantity} {item.unit}
+                          {item.quantity} {t(item.unit)}
                         </p>
                         <p className="text-[10px]" style={{ color: tc.textMuted }}>
                           {t('inv.safetyStock')}: {item.safetyStock} · {item.lastUpdated}
@@ -564,21 +567,21 @@ export function InventoryPage() {
                     </div>
                     <span className="text-xs font-semibold" style={{ color: tc.textPrimary }}>
                       {record.type === 'in' ? '+' : '-'}
-                      {record.quantity} {record.unit}
+                      {record.quantity} {t(record.unit)}
                     </span>
                   </div>
                   <p className="text-sm font-medium mb-1" style={{ color: tc.textPrimary }}>
-                    {record.itemName}
+                    {t(record.itemName)}
                   </p>
                   <div
                     className="flex items-center gap-3 text-[10px]"
                     style={{ color: tc.textMuted }}
                   >
                     <span>
-                      {t('inv.operator')}: {record.operator}
+                      {t('inv.operator')}: {t(record.operator)}
                     </span>
                     <span>{record.date}</span>
-                    <span>{record.note}</span>
+                    <span>{t(record.note)}</span>
                   </div>
                 </div>
               </NeonCard>

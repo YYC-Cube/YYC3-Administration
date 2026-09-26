@@ -56,134 +56,134 @@ interface Customer {
 const generateMockCustomers = (): Customer[] => [
   {
     id: 'C001',
-    name: '张明远',
-    company: '星际科技有限公司',
+    name: 'care.c1.name',
+    company: 'care.c1.company',
     phone: '138-0000-1234',
     email: 'zhangmy@startech.com',
     status: 'pending',
     level: 'vip',
     source: 'referral',
-    lastContact: '2天前',
-    nextFollowUp: '今天 14:00',
-    responsible: '李经理',
+    lastContact: 'care.c1.lastContact',
+    nextFollowUp: 'care.c1.nextFollowUp',
+    responsible: 'care.c1.responsible',
     aiScore: 92,
     value: 580000,
   },
   {
     id: 'C002',
-    name: '王建华',
-    company: '云端数据服务',
+    name: 'care.c2.name',
+    company: 'care.c2.company',
     phone: '139-1111-5678',
     email: 'wangjh@clouddata.cn',
     status: 'inProgress',
     level: 'high',
     source: 'online',
-    lastContact: '昨天',
-    nextFollowUp: '明天 10:30',
-    responsible: '陈专员',
+    lastContact: 'care.c2.lastContact',
+    nextFollowUp: 'care.c2.nextFollowUp',
+    responsible: 'care.c2.responsible',
     aiScore: 85,
     value: 320000,
   },
   {
     id: 'C003',
-    name: '陈雅文',
-    company: '智链网络科技',
+    name: 'care.c3.name',
+    company: 'care.c3.company',
     phone: '136-2222-9012',
     email: 'chenyw@smartchain.net',
     status: 'inProgress',
     level: 'normal',
     source: 'event',
-    lastContact: '3天前',
-    nextFollowUp: '今天 16:00',
-    responsible: '张主管',
+    lastContact: 'care.c3.lastContact',
+    nextFollowUp: 'care.c3.nextFollowUp',
+    responsible: 'care.c3.responsible',
     aiScore: 78,
     value: 150000,
   },
   {
     id: 'C004',
-    name: '李思琪',
-    company: '量子计算研究院',
+    name: 'care.c4.name',
+    company: 'care.c4.company',
     phone: '137-3333-3456',
     email: 'lisiqi@quantum.edu',
     status: 'completed',
     level: 'high',
     source: 'referral',
-    lastContact: '1周前',
-    nextFollowUp: '下周一',
-    responsible: '王顾问',
+    lastContact: 'care.c4.lastContact',
+    nextFollowUp: 'care.c4.nextFollowUp',
+    responsible: 'care.c4.responsible',
     aiScore: 88,
     value: 420000,
   },
   {
     id: 'C005',
-    name: '赵鹏飞',
-    company: '未来能源集团',
+    name: 'care.c5.name',
+    company: 'care.c5.company',
     phone: '135-4444-7890',
     email: 'zhaopf@futureenergy.com',
     status: 'pending',
     level: 'vip',
     source: 'offline',
-    lastContact: '今天',
-    nextFollowUp: '明天 9:00',
-    responsible: '刘总监',
+    lastContact: 'care.c5.lastContact',
+    nextFollowUp: 'care.c5.nextFollowUp',
+    responsible: 'care.c5.responsible',
     aiScore: 95,
     value: 750000,
   },
   {
     id: 'C006',
-    name: '孙晓梅',
-    company: '创新软件工作室',
+    name: 'care.c6.name',
+    company: 'care.c6.company',
     phone: '133-5555-2341',
     email: 'sunxm@innov-soft.com',
     status: 'inProgress',
     level: 'normal',
     source: 'online',
-    lastContact: '5天前',
-    nextFollowUp: '本周五',
-    responsible: '李经理',
+    lastContact: 'care.c6.lastContact',
+    nextFollowUp: 'care.c6.nextFollowUp',
+    responsible: 'care.c6.responsible',
     aiScore: 72,
     value: 95000,
   },
   {
     id: 'C007',
-    name: '周志强',
-    company: '数字化转型咨询',
+    name: 'care.c7.name',
+    company: 'care.c7.company',
     phone: '138-6666-8765',
     email: 'zhouzq@digital-trans.cn',
     status: 'archived',
     level: 'low',
     source: 'event',
-    lastContact: '2周前',
-    nextFollowUp: '-',
-    responsible: '陈专员',
+    lastContact: 'care.c7.lastContact',
+    nextFollowUp: 'care.c7.nextFollowUp',
+    responsible: 'care.c7.responsible',
     aiScore: 62,
     value: 48000,
   },
   {
     id: 'C008',
-    name: '吴雨晴',
-    company: '绿色能源科技',
+    name: 'care.c8.name',
+    company: 'care.c8.company',
     phone: '139-7777-4321',
     email: 'wuyq@green-energy.com',
     status: 'pending',
     level: 'high',
     source: 'referral',
-    lastContact: '昨天',
-    nextFollowUp: '今天 15:30',
-    responsible: '张主管',
+    lastContact: 'care.c8.lastContact',
+    nextFollowUp: 'care.c8.nextFollowUp',
+    responsible: 'care.c8.responsible',
     aiScore: 89,
     value: 380000,
   },
 ]
 
 const weeklyTrendData = [
-  { day: '周一', customers: 245, followUps: 128, tasks: 89 },
-  { day: '周二', customers: 268, followUps: 145, tasks: 102 },
-  { day: '周三', customers: 291, followUps: 156, tasks: 115 },
-  { day: '周四', customers: 312, followUps: 172, tasks: 128 },
-  { day: '周五', customers: 335, followUps: 189, tasks: 142 },
-  { day: '周六', customers: 298, followUps: 161, tasks: 108 },
-  { day: '周日', customers: 276, followUps: 138, tasks: 95 },
+  { day: 'care.day.mon', customers: 245, followUps: 128, tasks: 89 },
+  { day: 'care.day.tue', customers: 268, followUps: 145, tasks: 102 },
+  { day: 'care.day.wed', customers: 291, followUps: 156, tasks: 115 },
+  { day: 'care.day.thu', customers: 312, followUps: 172, tasks: 128 },
+  { day: 'care.day.fri', customers: 335, followUps: 189, tasks: 142 },
+  { day: 'care.day.sat', customers: 298, followUps: 161, tasks: 108 },
+  { day: 'care.day.sun', customers: 276, followUps: 138, tasks: 95 },
 ]
 
 // ==========================================
@@ -295,8 +295,8 @@ export function CustomerCarePage() {
       const searchLower = searchQuery.toLowerCase()
       const matchesSearch =
         !searchQuery ||
-        customer.name.toLowerCase().includes(searchLower) ||
-        customer.company.toLowerCase().includes(searchLower) ||
+        t(customer.name).toLowerCase().includes(searchLower) ||
+        t(customer.company).toLowerCase().includes(searchLower) ||
         customer.phone.includes(searchQuery) ||
         customer.email.toLowerCase().includes(searchLower)
 
@@ -311,13 +311,14 @@ export function CustomerCarePage() {
 
       return matchesSearch && matchesStatus && matchesLevel && matchesSource
     })
-  }, [mockCustomers, searchQuery, statusFilter, levelFilter, sourceFilter])
+  }, [mockCustomers, searchQuery, statusFilter, levelFilter, sourceFilter, t])
 
   // Statistics
   const stats = useMemo(() => {
     const totalCustomers = mockCustomers.length
-    const todayFollowUps = mockCustomers.filter(
-      (c) => c.nextFollowUp.includes('今天') || c.nextFollowUp.includes('今日'),
+    const todayKeyword = t('care.todayKeyword')
+    const todayFollowUps = mockCustomers.filter((c) =>
+      t(c.nextFollowUp).includes(todayKeyword),
     ).length
     const activeTasks = mockCustomers.filter(
       (c) => c.status === 'pending' || c.status === 'inProgress',
@@ -325,7 +326,7 @@ export function CustomerCarePage() {
     const teamEfficiency = 87.5
 
     return { totalCustomers, todayFollowUps, activeTasks, teamEfficiency }
-  }, [mockCustomers])
+  }, [mockCustomers, t])
 
   // Get status color
   const getStatusColor = (status: string) => {
@@ -492,7 +493,11 @@ export function CustomerCarePage() {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis dataKey="day" stroke="rgba(255,255,255,0.3)" />
+                <XAxis
+                  dataKey="day"
+                  stroke="rgba(255,255,255,0.3)"
+                  tickFormatter={(v: string) => t(v)}
+                />
                 <YAxis stroke="rgba(255,255,255,0.2)" />
                 <Tooltip
                   contentStyle={{
@@ -661,10 +666,10 @@ export function CustomerCarePage() {
                             className="size-8 rounded-full flex items-center justify-center text-sm"
                             style={{ background: tc.alpha(tc.primary, 0.2), color: tc.primary }}
                           >
-                            {customer.name.charAt(0)}
+                            {t(customer.name).charAt(0)}
                           </div>
                           <span className={`text-sm font-medium ${themeClasses.textPrimary}`}>
-                            {customer.name}
+                            {t(customer.name)}
                           </span>
                         </div>
                       </td>
@@ -673,7 +678,7 @@ export function CustomerCarePage() {
                           className={`flex items-center gap-2 text-sm ${themeClasses.textSecondary}`}
                         >
                           <Building2 className={`size-4 ${themeClasses.textMuted}`} />
-                          {customer.company}
+                          {t(customer.company)}
                         </div>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
@@ -701,18 +706,18 @@ export function CustomerCarePage() {
                           className={`flex items-center gap-2 text-sm ${themeClasses.textMuted}`}
                         >
                           <Clock className="size-4" />
-                          {customer.lastContact}
+                          {t(customer.lastContact)}
                         </div>
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <span className="text-sm font-medium" style={{ color: tc.accent }}>
-                          {customer.nextFollowUp}
+                          {t(customer.nextFollowUp)}
                         </span>
                       </td>
                       <td
                         className={`px-4 py-3 whitespace-nowrap text-sm ${themeClasses.textSecondary}`}
                       >
-                        {customer.responsible}
+                        {t(customer.responsible)}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

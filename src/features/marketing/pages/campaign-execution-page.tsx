@@ -47,9 +47,9 @@ export function CampaignExecutionPage() {
   const campaigns: Campaign[] = [
     {
       id: 'C001',
-      name: '618预热活动 - 抖音直播',
+      name: 'camp.c001.name',
       status: 'running',
-      channel: '抖音',
+      channel: 'camp.channel.douyin',
       progress: 67,
       reach: 125000,
       engagement: 8500,
@@ -61,9 +61,9 @@ export function CampaignExecutionPage() {
     },
     {
       id: 'C002',
-      name: '新品上市 - 微信朋友圈',
+      name: 'camp.c002.name',
       status: 'running',
-      channel: '微信',
+      channel: 'camp.channel.wechat',
       progress: 42,
       reach: 85000,
       engagement: 3200,
@@ -75,9 +75,9 @@ export function CampaignExecutionPage() {
     },
     {
       id: 'C003',
-      name: '品牌故事传播 - 小红书',
+      name: 'camp.c003.name',
       status: 'scheduled',
-      channel: '小红书',
+      channel: 'camp.channel.xiaohongshu',
       progress: 0,
       reach: 0,
       engagement: 0,
@@ -89,9 +89,9 @@ export function CampaignExecutionPage() {
     },
     {
       id: 'C004',
-      name: '会员专属优惠 - 全渠道',
+      name: 'camp.c004.name',
       status: 'paused',
-      channel: '全渠道',
+      channel: 'camp.channel.all',
       progress: 28,
       reach: 42000,
       engagement: 1800,
@@ -111,51 +111,57 @@ export function CampaignExecutionPage() {
   const getStatusConfig = (status: Campaign['status']) => {
     switch (status) {
       case 'scheduled':
-        return { label: '待执行', color: tc.textMuted, icon: Clock, bgGlow: 'none' }
+        return { label: t('camp.status.scheduled'), color: tc.textMuted, icon: Clock, bgGlow: 'none' }
       case 'running':
         return {
-          label: '执行中',
+          label: t('camp.status.running'),
           color: tc.primary,
           icon: Play,
           bgGlow: tc.neonGlow(tc.primary, 0.3),
         }
       case 'paused':
-        return { label: '已暂停', color: tc.warning, icon: Pause, bgGlow: 'none' }
+        return { label: t('camp.status.paused'), color: tc.warning, icon: Pause, bgGlow: 'none' }
       case 'completed':
-        return { label: '已完成', color: tc.success, icon: CheckCircle2, bgGlow: 'none' }
+        return { label: t('camp.status.completed'), color: tc.success, icon: CheckCircle2, bgGlow: 'none' }
     }
   }
 
   const stats = [
     {
-      label: '进行中活动',
+      label: 'camp.stat.running',
       value: campaigns.filter((c) => c.status === 'running').length,
       icon: Activity,
       color: tc.primary,
       change: '+2',
     },
     {
-      label: '总触达人数',
+      label: 'camp.stat.reach',
       value: campaigns.reduce((sum, c) => sum + c.reach, 0).toLocaleString(),
       icon: Users,
       color: tc.secondary,
       change: '+12.5%',
     },
     {
-      label: '互动总量',
+      label: 'camp.stat.engagement',
       value: campaigns.reduce((sum, c) => sum + c.engagement, 0).toLocaleString(),
       icon: MessageSquare,
       color: tc.accent,
       change: '+8.3%',
     },
     {
-      label: '转化总数',
+      label: 'camp.stat.conversion',
       value: campaigns.reduce((sum, c) => sum + c.conversion, 0).toLocaleString(),
       icon: Target,
       color: tc.success,
       change: '+15.2%',
     },
   ]
+
+  const getFilterLabel = (f: string) => {
+    if (f === 'all') return t('camp.filter.all')
+    if (f === 'running') return t('camp.filter.running')
+    return t('camp.filter.scheduled')
+  }
 
   return (
     <div className="space-y-6">
@@ -166,7 +172,7 @@ export function CampaignExecutionPage() {
             {t('nav.promotionExec')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            实时活动监控 · 自动化执行 · 多渠道协同
+            {t('camp.subtitle')}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -179,7 +185,7 @@ export function CampaignExecutionPage() {
             }}
           >
             <RefreshCw className="w-4 h-4" />
-            刷新数据
+            {t('camp.refresh')}
           </button>
           <button
             className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all"
@@ -190,7 +196,7 @@ export function CampaignExecutionPage() {
             }}
           >
             <Send className="w-5 h-5" />
-            创建活动
+            {t('camp.create')}
           </button>
         </div>
       </div>
@@ -212,7 +218,7 @@ export function CampaignExecutionPage() {
               </div>
             </div>
             <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-              {stat.label}
+              {t(stat.label)}
             </p>
             <p className="text-2xl font-bold" style={{ color: tc.textPrimary }}>
               {stat.value}
@@ -235,7 +241,7 @@ export function CampaignExecutionPage() {
               boxShadow: filter === f ? tc.neonGlow(tc.primary, 0.3) : 'none',
             }}
           >
-            {f === 'all' ? '全部活动' : f === 'running' ? '进行中' : '待执行'}
+            {getFilterLabel(f)}
           </button>
         ))}
       </div>
@@ -271,11 +277,11 @@ export function CampaignExecutionPage() {
                         color: tc.textSecondary,
                       }}
                     >
-                      {campaign.channel}
+                      {t(campaign.channel)}
                     </span>
                   </div>
                   <h3 className="text-lg font-bold mb-2" style={{ color: tc.textPrimary }}>
-                    {campaign.name}
+                    {t(campaign.name)}
                   </h3>
                   <div className="flex items-center gap-2 text-sm" style={{ color: tc.textMuted }}>
                     <Calendar className="w-4 h-4" />
@@ -290,7 +296,7 @@ export function CampaignExecutionPage() {
                   <div className="grid grid-cols-3 gap-4">
                     <div>
                       <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                        触达
+                        {t('camp.metric.reach')}
                       </p>
                       <p className="text-lg font-bold" style={{ color: tc.primary }}>
                         {campaign.reach.toLocaleString()}
@@ -298,7 +304,7 @@ export function CampaignExecutionPage() {
                     </div>
                     <div>
                       <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                        互动
+                        {t('camp.metric.engagement')}
                       </p>
                       <p className="text-lg font-bold" style={{ color: tc.secondary }}>
                         {campaign.engagement.toLocaleString()}
@@ -306,7 +312,7 @@ export function CampaignExecutionPage() {
                     </div>
                     <div>
                       <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                        转化
+                        {t('camp.metric.conversion')}
                       </p>
                       <p className="text-lg font-bold" style={{ color: tc.success }}>
                         {campaign.conversion}
@@ -318,7 +324,7 @@ export function CampaignExecutionPage() {
                   <div className="mt-4">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs" style={{ color: tc.textMuted }}>
-                        预算使用
+                        {t('camp.budgetUsage')}
                       </span>
                       <span className="text-xs font-medium" style={{ color: tc.textPrimary }}>
                         ¥{campaign.spent.toLocaleString()} / ¥{campaign.budget.toLocaleString()}
@@ -387,7 +393,7 @@ export function CampaignExecutionPage() {
                       }}
                     >
                       <Eye className="w-4 h-4" />
-                      详情
+                      {t('camp.detail')}
                     </button>
                     <button
                       className="px-3 py-2 rounded-lg transition-all"

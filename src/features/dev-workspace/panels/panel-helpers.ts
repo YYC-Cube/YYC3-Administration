@@ -62,13 +62,22 @@ export function formatFileSize(bytes?: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)}MB`
 }
 
-export function timeAgo(ts?: number): string {
+type I18nT = (key: string, params?: Record<string, string | number>) => string
+
+export function timeAgo(ts?: number, t?: I18nT): string {
   if (!ts) return ''
   const diff = Date.now() - ts
-  if (diff < 60000) return '刚刚'
-  if (diff < 3600000) return `${Math.floor(diff / 60000)}分钟前`
-  if (diff < 86400000) return `${Math.floor(diff / 3600000)}小时前`
-  return `${Math.floor(diff / 86400000)}天前`
+  if (diff < 60000) return t ? t('ph.time.justNow') : '刚刚'
+  if (diff < 3600000) {
+    const n = Math.floor(diff / 60000)
+    return t ? t('ph.time.minutesAgo', { n }) : `${n}分钟前`
+  }
+  if (diff < 86400000) {
+    const n = Math.floor(diff / 3600000)
+    return t ? t('ph.time.hoursAgo', { n }) : `${n}小时前`
+  }
+  const n = Math.floor(diff / 86400000)
+  return t ? t('ph.time.daysAgo', { n }) : `${n}天前`
 }
 
 // ==========================================
@@ -405,16 +414,16 @@ export const MOCK_SEARCH_RESULTS: Record<string, SearchResult[]> = {
     {
       id: 'sr10',
       type: 'command',
-      title: '打开文件',
-      description: 'Ctrl+P 打开文件选择器',
+      title: 'ph.cmd.openFile',
+      description: 'ph.cmd.openFileDesc',
       filePath: '',
       score: 0.96,
     },
     {
       id: 'sr11',
       type: 'command',
-      title: '切换终端',
-      description: 'Ctrl+` 切换终端',
+      title: 'ph.cmd.toggleTerminal',
+      description: 'ph.cmd.toggleTerminalDesc',
       filePath: '',
       score: 0.88,
     },
@@ -433,29 +442,29 @@ export const AI_SUGGESTIONS_POOL: AISuggestion[] = [
   {
     id: 's1',
     type: 'optimization',
-    title: '虚拟化文件树渲染',
-    description: '对大目录使用窗口化技术',
+    title: 'ph.sug.s1.title',
+    description: 'ph.sug.s1.desc',
     confidence: 0.92,
   },
   {
     id: 's2',
     type: 'refactor',
-    title: '抽取拖放逻辑到自定义 Hook',
-    description: '创建 useDragAndDrop hook 提高复用性',
+    title: 'ph.sug.s2.title',
+    description: 'ph.sug.s2.desc',
     confidence: 0.88,
   },
   {
     id: 's3',
     type: 'fix',
-    title: '修复 AI 推理中的内存泄漏',
-    description: '为异步操作添加 AbortController',
+    title: 'ph.sug.s3.title',
+    description: 'ph.sug.s3.desc',
     confidence: 0.95,
   },
   {
     id: 's4',
     type: 'code',
-    title: '添加错误边界包装器',
-    description: '使用 React 错误边界包裹面板',
+    title: 'ph.sug.s4.title',
+    description: 'ph.sug.s4.desc',
     confidence: 0.86,
   },
 ]

@@ -92,13 +92,14 @@ const PROVIDER_ENDPOINTS: Record<AIProviderType, { chatPath: string; defaultBase
 
 const SYSTEM_PROMPT = `You are YYC³ AI Assistant, an expert coding assistant integrated into the YYC³ CloudPivot Intelli-Matrix IDE. You help with code generation, debugging, architecture design, and development best practices. Respond concisely and precisely. Use Chinese when the user writes in Chinese. Always format code with proper syntax highlighting hints.`
 
-const MOCK_RESPONSES = [
-  "基于您当前的代码库分析，建议使用自定义 Hook 模式实现 WebSocket 集成，以提高组件间的复用性。\n\n```typescript\nexport function useWebSocket(url: string) {\n  const [status, setStatus] = useState<'connecting' | 'open' | 'closed'>('connecting');\n  // ... implementation\n}\n```",
-  '我分析了您的 Zustand Store 结构。建议使用 `immer` 中间件来简化深层嵌套对象的不可变更新操作，这将显著减少样板代码。',
-  '观察到 task-board-page 中的 DnD 实现可以通过 `useMemo` 记忆化 `useDrag` 和 `useDrop` 配置来优化，减少不必要的重渲染。',
-  '您的主题系统 `useThemeColors` 设计良好。要添加动画令牌，建议扩展 `ThemeColors` 接口，加入 transition/easing 预设值。',
-  '对于文件浏览器的虚拟滚动，建议使用 `react-window` 来高效渲染包含 10,000+ 节点的大型文件树，避免性能退化。',
-  '检测到潜在的内存泄漏风险：AI 推理的异步操作缺少 AbortController。建议在组件卸载时取消所有待处理的请求。\n\n```typescript\nuseEffect(() => {\n  const controller = new AbortController();\n  fetchAI(input, { signal: controller.signal });\n  return () => controller.abort();\n}, [input]);\n```',
+// Mock responses hold i18n keys; resolved via t() at render sites (caller passes `t`)
+const MOCK_RESPONSE_KEYS = [
+  'aips.mock.codegenHook',
+  'aips.mock.immerMiddleware',
+  'aips.mock.dndMemoize',
+  'aips.mock.themeAnimatedTokens',
+  'aips.mock.virtualScroll',
+  'aips.mock.abortController',
 ]
 
 // ==========================================
@@ -193,12 +194,14 @@ class AIProxyService {
    * @param messages - Chat message history
    * @param signal - Optional AbortSignal for cancellation
    * @param fileContext - Optional: current open file content for AI context injection
+   * @param t - Optional i18n translator for mock/fallback display strings
    */
   async chat(
     config: AIProviderConfig,
     messages: ChatMessage[],
     signal?: AbortSignal,
     fileContext?: { filePath: string; content: string },
+    t?: (key: string) => string,
   ): Promise<ProxyResponse> {
     const startTime = Date.now()
 
@@ -218,7 +221,7 @@ class AIProxyService {
 
     // Mock provider — always available
     if (config.provider === 'mock' || !config.apiKey) {
-      return this.mockResponse(request, startTime)
+      return this.mockResponse(request, startTime, t)
     }
 
     // Check cache first
@@ -345,7 +348,7 @@ class AIProxyService {
         return data.content?.[0]?.text ?? 'No response.'
       }
 
-      return MOCK_RESPONSES[0]
+      return MOCK_RESPONSE_KEYS[0]
     } catch (err: unknown) {
       if (err instanceof Error && err.name === 'AbortError') throw err
       const errorMessage = err instanceof Error ? err.message : 'Connection failed'
@@ -354,9 +357,14 @@ class AIProxyService {
   }
 
   /** Mock response with simulated latency */
-  private async mockResponse(request: ProxyRequest, startTime: number): Promise<ProxyResponse> {
+  private async mockResponse(
+    request: ProxyRequest,
+    startTime: number,
+    t?: (key: string) => string,
+  ): Promise<ProxyResponse> {
     await new Promise((r) => setTimeout(r, 600 + Math.random() * 800))
-    const content = MOCK_RESPONSES[Math.floor(Math.random() * MOCK_RESPONSES.length)]
+    const key = MOCK_RESPONSE_KEYS[Math.floor(Math.random() * MOCK_RESPONSE_KEYS.length)]
+    const content = t ? t(key) : key
     const latencyMs = Date.now() - startTime
     this.log('mock', 'mock-v1', latencyMs, false)
     return { content, model: 'mock-v1', provider: 'mock', cached: false, latencyMs }
@@ -407,16 +415,19 @@ class AIProxyService {
    * SSE Streaming chat — yields partial content tokens in real-time.
    * Falls back to non-streaming mock for mock provider.
    * Supports OpenAI, DeepSeek (SSE stream format) and Claude (SSE stream format).
+   * @param t - Optional i18n translator for mock/fallback display strings
    */
   async *chatStream(
     config: AIProviderConfig,
     messages: ChatMessage[],
     signal?: AbortSignal,
     fileContext?: { filePath: string; content: string },
+    t?: (key: string, params?: Record<string, string | number>) => string,
   ): AsyncGenerator<{ token: string; done: boolean }, void, unknown> {
     // Mock provider — simulate streaming with character-by-character delivery
     if (config.provider === 'mock' || !config.apiKey) {
-      const mockContent = MOCK_RESPONSES[Math.floor(Math.random() * MOCK_RESPONSES.length)]
+      const key = MOCK_RESPONSE_KEYS[Math.floor(Math.random() * MOCK_RESPONSE_KEYS.length)]
+      const mockContent = t ? t(key) : key
       const words = mockContent.split(/(\s+)/)
       for (let i = 0; i < words.length; i++) {
         if (signal?.aborted) return
@@ -456,7 +467,7 @@ class AIProxyService {
         if (!res.ok) throw new Error(`API ${res.status}: ${await res.text().catch(() => '')}`)
         const reader = res.body?.getReader()
         if (!reader) {
-          yield { token: '流式响应不可用', done: true }
+          yield { token: t ? t('aips.streamUnavailable') : 'aips.streamUnavailable', done: true }
           return
         }
         const decoder = new TextDecoder()
@@ -506,7 +517,7 @@ class AIProxyService {
         if (!res.ok) throw new Error(`API ${res.status}: ${await res.text().catch(() => '')}`)
         const reader = res.body?.getReader()
         if (!reader) {
-          yield { token: '流式响应不可用', done: true }
+          yield { token: t ? t('aips.streamUnavailable') : 'aips.streamUnavailable', done: true }
           return
         }
         const decoder = new TextDecoder()
@@ -538,11 +549,19 @@ class AIProxyService {
       }
 
       // Unknown provider fallback
-      yield { token: '不支持的 AI 提供商', done: true }
+      yield { token: t ? t('aips.unsupportedProvider') : 'aips.unsupportedProvider', done: true }
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : '连接失败'
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : t
+            ? t('aips.connectionFailed')
+            : 'aips.connectionFailed'
       if (err instanceof Error && err.name === 'AbortError') return
-      yield { token: `⚠️ 流式错误: ${errorMessage}`, done: true }
+      const msg = t
+        ? t('aips.streamError', { message: errorMessage })
+        : `aips.streamError(${errorMessage})`
+      yield { token: msg, done: true }
     }
   }
 }

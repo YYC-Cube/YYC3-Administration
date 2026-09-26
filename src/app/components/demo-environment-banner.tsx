@@ -19,6 +19,7 @@
 import { AlertCircle, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { isSupabaseConfigured } from '@/lib/supabase-client'
 
 const STORAGE_KEY = 'yyc3_demo_banner_dismissed'
@@ -31,6 +32,7 @@ const STORAGE_KEY = 'yyc3_demo_banner_dismissed'
  * - 自测量高度,为 body 注入 padding-top 以免遮挡应用内容。
  */
 export function DemoEnvironmentBanner() {
+  const { t } = useI18n()
   const [dismissed, setDismissed] = useState(false)
   const bannerRef = useRef<HTMLDivElement>(null)
 
@@ -96,18 +98,14 @@ export function DemoEnvironmentBanner() {
     >
       <AlertCircle size={18} style={{ flexShrink: 0 }} aria-hidden="true" />
       <span style={{ flex: 1 }}>
-        <strong>演示环境 / Demo Environment：</strong>
-        所有数据仅保存在当前浏览器本地,不会上传到服务器。
-        <span style={{ opacity: 0.9 }}>
-          {' '}
-          请勿输入真实的账号、密码或 API 密钥。 All data is stored locally in your browser only. Do
-          not enter real credentials or API keys.
-        </span>
+        <strong>{t('deb.title')}</strong>
+        {t('deb.descLocal')}
+        <span style={{ opacity: 0.9 }}> {t('deb.descWarn')}</span>
       </span>
       <button
         type="button"
         onClick={handleDismiss}
-        aria-label="关闭演示环境提示 / Dismiss demo notice"
+        aria-label={t('deb.dismiss')}
         style={{
           background: 'transparent',
           border: 'none',

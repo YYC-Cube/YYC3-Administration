@@ -18,6 +18,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { FileNode, SearchResult } from '@/features/dev-workspace/panels/panel-types'
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import {
   getFileIcon,
   MOCK_FILE_TREE,
@@ -37,6 +38,7 @@ function flattenTree(nodes: FileNode[]): FileNode[] {
 }
 
 export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
+  const { t } = useI18n()
   const { searchHistory, addSearchHistory, fileTree, selectFile, addRecentFile, setActivePanel } =
     usePanelStore()
   const [query, setQuery] = useState('')
@@ -148,12 +150,12 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
   const tabs = [
     {
       key: 'files' as const,
-      label: '文件',
+      label: 'gs.tab.files',
       count: searchType === 'files' && results.length > 0 ? results.length : undefined,
     },
-    { key: 'content' as const, label: '内容' },
-    { key: 'symbols' as const, label: '符号' },
-    { key: 'commands' as const, label: '命令' },
+    { key: 'content' as const, label: 'gs.tab.content' },
+    { key: 'symbols' as const, label: 'gs.tab.symbols' },
+    { key: 'commands' as const, label: 'gs.tab.commands' },
   ]
 
   return (
@@ -168,7 +170,7 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="搜索文件、内容、符号..."
+            placeholder={t('gs.placeholder')}
             className="w-full pl-8 pr-7 py-1.5 text-[11px] rounded-lg border outline-none transition-all"
             style={{ background: tc.bgInput, borderColor: tc.borderDefault, color: tc.textPrimary }}
             onFocus={(e) => {
@@ -202,7 +204,7 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
                 color: searchType === tab.key ? tc.primary : tc.textMuted,
               }}
             >
-              {tab.label}
+              {t(tab.label)}
               {tab.count !== undefined && (
                 <span
                   className="text-[7px] px-1 rounded-full"
@@ -248,7 +250,7 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <p className="text-[11px] truncate" style={{ color: tc.textPrimary }}>
-                        {r.title}
+                        {t(r.title)}
                       </p>
                       <span className="text-[8px] shrink-0 ml-1" style={{ color: tc.textMuted }}>
                         {Math.round(r.score * 100)}%
@@ -256,7 +258,7 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
                     </div>
                     {r.description && (
                       <p className="text-[9px] truncate" style={{ color: tc.textMuted }}>
-                        {r.description}
+                        {t(r.description)}
                       </p>
                     )}
                     <div className="flex items-center gap-1 mt-0.5">
@@ -285,7 +287,7 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
         {!searching && !query && searchHistory.length > 0 && (
           <div className="px-3 py-2">
             <p className="text-[9px] uppercase tracking-wider mb-2" style={{ color: tc.textMuted }}>
-              最近搜索
+              {t('gs.recent')}
             </p>
             {searchHistory.map((h, i) => (
               <button
@@ -304,13 +306,13 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
         {!searching && !query && searchHistory.length === 0 && (
           <div className="px-3 py-4 space-y-2">
             <p className="text-[9px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-              快捷操作
+              {t('gs.quickActions')}
             </p>
             {[
-              { label: '浏览所有文件', action: () => setActivePanel('file-explorer') },
-              { label: '搜索组件', action: () => setQuery('component') },
-              { label: '查找 Hooks', action: () => setQuery('use') },
-              { label: '搜索 Store', action: () => setQuery('store') },
+              { label: 'gs.browseFiles', action: () => setActivePanel('file-explorer') },
+              { label: 'gs.searchComponents', action: () => setQuery('component') },
+              { label: 'gs.findHooks', action: () => setQuery('use') },
+              { label: 'gs.searchStore', action: () => setQuery('store') },
             ].map((item) => (
               <button
                 key={item.label}
@@ -319,7 +321,7 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
                 style={{ color: tc.textSecondary }}
               >
                 <Search className="w-3 h-3" style={{ color: tc.textMuted }} />
-                {item.label}
+                {t(item.label)}
               </button>
             ))}
           </div>
@@ -328,7 +330,7 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
           <div className="flex flex-col items-center justify-center py-8 opacity-40">
             <Search className="w-6 h-6 mb-1" style={{ color: tc.textMuted }} />
             <span className="text-[10px]" style={{ color: tc.textMuted }}>
-              未找到结果
+              {t('gs.noResults')}
             </span>
           </div>
         )}

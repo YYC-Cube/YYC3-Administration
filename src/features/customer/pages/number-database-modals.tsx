@@ -5,8 +5,7 @@
  * @tags customer,modals
  */
 
-import { Check, Database, Phone, Repeat, Trash2, Undo2, UserPlus, X, Zap } from 'lucide-react'
-import { AnimatePresence, motion } from 'motion/react'
+import { Check, Repeat, Trash2, Undo2, UserPlus, X, Zap } from 'lucide-react'
 import { useState } from 'react'
 
 import { ALL_TAGS, STAGE_KEYS, STAGE_META, TAG_COLORS } from './number-database-data'
@@ -15,7 +14,6 @@ import type { Contact } from './number-database-data'
 
 import { useI18n } from '@/app/components/i18n-context'
 import { useContacts } from '@/features/customer/pages/contacts-context'
-import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 function ContactFormModal({
   contact,
@@ -39,12 +37,12 @@ function ContactFormModal({
       stage: 'acquisition',
       tags: [],
       aiScore: 50,
-      aiInsights: ['新建联系人，AI 将自动分析'],
+      aiInsights: ['ndbm.newContactInsight'],
       starred: false,
       address: '',
-      source: '手动录入',
+      source: 'ndbm.manualEntry',
       createdAt: new Date().toISOString().slice(0, 10),
-      lastContact: '刚刚',
+      lastContact: 'ndbm.justNow',
       totalCalls: 0,
       totalValue: 0,
       notes: '',
@@ -104,7 +102,7 @@ function ContactFormModal({
           {/* Name & Phone */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[10px] text-white/30 mb-1 block">姓名 *</label>
+              <label className="text-[10px] text-white/30 mb-1 block">{t('ndbm.name')} *</label>
               <input
                 value={form.name}
                 onChange={(e) => updateField('name', e.target.value)}
@@ -115,7 +113,7 @@ function ContactFormModal({
                 }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = 'rgba(0,240,255,0.4)')}
                 onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(0,240,255,0.15)')}
-                placeholder="联系人姓名"
+                placeholder={t('ndbm.namePlaceholder')}
               />
             </div>
             <div>
@@ -153,7 +151,7 @@ function ContactFormModal({
               />
             </div>
             <div>
-              <label className="text-[10px] text-white/30 mb-1 block">公司</label>
+              <label className="text-[10px] text-white/30 mb-1 block">{t('ndbm.company')}</label>
               <input
                 value={form.company}
                 onChange={(e) => updateField('company', e.target.value)}
@@ -164,14 +162,14 @@ function ContactFormModal({
                 }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = 'rgba(0,240,255,0.4)')}
                 onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(0,240,255,0.15)')}
-                placeholder="公司名称"
+                placeholder={t('ndbm.companyPlaceholder')}
               />
             </div>
           </div>
 
           {/* Stage */}
           <div>
-            <label className="text-[10px] text-white/30 mb-2 block">生命周期阶段</label>
+            <label className="text-[10px] text-white/30 mb-2 block">{t('ndbm.stage')}</label>
             <div className="flex gap-2">
               {STAGE_KEYS.map((stage) => {
                 const meta = STAGE_META[stage]
@@ -196,7 +194,7 @@ function ContactFormModal({
             <p className="text-[9px] text-white/15 mt-1.5 flex items-center gap-1">
               <Zap className="w-2.5 h-2.5 text-[#00ffcc]/40" />
               {t('ndb.formCondition')}: {t('ndb.whenStage')} "{form.stage}" →{' '}
-              {showValueField ? '价值字��可见' : '价值字段隐藏'}
+              {showValueField ? t('ndbm.valueVisible') : t('ndbm.valueHidden')}
             </p>
           </div>
 
@@ -254,7 +252,7 @@ function ContactFormModal({
 
           {/* Tags */}
           <div>
-            <label className="text-[10px] text-white/30 mb-2 block">标签</label>
+            <label className="text-[10px] text-white/30 mb-2 block">{t('ndbm.tags')}</label>
             <div className="flex flex-wrap gap-1.5">
               {ALL_TAGS.map((tag) => {
                 const active = form.tags.includes(tag)
@@ -271,7 +269,7 @@ function ContactFormModal({
                     }}
                   >
                     {active && <Check className="w-2.5 h-2.5 inline mr-0.5" />}
-                    {tag}
+                    {t(tag)}
                   </button>
                 )
               })}
@@ -292,7 +290,7 @@ function ContactFormModal({
               }}
               onFocus={(e) => (e.currentTarget.style.borderColor = 'rgba(0,240,255,0.4)')}
               onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(0,240,255,0.15)')}
-              placeholder="客户备注信息…"
+              placeholder={t('ndbm.notesPlaceholder')}
             />
           </div>
 
@@ -300,7 +298,7 @@ function ContactFormModal({
           {showRenewalField && (
             <div style={{ animation: 'spring-in 0.3s var(--spring-easing) both' }}>
               <label className="text-[10px] text-[#00ffc8]/60 mb-1 block flex items-center gap-1">
-                <Repeat className="w-3 h-3" /> 续约/服务备注 (仅服务/忠诚阶段)
+                <Repeat className="w-3 h-3" /> {t('ndbm.renewalLabel')}
               </label>
               <input
                 className="w-full px-3 py-2 rounded-xl text-sm text-white/80 outline-none transition-all"
@@ -310,7 +308,7 @@ function ContactFormModal({
                 }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = 'rgba(0,255,200,0.4)')}
                 onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(0,255,200,0.15)')}
-                placeholder="续约周期、服务等级…"
+                placeholder={t('ndbm.renewalPlaceholder')}
               />
             </div>
           )}

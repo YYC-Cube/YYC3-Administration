@@ -86,17 +86,29 @@ const PANEL_TABS: {
     type: 'file-explorer',
     icon: Files,
     label: 'Explorer',
-    labelZh: '文件浏览器',
+    labelZh: 'lp.tab.fileExplorer',
     color: '#3b82f6',
     shortcut: 'Ctrl+E',
   },
-  { type: 'task-manager', icon: ListTodo, label: 'Tasks', labelZh: '任务看板', color: '#22c55e' },
-  { type: 'ai-assistant', icon: Bot, label: 'AI Assistant', labelZh: 'AI 助手', color: '#a78bfa' },
+  {
+    type: 'task-manager',
+    icon: ListTodo,
+    label: 'Tasks',
+    labelZh: 'lp.tab.taskManager',
+    color: '#22c55e',
+  },
+  {
+    type: 'ai-assistant',
+    icon: Bot,
+    label: 'AI Assistant',
+    labelZh: 'lp.tab.aiAssistant',
+    color: '#a78bfa',
+  },
   {
     type: 'global-search',
     icon: Search,
     label: 'Search',
-    labelZh: '全局搜索',
+    labelZh: 'lp.tab.globalSearch',
     color: '#f97316',
     shortcut: 'Ctrl+P',
   },
@@ -104,27 +116,33 @@ const PANEL_TABS: {
     type: 'quick-access',
     icon: Star,
     label: 'Quick Access',
-    labelZh: '快速访问',
+    labelZh: 'lp.tab.quickAccess',
     color: '#eab308',
   },
-  { type: 'git-integration', icon: GitBranch, label: 'Git', labelZh: 'Git 集成', color: '#ec4899' },
+  {
+    type: 'git-integration',
+    icon: GitBranch,
+    label: 'Git',
+    labelZh: 'lp.tab.gitIntegration',
+    color: '#ec4899',
+  },
   {
     type: 'settings',
     icon: Settings,
     label: 'Settings',
-    labelZh: '工作区设置',
+    labelZh: 'lp.tab.settings',
     color: '#06b6d4',
     shortcut: 'Ctrl+,',
   },
 ]
 
 const WELCOME_SHORTCUTS = [
-  { key: 'Ctrl+B', label: '切换面板', icon: PanelLeft },
-  { key: 'Ctrl+P', label: '快速搜索', icon: Search },
-  { key: 'Ctrl+E', label: '文件浏览器', icon: Files },
-  { key: 'Ctrl+,', label: '设置', icon: Settings },
-  { key: 'Ctrl+N', label: '新建文件', icon: Code },
-  { key: 'Ctrl+`', label: '终端', icon: Terminal },
+  { key: 'Ctrl+B', label: 'lp.sc.togglePanel', icon: PanelLeft },
+  { key: 'Ctrl+P', label: 'lp.sc.quickSearch', icon: Search },
+  { key: 'Ctrl+E', label: 'lp.sc.fileExplorer', icon: Files },
+  { key: 'Ctrl+,', label: 'lp.sc.settings', icon: Settings },
+  { key: 'Ctrl+N', label: 'lp.sc.newFile', icon: Code },
+  { key: 'Ctrl+`', label: 'lp.sc.terminal', icon: Terminal },
 ]
 
 // ==========================================
@@ -469,11 +487,11 @@ export function LeftPanelPage() {
               </span>
             </div>
             <p className="text-[9px] flex items-center gap-1.5" style={{ color: tc.textMuted }}>
-              <span>言传千行代码 | 语枢万物智能</span>
+              <span>{t('lp.slogan')}</span>
               <span style={{ color: tc.borderDefault }}>·</span>
               <span className="flex items-center gap-0.5">
                 <Shield className="w-2.5 h-2.5" style={{ color: '#22c55e' }} />
-                FEFS 架构
+                {t('lp.fefs')}
               </span>
             </p>
           </div>
@@ -496,7 +514,7 @@ export function LeftPanelPage() {
               style={{ background: '#a78bfa', boxShadow: '0 0 6px rgba(139,92,246,0.5)' }}
             />
             <span className="text-[8px]" style={{ color: '#a78bfa' }}>
-              AI 就绪
+              {t('lp.aiReady')}
             </span>
           </div>
 
@@ -509,7 +527,7 @@ export function LeftPanelPage() {
               border: '1px solid rgba(34,197,94,0.12)',
             }}
           >
-            <CheckCircle2 className="w-3 h-3" /> 持久化
+            <CheckCircle2 className="w-3 h-3" /> {t('lp.persisted')}
           </span>
 
           {/* Toggle panel */}
@@ -569,7 +587,7 @@ export function LeftPanelPage() {
                 onMouseEnter={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect()
                   setTooltip({
-                    label: locale === 'zh' ? tab.labelZh : tab.label,
+                    label: t(tab.labelZh),
                     shortcut: tab.shortcut,
                     x: rect.right,
                     y: rect.top + rect.height / 2 - 14,
@@ -591,7 +609,7 @@ export function LeftPanelPage() {
                 )}
                 <Icon className="w-[18px] h-[18px]" />
                 <span className="text-[7px] mt-0.5 leading-none">
-                  {locale === 'zh' ? tab.labelZh.slice(0, 2) : tab.label.slice(0, 4)}
+                  {t(tab.labelZh).slice(0, locale === 'zh' ? 2 : 4)}
                 </span>
               </motion.button>
             )
@@ -605,14 +623,14 @@ export function LeftPanelPage() {
             <button
               className="w-10 h-10 flex items-center justify-center rounded-lg transition-all hover:bg-white/5"
               style={{ color: tc.textMuted }}
-              title="性能监控"
+              title={t('lp.perfMon')}
             >
               <Activity className="w-4 h-4" />
             </button>
             <button
               className="w-10 h-10 flex items-center justify-center rounded-lg transition-all hover:bg-white/5"
               style={{ color: tc.textMuted }}
-              title="键盘快捷键"
+              title={t('lp.keyboardShortcuts')}
             >
               <Keyboard className="w-4 h-4" />
             </button>
@@ -690,7 +708,7 @@ export function LeftPanelPage() {
                         className="text-[10px] uppercase tracking-wider"
                         style={{ color: activeTabConfig.color, fontWeight: 600 }}
                       >
-                        {locale === 'zh' ? activeTabConfig.labelZh : activeTabConfig.label}
+                        {t(activeTabConfig.labelZh)}
                       </span>
                     </div>
                     <button
@@ -757,7 +775,7 @@ export function LeftPanelPage() {
               </motion.div>
             ) : (
               <span className="text-[10px] px-2" style={{ color: tc.textMuted }}>
-                未打开文件
+                {t('lp.noFile')}
               </span>
             )}
           </div>
@@ -847,24 +865,24 @@ export function LeftPanelPage() {
 
                 {/* Title */}
                 <h2 className="text-[18px] mb-1" style={{ color: tc.textPrimary, fontWeight: 600 }}>
-                  YYC³ 开发者工作区
+                  {t('lp.welcomeTitle')}
                 </h2>
                 <p className="text-[11px] mb-1" style={{ color: tc.textSecondary }}>
-                  CloudPivot Intelli-Matrix · IDE 风格集成开发环境
+                  {t('lp.welcomeSubtitle')}
                 </p>
                 <p className="text-[9px] mb-6" style={{ color: tc.textMuted }}>
-                  从文件浏览器选择文件以开始编辑，或使用以下快捷键导航
+                  {t('lp.welcomeDesc')}
                 </p>
 
                 {/* Feature tags */}
                 <div className="flex flex-wrap justify-center gap-1.5 mb-6">
                   {[
-                    { label: 'Monaco 编辑器', color: '#3b82f6' },
-                    { label: 'AI 流式响应', color: '#a78bfa' },
-                    { label: 'Token 统计', color: '#eab308' },
-                    { label: '文件 CRUD', color: '#22c55e' },
-                    { label: 'Git 集成', color: '#ec4899' },
-                    { label: '多开系统', color: '#f97316' },
+                    { label: t('lp.feat.monaco'), color: '#3b82f6' },
+                    { label: t('lp.feat.aiStream'), color: '#a78bfa' },
+                    { label: t('lp.feat.tokenStats'), color: '#eab308' },
+                    { label: t('lp.feat.fileCrud'), color: '#22c55e' },
+                    { label: t('lp.feat.git'), color: '#ec4899' },
+                    { label: t('lp.feat.multiInstance'), color: '#f97316' },
                   ].map((feat) => (
                     <span
                       key={feat.label}
@@ -911,7 +929,7 @@ export function LeftPanelPage() {
                           {sc.key}
                         </kbd>
                         <span className="text-[8px]" style={{ color: tc.textMuted }}>
-                          {sc.label}
+                          {t(sc.label)}
                         </span>
                       </motion.div>
                     )
@@ -924,10 +942,7 @@ export function LeftPanelPage() {
                   style={{ color: tc.textMuted }}
                 >
                   <Sparkles className="w-3 h-3" style={{ color: '#00ff87', opacity: 0.5 }} />
-                  <span>
-                    言启象限 | 语枢未来 — Words Initiate Quadrants, Language Serves as Core for
-                    Future
-                  </span>
+                  <span>{t('lp.brandSlogan')}</span>
                   <Sparkles className="w-3 h-3" style={{ color: '#00ff87', opacity: 0.5 }} />
                 </div>
               </motion.div>
@@ -953,12 +968,12 @@ export function LeftPanelPage() {
               </span>
               <span className="flex items-center gap-1">
                 <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#eab308' }} />
-                {MOCK_GIT_STATUS.modified} 已修改
+                {t('lp.modified', { count: MOCK_GIT_STATUS.modified })}
               </span>
               {/* Sync status */}
               <span className="flex items-center gap-1">
                 <CheckCircle2 className="w-3 h-3" style={{ color: '#22c55e' }} />
-                已同步
+                {t('lp.synced')}
               </span>
             </div>
 
@@ -966,12 +981,12 @@ export function LeftPanelPage() {
             <div className="flex items-center gap-2">
               <span className="flex items-center gap-1">
                 <Bot className="w-3 h-3" style={{ color: '#a78bfa' }} />
-                AI 流式就绪
+                {t('lp.aiStreamReady')}
               </span>
               <span style={{ color: tc.borderDefault }}>·</span>
               <span className="flex items-center gap-1">
                 <Zap className="w-3 h-3" style={{ color: '#eab308' }} />
-                Token 统计
+                {t('lp.tokenStats')}
               </span>
             </div>
 
@@ -988,8 +1003,8 @@ export function LeftPanelPage() {
                   <span>UTF-8</span>
                 </>
               )}
-              <span>字体: {settings.general.editorFontSize}px</span>
-              <span>缩进: 2</span>
+              <span>{t('lp.fontSize', { size: settings.general.editorFontSize })}</span>
+              <span>{t('lp.indent', { n: 2 })}</span>
               {/* Performance */}
               <span className="flex items-center gap-1">
                 <Activity

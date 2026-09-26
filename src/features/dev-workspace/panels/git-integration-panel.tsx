@@ -28,6 +28,7 @@ import { useCallback, useState } from 'react'
 
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import {
   MOCK_GIT_LOG,
   MOCK_GIT_STATUS,
@@ -36,6 +37,7 @@ import {
 import { gitAPIService } from '@/services/git-api-service'
 
 export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
+  const { t } = useI18n()
   const [activeTab, setActiveTab] = useState<'status' | 'log' | 'config'>('status')
   const [gitToken, setGitToken] = useState('')
   const [gitOwner, setGitOwner] = useState('YanYuCloudCube')
@@ -91,10 +93,15 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
     }))
 
   const statusItems = [
-    { label: '已修改', count: gitStatus.modified, color: '#eab308', icon: Edit3 },
-    { label: '已暂存', count: gitStatus.staged, color: '#22c55e', icon: Plus },
-    { label: '未跟踪', count: gitStatus.untracked, color: '#6b7280', icon: File },
-    { label: '冲突', count: gitStatus.conflicts, color: '#ef4444', icon: AlertTriangle },
+    { label: 'git.status.modified', count: gitStatus.modified, color: '#eab308', icon: Edit3 },
+    { label: 'git.status.staged', count: gitStatus.staged, color: '#22c55e', icon: Plus },
+    { label: 'git.status.untracked', count: gitStatus.untracked, color: '#6b7280', icon: File },
+    {
+      label: 'git.status.conflicts',
+      count: gitStatus.conflicts,
+      color: '#ef4444',
+      icon: AlertTriangle,
+    },
   ]
 
   return (
@@ -160,7 +167,7 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
                 <div key={item.label} className="flex items-center gap-2 px-3 py-1">
                   <Icon className="w-3.5 h-3.5" style={{ color: item.color }} />
                   <span className="text-[11px] flex-1" style={{ color: tc.textSecondary }}>
-                    {item.label}
+                    {t(item.label)}
                   </span>
                   <span
                     className="text-[10px] px-1.5 py-0.5 rounded-full min-w-[20px] text-center"
@@ -183,13 +190,18 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
                 className="text-[9px] uppercase tracking-wider mb-1"
                 style={{ color: tc.textMuted }}
               >
-                操作
+                {t('git.operations')}
               </p>
               {[
-                { label: '全部暂存', icon: Plus, color: '#22c55e', action: () => {} },
-                { label: '提交', icon: GitCommit, color: '#3b82f6', action: () => {} },
-                { label: '推送', icon: Upload, color: '#f97316', action: handlePush },
-                { label: '拉取', icon: Download, color: '#a78bfa', action: handlePull },
+                { label: 'git.actions.stageAll', icon: Plus, color: '#22c55e', action: () => {} },
+                {
+                  label: 'git.actions.commit',
+                  icon: GitCommit,
+                  color: '#3b82f6',
+                  action: () => {},
+                },
+                { label: 'git.actions.push', icon: Upload, color: '#f97316', action: handlePush },
+                { label: 'git.actions.pull', icon: Download, color: '#a78bfa', action: handlePull },
               ].map((action) => (
                 <button
                   key={action.label}
@@ -198,8 +210,8 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
                   style={{ borderColor: tc.borderSubtle, color: action.color }}
                 >
                   <action.icon className="w-3 h-3" />
-                  {action.label}
-                  {action.label === '推送' && gitAPIService.isConfigured && (
+                  {t(action.label)}
+                  {action.label === 'git.actions.push' && gitAPIService.isConfigured && (
                     <span className="text-[7px] ml-auto opacity-50">API</span>
                   )}
                 </button>
@@ -229,7 +241,9 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
                       {typeof commit.sha === 'string' ? commit.sha.substring(0, 7) : commit.sha}
                     </span>
                     <span className="text-[8px] ml-auto" style={{ color: tc.textMuted }}>
-                      {commit.author?.date ? timeAgo(new Date(commit.author.date).getTime()) : ''}
+                      {commit.author?.date
+                        ? timeAgo(new Date(commit.author.date).getTime(), t)
+                        : ''}
                     </span>
                   </div>
                   <p className="text-[10px] ml-5" style={{ color: tc.textPrimary }}>
@@ -240,14 +254,14 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
                       {commit.author?.name ?? ''}
                     </span>
                     <span className="text-[8px]" style={{ color: tc.textMuted }}>
-                      {commit.filesChanged ?? 0} 文件
+                      {t('git.filesChanged', { n: commit.filesChanged ?? 0 })}
                     </span>
                   </div>
                 </div>
               ))}
             {apiCommits && (
               <p className="text-[8px] text-center py-1" style={{ color: '#22c55e' }}>
-                通过 GitHub API
+                {t('git.viaGitHubApi')}
               </p>
             )}
           </div>
@@ -256,11 +270,11 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
         {activeTab === 'config' && (
           <div className="px-3 py-2 space-y-2">
             <p className="text-[9px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-              GitHub API 配置
+              {t('git.apiConfig')}
             </p>
             <div>
               <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                个人访问令牌
+                {t('git.pat')}
               </label>
               <input
                 type="password"
@@ -275,12 +289,12 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
                 }}
               />
               <p className="text-[7px] mt-0.5" style={{ color: tc.textMuted }}>
-                所需权限范围：repo, read:org
+                {t('git.scopes')}
               </p>
             </div>
             <div>
               <label className="text-[9px] block mb-0.5" style={{ color: tc.textMuted }}>
-                所有者 / 仓库
+                {t('git.ownerRepo')}
               </label>
               <div className="flex gap-1">
                 <input
@@ -325,17 +339,17 @@ export function GitIntegrationPanel({ tc }: { tc: ThemeColors }) {
               ) : (
                 <GitBranch className="w-3 h-3" />
               )}
-              {gitAPIService.isConfigured ? '重新连接' : '连接 GitHub'}
+              {gitAPIService.isConfigured ? t('git.reconnect') : t('git.connect')}
             </button>
             {gitAPIService.isConfigured && (
               <p className="text-[8px] flex items-center gap-1" style={{ color: '#22c55e' }}>
-                <CheckCircle2 className="w-3 h-3" /> 已连接 · {gitOwner}/{gitRepo}
+                <CheckCircle2 className="w-3 h-3" />{' '}
+                {t('git.connected', { owner: gitOwner, repo: gitRepo })}
               </p>
             )}
             <div className="pt-2 border-t" style={{ borderColor: tc.borderSubtle }}>
               <p className="text-[8px]" style={{ color: tc.textMuted }}>
-                生产环境中，请使用服务端代理保护您的令牌。在 ai-proxy-service.ts 中配置
-                PROXY_BASE_URL 实现安全 API 路由。
+                {t('git.proxyNote')}
               </p>
             </div>
           </div>

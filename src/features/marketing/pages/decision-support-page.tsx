@@ -39,45 +39,45 @@ export function DecisionSupportPage() {
   const decisions: Decision[] = [
     {
       id: 'D001',
-      title: '增加抖音渠道预算',
+      title: 'ds.decision.d001.title',
       category: 'budget',
       priority: 'high',
-      impact: '预计ROI提升 +32%',
+      impact: 'ds.decision.d001.impact',
       confidence: 94,
-      recommendation: '建议将预算从¥30K增加至¥45K，预测将带来额外¥180K营收',
+      recommendation: 'ds.decision.d001.rec',
     },
     {
       id: 'D002',
-      title: '优化投放时段策略',
+      title: 'ds.decision.d002.title',
       category: 'timing',
       priority: 'high',
-      impact: '转化率提升 +28%',
+      impact: 'ds.decision.d002.impact',
       confidence: 91,
-      recommendation: '晚间20:00-22:00转化率最高，建议集中70%预算在此时段',
+      recommendation: 'ds.decision.d002.rec',
     },
     {
       id: 'D003',
-      title: '精准定向高价值人群',
+      title: 'ds.decision.d003.title',
       category: 'audience',
       priority: 'medium',
-      impact: '获客成本降低 -25%',
+      impact: 'ds.decision.d003.impact',
       confidence: 88,
-      recommendation: 'AI识别出30-45岁企业决策者群体转化价值高2.8倍',
+      recommendation: 'ds.decision.d003.rec',
     },
     {
       id: 'D004',
-      title: '暂停低效渠道投放',
+      title: 'ds.decision.d004.title',
       category: 'channel',
       priority: 'medium',
-      impact: '节省预算 ¥18K',
+      impact: 'ds.decision.d004.impact',
       confidence: 85,
-      recommendation: '某渠道ROI仅1.2x，建议暂停并将预算转移至高效渠道',
+      recommendation: 'ds.decision.d004.rec',
     },
   ]
 
   const predictions = [
     {
-      metric: '下月营收预测',
+      metric: 'ds.pred.revenue',
       value: '¥3.2M',
       change: '+28%',
       confidence: 92,
@@ -85,7 +85,7 @@ export function DecisionSupportPage() {
       color: tc.success,
     },
     {
-      metric: '用户增长预测',
+      metric: 'ds.pred.userGrowth',
       value: '+45K',
       change: '+35%',
       confidence: 89,
@@ -93,7 +93,7 @@ export function DecisionSupportPage() {
       color: tc.primary,
     },
     {
-      metric: '转化率趋势',
+      metric: 'ds.pred.conversion',
       value: '26.8%',
       change: '+8%',
       confidence: 87,
@@ -101,7 +101,7 @@ export function DecisionSupportPage() {
       color: tc.secondary,
     },
     {
-      metric: 'ROI预期',
+      metric: 'ds.pred.roi',
       value: '4.2x',
       change: '+15%',
       confidence: 91,
@@ -113,49 +113,55 @@ export function DecisionSupportPage() {
   const riskAlerts = [
     {
       id: 'R001',
-      title: '预算即将耗尽',
+      title: 'ds.risk.r001.title',
       severity: 'high',
-      message: '618活动预算使用率已达92%，预计3天内耗尽',
-      action: '增加预算',
+      message: 'ds.risk.r001.message',
+      action: 'ds.risk.r001.action',
     },
     {
       id: 'R002',
-      title: '竞争对手加大投放',
+      title: 'ds.risk.r002.title',
       severity: 'medium',
-      message: '检测到竞品在核心渠道投放增加40%，可能影响曝光',
-      action: '调整策略',
+      message: 'ds.risk.r002.message',
+      action: 'ds.risk.r002.action',
     },
     {
       id: 'R003',
-      title: '季节性流量下降',
+      title: 'ds.risk.r003.title',
       severity: 'low',
-      message: '预测下周流量将下降15%，建议调整投放节奏',
-      action: '查看详情',
+      message: 'ds.risk.r003.message',
+      action: 'ds.risk.r003.action',
     },
   ]
 
   const getPriorityConfig = (priority: Decision['priority']) => {
     switch (priority) {
       case 'high':
-        return { label: '高优先级', color: tc.danger, icon: AlertTriangle }
+        return { label: t('ds.priority.high'), color: tc.danger, icon: AlertTriangle }
       case 'medium':
-        return { label: '中优先级', color: tc.warning, icon: Activity }
+        return { label: t('ds.priority.medium'), color: tc.warning, icon: Activity }
       case 'low':
-        return { label: '低优先级', color: tc.textMuted, icon: CheckCircle2 }
+        return { label: t('ds.priority.low'), color: tc.textMuted, icon: CheckCircle2 }
     }
   }
 
   const getCategoryLabel = (category: Decision['category']) => {
     switch (category) {
       case 'budget':
-        return '预算优化'
+        return t('ds.category.budget')
       case 'channel':
-        return '渠道选择'
+        return t('ds.category.channel')
       case 'timing':
-        return '时段优化'
+        return t('ds.category.timing')
       case 'audience':
-        return '受众定向'
+        return t('ds.category.audience')
     }
+  }
+
+  const getSeverityLabel = (severity: string) => {
+    if (severity === 'high') return t('ds.severity.high')
+    if (severity === 'medium') return t('ds.severity.medium')
+    return t('ds.severity.low')
   }
 
   return (
@@ -166,7 +172,7 @@ export function DecisionSupportPage() {
             {t('nav.aiDecisionSupport')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            AI预测分析 · 策略建议 · 风险评估
+            {t('ds.subtitle')}
           </p>
         </div>
         <div
@@ -175,7 +181,7 @@ export function DecisionSupportPage() {
         >
           <Brain className="w-5 h-5" style={{ color: tc.primary }} />
           <span className="text-sm font-medium" style={{ color: tc.primary }}>
-            AI实时分析
+            {t('ds.aiLiveAnalysis')}
           </span>
         </div>
       </div>
@@ -196,7 +202,7 @@ export function DecisionSupportPage() {
                 </div>
               </div>
               <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-                {pred.metric}
+                {t(pred.metric)}
               </p>
               <p className="text-2xl font-bold mb-1" style={{ color: tc.textPrimary }}>
                 {pred.value}
@@ -213,7 +219,7 @@ export function DecisionSupportPage() {
         <div className="flex items-center gap-3 mb-6">
           <AlertTriangle className="w-6 h-6" style={{ color: tc.warning }} />
           <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-            风险预警
+            {t('ds.riskAlerts')}
           </h2>
         </div>
         <div className="space-y-3">
@@ -240,7 +246,7 @@ export function DecisionSupportPage() {
                     }}
                   />
                   <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                    {alert.title}
+                    {t(alert.title)}
                   </h3>
                 </div>
                 <span
@@ -262,15 +268,11 @@ export function DecisionSupportPage() {
                           : tc.textMuted,
                   }}
                 >
-                  {alert.severity === 'high'
-                    ? '紧急'
-                    : alert.severity === 'medium'
-                      ? '注意'
-                      : '提示'}
+                  {getSeverityLabel(alert.severity)}
                 </span>
               </div>
               <p className="text-sm mb-3" style={{ color: tc.textSecondary }}>
-                {alert.message}
+                {t(alert.message)}
               </p>
               <button
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all"
@@ -280,7 +282,7 @@ export function DecisionSupportPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                {alert.action}
+                {t(alert.action)}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -292,7 +294,7 @@ export function DecisionSupportPage() {
         <div className="flex items-center gap-3 mb-6">
           <Lightbulb className="w-6 h-6" style={{ color: tc.primary }} />
           <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-            AI决策建议
+            {t('ds.aiDecisions')}
           </h2>
         </div>
         <div className="space-y-4">
@@ -316,7 +318,7 @@ export function DecisionSupportPage() {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold mb-1" style={{ color: tc.textPrimary }}>
-                        {decision.title}
+                        {t(decision.title)}
                       </h3>
                       <div className="flex items-center gap-2">
                         <span
@@ -359,15 +361,15 @@ export function DecisionSupportPage() {
                   }}
                 >
                   <p className="text-sm font-medium mb-1" style={{ color: tc.success }}>
-                    预期影响
+                    {t('ds.expectedImpact')}
                   </p>
                   <p className="text-lg font-bold" style={{ color: tc.success }}>
-                    {decision.impact}
+                    {t(decision.impact)}
                   </p>
                 </div>
 
                 <p className="text-sm mb-4" style={{ color: tc.textSecondary }}>
-                  {decision.recommendation}
+                  {t(decision.recommendation)}
                 </p>
 
                 <div className="flex items-center gap-3">
@@ -380,7 +382,7 @@ export function DecisionSupportPage() {
                     }}
                   >
                     <CheckCircle2 className="w-4 h-4" />
-                    采纳建议
+                    {t('ds.adopt')}
                   </button>
                   <button
                     className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
@@ -390,7 +392,7 @@ export function DecisionSupportPage() {
                       border: `1px solid ${tc.borderSubtle}`,
                     }}
                   >
-                    详细分析
+                    {t('ds.detailAnalysis')}
                   </button>
                 </div>
               </div>

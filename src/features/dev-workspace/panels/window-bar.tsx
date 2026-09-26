@@ -32,21 +32,23 @@ import { useCallback, useRef, useState } from 'react'
 import type { WindowType } from '@/features/dev-workspace/multi-instance/types'
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { useWindowStore } from '@/features/dev-workspace/multi-instance/window-manager'
 
 const WINDOW_TYPE_ICONS: Record<
   WindowType,
   { icon: typeof Monitor; color: string; label: string }
 > = {
-  main: { icon: Monitor, color: '#3b82f6', label: '主窗口' },
-  editor: { icon: Code, color: '#22c55e', label: '编辑器' },
-  preview: { icon: Eye, color: '#f97316', label: '预览' },
-  terminal: { icon: Terminal, color: '#a78bfa', label: '终端' },
-  'ai-chat': { icon: Bot, color: '#ec4899', label: 'AI 对话' },
-  settings: { icon: Settings, color: '#6b7280', label: '设置' },
+  main: { icon: Monitor, color: '#3b82f6', label: 'wb.type.main' },
+  editor: { icon: Code, color: '#22c55e', label: 'wb.type.editor' },
+  preview: { icon: Eye, color: '#f97316', label: 'wb.type.preview' },
+  terminal: { icon: Terminal, color: '#a78bfa', label: 'wb.type.terminal' },
+  'ai-chat': { icon: Bot, color: '#ec4899', label: 'wb.type.aiChat' },
+  settings: { icon: Settings, color: '#6b7280', label: 'wb.type.settings' },
 }
 
 export function WindowBar({ tc }: { tc: ThemeColors }) {
+  const { t } = useI18n()
   const {
     instances,
     activeInstanceId,
@@ -66,7 +68,7 @@ export function WindowBar({ tc }: { tc: ThemeColors }) {
 
   const handleCreateWindow = (type: WindowType) => {
     const config = WINDOW_TYPE_ICONS[type]
-    createWindow(type, { title: `YYC³ - ${config.label}` })
+    createWindow(type, { title: `YYC³ - ${t(config.label)}` })
     setShowNewMenu(false)
   }
 
@@ -137,7 +139,7 @@ export function WindowBar({ tc }: { tc: ThemeColors }) {
           className="flex items-center gap-1.5 px-2 py-1 text-[9px] rounded-md border transition-all hover:bg-white/5"
           style={{ borderColor: tc.borderSubtle, color: tc.textMuted }}
         >
-          <Plus className="w-3 h-3" /> 新建窗口
+          <Plus className="w-3 h-3" /> {t('wb.newWindow')}
         </button>
       </div>
     )
@@ -268,7 +270,7 @@ export function WindowBar({ tc }: { tc: ThemeColors }) {
                   style={{ color: tc.textSecondary }}
                 >
                   <cfg.icon className="w-3 h-3" style={{ color: cfg.color }} />
-                  {cfg.label}
+                  {t(cfg.label)}
                 </button>
               ))}
             </motion.div>
@@ -281,7 +283,7 @@ export function WindowBar({ tc }: { tc: ThemeColors }) {
         className="text-[8px] px-1.5 py-0.5 rounded-full ml-auto shrink-0"
         style={{ background: `${tc.primary}08`, color: tc.textMuted }}
       >
-        {instances.length} {instances.length === 1 ? '个窗口' : '个窗口'}
+        {t('wb.windowCount', { n: instances.length })}
       </span>
     </div>
   )

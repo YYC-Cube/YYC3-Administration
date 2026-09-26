@@ -98,7 +98,7 @@ function genId() {
 function makeTitle(messages: ChatMessage[]): string {
   const firstUser = messages.find((m) => m.role === 'user')
   if (firstUser) return firstUser.content.slice(0, 30) + (firstUser.content.length > 30 ? '…' : '')
-  return '新会话'
+  return 'chat.newSession'
 }
 
 /**
@@ -123,7 +123,7 @@ export function useChatSession() {
       const id = genId()
       const session: ChatSession = {
         id,
-        title: '新会话',
+        title: 'chat.newSession',
         messages: [],
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -141,7 +141,7 @@ export function useChatSession() {
     const id = genId()
     const session: ChatSession = {
       id,
-      title: '新会话',
+      title: 'chat.newSession',
       messages: [],
       createdAt: Date.now(),
       updatedAt: Date.now(),
@@ -165,7 +165,7 @@ export function useChatSession() {
         return [
           {
             id: freshId,
-            title: '新会话',
+            title: 'chat.newSession',
             messages: [],
             createdAt: Date.now(),
             updatedAt: Date.now(),
@@ -196,7 +196,7 @@ export function useChatSession() {
           }
           const next = { ...s, messages: updatedMessages, updatedAt: Date.now() }
           // Auto-title from first user message
-          if (next.title === '新会话' && message.role === 'user') {
+          if (next.title === 'chat.newSession' && message.role === 'user') {
             next.title = message.content.slice(0, 30) + (message.content.length > 30 ? '…' : '')
           }
           return next
@@ -226,7 +226,7 @@ export function useChatSession() {
     setSessions((prev) =>
       prev.map((s) => {
         if (s.id !== activeId) return s
-        return { ...s, messages: [], updatedAt: Date.now(), title: '新会话' }
+        return { ...s, messages: [], updatedAt: Date.now(), title: 'chat.newSession' }
       }),
     )
   }, [activeId])

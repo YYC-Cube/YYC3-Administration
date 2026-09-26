@@ -18,7 +18,6 @@ import {
   BarChart3,
   CheckCircle2,
   ChevronRight,
-  Code,
   Filter,
   LayoutGrid,
   List,
@@ -37,20 +36,13 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import {
   AIInferencePanel,
-  DraggableTaskCard,
   DroppableKanbanColumn,
   ListView,
   RemindersPanel,
   TaskModal,
   TaskStats,
 } from './task-board-components'
-import {
-  DND_ITEM_TYPE,
-  KANBAN_COLUMNS,
-  PRIORITY_CONFIG,
-  STATUS_CONFIG,
-  TYPE_CONFIG,
-} from './task-board-data'
+import { KANBAN_COLUMNS, PRIORITY_CONFIG, STATUS_CONFIG, TYPE_CONFIG } from './task-board-data'
 import { useTaskStore } from './task-board-store'
 
 import type { Task, TaskPriority, TaskStatus, TaskType, ViewMode } from './task-board-data'
@@ -164,14 +156,16 @@ export function TaskBoardPage() {
 
   // Filtered & sorted tasks
   const filteredTasks = useMemo(() => {
-    let result = tasks.filter((t) => (showArchived ? true : !t.isArchived))
+    let result = tasks.filter((task) => (showArchived ? true : !task.isArchived))
     if (searchQuery) {
       const q = searchQuery.toLowerCase()
       result = result.filter(
-        (t) =>
-          t.title.toLowerCase().includes(q) ||
-          t.description?.toLowerCase().includes(q) ||
-          t.tags?.some((tag) => tag.toLowerCase().includes(q)),
+        (task) =>
+          t(task.title).toLowerCase().includes(q) ||
+          t(task.description ?? '')
+            .toLowerCase()
+            .includes(q) ||
+          task.tags?.some((tag) => tag.toLowerCase().includes(q)),
       )
     }
     if (filterStatus) result = result.filter((t) => t.status === filterStatus)
@@ -196,6 +190,7 @@ export function TaskBoardPage() {
     showArchived,
     sortBy,
     sortOrder,
+    t,
   ])
 
   const tasksByStatus = useMemo(() => {

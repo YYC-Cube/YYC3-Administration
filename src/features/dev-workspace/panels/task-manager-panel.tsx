@@ -37,6 +37,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
+
 // ==========================================
 // Types
 // ==========================================
@@ -65,18 +67,18 @@ const STATUS_CFG: Record<
   TaskStatus,
   { label: string; icon: typeof Circle; color: string; next: TaskStatus }
 > = {
-  todo: { label: '待办', icon: Circle, color: '#6b7280', next: 'in-progress' },
-  'in-progress': { label: '进行中', icon: Play, color: '#3b82f6', next: 'review' },
-  review: { label: '审查', icon: Eye, color: '#8b5cf6', next: 'done' },
-  done: { label: '完成', icon: CheckCircle2, color: '#22c55e', next: 'todo' },
-  blocked: { label: '阻塞', icon: Ban, color: '#ef4444', next: 'todo' },
+  todo: { label: 'tm.status.todo', icon: Circle, color: '#6b7280', next: 'in-progress' },
+  'in-progress': { label: 'tm.status.inProgress', icon: Play, color: '#3b82f6', next: 'review' },
+  review: { label: 'tm.status.review', icon: Eye, color: '#8b5cf6', next: 'done' },
+  done: { label: 'tm.status.done', icon: CheckCircle2, color: '#22c55e', next: 'todo' },
+  blocked: { label: 'tm.status.blocked', icon: Ban, color: '#ef4444', next: 'todo' },
 }
 
 const PRIORITY_CFG: Record<TaskPriority, { label: string; color: string; icon: typeof ArrowUp }> = {
-  critical: { label: '紧急', color: '#ef4444', icon: AlertTriangle },
-  high: { label: '高', color: '#f97316', icon: ArrowUp },
-  medium: { label: '中', color: '#eab308', icon: ChevronRight },
-  low: { label: '低', color: '#22c55e', icon: ArrowDown },
+  critical: { label: 'tm.priority.critical', color: '#ef4444', icon: AlertTriangle },
+  high: { label: 'tm.priority.high', color: '#f97316', icon: ArrowUp },
+  medium: { label: 'tm.priority.medium', color: '#eab308', icon: ChevronRight },
+  low: { label: 'tm.priority.low', color: '#22c55e', icon: ArrowDown },
 }
 
 const STORAGE_KEY = 'yyc3-task-board-storage'
@@ -86,6 +88,7 @@ const STORAGE_KEY = 'yyc3-task-board-storage'
 // ==========================================
 
 export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
+  const { t } = useI18n()
   const [tasks, setTasks] = useState<MiniTask[]>([])
   const [filter, setFilter] = useState<string>('all')
   const [showCreate, setShowCreate] = useState(false)
@@ -178,7 +181,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
     const aiTasks: MiniTask[] = [
       {
         id: crypto.randomUUID(),
-        title: '重构 useThemeColors hook 提升类型安全性',
+        title: 'tm.aiTask1',
         status: 'todo',
         priority: 'medium',
         source: 'ai-inferred',
@@ -187,7 +190,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
       },
       {
         id: crypto.randomUUID(),
-        title: '为 panel-store.ts 添加单元测试',
+        title: 'tm.aiTask2',
         status: 'todo',
         priority: 'high',
         source: 'ai-inferred',
@@ -196,7 +199,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
       },
       {
         id: crypto.randomUUID(),
-        title: '优化 Monaco Editor 懒加载',
+        title: 'tm.aiTask3',
         status: 'todo',
         priority: 'low',
         source: 'ai-inferred',
@@ -231,7 +234,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
         style={{ borderColor: tc.borderSubtle }}
       >
         <span className="text-[11px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-          任务
+          {t('tm.title')}
         </span>
         <div className="flex items-center gap-1">
           <span
@@ -243,14 +246,14 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
           <button
             onClick={handleAIInfer}
             className="w-5 h-5 flex items-center justify-center rounded hover:bg-white/5 transition-colors"
-            title="AI 推断任务"
+            title={t('tm.aiInfer')}
           >
             <Brain className="w-3 h-3" style={{ color: '#a78bfa' }} />
           </button>
           <button
             onClick={() => setShowCreate(!showCreate)}
             className="w-5 h-5 flex items-center justify-center rounded hover:bg-white/5 transition-colors"
-            title="新建任务"
+            title={t('tm.newTask')}
           >
             {showCreate ? (
               <X className="w-3 h-3" style={{ color: tc.textMuted }} />
@@ -276,7 +279,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                 type="text"
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
-                placeholder="任务标题..."
+                placeholder={t('tm.titlePlaceholder')}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleCreate()
@@ -310,7 +313,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                     Object.entries(PRIORITY_CFG) as [TaskPriority, typeof PRIORITY_CFG.critical][]
                   ).map(([k, v]) => (
                     <option key={k} value={k}>
-                      {v.label}
+                      {t(v.label)}
                     </option>
                   ))}
                 </select>
@@ -335,7 +338,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                     border: `1px solid ${newTitle.trim() ? `${tc.primary}30` : tc.borderSubtle}`,
                   }}
                 >
-                  添加
+                  {t('tm.add')}
                 </button>
               </div>
             </div>
@@ -357,7 +360,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
             color: filter === 'all' ? tc.primary : tc.textMuted,
           }}
         >
-          全部
+          {t('tm.all')}
         </button>
         {(Object.entries(STATUS_CFG) as [TaskStatus, typeof STATUS_CFG.todo][]).map(
           ([key, cfg]) => (
@@ -371,7 +374,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                 color: filter === key ? cfg.color : tc.textMuted,
               }}
             >
-              {cfg.label} {statusCounts[key] ? <span>({statusCounts[key]})</span> : null}
+              {t(cfg.label)} {statusCounts[key] ? <span>({statusCounts[key]})</span> : null}
             </button>
           ),
         )}
@@ -395,7 +398,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                 <button
                   onClick={() => handleToggleStatus(task.id)}
                   className="mt-0.5 shrink-0 transition-transform hover:scale-110"
-                  title={`移至 ${sCfg.next}`}
+                  title={t('tm.moveTo', { status: t(STATUS_CFG[sCfg.next].label) })}
                 >
                   <SIcon className="w-3.5 h-3.5" style={{ color: sCfg.color }} />
                 </button>
@@ -411,7 +414,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                       opacity: task.status === 'done' ? 0.6 : 1,
                     }}
                   >
-                    {task.title}
+                    {t(task.title)}
                   </p>
                   <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
                     <span
@@ -480,7 +483,11 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                       )}
                       <div className="flex items-center gap-2" style={{ color: tc.textMuted }}>
                         <Clock className="w-2.5 h-2.5" />
-                        <span>创建于 {new Date(task.createdAt).toLocaleDateString()}</span>
+                        <span>
+                          {t('tm.createdAt', {
+                            date: new Date(task.createdAt).toLocaleDateString(),
+                          })}
+                        </span>
                       </div>
                       <div className="flex gap-1 mt-1">
                         {(Object.entries(STATUS_CFG) as [TaskStatus, typeof STATUS_CFG.todo][]).map(
@@ -500,7 +507,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
                                 border: `1px solid ${task.status === key ? `${cfg.color}40` : 'transparent'}`,
                               }}
                             >
-                              {cfg.label}
+                              {t(cfg.label)}
                             </button>
                           ),
                         )}
@@ -516,7 +523,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
           <div className="flex flex-col items-center justify-center py-8 opacity-40">
             <ListTodo className="w-6 h-6 mb-1" style={{ color: tc.textMuted }} />
             <span className="text-[10px]" style={{ color: tc.textMuted }}>
-              {activeTasks.length === 0 ? '暂无任务' : '无匹配任务'}
+              {activeTasks.length === 0 ? t('tm.noTasks') : t('tm.noMatch')}
             </span>
             <button
               onClick={() => setShowCreate(true)}
@@ -524,7 +531,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
               style={{ color: tc.primary, border: `1px solid ${tc.primary}30` }}
             >
               <Plus className="w-3 h-3 inline mr-1" />
-              创建任务
+              {t('tm.createTask')}
             </button>
           </div>
         )}

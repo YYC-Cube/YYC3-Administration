@@ -46,7 +46,7 @@ describe('useChatSession — Session Management', () => {
     const { result } = renderHook(() => useChatSession())
     expect(result.current.sessions.length).toBe(1)
     expect(result.current.activeSession).toBeTruthy()
-    expect(result.current.activeSession?.title).toBe('新会话')
+    expect(result.current.activeSession?.title).toBe('chat.newSession')
   })
 
   it('creates a new session via createSession', () => {
@@ -147,7 +147,7 @@ describe('useChatSession — Messages', () => {
     })
 
     expect(result.current.activeSession?.messages.length).toBe(0)
-    expect(result.current.activeSession?.title).toBe('新会话')
+    expect(result.current.activeSession?.title).toBe('chat.newSession')
   })
 
   it('auto-titles session from first user message', () => {

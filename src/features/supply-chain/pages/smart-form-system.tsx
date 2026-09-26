@@ -1,8 +1,6 @@
 import {
   AlertCircle,
-  AlignLeft,
   Brain,
-  Calendar,
   Check,
   CheckCircle2,
   ChevronRight,
@@ -10,22 +8,13 @@ import {
   Eye,
   EyeOff,
   FileText,
-  Hash,
-  List,
   Loader2,
-  MessageSquare,
-  Phone,
   Plus,
   Puzzle,
   RefreshCw,
   Send,
-  Sliders,
   Sparkles,
   Star,
-  ToggleLeft,
-  Type,
-  Upload,
-  Users,
   Wand2,
 } from 'lucide-react'
 import {
@@ -42,13 +31,12 @@ import {
 import {
   aiSuggestions,
   CUSTOM_TEMPLATES_KEY,
-  fieldTypeInfo,
   FORM_STORAGE_KEY,
   formTemplates,
   validateField,
 } from './smart-form-data'
 
-import type { FieldDef, FieldType, FormFieldValue, FormTemplate } from './smart-form-data'
+import type { FieldDef, FormFieldValue, FormTemplate } from './smart-form-data'
 
 import { useApp } from '@/app/components/app-context'
 import { useI18n } from '@/app/components/i18n-context'
@@ -198,22 +186,23 @@ export function SmartFormPage() {
     }
 
     // Add notification + activity
+    const tplTitle = t(template.title)
     addNotification({
-      title: `表单提交成功`,
-      message: `「${template.title}」已提交并保存，AI 正在处理数据…`,
+      title: t('sfs.notify.successTitle'),
+      message: t('sfs.notify.successMessage', { title: tplTitle }),
       type: 'success',
       color: '#00ffc8',
     })
     addActivity({
-      action: '表单提交',
-      target: `${template.title} · 智能表单系统`,
+      action: t('sfs.activity.formSubmitted'),
+      target: t('sfs.activity.smartFormTarget', { title: tplTitle }),
       type: 'system',
       color: template.color,
     })
 
     setIsSubmitting(false)
     setSubmitSuccess(true)
-  }, [validateAll, template, formValues, addNotification, addActivity])
+  }, [validateAll, template, formValues, addNotification, addActivity, t])
 
   const resetForm = useCallback(() => {
     setSubmitSuccess(false)
@@ -324,7 +313,7 @@ export function SmartFormPage() {
         {/* Header */}
         <PageHeader
           title={t('nav.smartForm')}
-          subtitle="Smart Form Engine — AI 辅助动态表单"
+          subtitle={t('sfs.subtitle.aiForm')}
           actions={
             <div
               className="px-3 py-1.5 rounded-xl text-[10px] flex items-center gap-1.5"
@@ -411,7 +400,7 @@ export function SmartFormPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="text-sm" style={{ color: tc.textPrimary }}>
-                          {tpl.title}
+                          {t(tpl.title)}
                         </h4>
                         <p className={TYPOGRAPHY.bodyMuted}>{tpl.subtitle}</p>
                       </div>
@@ -421,7 +410,7 @@ export function SmartFormPage() {
                       />
                     </div>
                     <p className="text-xs" style={{ color: tc.textMuted }}>
-                      {tpl.description}
+                      {t(tpl.description)}
                     </p>
                     <div className="flex items-center gap-3">
                       <span
@@ -432,7 +421,7 @@ export function SmartFormPage() {
                           border: `1px solid ${tpl.color}25`,
                         }}
                       >
-                        {tpl.fields.length} 个字段
+                        {t('sfs.fieldCount', { n: tpl.fields.length })}
                       </span>
                       <span
                         className="text-[9px] px-2 py-0.5 rounded-full"
@@ -486,7 +475,7 @@ export function SmartFormPage() {
               style={{ color: template.color, textShadow: `0 0 15px ${template.color}50` }}
             >
               <TemplateIcon className="w-5 h-5" />
-              {template.title}
+              {t(template.title)}
             </h2>
             <p className={TYPOGRAPHY.bodyMuted}>{template.subtitle} — AI-Powered Smart Form</p>
           </div>
@@ -759,7 +748,7 @@ const FormField = memo(function FormField({
       {/* Label Row */}
       <div className="flex items-center gap-2 mb-2">
         <label className="text-sm" style={{ color: tc.textMuted }}>
-          {field.label}
+          {t(field.label)}
         </label>
         {field.required && (
           <span
@@ -810,14 +799,14 @@ const FormField = memo(function FormField({
             <span style={{ color: tc.muted }}>{t('form.aiSuggestion')}</span>
           </div>
           <p style={{ color: tc.textMuted }} className="mb-2">
-            {field.aiHint}
+            {t(field.aiHint)}
           </p>
           {suggestions.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mt-1.5">
               {suggestions.map((s, i) => (
                 <button
                   key={i}
-                  onClick={() => onApplyAiSuggestion(s)}
+                  onClick={() => onApplyAiSuggestion(t(s))}
                   className="px-2 py-1 rounded-lg text-[9px] transition-all duration-200 hover:scale-105"
                   style={{
                     background: tc.alpha(tc.secondary, 0.08),
@@ -825,7 +814,7 @@ const FormField = memo(function FormField({
                     color: tc.textMuted,
                   }}
                 >
-                  {s}
+                  {t(s)}
                 </button>
               ))}
             </div>
@@ -841,7 +830,7 @@ const FormField = memo(function FormField({
           onChange={(e) => onChange(e.target.value)}
           onFocus={focusHandler}
           onBlur={blurHandler}
-          placeholder={field.placeholder}
+          placeholder={field.placeholder ? t(field.placeholder) : undefined}
           className="w-full px-4 py-2.5 text-sm"
           style={inputStyle}
         />
@@ -854,7 +843,7 @@ const FormField = memo(function FormField({
           onChange={(e) => onChange(e.target.value === '' ? '' : Number(e.target.value))}
           onFocus={focusHandler}
           onBlur={blurHandler}
-          placeholder={field.placeholder}
+          placeholder={field.placeholder ? t(field.placeholder) : undefined}
           min={field.min}
           max={field.max}
           className="w-full px-4 py-2.5 text-sm"
@@ -868,7 +857,7 @@ const FormField = memo(function FormField({
           onChange={(e) => onChange(e.target.value)}
           onFocus={focusHandler}
           onBlur={blurHandler}
-          placeholder={field.placeholder}
+          placeholder={field.placeholder ? t(field.placeholder) : undefined}
           rows={3}
           className="w-full px-4 py-2.5 text-sm resize-none"
           style={{ ...inputStyle, scrollbarWidth: 'none' }}
@@ -894,7 +883,7 @@ const FormField = memo(function FormField({
           </option>
           {field.options?.map((opt) => (
             <option key={opt} value={opt} style={{ background: tc.bgCard, color: tc.textPrimary }}>
-              {opt}
+              {t(opt)}
             </option>
           ))}
         </select>
@@ -918,7 +907,7 @@ const FormField = memo(function FormField({
                 }}
               >
                 {selected && <Check className="w-3 h-3 inline mr-1" />}
-                {opt}
+                {t(opt)}
               </button>
             )
           })}
@@ -951,7 +940,7 @@ const FormField = memo(function FormField({
                 ) : (
                   <Plus className="w-3 h-3 inline mr-1" style={{ color: tc.muted }} />
                 )}
-                {opt}
+                {t(opt)}
               </button>
             )
           })}
@@ -1069,7 +1058,7 @@ const FormField = memo(function FormField({
           style={{ color: tc.danger, animation: 'spring-in 0.2s var(--spring-easing) both' }}
         >
           <AlertCircle className="w-3 h-3" />
-          {error}
+          {error ? t(error, { label: t(field.label) }) : error}
         </div>
       )}
     </div>

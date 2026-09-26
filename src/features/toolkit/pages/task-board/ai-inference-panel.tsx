@@ -15,9 +15,11 @@ import { useTaskStore } from '../task-board-store'
 
 import type { TaskInferenceResult } from '../task-board-data'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 export function AIInferencePanel({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+  const { t } = useI18n()
   const addTask = useTaskStore((s) => s.addTask)
   const [mode, setMode] = useState<'conversation' | 'code' | 'description'>('conversation')
   const [input, setInput] = useState('')
@@ -170,14 +172,14 @@ export function AIInferencePanel({ tc }: { tc: ReturnType<typeof useThemeColors>
                     style={{ color: PRIORITY_CONFIG[r.priority].color }}
                   />
                   <span className="text-[12px] truncate" style={{ color: tc.textPrimary }}>
-                    {r.title}
+                    {t(r.title)}
                   </span>
                 </div>
                 <p className="text-[10px] mb-1.5 line-clamp-2" style={{ color: tc.textMuted }}>
-                  {r.description}
+                  {t(r.description)}
                 </p>
                 <p className="text-[9px] italic mb-2" style={{ color: tc.textMuted }}>
-                  Reasoning: {r.reasoning}
+                  Reasoning: {t(r.reasoning)}
                 </p>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span

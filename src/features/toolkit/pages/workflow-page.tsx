@@ -56,204 +56,204 @@ export function WorkflowPage() {
   const workflows: Workflow[] = [
     {
       id: 'WF001',
-      name: '客户跟进自动化',
+      name: 'wfp.wf1.name',
       status: 'running',
       createdAt: '2024-05-20',
-      lastRun: '5分钟前',
+      lastRun: 'wfp.time.5minAgo',
       runCount: 156,
-      avgDuration: '2.3分钟',
+      avgDuration: 'wfp.wf1.avgDuration',
       nodes: [
         {
           id: '1',
-          name: '输入分析',
+          name: 'wfp.node.input',
           icon: FileText,
           status: 'completed',
-          description: '分析客户数据',
+          description: 'wfp.wf1.desc.input',
           progress: 100,
         },
         {
           id: '2',
-          name: '意图识别',
+          name: 'wfp.node.intent',
           icon: Target,
           status: 'completed',
-          description: '识别客户意图',
+          description: 'wfp.wf1.desc.intent',
           progress: 100,
         },
         {
           id: '3',
-          name: '任务执行',
+          name: 'wfp.node.execute',
           icon: Rocket,
           status: 'active',
-          description: '执行跟进任务',
+          description: 'wfp.wf1.desc.execute',
           progress: 65,
         },
         {
           id: '4',
-          name: '结果优化',
+          name: 'wfp.node.optimize',
           icon: TrendingUp,
           status: 'pending',
-          description: '优化执行结果',
+          description: 'wfp.wf1.desc.optimize',
           progress: 0,
         },
         {
           id: '5',
-          name: '学习反馈',
+          name: 'wfp.node.learn',
           icon: Cpu,
           status: 'pending',
-          description: 'AI学习反馈',
+          description: 'wfp.wf1.desc.learn',
           progress: 0,
         },
       ],
     },
     {
       id: 'WF002',
-      name: '数据同步流水线',
+      name: 'wfp.wf2.name',
       status: 'running',
       createdAt: '2024-05-18',
-      lastRun: '2分钟前',
+      lastRun: 'wfp.time.2minAgo',
       runCount: 892,
-      avgDuration: '45秒',
+      avgDuration: 'wfp.wf2.avgDuration',
       nodes: [
         {
           id: '1',
-          name: '输入分析',
+          name: 'wfp.node.input',
           icon: FileText,
           status: 'completed',
-          description: '数据源检测',
+          description: 'wfp.wf2.desc.input',
           progress: 100,
         },
         {
           id: '2',
-          name: '意图识别',
+          name: 'wfp.node.intent',
           icon: Target,
           status: 'completed',
-          description: '同步策略识别',
+          description: 'wfp.wf2.desc.intent',
           progress: 100,
         },
         {
           id: '3',
-          name: '任务执行',
+          name: 'wfp.node.execute',
           icon: Rocket,
           status: 'completed',
-          description: '数据同步',
+          description: 'wfp.wf2.desc.execute',
           progress: 100,
         },
         {
           id: '4',
-          name: '结果优化',
+          name: 'wfp.node.optimize',
           icon: TrendingUp,
           status: 'active',
-          description: '数据清洗',
+          description: 'wfp.wf2.desc.optimize',
           progress: 40,
         },
         {
           id: '5',
-          name: '学习反馈',
+          name: 'wfp.node.learn',
           icon: Cpu,
           status: 'pending',
-          description: '质量评估',
+          description: 'wfp.wf2.desc.learn',
           progress: 0,
         },
       ],
     },
     {
       id: 'WF003',
-      name: '营销活动触发',
+      name: 'wfp.wf3.name',
       status: 'paused',
       createdAt: '2024-05-22',
-      lastRun: '1小时前',
+      lastRun: 'wfp.time.1hAgo',
       runCount: 28,
-      avgDuration: '5.1分钟',
+      avgDuration: 'wfp.wf3.avgDuration',
       nodes: [
         {
           id: '1',
-          name: '输入分析',
+          name: 'wfp.node.input',
           icon: FileText,
           status: 'completed',
-          description: '活动条件检测',
+          description: 'wfp.wf3.desc.input',
           progress: 100,
         },
         {
           id: '2',
-          name: '意图识别',
+          name: 'wfp.node.intent',
           icon: Target,
           status: 'completed',
-          description: '触发规则匹配',
+          description: 'wfp.wf3.desc.intent',
           progress: 100,
         },
         {
           id: '3',
-          name: '任务执行',
+          name: 'wfp.node.execute',
           icon: Rocket,
           status: 'pending',
-          description: '发送营销消息',
+          description: 'wfp.wf3.desc.execute',
           progress: 0,
         },
         {
           id: '4',
-          name: '结果优化',
+          name: 'wfp.node.optimize',
           icon: TrendingUp,
           status: 'pending',
-          description: '效果追踪',
+          description: 'wfp.wf3.desc.optimize',
           progress: 0,
         },
         {
           id: '5',
-          name: '学习反馈',
+          name: 'wfp.node.learn',
           icon: Cpu,
           status: 'pending',
-          description: '转化率分析',
+          description: 'wfp.wf3.desc.learn',
           progress: 0,
         },
       ],
     },
     {
       id: 'WF004',
-      name: 'AI内容生成',
+      name: 'wfp.wf4.name',
       status: 'completed',
       createdAt: '2024-05-21',
-      lastRun: '昨天',
+      lastRun: 'wfp.time.yesterday',
       runCount: 45,
-      avgDuration: '8.2分钟',
+      avgDuration: 'wfp.wf4.avgDuration',
       nodes: [
         {
           id: '1',
-          name: '输入分析',
+          name: 'wfp.node.input',
           icon: FileText,
           status: 'completed',
-          description: '主题分析',
+          description: 'wfp.wf4.desc.input',
           progress: 100,
         },
         {
           id: '2',
-          name: '意图识别',
+          name: 'wfp.node.intent',
           icon: Target,
           status: 'completed',
-          description: '内容意图',
+          description: 'wfp.wf4.desc.intent',
           progress: 100,
         },
         {
           id: '3',
-          name: '任务执行',
+          name: 'wfp.node.execute',
           icon: Rocket,
           status: 'completed',
-          description: 'AI生成',
+          description: 'wfp.wf4.desc.execute',
           progress: 100,
         },
         {
           id: '4',
-          name: '结果优化',
+          name: 'wfp.node.optimize',
           icon: TrendingUp,
           status: 'completed',
-          description: '内容优化',
+          description: 'wfp.wf4.desc.optimize',
           progress: 100,
         },
         {
           id: '5',
-          name: '学习反馈',
+          name: 'wfp.node.learn',
           icon: Cpu,
           status: 'completed',
-          description: '质量评分',
+          description: 'wfp.wf4.desc.learn',
           progress: 100,
         },
       ],
@@ -263,43 +263,48 @@ export function WorkflowPage() {
   const activeTasks: ActiveTask[] = [
     {
       id: 'T001',
-      name: '客户跟进 - 张明远',
-      workflow: '客户跟进自动化',
+      name: 'wfp.task.t1.name',
+      workflow: 'wfp.wf1.name',
       progress: 75,
       status: 'running',
-      eta: '约30秒',
+      eta: 'wfp.eta.about30s',
     },
     {
       id: 'T002',
-      name: '数据同步 - 订单数据',
-      workflow: '数据同步流水线',
+      name: 'wfp.task.t2.name',
+      workflow: 'wfp.wf2.name',
       progress: 40,
       status: 'running',
-      eta: '约20秒',
+      eta: 'wfp.eta.about20s',
     },
     {
       id: 'T003',
-      name: '客户跟进 - 李思琪',
-      workflow: '客户跟进自动化',
+      name: 'wfp.task.t3.name',
+      workflow: 'wfp.wf1.name',
       progress: 0,
       status: 'waiting',
-      eta: '等待中',
+      eta: 'wfp.eta.waiting',
     },
     {
       id: 'T004',
-      name: '营销推送 - 会员组',
-      workflow: '营销活动触发',
+      name: 'wfp.task.t4.name',
+      workflow: 'wfp.wf3.name',
       progress: 0,
       status: 'waiting',
-      eta: '流程暂停',
+      eta: 'wfp.eta.paused',
     },
   ]
 
   const stats = [
-    { label: '已完成任务', value: '1,234', icon: CheckCircle2, color: tc.success },
-    { label: '活跃工作流', value: '8', icon: Activity, color: tc.accent },
-    { label: '平均耗时', value: '2.1分钟', icon: Clock, color: tc.secondary },
-    { label: '成功率', value: '99.2%', icon: TrendingUp, color: tc.success },
+    { label: 'wfp.stat.completedTasks', value: '1,234', icon: CheckCircle2, color: tc.success },
+    { label: 'wfp.stat.activeWorkflows', value: '8', icon: Activity, color: tc.accent },
+    {
+      label: 'wfp.stat.avgDuration',
+      value: 'wfp.stat.avgDurationValue',
+      icon: Clock,
+      color: tc.secondary,
+    },
+    { label: 'wfp.stat.successRate', value: '99.2%', icon: TrendingUp, color: tc.success },
   ]
 
   const getStatusColor = (status: Workflow['status']): string => {
@@ -325,7 +330,7 @@ export function WorkflowPage() {
             {translate('workflow.title')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            五维闭环工作流系统 · 自动化任务编排
+            {translate('wfp.subtitle')}
           </p>
         </div>
         <div className="flex gap-3">
@@ -338,14 +343,14 @@ export function WorkflowPage() {
             }}
           >
             <RefreshCw className="w-4 h-4" />
-            刷新
+            {translate('wfp.refresh')}
           </button>
           <button
             className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium"
             style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
           >
             <Play className="w-5 h-5" />
-            新建工作流
+            {translate('wfp.newWorkflow')}
           </button>
         </div>
       </div>
@@ -357,10 +362,10 @@ export function WorkflowPage() {
               <stat.icon className="w-8 h-8" style={{ color: stat.color }} />
             </div>
             <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-              {stat.label}
+              {translate(stat.label)}
             </p>
             <p className="text-2xl font-bold" style={{ color: tc.textPrimary }}>
-              {stat.value}
+              {translate(stat.value)}
             </p>
           </NeonCard>
         ))}
@@ -370,7 +375,7 @@ export function WorkflowPage() {
         <NeonCard color={tc.primary} hoverable={false} className="lg:col-span-2 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-              工作流列表
+              {translate('wfp.listTitle')}
             </h2>
             <div className="flex gap-2">
               <button
@@ -381,7 +386,7 @@ export function WorkflowPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                全部
+                {translate('wfp.filter.all')}
               </button>
               <button
                 className="px-4 py-2 rounded-lg text-sm"
@@ -391,7 +396,7 @@ export function WorkflowPage() {
                   border: `1px solid ${tc.success}`,
                 }}
               >
-                运行中
+                {translate('wfp.filter.running')}
               </button>
               <button
                 className="px-4 py-2 rounded-lg text-sm"
@@ -401,7 +406,7 @@ export function WorkflowPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                已暂停
+                {translate('wfp.filter.paused')}
               </button>
             </div>
           </div>
@@ -430,15 +435,15 @@ export function WorkflowPage() {
                         }}
                       />
                       <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                        {workflow.name}
+                        {translate(workflow.name)}
                       </h3>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-sm" style={{ color: tc.textSecondary }}>
-                        运行次数: {workflow.runCount}
+                        {translate('wfp.runCount')}: {workflow.runCount}
                       </span>
                       <span className="text-sm" style={{ color: tc.textSecondary }}>
-                        平均耗时: {workflow.avgDuration}
+                        {translate('wfp.stat.avgDuration')}: {translate(workflow.avgDuration)}
                       </span>
                     </div>
                   </div>
@@ -447,14 +452,14 @@ export function WorkflowPage() {
                     <div className="mt-4 pt-4 border-t" style={{ borderColor: tc.borderSubtle }}>
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-sm" style={{ color: tc.textSecondary }}>
-                          工作流节点
+                          {translate('wfp.nodesTitle')}
                         </span>
                         <span
                           className="text-xs px-2 py-1 rounded-full"
                           style={{ background: tc.alpha(tc.success, 0.15), color: tc.success }}
                         >
                           {workflow.nodes.filter((n) => n.status === 'completed').length}/
-                          {workflow.nodes.length} 完成
+                          {workflow.nodes.length} {translate('wfp.completedShort')}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -492,7 +497,7 @@ export function WorkflowPage() {
                                 className="text-xs mt-2 text-center"
                                 style={{ color: tc.textSecondary }}
                               >
-                                {node.name}
+                                {translate(node.name)}
                               </span>
                             </div>
                             {index < workflow.nodes.length - 1 && (
@@ -514,7 +519,7 @@ export function WorkflowPage() {
 
         <NeonCard color={tc.secondary} hoverable={false} className="p-6">
           <h2 className="text-xl font-semibold mb-4" style={{ color: tc.textPrimary }}>
-            实时任务
+            {translate('wfp.realtimeTasks')}
           </h2>
 
           <div className="space-y-3">
@@ -526,7 +531,7 @@ export function WorkflowPage() {
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium text-sm" style={{ color: tc.textPrimary }}>
-                    {task.name}
+                    {translate(task.name)}
                   </span>
                   <span
                     className="text-xs px-2 py-1 rounded-full"
@@ -546,14 +551,14 @@ export function WorkflowPage() {
                     }}
                   >
                     {task.status === 'running'
-                      ? '运行中'
+                      ? translate('wfp.status.running')
                       : task.status === 'completed'
-                        ? '已完成'
-                        : '等待中'}
+                        ? translate('wfp.status.completed')
+                        : translate('wfp.status.waiting')}
                   </span>
                 </div>
                 <p className="text-xs mb-2" style={{ color: tc.textSecondary }}>
-                  {task.workflow}
+                  {translate(task.workflow)}
                 </p>
                 <div className="flex items-center gap-2">
                   <div
@@ -574,7 +579,7 @@ export function WorkflowPage() {
                   </span>
                 </div>
                 <p className="text-xs mt-2" style={{ color: tc.textMuted }}>
-                  {task.eta}
+                  {translate(task.eta)}
                 </p>
               </div>
             ))}
@@ -584,11 +589,11 @@ export function WorkflowPage() {
             <div className="flex items-center gap-2 mb-2">
               <Zap className="w-5 h-5" style={{ color: tc.accent }} />
               <span className="font-medium" style={{ color: tc.accent }}>
-                工作流效率提示
+                {translate('wfp.tipTitle')}
               </span>
             </div>
             <p className="text-sm" style={{ color: tc.textSecondary }}>
-              当前系统负载正常，建议优化"数据同步流水线"的执行频率以降低资源消耗。
+              {translate('wfp.tipBody')}
             </p>
           </div>
         </NeonCard>

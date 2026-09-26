@@ -31,6 +31,7 @@ class ResizeObserverStub {
 vi.stubGlobal('ResizeObserver', ResizeObserverStub)
 
 import { DemoEnvironmentBanner } from '@/app/components/demo-environment-banner'
+import { I18nProvider } from '@/app/components/i18n-context'
 
 beforeEach(() => {
   h.configured = false
@@ -44,7 +45,11 @@ afterEach(() => {
 
 describe('DemoEnvironmentBanner', () => {
   it('Supabase 未配置:渲染含中英文风险提示的警示横幅', () => {
-    render(<DemoEnvironmentBanner />)
+    render(
+      <I18nProvider>
+        <DemoEnvironmentBanner />
+      </I18nProvider>,
+    )
 
     const alert = screen.getByRole('alert')
     expect(alert).toHaveTextContent(/演示环境/)
@@ -56,7 +61,11 @@ describe('DemoEnvironmentBanner', () => {
   })
 
   it('点击关闭:横幅消失且 sessionStorage 记录,body padding-top 还原', () => {
-    render(<DemoEnvironmentBanner />)
+    render(
+      <I18nProvider>
+        <DemoEnvironmentBanner />
+      </I18nProvider>,
+    )
     expect(screen.getByRole('alert')).toBeInTheDocument()
 
     // 横幅可见时为 body 设置了 padding-top(占位防遮挡)
@@ -71,13 +80,21 @@ describe('DemoEnvironmentBanner', () => {
 
   it('sessionStorage 已记录关闭:初始即不渲染', () => {
     sessionStorage.setItem('yyc3_demo_banner_dismissed', '1')
-    render(<DemoEnvironmentBanner />)
+    render(
+      <I18nProvider>
+        <DemoEnvironmentBanner />
+      </I18nProvider>,
+    )
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
   it('Supabase 已配置(真实后端模式):不渲染演示警示', () => {
     h.configured = true
-    render(<DemoEnvironmentBanner />)
+    render(
+      <I18nProvider>
+        <DemoEnvironmentBanner />
+      </I18nProvider>,
+    )
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 })

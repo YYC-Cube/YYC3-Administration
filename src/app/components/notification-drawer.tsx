@@ -315,7 +315,7 @@ export function NotificationDrawer({ open, onClose }: NotificationDrawerProps) {
                               color: notif.read ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.8)',
                             }}
                           >
-                            {notif.title}
+                            {t(notif.title)}
                           </p>
                           {!notif.read && (
                             <div
@@ -325,7 +325,7 @@ export function NotificationDrawer({ open, onClose }: NotificationDrawerProps) {
                           )}
                         </div>
                         <p className="text-[11px] text-white/25 leading-relaxed line-clamp-2">
-                          {notif.message}
+                          {t(notif.message)}
                         </p>
                         <div className="flex items-center gap-2 mt-1.5">
                           <Clock className="w-3 h-3 text-white/15" />

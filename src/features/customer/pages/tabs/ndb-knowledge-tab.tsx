@@ -59,38 +59,38 @@ export function KnowledgeTab() {
           <div className="space-y-2">
             {[
               {
-                title: '量子加密通信解决方案白皮书',
-                type: '技术文档',
+                title: 'ndbk.doc.1.title',
+                type: 'ndbk.doc.1.type',
                 views: 342,
-                date: '3月12日',
+                date: 'ndbk.doc.1.date',
                 color: '#00f0ff',
               },
               {
-                title: '2026Q1 产品更新说明',
-                type: '产品资料',
+                title: 'ndbk.doc.2.title',
+                type: 'ndbk.doc.2.type',
                 views: 567,
-                date: '3月10日',
+                date: 'ndbk.doc.2.date',
                 color: '#00d4ff',
               },
               {
-                title: '客户续约话术模板 v3.2',
-                type: '话术库',
+                title: 'ndbk.doc.3.title',
+                type: 'ndbk.doc.3.type',
                 views: 1204,
-                date: '3月8日',
+                date: 'ndbk.doc.3.date',
                 color: '#00ffcc',
               },
               {
-                title: '竞品分析报告：AI智能呼叫赛道',
-                type: '市场分析',
+                title: 'ndbk.doc.4.title',
+                type: 'ndbk.doc.4.type',
                 views: 298,
-                date: '3月5日',
+                date: 'ndbk.doc.4.date',
                 color: '#00ffc8',
               },
               {
-                title: '新人入职培训手册 2026版',
-                type: '培训资料',
+                title: 'ndbk.doc.5.title',
+                type: 'ndbk.doc.5.type',
                 views: 189,
-                date: '3月1日',
+                date: 'ndbk.doc.5.date',
                 color: '#008b9d',
               },
             ].map((doc, i) => (
@@ -104,9 +104,9 @@ export function KnowledgeTab() {
               >
                 <FileText className="w-4 h-4 shrink-0" style={{ color: `${doc.color}60` }} />
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] text-white/60 truncate">{doc.title}</p>
+                  <p className="text-[11px] text-white/60 truncate">{t(doc.title)}</p>
                   <p className="text-[9px] text-white/20">
-                    {doc.type} · {doc.date}
+                    {t(doc.type)} · {t(doc.date)}
                   </p>
                 </div>
                 <span className="text-[9px] text-white/15 flex items-center gap-1">
@@ -129,34 +129,34 @@ export function KnowledgeTab() {
           <div className="space-y-3">
             {[
               {
-                name: '张伟',
-                role: '高级销售',
-                msg: '本周签约3单，连续突破记录！你的专业度和执行力令人钦佩，继续保持这股冲劲！',
-                type: '鼓励',
+                name: 'ndbk.motivation.1.name',
+                role: 'ndbk.motivation.1.role',
+                msg: 'ndbk.motivation.1.msg',
+                type: 'ndb.encourage',
                 score: 96,
                 color: '#00ffc8',
               },
               {
-                name: '李娜',
-                role: '客户经理',
-                msg: '客户满意度评分4.9，全团队最高！你对客户的用心被看到了，期待下个月更精彩的表现！',
-                type: '鼓励',
+                name: 'ndbk.motivation.2.name',
+                role: 'ndbk.motivation.2.role',
+                msg: 'ndbk.motivation.2.msg',
+                type: 'ndb.encourage',
                 score: 94,
                 color: '#00f0ff',
               },
               {
-                name: '王磊',
-                role: '技术支持',
-                msg: '本周工单解决率有所下降，建议优先处理高优先级工单。相信你的技术能力，调整节奏就好！',
-                type: '诫勉',
+                name: 'ndbk.motivation.3.name',
+                role: 'ndbk.motivation.3.role',
+                msg: 'ndbk.motivation.3.msg',
+                type: 'ndb.admonish',
                 score: 72,
                 color: '#00ffcc',
               },
               {
-                name: '刘洋',
-                role: '售前顾问',
-                msg: '方案制作质量很高，但交付周期偏长。尝试用模板化��法提效，你一定能做到的！',
-                type: '诫勉',
+                name: 'ndbk.motivation.4.name',
+                role: 'ndbk.motivation.4.role',
+                msg: 'ndbk.motivation.4.msg',
+                type: 'ndb.admonish',
                 score: 78,
                 color: '#008b9d',
               },
@@ -176,28 +176,29 @@ export function KnowledgeTab() {
                       style={{ background: `${m.color}15`, border: `1px solid ${m.color}25` }}
                     >
                       <span className="text-[9px]" style={{ color: m.color }}>
-                        {m.name[0]}
+                        {t(m.name).charAt(0)}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[11px] text-white/60">{m.name}</span>
-                      <span className="text-[9px] text-white/20 ml-1.5">{m.role}</span>
+                      <span className="text-[11px] text-white/60">{t(m.name)}</span>
+                      <span className="text-[9px] text-white/20 ml-1.5">{t(m.role)}</span>
                     </div>
                   </div>
                   <span
                     className="text-[8px] px-1.5 py-0.5 rounded-full"
                     style={{
-                      background: m.type === '鼓励' ? 'rgba(0,255,200,0.1)' : 'rgba(0,139,157,0.1)',
-                      color: m.type === '鼓励' ? '#00ffc8' : '#008b9d',
-                      border: `1px solid ${m.type === '鼓励' ? 'rgba(0,255,200,0.2)' : 'rgba(0,139,157,0.2)'}`,
+                      background:
+                        m.type === 'ndb.encourage' ? 'rgba(0,255,200,0.1)' : 'rgba(0,139,157,0.1)',
+                      color: m.type === 'ndb.encourage' ? '#00ffc8' : '#008b9d',
+                      border: `1px solid ${m.type === 'ndb.encourage' ? 'rgba(0,255,200,0.2)' : 'rgba(0,139,157,0.2)'}`,
                     }}
                   >
-                    {m.type}
+                    {t(m.type)}
                   </span>
                 </div>
-                <p className="text-[10px] text-white/35 leading-relaxed">{m.msg}</p>
+                <p className="text-[10px] text-white/35 leading-relaxed">{t(m.msg)}</p>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-[8px] text-white/15">绩效指数</span>
+                  <span className="text-[8px] text-white/15">{t('ndb.perfIndex')}</span>
                   <div className="flex-1 h-1 rounded-full bg-white/5">
                     <div
                       className="h-full rounded-full"

@@ -15,22 +15,22 @@ export function BrandManagementPage() {
 
   const brandMetrics = [
     {
-      label: '品牌提及',
+      label: 'brand.mentions',
       value: '127.5K',
       change: '+18.2%',
       icon: MessageSquare,
       color: tc.primary,
     },
-    { label: '情感积极度', value: '86.5%', change: '+5.3%', icon: Heart, color: tc.success },
-    { label: '品牌关注度', value: '2.4M', change: '+12.8%', icon: Eye, color: tc.secondary },
-    { label: '品牌美誉度', value: '92.3', change: '+3.1%', icon: Star, color: tc.accent },
+    { label: 'brand.sentiment', value: '86.5%', change: '+5.3%', icon: Heart, color: tc.success },
+    { label: 'brand.attention', value: '2.4M', change: '+12.8%', icon: Eye, color: tc.secondary },
+    { label: 'brand.reputation', value: '92.3', change: '+3.1%', icon: Star, color: tc.accent },
   ]
 
   const sentimentData = [
-    { category: '产品质量', positive: 88, neutral: 10, negative: 2 },
-    { category: '客户服务', positive: 82, neutral: 15, negative: 3 },
-    { category: '品牌形象', positive: 92, neutral: 6, negative: 2 },
-    { category: '性价比', positive: 75, neutral: 20, negative: 5 },
+    { category: 'brand.cat.quality', positive: 88, neutral: 10, negative: 2 },
+    { category: 'brand.cat.service', positive: 82, neutral: 15, negative: 3 },
+    { category: 'brand.cat.image', positive: 92, neutral: 6, negative: 2 },
+    { category: 'brand.cat.value', positive: 75, neutral: 20, negative: 5 },
   ]
 
   return (
@@ -41,7 +41,7 @@ export function BrandManagementPage() {
             {t('nav.brandMgmt')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            品牌监测 · 口碑分析 · 声誉管理
+            {t('brand.subtitle')}
           </p>
         </div>
         <button
@@ -49,7 +49,7 @@ export function BrandManagementPage() {
           style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
         >
           <Shield className="w-5 h-5" />
-          生成报告
+          {t('brand.generateReport')}
         </button>
       </div>
 
@@ -68,7 +68,7 @@ export function BrandManagementPage() {
                 </div>
               </div>
               <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-                {metric.label}
+                {t(metric.label)}
               </p>
               <p className="text-2xl font-bold" style={{ color: tc.textPrimary }}>
                 {metric.value}
@@ -80,17 +80,17 @@ export function BrandManagementPage() {
 
       <NeonCard className="p-6">
         <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-          情感分析概览
+          {t('brand.sentimentOverview')}
         </h2>
         <div className="space-y-4">
           {sentimentData.map((item) => (
             <div key={item.category}>
               <div className="flex items-center justify-between mb-2">
                 <span className="font-medium" style={{ color: tc.textPrimary }}>
-                  {item.category}
+                  {t(item.category)}
                 </span>
                 <span className="text-sm" style={{ color: tc.textMuted }}>
-                  积极度 {item.positive}%
+                  {t('brand.positiveRate', { pct: item.positive })}
                 </span>
               </div>
               <div

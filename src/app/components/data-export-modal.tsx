@@ -78,7 +78,15 @@ export function DataExportModal({ open, onClose, preselectedDataset }: DataExpor
 
     // Simulate brief export processing time
     setTimeout(() => {
-      const data = dataset.getData()
+      // Translate i18n-key string values before serializing, so the exported
+      // file contains human-readable text rather than dotted keys.
+      const data = dataset.getData().map((row) => {
+        const translated: Record<string, unknown> = {}
+        for (const [k, v] of Object.entries(row)) {
+          translated[k] = typeof v === 'string' ? t(v) : v
+        }
+        return translated
+      })
       const filename = `yyc3_${dataset.id}_${new Date().toISOString().slice(0, 10)}`
 
       if (format === 'csv') {
@@ -95,7 +103,7 @@ export function DataExportModal({ open, onClose, preselectedDataset }: DataExpor
         onClose()
       }, 1800)
     }, 1200)
-  }, [dataset, format, onClose])
+  }, [dataset, format, onClose, t])
 
   if (!open) return null
 
@@ -272,13 +280,13 @@ export function DataExportModal({ open, onClose, preselectedDataset }: DataExpor
                             className="text-sm"
                             style={{ color: isActive ? ds.color : 'rgba(255,255,255,0.5)' }}
                           >
-                            {ds.label}
+                            {t(ds.label)}
                           </span>
                         </div>
-                        <p className="text-[10px] text-white/20 mb-2">{ds.description}</p>
+                        <p className="text-[10px] text-white/20 mb-2">{t(ds.description)}</p>
                         <div className="flex items-center gap-3 text-[9px] text-white/15">
-                          <span>{ds.rowCount} 行</span>
-                          <span>{ds.fields.length} 字段</span>
+                          <span>{t('dem.rows', { count: ds.rowCount })}</span>
+                          <span>{t('dem.fields', { count: ds.fields.length })}</span>
                         </div>
                       </button>
                     )
@@ -391,7 +399,10 @@ export function DataExportModal({ open, onClose, preselectedDataset }: DataExpor
                                       className="px-3 py-2 text-white/30 whitespace-nowrap"
                                       style={{ borderBottom: '1px solid rgba(255,255,255,0.02)' }}
                                     >
-                                      {String(row[f] ?? '')}
+                                      {(() => {
+                                        const v = row[f]
+                                        return typeof v === 'string' ? t(v) : String(v ?? '')
+                                      })()}
                                     </td>
                                   ))}
                                 </tr>

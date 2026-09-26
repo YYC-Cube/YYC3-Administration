@@ -218,12 +218,12 @@ function loadOnboardingDone(): boolean {
   }
 }
 
-// Mock initial notifications
+// Mock initial notifications — title/message hold i18n keys; resolve via t() at render sites
 const initialNotifications: NotificationItem[] = [
   {
     id: 'n1',
-    title: '新客户转化',
-    message: '张明远已从「获客」阶段进入「转化」阶段，AI 评估转化概率 87%',
+    title: 'ntf.n1.title',
+    message: 'ntf.n1.message',
     type: 'success',
     color: '#00ffc8',
     timestamp: new Date(Date.now() - 300000),
@@ -231,8 +231,8 @@ const initialNotifications: NotificationItem[] = [
   },
   {
     id: 'n2',
-    title: 'AI 呼叫完成',
-    message: '批量外呼任务 #247 已完成，接通率 78.3%，转化 12 条有效线索',
+    title: 'ntf.n2.title',
+    message: 'ntf.n2.message',
     type: 'info',
     color: '#00f0ff',
     timestamp: new Date(Date.now() - 1200000),
@@ -240,8 +240,8 @@ const initialNotifications: NotificationItem[] = [
   },
   {
     id: 'n3',
-    title: '客户健康度预警',
-    message: '王建华（量子计算）健康度降至 65，建议尽快安排跟进',
+    title: 'ntf.n3.title',
+    message: 'ntf.n3.message',
     type: 'warning',
     color: '#00d4ff',
     timestamp: new Date(Date.now() - 2400000),
@@ -249,8 +249,8 @@ const initialNotifications: NotificationItem[] = [
   },
   {
     id: 'n4',
-    title: 'AI 话术更新',
-    message: '产品推荐话术 v3.2 已自动生成并部署，覆盖 3 个场景',
+    title: 'ntf.n4.title',
+    message: 'ntf.n4.message',
     type: 'info',
     color: '#00f0ff',
     timestamp: new Date(Date.now() - 3600000),
@@ -258,8 +258,8 @@ const initialNotifications: NotificationItem[] = [
   },
   {
     id: 'n5',
-    title: '系统性能优化',
-    message: '缓存策略已自动调整，API 响应时间优化 18%',
+    title: 'ntf.n5.title',
+    message: 'ntf.n5.message',
     type: 'success',
     color: '#00ffc8',
     timestamp: new Date(Date.now() - 5400000),
@@ -267,8 +267,8 @@ const initialNotifications: NotificationItem[] = [
   },
   {
     id: 'n6',
-    title: '内存使用警告',
-    message: '内存使用已达 67%，建议优化缓存策略或扩容',
+    title: 'ntf.n6.title',
+    message: 'ntf.n6.message',
     type: 'warning',
     color: '#00d4ff',
     timestamp: new Date(Date.now() - 7200000),
@@ -276,8 +276,8 @@ const initialNotifications: NotificationItem[] = [
   },
   {
     id: 'n7',
-    title: '赵鹏飞续约成功',
-    message: '未来能源年度合同已续签，合同金额 ¥1,024,000',
+    title: 'ntf.n7.title',
+    message: 'ntf.n7.message',
     type: 'success',
     color: '#00ffc8',
     timestamp: new Date(Date.now() - 10800000),
@@ -285,52 +285,52 @@ const initialNotifications: NotificationItem[] = [
   },
 ]
 
-// Mock initial activities
+// Mock initial activities — action/target hold i18n keys; resolve via t() at render sites
 const initialActivities: ActivityItem[] = [
   {
     id: 'a1',
-    action: 'AI 自动跟进',
-    target: '陈雅文 · 智链网络',
+    action: 'ntf.a1.action',
+    target: 'ntf.a1.target',
     timestamp: new Date(Date.now() - 120000),
     type: 'ai',
     color: '#00d4ff',
   },
   {
     id: 'a2',
-    action: '呼叫完成',
-    target: '赵鹏飞 · 未来能源 (3:45)',
+    action: 'ntf.a2.action',
+    target: 'ntf.a2.target',
     timestamp: new Date(Date.now() - 600000),
     type: 'call',
     color: '#00ffcc',
   },
   {
     id: 'a3',
-    action: '客户健康度更新',
-    target: '李思琪 健康度 88 → 92',
+    action: 'ntf.a3.action',
+    target: 'ntf.a3.target',
     timestamp: new Date(Date.now() - 1800000),
     type: 'customer',
     color: '#00f0ff',
   },
   {
     id: 'a4',
-    action: '系统性能优化',
-    target: '缓存策略已自动调整',
+    action: 'ntf.a4.action',
+    target: 'ntf.a4.target',
     timestamp: new Date(Date.now() - 3600000),
     type: 'system',
     color: '#00ffc8',
   },
   {
     id: 'a5',
-    action: '新客户录入',
-    target: '王建华 · 量子计算 ¥64,000',
+    action: 'ntf.a5.action',
+    target: 'ntf.a5.target',
     timestamp: new Date(Date.now() - 5400000),
     type: 'customer',
     color: '#00d4ff',
   },
   {
     id: 'a6',
-    action: 'AI 话术生成',
-    target: '产品推荐话术 v3.2 已就绪',
+    action: 'ntf.a6.action',
+    target: 'ntf.a6.target',
     timestamp: new Date(Date.now() - 7200000),
     type: 'ai',
     color: '#00f0ff',
@@ -486,66 +486,68 @@ export function useApp() {
 // Simulates WebSocket-like data pushes
 // ==========================================
 
+// Pool entries hold i18n keys in title/message; resolved via t() at render sites
 const realtimeNotifPool: Array<Omit<NotificationItem, 'id' | 'timestamp' | 'read'>> = [
   {
-    title: '新线索转入',
-    message: '刘晓东（芯片科技）已进入获客阶段，来源：官网表单',
+    title: 'ntf.r1.title',
+    message: 'ntf.r1.message',
     type: 'info',
     color: '#00f0ff',
   },
   {
-    title: 'AI 呼叫接通',
-    message: '当前通话：周婷 · 银河传媒，情感分析：积极',
+    title: 'ntf.r2.title',
+    message: 'ntf.r2.message',
     type: 'success',
     color: '#00ffc8',
   },
   {
-    title: '客户流失风险',
-    message: '孙磊（深海科技）健康度降至 52，触发预警',
+    title: 'ntf.r3.title',
+    message: 'ntf.r3.message',
     type: 'warning',
     color: '#00d4ff',
   },
   {
-    title: '批量任务完成',
-    message: '外呼任务 #251 结束：42通完成，接通率 81.2%',
+    title: 'ntf.r4.title',
+    message: 'ntf.r4.message',
     type: 'success',
     color: '#00ffc8',
   },
   {
-    title: 'AI 学习更新',
-    message: '情感模型 v4.3 训练完成，准确率提升 2.1%',
+    title: 'ntf.r5.title',
+    message: 'ntf.r5.message',
     type: 'info',
     color: '#00f0ff',
   },
   {
-    title: '安全扫描完成',
-    message: '0 威胁检测，系统安全等级 A+',
+    title: 'ntf.r6.title',
+    message: 'ntf.r6.message',
     type: 'success',
     color: '#00ffc8',
   },
   {
-    title: '呼叫异常检测',
-    message: '连续 3 通未接通，建议检查线路或调整时段',
+    title: 'ntf.r7.title',
+    message: 'ntf.r7.message',
     type: 'error',
     color: '#005f73',
   },
   {
-    title: '客户升级',
-    message: '陈雅文（智链网络）忠诚度评分升至 A+ 级',
+    title: 'ntf.r8.title',
+    message: 'ntf.r8.message',
     type: 'success',
     color: '#00ffc8',
   },
 ]
 
+// Pool entries hold i18n keys in action/target; resolved via t() at render sites
 const realtimeActivityPool: Array<Omit<ActivityItem, 'id' | 'timestamp'>> = [
-  { action: 'AI 自动外呼', target: '刘晓东 · 芯片科技', type: 'call', color: '#00ffcc' },
-  { action: '客户画像更新', target: '周婷 · 银河传媒 标签+3', type: 'customer', color: '#00f0ff' },
-  { action: '话术优化推送', target: '场景：续约挽回 v2.1', type: 'ai', color: '#00d4ff' },
-  { action: '系统负载均衡', target: '节点 3 流量已分流 15%', type: 'system', color: '#00ffc8' },
-  { action: 'AI 情感分析', target: '当前通话情绪：中性→积极', type: 'ai', color: '#00d4ff' },
-  { action: '新客户录入', target: '马浩然 · 极光数据 ¥88,000', type: 'customer', color: '#00f0ff' },
-  { action: '呼叫完成', target: '周婷 · 银河传媒 (5:21)', type: 'call', color: '#00ffcc' },
-  { action: '缓存清理', target: '释放 128MB · 内存使用率 -4%', type: 'system', color: '#00ffc8' },
+  { action: 'ntf.ra1.action', target: 'ntf.ra1.target', type: 'call', color: '#00ffcc' },
+  { action: 'ntf.ra2.action', target: 'ntf.ra2.target', type: 'customer', color: '#00f0ff' },
+  { action: 'ntf.ra3.action', target: 'ntf.ra3.target', type: 'ai', color: '#00d4ff' },
+  { action: 'ntf.ra4.action', target: 'ntf.ra4.target', type: 'system', color: '#00ffc8' },
+  { action: 'ntf.ra5.action', target: 'ntf.ra5.target', type: 'ai', color: '#00d4ff' },
+  { action: 'ntf.ra6.action', target: 'ntf.ra6.target', type: 'customer', color: '#00f0ff' },
+  { action: 'ntf.ra7.action', target: 'ntf.ra7.target', type: 'call', color: '#00ffcc' },
+  { action: 'ntf.ra8.action', target: 'ntf.ra8.target', type: 'system', color: '#00ffc8' },
 ]
 
 /**
@@ -673,91 +675,137 @@ export interface ExportableDataset {
   getData: () => Record<string, unknown>[]
 }
 
+// 阶段 / 相对时间为显示文本,存 i18n 键;姓名/公司为 mock 专名保持原样
 const mockCustomerExport = () => [
   {
     姓名: '张明远',
     公司: '星际科技',
-    阶段: '转化',
+    阶段: 'app.stage.conversion',
     价值: '¥128,000',
     健康度: 92,
-    最近联系: '2小时前',
+    最近联系: 'app.time.2hAgo',
   },
   {
     姓名: '李思琪',
     公司: '云端数据',
-    阶段: '成交',
+    阶段: 'app.stage.deal',
     价值: '¥256,000',
     健康度: 88,
-    最近联系: '1天前',
+    最近联系: 'app.time.1dAgo',
   },
   {
     姓名: '王建华',
     公司: '量子计算',
-    阶段: '获客',
+    阶段: 'app.stage.acquisition',
     价值: '¥64,000',
     健康度: 65,
-    最近联系: '3天前',
+    最近联系: 'app.time.3dAgo',
   },
   {
     姓名: '陈雅文',
     公司: '智链网络',
-    阶段: '服务',
+    阶段: 'app.stage.service',
     价值: '¥512,000',
     健康度: 95,
-    最近联系: '刚刚',
+    最近联系: 'app.time.justNow',
   },
   {
     姓名: '赵鹏飞',
     公司: '未来能源',
-    阶段: '忠诚',
+    阶段: 'app.stage.loyalty',
     价值: '¥1,024,000',
     健康度: 98,
-    最近联系: '5小时前',
+    最近联系: 'app.time.5hAgo',
   },
-  { 姓名: '刘晓东', 公司: '芯片科技', 阶段: '获客', 价值: '¥42,000', 健康度: 70, 最近联系: '刚刚' },
+  {
+    姓名: '刘晓东',
+    公司: '芯片科技',
+    阶段: 'app.stage.acquisition',
+    价值: '¥42,000',
+    健康度: 70,
+    最近联系: 'app.time.justNow',
+  },
   {
     姓名: '周婷',
     公司: '银河传媒',
-    阶段: '转化',
+    阶段: 'app.stage.conversion',
     价值: '¥186,000',
     健康度: 82,
-    最近联系: '30分钟前',
+    最近联系: 'app.time.30minAgo',
   },
   {
     姓名: '马浩然',
     公司: '极光数据',
-    阶段: '获客',
+    阶段: 'app.stage.acquisition',
     价值: '¥88,000',
     健康度: 75,
-    最近联系: '1小时前',
+    最近联系: 'app.time.1hAgo',
   },
 ]
 
-// Mock Dashboard Export Data (Weekly Metrics)
+// Mock Dashboard Export Data (Weekly Metrics) — 日期为显示文本,存 i18n 键
 const mockDashboardExport = () => [
-  { 日期: '周一', 新客户: 42, 呼叫数: 35, AI任务: 128, 转化率: '38.2%' },
-  { 日期: '周二', 新客户: 56, 呼叫数: 48, AI任务: 156, 转化率: '41.5%' },
-  { 日期: '周三', 新客户: 38, 呼叫数: 32, AI任务: 112, 转化率: '35.8%' },
-  { 日期: '周四', 新客户: 67, 呼叫数: 58, AI任务: 189, 转化率: '44.2%' },
-  { 日期: '周五', 新客户: 72, 呼叫数: 64, AI任务: 201, 转化率: '47.1%' },
-  { 日期: '周六', 新客户: 45, 呼叫数: 28, AI任务: 95, 转化率: '33.9%' },
-  { 日期: '周日', 新客户: 52, 呼叫数: 42, AI任务: 167, 转化率: '40.6%' },
+  { 日期: 'app.day.mon', 新客户: 42, 呼叫数: 35, AI任务: 128, 转化率: '38.2%' },
+  { 日期: 'app.day.tue', 新客户: 56, 呼叫数: 48, AI任务: 156, 转化率: '41.5%' },
+  { 日期: 'app.day.wed', 新客户: 38, 呼叫数: 32, AI任务: 112, 转化率: '35.8%' },
+  { 日期: 'app.day.thu', 新客户: 67, 呼叫数: 58, AI任务: 189, 转化率: '44.2%' },
+  { 日期: 'app.day.fri', 新客户: 72, 呼叫数: 64, AI任务: 201, 转化率: '47.1%' },
+  { 日期: 'app.day.sat', 新客户: 45, 呼叫数: 28, AI任务: 95, 转化率: '33.9%' },
+  { 日期: 'app.day.sun', 新客户: 52, 呼叫数: 42, AI任务: 167, 转化率: '40.6%' },
 ]
 
+// 类型 / 状态为显示文本,存 i18n 键;姓名/公司为 mock 专名保持原样
 const mockCallExport = () => [
-  { 姓名: '张明远', 公司: '星际科技', 类型: 'AI外呼', 状态: '已完成', 时长: '2:34', AI评分: 92 },
-  { 姓名: '李思琪', 公司: '云端数据', 类型: 'AI跟进', 状态: '等待中', 时长: '--', AI评分: 85 },
-  { 姓名: '王建华', 公司: '量子计算', 类型: '人工转接', 状态: '排队中', 时长: '--', AI评分: 67 },
-  { 姓名: '陈雅文', 公司: '智链网络', 类型: 'AI回访', 状态: '已完成', 时长: '6:12', AI评分: 96 },
-  { 姓名: '赵鹏飞', 公司: '未来能源', 类型: 'AI外呼', 状态: '已完成', 时长: '3:45', AI评分: 88 },
+  {
+    姓名: '张明远',
+    公司: '星际科技',
+    类型: 'app.callType.outbound',
+    状态: 'app.callStatus.done',
+    时长: '2:34',
+    AI评分: 92,
+  },
+  {
+    姓名: '李思琪',
+    公司: '云端数据',
+    类型: 'app.callType.followup',
+    状态: 'app.callStatus.waiting',
+    时长: '--',
+    AI评分: 85,
+  },
+  {
+    姓名: '王建华',
+    公司: '量子计算',
+    类型: 'app.callType.transfer',
+    状态: 'app.callStatus.queued',
+    时长: '--',
+    AI评分: 67,
+  },
+  {
+    姓名: '陈雅文',
+    公司: '智链网络',
+    类型: 'app.callType.callback',
+    状态: 'app.callStatus.done',
+    时长: '6:12',
+    AI评分: 96,
+  },
+  {
+    姓名: '赵鹏飞',
+    公司: '未来能源',
+    类型: 'app.callType.outbound',
+    状态: 'app.callStatus.done',
+    时长: '3:45',
+    AI评分: 88,
+  },
 ]
 
-/** Pre-configured exportable datasets covering dashboard, customer, and call data. */
+/** Pre-configured exportable datasets covering dashboard, customer, and call data.
+ *  label/description hold i18n keys; resolved via t() at render sites.
+ *  `fields` stays as-is: it is the export file schema (CSV column headers), not UI copy. */
 export const exportableDatasets: ExportableDataset[] = [
   {
     id: 'dashboard',
-    label: '数据驾驶舱',
-    description: '7日运营趋势、KPI汇总数据',
+    label: 'ntf.ds1.label',
+    description: 'ntf.ds1.description',
     color: '#00f0ff',
     rowCount: 7,
     fields: ['日期', '新客户', '呼叫数', 'AI任务', '转化率'],
@@ -765,8 +813,8 @@ export const exportableDatasets: ExportableDataset[] = [
   },
   {
     id: 'customers',
-    label: '客户数据',
-    description: '全量客户信息、生命周期阶段、健康度',
+    label: 'ntf.ds2.label',
+    description: 'ntf.ds2.description',
     color: '#00d4ff',
     rowCount: 8,
     fields: ['姓名', '公司', '阶段', '价值', '健康度', '最近联系'],
@@ -774,8 +822,8 @@ export const exportableDatasets: ExportableDataset[] = [
   },
   {
     id: 'calls',
-    label: '呼叫记录',
-    description: 'AI呼叫队列、通话时长、AI评分',
+    label: 'ntf.ds3.label',
+    description: 'ntf.ds3.description',
     color: '#00ffcc',
     rowCount: 5,
     fields: ['姓名', '公司', '类型', '状态', '时长', 'AI评分'],

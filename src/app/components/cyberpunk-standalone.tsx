@@ -394,7 +394,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                   }}
                 >
                   {(
-                    ['zh', 'en', 'ja', 'zh-TW', 'ko', 'fr', 'de', 'es', 'pt-BR', 'ar'] as const
+                    ['zh', 'en'] as const
                   ).map((code) => {
                     const active = locale === code
                     const flag = localeFlags[code as keyof typeof localeFlags] ?? ''

@@ -21,7 +21,6 @@ import {
   Check,
   Clock,
   Copy,
-  Eye,
   Loader2,
   Send,
   Settings,
@@ -36,6 +35,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { AIChatMessage, AISuggestion } from '@/features/dev-workspace/panels/panel-types'
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { AI_SUGGESTIONS_POOL, timeAgo } from '@/features/dev-workspace/panels/panel-helpers'
 import { usePanelStore } from '@/features/dev-workspace/panels/panel-store'
 import { aiProxyService } from '@/services/ai-proxy-service'
@@ -81,6 +81,7 @@ export function AIAssistantPanel({
   editorInsertRef,
 }: AIAssistantPanelProps) {
   const { aiMessages, addAIMessage, clearAIMessages } = usePanelStore()
+  const { t } = useI18n()
   const activeModel = useActiveModel()
   const providerConfig = toProviderRequestConfig(activeModel)
   const openModelSettings = useAIModelStore((s) => s.openModelSettings)
@@ -152,6 +153,7 @@ export function AIAssistantPanel({
         history,
         abortRef.current.signal,
         fileContext,
+        t,
       )
 
       for await (const chunk of stream) {
@@ -181,7 +183,7 @@ export function AIAssistantPanel({
       const aiMsg: AIChatMessage = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        content: fullContent || '（无响应内容）',
+        content: fullContent || t('aia.noResponse'),
         timestamp: Date.now(),
       }
       addAIMessage(aiMsg)
@@ -190,7 +192,7 @@ export function AIAssistantPanel({
         addAIMessage({
           id: crypto.randomUUID(),
           role: 'assistant',
-          content: `⚠️ 错误: ${err.message}`,
+          content: t('aia.error', { message: err.message }),
           timestamp: Date.now(),
         })
       }
@@ -214,6 +216,7 @@ export function AIAssistantPanel({
     providerConfig,
     selectedFile,
     editorContentGetter,
+    t,
   ])
 
   const handleStop = useCallback(() => {
@@ -255,7 +258,7 @@ export function AIAssistantPanel({
       >
         <div className="flex items-center gap-1.5">
           <span className="text-[11px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-            AI 助手
+            {t('aia.title')}
           </span>
           {processing && <Loader2 className="w-3 h-3 animate-spin" style={{ color: tc.primary }} />}
           <span
@@ -273,7 +276,7 @@ export function AIAssistantPanel({
               className="text-[8px] px-1 py-0.5 rounded"
               style={{ background: 'rgba(234,179,8,0.1)', color: '#eab308' }}
             >
-              流式传输中…
+              {t('aia.streaming')}
             </span>
           )}
         </div>
@@ -281,7 +284,7 @@ export function AIAssistantPanel({
           <button
             onClick={() => setShowStats(!showStats)}
             className="w-5 h-5 flex items-center justify-center rounded hover:bg-white/5 transition-colors"
-            title="Token 统计"
+            title={t('aia.tokenStats')}
           >
             <BarChart3
               className="w-3 h-3"
@@ -291,7 +294,7 @@ export function AIAssistantPanel({
           <button
             onClick={() => setShowConfig(!showConfig)}
             className="w-5 h-5 flex items-center justify-center rounded hover:bg-white/5 transition-colors"
-            title="提供商设置"
+            title={t('aia.providerSettings')}
           >
             <Settings
               className="w-3 h-3"
@@ -307,7 +310,7 @@ export function AIAssistantPanel({
             className="text-[9px] px-1.5 py-0.5 rounded hover:bg-white/5 transition-colors"
             style={{ color: tc.textMuted }}
           >
-            清除
+            {t('aia.clear')}
           </button>
         </div>
       </div>
@@ -327,7 +330,7 @@ export function AIAssistantPanel({
                 className="text-[9px] uppercase tracking-wider flex items-center gap-1"
                 style={{ color: tc.textMuted }}
               >
-                <Zap className="w-3 h-3" style={{ color: '#eab308' }} /> Token 用量统计
+                <Zap className="w-3 h-3" style={{ color: '#eab308' }} /> {t('aia.tokenUsageStats')}
               </p>
 
               {/* 当前请求统计 */}
@@ -341,7 +344,7 @@ export function AIAssistantPanel({
                     }}
                   >
                     <p className="text-[8px]" style={{ color: 'rgba(139,92,246,0.7)' }}>
-                      提示词 Token
+                      {t('aia.promptTokens')}
                     </p>
                     <p className="text-[12px]" style={{ color: '#a78bfa' }}>
                       {currentStats.promptTokens.toLocaleString()}
@@ -355,7 +358,7 @@ export function AIAssistantPanel({
                     }}
                   >
                     <p className="text-[8px]" style={{ color: 'rgba(34,197,94,0.7)' }}>
-                      补全 Token
+                      {t('aia.completionTokens')}
                     </p>
                     <p className="text-[12px]" style={{ color: '#22c55e' }}>
                       {currentStats.completionTokens.toLocaleString()}
@@ -369,7 +372,7 @@ export function AIAssistantPanel({
                     }}
                   >
                     <p className="text-[8px]" style={{ color: 'rgba(234,179,8,0.7)' }}>
-                      总计 Token
+                      {t('aia.totalTokens')}
                     </p>
                     <p className="text-[12px]" style={{ color: '#eab308' }}>
                       {currentStats.totalTokens.toLocaleString()}
@@ -383,11 +386,11 @@ export function AIAssistantPanel({
                 <div className="flex items-center gap-3 text-[9px]" style={{ color: tc.textMuted }}>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3" style={{ color: '#3b82f6' }} />
-                    延迟: {currentStats.latencyMs}ms
+                    {t('aia.latency', { ms: currentStats.latencyMs })}
                   </span>
                   <span className="flex items-center gap-1">
                     <Zap className="w-3 h-3" style={{ color: '#eab308' }} />
-                    速度: {currentStats.tokensPerSecond} tok/s
+                    {t('aia.speed', { tps: currentStats.tokensPerSecond })}
                   </span>
                   <span>
                     {currentStats.provider}/{currentStats.model}
@@ -403,15 +406,18 @@ export function AIAssistantPanel({
                     style={{ color: tc.textMuted }}
                   >
                     <span>
-                      会话累计: {totalStats.totalTokens.toLocaleString()} tokens（{totalStats.count}{' '}
-                      次请求）
+                      {t('aia.sessionTotal', {
+                        total: totalStats.totalTokens.toLocaleString(),
+                        count: totalStats.count,
+                      })}
                     </span>
                     <span>
-                      平均延迟:{' '}
-                      {totalStats.count > 0
-                        ? Math.round(totalStats.avgLatency / totalStats.count)
-                        : 0}
-                      ms
+                      {t('aia.avgLatency', {
+                        ms:
+                          totalStats.count > 0
+                            ? Math.round(totalStats.avgLatency / totalStats.count)
+                            : 0,
+                      })}
                     </span>
                   </div>
                   {/* Mini token usage bar */}
@@ -440,14 +446,14 @@ export function AIAssistantPanel({
                         className="w-1.5 h-1.5 rounded-full inline-block"
                         style={{ background: '#a78bfa' }}
                       />{' '}
-                      提示词
+                      {t('aia.prompt')}
                     </span>
                     <span className="flex items-center gap-0.5">
                       <span
                         className="w-1.5 h-1.5 rounded-full inline-block"
                         style={{ background: '#22c55e' }}
                       />{' '}
-                      补全
+                      {t('aia.completion')}
                     </span>
                   </div>
                 </div>
@@ -455,7 +461,7 @@ export function AIAssistantPanel({
 
               {!currentStats && tokenHistory.length === 0 && (
                 <p className="text-[9px] text-center py-2" style={{ color: tc.textMuted }}>
-                  发送消息后将显示 Token 用量统计
+                  {t('aia.noStats')}
                 </p>
               )}
             </div>
@@ -475,7 +481,7 @@ export function AIAssistantPanel({
           >
             <div className="px-3 py-2 space-y-2" data-testid="ai-config-panel">
               <p className="text-[9px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-                AI 模型(全局统一配置)
+                {t('aia.modelConfig')}
               </p>
               {activeModel ? (
                 <div
@@ -490,7 +496,7 @@ export function AIAssistantPanel({
                       className="text-[8px] px-1.5 py-0.5 rounded"
                       style={{ background: 'rgba(34,197,94,0.1)', color: '#22c55e' }}
                     >
-                      已激活
+                      {t('aia.activated')}
                     </span>
                   </div>
                   <p className="text-[8px] mt-1 truncate" style={{ color: tc.textMuted }}>
@@ -499,7 +505,7 @@ export function AIAssistantPanel({
                 </div>
               ) : (
                 <p className="text-[9px] py-1" style={{ color: tc.textMuted }}>
-                  未配置模型 — 当前使用内置模拟引擎
+                  {t('aia.noModel')}
                 </p>
               )}
               <button
@@ -513,10 +519,10 @@ export function AIAssistantPanel({
                   background: tc.bgInput,
                 }}
               >
-                ⚙️ 打开模型设置
+                ⚙️ {t('aia.openModelSettings')}
               </button>
               <p className="text-[8px]" style={{ color: tc.textMuted }}>
-                模型、密钥与多服务商配置已收敛至全局模型设置(加密存储)
+                {t('aia.modelConfigNote')}
               </p>
             </div>
           </motion.div>
@@ -529,15 +535,18 @@ export function AIAssistantPanel({
           <div className="flex flex-col items-center justify-center py-8 text-center">
             <Brain className="w-8 h-8 mb-2 opacity-30" style={{ color: '#a78bfa' }} />
             <p className="text-[11px] mb-1" style={{ color: tc.textSecondary }}>
-              AI 助手就绪
+              {t('aia.ready')}
             </p>
             <p className="text-[9px] mb-2" style={{ color: tc.textMuted }}>
               {isRealProvider
-                ? `已连接 ${providerConfig.provider} (${providerConfig.model})`
-                : '使用模拟引擎 — 通过 ⚙️ 配置真实提供商'}
+                ? t('aia.connected', {
+                    provider: providerConfig.provider,
+                    model: providerConfig.model,
+                  })
+                : t('aia.useMock')}
             </p>
             <p className="text-[8px] mb-3" style={{ color: tc.textMuted }}>
-              支持 SSE 流式响应 · 实时 Token 统计
+              {t('aia.features')}
             </p>
             <div className="flex gap-1.5">
               <span
@@ -548,7 +557,7 @@ export function AIAssistantPanel({
                   border: '1px solid rgba(139,92,246,0.15)',
                 }}
               >
-                流式输出
+                {t('aia.streamOutput')}
               </span>
               <span
                 className="text-[8px] px-1.5 py-0.5 rounded"
@@ -558,7 +567,7 @@ export function AIAssistantPanel({
                   border: '1px solid rgba(234,179,8,0.15)',
                 }}
               >
-                Token 统计
+                {t('aia.tokenStats')}
               </span>
               <span
                 className="text-[8px] px-1.5 py-0.5 rounded"
@@ -568,7 +577,7 @@ export function AIAssistantPanel({
                   border: '1px solid rgba(34,197,94,0.15)',
                 }}
               >
-                上下文注入
+                {t('aia.contextInjection')}
               </span>
             </div>
           </div>
@@ -590,8 +599,12 @@ export function AIAssistantPanel({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
                 <p className="text-[9px]" style={{ color: tc.textMuted }}>
-                  {msg.role === 'user' ? '你' : isRealProvider ? providerConfig.model : '模拟 AI'} ·{' '}
-                  {timeAgo(msg.timestamp)}
+                  {msg.role === 'user'
+                    ? t('aia.you')
+                    : isRealProvider
+                      ? providerConfig.model
+                      : t('aia.mockAI')}{' '}
+                  · {timeAgo(msg.timestamp, t)}
                 </p>
                 {/* Actions for assistant messages */}
                 {msg.role === 'assistant' && (
@@ -599,7 +612,7 @@ export function AIAssistantPanel({
                     <button
                       onClick={() => handleCopy(msg.id, msg.content)}
                       className="w-4 h-4 flex items-center justify-center rounded hover:bg-white/5"
-                      title="复制"
+                      title={t('aia.copy')}
                     >
                       {copiedId === msg.id ? (
                         <Check className="w-2.5 h-2.5" style={{ color: '#22c55e' }} />
@@ -611,7 +624,7 @@ export function AIAssistantPanel({
                       <button
                         onClick={() => handleInsert(msg.content)}
                         className="w-4 h-4 flex items-center justify-center rounded hover:bg-white/5"
-                        title="插入编辑器"
+                        title={t('aia.insertEditor')}
                       >
                         <ArrowDownToLine className="w-2.5 h-2.5" style={{ color: tc.textMuted }} />
                       </button>
@@ -640,7 +653,7 @@ export function AIAssistantPanel({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[9px] flex items-center gap-1" style={{ color: tc.textMuted }}>
-                {isRealProvider ? providerConfig.model : '模拟 AI'} · 生成中
+                {isRealProvider ? providerConfig.model : t('aia.mockAI')} · {t('aia.generating')}
                 <Loader2 className="w-2.5 h-2.5 animate-spin" style={{ color: '#a78bfa' }} />
                 <span className="text-[8px]" style={{ color: '#eab308' }}>
                   ~{estimateTokens(streamingContent)} tokens
@@ -682,7 +695,7 @@ export function AIAssistantPanel({
                 ))}
               </div>
               <span className="text-[9px]" style={{ color: tc.textMuted }}>
-                正在思考...
+                {t('aia.thinking')}
               </span>
             </div>
           </div>
@@ -693,7 +706,7 @@ export function AIAssistantPanel({
         {suggestions.length > 0 && !processing && (
           <div className="space-y-1.5 pt-2 border-t" style={{ borderColor: tc.borderSubtle }}>
             <p className="text-[9px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-              建议
+              {t('aia.suggestions')}
             </p>
             {suggestions.map((s) => (
               <button
@@ -708,10 +721,10 @@ export function AIAssistantPanel({
                 <Sparkles className="w-3 h-3 shrink-0 mt-0.5" style={{ color: '#a78bfa' }} />
                 <div className="min-w-0">
                   <p className="text-[10px] truncate" style={{ color: tc.textPrimary }}>
-                    {s.title}
+                    {t(s.title)}
                   </p>
                   <p className="text-[8px]" style={{ color: tc.textMuted }}>
-                    {s.description} · {Math.round(s.confidence * 100)}%
+                    {t(s.description)} · {Math.round(s.confidence * 100)}%
                   </p>
                 </div>
               </button>
@@ -736,7 +749,7 @@ export function AIAssistantPanel({
             className="hover:underline"
             style={{ color: '#a78bfa' }}
           >
-            详情
+            {t('aia.details')}
           </button>
         </div>
       )}
@@ -750,8 +763,8 @@ export function AIAssistantPanel({
             onKeyDown={handleKeyDown}
             placeholder={
               isRealProvider
-                ? `向 ${isRealProvider ? providerConfig.model : 'AI'} 提问（流式响应）...`
-                : '向 AI 提问（模拟流式响应）...'
+                ? t('aia.placeholderReal', { model: providerConfig.model })
+                : t('aia.placeholderMock')
             }
             rows={2}
             disabled={processing}

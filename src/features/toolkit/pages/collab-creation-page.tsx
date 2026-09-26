@@ -160,101 +160,101 @@ function Tag({
 const MOCK_PROJECTS = [
   {
     id: 'p1',
-    title: '春季家居营销方案',
-    desc: '结合AI分析用户偏好，制定个性化营销策略',
-    status: '进行中' as const,
+    title: 'ccp.project.p1.title',
+    desc: 'ccp.project.p1.desc',
+    status: 'ccp.status.inProgress' as const,
     statusColor: '#22c55e',
     aiAssisted: true,
     progress: 75,
     deadline: '2024-01-15',
     team: [
-      { name: '张', color: '#8b5cf6' },
-      { name: '李', color: '#ec4899' },
-      { name: '王', color: '#06b6d4' },
+      { name: 'ccp2.name.zhang', color: '#8b5cf6' },
+      { name: 'ccp2.name.li', color: '#ec4899' },
+      { name: 'ccp2.name.wang', color: '#06b6d4' },
     ],
-    tags: ['营销', 'AI辅助', '家居'],
+    tags: ['ccp.tag.marketing', 'ccp.tag.aiAssisted', 'ccp.tag.home'],
   },
   {
     id: 'p2',
-    title: '品牌视觉升级项目',
-    desc: '全新品牌形象设计与VI系统建设',
-    status: '评审中' as const,
+    title: 'ccp.project.p2.title',
+    desc: 'ccp.project.p2.desc',
+    status: 'ccp.status.inReview' as const,
     statusColor: '#eab308',
     aiAssisted: false,
     progress: 90,
     deadline: '2024-01-20',
     team: [
-      { name: '陈', color: '#f97316' },
-      { name: '刘', color: '#14b8a6' },
+      { name: 'ccp2.name.chen', color: '#f97316' },
+      { name: 'ccp2.name.liu', color: '#14b8a6' },
     ],
-    tags: ['设计', '品牌', '视觉'],
+    tags: ['ccp.tag.design', 'ccp.tag.brand', 'ccp.tag.visual'],
   },
   {
     id: 'p3',
-    title: '智能客服话术优化',
-    desc: '基于AI对话分析，优化客服响应效率',
-    status: '规划中' as const,
+    title: 'ccp.project.p3.title',
+    desc: 'ccp.project.p3.desc',
+    status: 'ccp.status.planning' as const,
     statusColor: '#3b82f6',
     aiAssisted: true,
     progress: 25,
     deadline: '2024-01-25',
     team: [
-      { name: '王', color: '#8b5cf6' },
-      { name: '李', color: '#ef4444' },
+      { name: 'ccp2.name.wang', color: '#8b5cf6' },
+      { name: 'ccp2.name.li', color: '#ef4444' },
     ],
-    tags: ['AI', '客服', '优化'],
+    tags: ['ccp.tag.ai', 'ccp.tag.support', 'ccp.tag.optimization'],
   },
 ]
 
 const MOCK_IDEAS = [
   {
     id: 'i1',
-    title: 'AR家具试放功能',
-    desc: '让客户通过手机AR技术在家中预览家具摆放效果',
-    author: '张创新',
+    title: 'ccp.idea.i1.title',
+    desc: 'ccp.idea.i1.desc',
+    author: 'ccp2.person.zhangChuangxin',
     authorColor: '#8b5cf6',
-    category: '技术创新',
+    category: 'ccp.category.tech',
     categoryColor: '#22c55e',
-    time: '2小时前',
+    time: 'ccp.time.2hAgo',
     likes: 24,
     comments: 8,
     aiGenerated: false,
   },
   {
     id: 'i2',
-    title: '智能家居搭配推荐',
-    desc: '基于用户喜好和空间特点，AI推荐最佳家具搭配方案',
-    author: 'AI助手',
+    title: 'ccp.idea.i2.title',
+    desc: 'ccp.idea.i2.desc',
+    author: 'ccp.author.ai',
     authorColor: '#3b82f6',
-    category: 'AI应用',
+    category: 'ccp.category.aiApp',
     categoryColor: '#8b5cf6',
-    time: '4小时前',
+    time: 'ccp.time.4hAgo',
     likes: 18,
     comments: 5,
     aiGenerated: true,
   },
   {
     id: 'i3',
-    title: '用户体验积分系统',
-    desc: '设计游戏化积分系统，提升用户参与度和留存率',
-    author: '李运营',
+    title: 'ccp.idea.i3.title',
+    desc: 'ccp.idea.i3.desc',
+    author: 'ccp2.person.liYunying',
     authorColor: '#ec4899',
-    category: '运营策略',
+    category: 'ccp.category.ops',
     categoryColor: '#f97316',
-    time: '昨天',
+    time: 'ccp.time.yesterday',
     likes: 31,
     comments: 12,
     aiGenerated: false,
   },
   {
     id: 'i4',
-    title: '多语言智能翻译',
-    desc: 'AI实时翻译系统，支持全球化运营和多语种客服',
-    author: 'AI助手',
+    title: 'ccp.idea.i4.title',
+    desc: 'ccp.idea.i4.desc',
+    author: 'ccp.author.ai',
     authorColor: '#3b82f6',
-    category: 'AI应用',
+    category: 'ccp.category.aiApp',
     categoryColor: '#8b5cf6',
-    time: '昨天',
+    time: 'ccp.time.yesterday',
     likes: 15,
     comments: 3,
     aiGenerated: true,
@@ -262,96 +262,116 @@ const MOCK_IDEAS = [
 ]
 
 const MOCK_TEAM = [
-  { name: '张设计师', role: 'UI设计', color: '#8b5cf6', online: true },
-  { name: '李文案', role: '内容策划', color: '#ec4899', online: true },
-  { name: '王策划', role: '市场策划', color: '#06b6d4', online: true },
-  { name: '陈美工', role: '视觉设计', color: '#f97316', online: true },
-  { name: '刘总监', role: '创意总监', color: '#14b8a6', online: true },
+  { name: 'ccp2.person.zhangShejishi', role: 'ccp.role.uiDesign', color: '#8b5cf6', online: true },
+  { name: 'ccp2.person.liWenan', role: 'ccp.role.content', color: '#ec4899', online: true },
+  { name: 'ccp2.person.wangCehua', role: 'ccp.role.market', color: '#06b6d4', online: true },
+  { name: 'ccp2.person.chenMeigong', role: 'ccp.role.visual', color: '#f97316', online: true },
+  { name: 'ccp2.person.liuZongjian', role: 'ccp.role.creative', color: '#14b8a6', online: true },
 ]
 
 const MOCK_ACTIVITIES = [
   {
-    actor: '张设计师',
+    actor: 'ccp2.person.zhangShejishi',
     actorColor: '#8b5cf6',
-    action: '更新了春季营销方案的设计稿',
-    time: '2分钟前',
+    action: 'ccp.activity.1',
+    time: 'ccp.time.2minAgo',
   },
-  { actor: '李文案', actorColor: '#ec4899', action: '提交了新的创意想法', time: '5分钟前' },
-  { actor: 'AI助手', actorColor: '#3b82f6', action: '生成了3个新的营销创意', time: '10分钟前' },
-  { actor: '王策划', actorColor: '#06b6d4', action: '完成了市场调研报告', time: '15分钟前' },
-  { actor: '陈美工', actorColor: '#f97316', action: '上传了品牌VI手册初稿', time: '30分钟前' },
+  {
+    actor: 'ccp2.person.liWenan',
+    actorColor: '#ec4899',
+    action: 'ccp.activity.2',
+    time: 'ccp.time.5minAgo',
+  },
+  {
+    actor: 'ccp.author.ai',
+    actorColor: '#3b82f6',
+    action: 'ccp.activity.3',
+    time: 'ccp.time.10minAgo',
+  },
+  {
+    actor: 'ccp2.person.wangCehua',
+    actorColor: '#06b6d4',
+    action: 'ccp.activity.4',
+    time: 'ccp.time.15minAgo',
+  },
+  {
+    actor: 'ccp2.person.chenMeigong',
+    actorColor: '#f97316',
+    action: 'ccp.activity.5',
+    time: 'ccp.time.30minAgo',
+  },
 ]
 
 const MOCK_AI_TOOLS = [
   {
     id: 't1',
-    title: 'AI创意生成器',
-    desc: '基于行业趋势和用户数据，智能生成创意方案',
+    title: 'ccp.tool.t1.title',
+    desc: 'ccp.tool.t1.desc',
     icon: Sparkles,
-    stat: '今日使用次数',
-    statValue: '15次',
+    stat: 'ccp.tool.t1.stat',
+    statValue: 'ccp.tool.t1.statValue',
     statColor: '#8b5cf6',
-    btnLabel: '开始创作',
+    btnLabel: 'ccp.tool.t1.btn',
     btnIcon: Sparkles,
     gradient: ['#8b5cf6', '#a855f7'],
   },
   {
     id: 't2',
-    title: '智能设计助手',
-    desc: 'AI辅助设计，自动生成配色方案和布局建议',
+    title: 'ccp.tool.t2.title',
+    desc: 'ccp.tool.t2.desc',
     icon: Palette,
-    stat: '设计模板',
+    stat: 'ccp.tool.t2.stat',
     statValue: '200+',
     statColor: '#ec4899',
-    btnLabel: '开始设计',
+    btnLabel: 'ccp.tool.t2.btn',
     btnIcon: PenTool,
     gradient: ['#ec4899', '#f43f5e'],
   },
   {
     id: 't3',
-    title: '智能文案生成',
-    desc: '根据产品特点和目标用户，生成吸引人的营销文案',
+    title: 'ccp.tool.t3.title',
+    desc: 'ccp.tool.t3.desc',
     icon: Type,
-    stat: '文案风格',
-    statValue: '12种',
+    stat: 'ccp.tool.t3.stat',
+    statValue: 'ccp.tool.t3.statValue',
     statColor: '#3b82f6',
-    btnLabel: '生成文案',
+    btnLabel: 'ccp.tool.t3.btn',
     btnIcon: FileText,
     gradient: ['#3b82f6', '#6366f1'],
   },
   {
     id: 't4',
-    title: '市场趋势分析',
-    desc: 'AI分析市场数据，预测行业趋势和用户需求',
+    title: 'ccp.tool.t4.title',
+    desc: 'ccp.tool.t4.desc',
     icon: TrendingUp,
-    stat: '数据源',
-    statValue: '实时更新',
+    stat: 'ccp.tool.t4.stat',
+    statValue: 'ccp.tool.t4.statValue',
     statColor: '#22c55e',
-    btnLabel: '查看趋势',
+    btnLabel: 'ccp.tool.t4.btn',
     btnIcon: TrendingUp,
     gradient: ['#22c55e', '#10b981'],
   },
   {
     id: 't5',
-    title: '创意评估器',
-    desc: 'AI评估创意可行性，提供改进建议和风险分析',
+    title: 'ccp.tool.t5.title',
+    desc: 'ccp.tool.t5.desc',
     icon: ClipboardCheck,
-    stat: '评估维度',
-    statValue: '8个',
+    stat: 'ccp.tool.t5.stat',
+    statValue: 'ccp.tool.t5.statValue',
     statColor: '#f97316',
-    btnLabel: '开始评估',
+    btnLabel: 'ccp.tool.t5.btn',
     btnIcon: CheckCircle,
     gradient: ['#f97316', '#ef4444'],
   },
   {
     id: 't6',
-    title: '项目智能规划',
-    desc: 'AI制定项目计划，优化资源配置和时间安排',
+    title: 'ccp.tool.t6.title',
+    desc: 'ccp.tool.t6.desc',
     icon: FolderKanban,
-    stat: '成功率',
+    stat: 'ccp.tool.t6.stat',
     statValue: '92%',
     statColor: '#06b6d4',
-    btnLabel: '智能规划',
+    btnLabel: 'ccp.tool.t6.btn',
     btnIcon: Target,
     gradient: ['#06b6d4', '#0ea5e9'],
   },
@@ -365,7 +385,7 @@ const MOCK_AI_TOOLS = [
 function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState(t('collab.allStatus'))
+  const [statusFilter, setStatusFilter] = useState('ccp.status.all')
 
   return (
     <div style={{ animation: 'spring-in 0.4s var(--spring-easing) both' }}>
@@ -376,7 +396,7 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="搜索项目..."
+            placeholder={t('ccp.searchProjects')}
             className="w-full pl-9 pr-4 py-2 rounded-xl text-[12px] text-white/70 placeholder-white/20 outline-none transition-all"
             style={{
               background: tc.alpha(tc.primary, 0.03),
@@ -400,17 +420,17 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
           }}
           onClick={() =>
             setStatusFilter((s) =>
-              s === '全部状态'
-                ? '进行中'
-                : s === '进行中'
-                  ? '评审中'
-                  : s === '评审中'
-                    ? '规划中'
-                    : '全部状态',
+              s === 'ccp.status.all'
+                ? 'ccp.status.inProgress'
+                : s === 'ccp.status.inProgress'
+                  ? 'ccp.status.inReview'
+                  : s === 'ccp.status.inReview'
+                    ? 'ccp.status.planning'
+                    : 'ccp.status.all',
             )
           }
         >
-          {statusFilter} <ChevronDown className="w-3 h-3" />
+          {t(statusFilter)} <ChevronDown className="w-3 h-3" />
         </button>
         <button
           className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[11px] transition-all hover:-translate-y-0.5"
@@ -421,7 +441,7 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
             boxShadow: `0 4px 12px ${tc.alpha(tc.primary, 0.25)}`,
           }}
         >
-          <Plus className="w-3.5 h-3.5" /> 新建项目
+          <Plus className="w-3.5 h-3.5" /> {t('ccp.newProject')}
         </button>
       </div>
 
@@ -434,12 +454,14 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <h4 className="text-[13px] text-white/80 truncate">{project.title}</h4>
-                    {project.aiAssisted && <Tag label="AI辅助" color={tc.primary} tc={tc} />}
-                    <Tag label={project.status} color={project.statusColor} tc={tc} />
+                    <h4 className="text-[13px] text-white/80 truncate">{t(project.title)}</h4>
+                    {project.aiAssisted && (
+                      <Tag label={t('ccp.tag.aiAssisted')} color={tc.primary} tc={tc} />
+                    )}
+                    <Tag label={t(project.status)} color={project.statusColor} tc={tc} />
                   </div>
                   <p className="text-[11px] text-white/25 leading-relaxed line-clamp-2">
-                    {project.desc}
+                    {t(project.desc)}
                   </p>
                 </div>
               </div>
@@ -460,7 +482,7 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 </div>
                 <div className="flex -space-x-1.5">
                   {project.team.map((m, i) => (
-                    <AvatarCircle key={i} name={m.name} color={m.color} size={22} />
+                    <AvatarCircle key={i} name={t(m.name)} color={m.color} size={22} />
                   ))}
                 </div>
               </div>
@@ -476,7 +498,7 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                       border: '1px solid rgba(255,255,255,0.06)',
                     }}
                   >
-                    {tag}
+                    {t(tag)}
                   </span>
                 ))}
               </div>
@@ -487,8 +509,8 @@ function TabProjects({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 style={{ borderTop: `1px solid rgba(255,255,255,0.04)` }}
               >
                 {[
-                  { icon: Eye, label: '查看' },
-                  { icon: Edit3, label: '编辑' },
+                  { icon: Eye, label: t('ccp.action.view') },
+                  { icon: Edit3, label: t('ccp.action.edit') },
                 ].map(({ icon: Icon, label }) => (
                   <button
                     key={label}
@@ -544,7 +566,7 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
             <div style={{ animation: `spring-in 0.35s var(--spring-easing) ${idx * 0.06}s both` }}>
               {/* Title */}
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <h4 className="text-[13px] text-white/80">{idea.title}</h4>
+                <h4 className="text-[13px] text-white/80">{t(idea.title)}</h4>
                 {idea.aiGenerated && (
                   <span
                     className="flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px]"
@@ -554,20 +576,20 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                       border: `1px solid ${tc.alpha(tc.primary, 0.15)}`,
                     }}
                   >
-                    <Sparkles className="w-2.5 h-2.5" /> AI生成
+                    <Sparkles className="w-2.5 h-2.5" /> {t('ccp.aiGenerated')}
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-white/25 leading-relaxed mb-3">{idea.desc}</p>
+              <p className="text-[11px] text-white/25 leading-relaxed mb-3">{t(idea.desc)}</p>
 
               {/* Author + Category + Time */}
               <div className="flex items-center gap-3 mb-3">
                 <div className="flex items-center gap-1.5">
-                  <AvatarCircle name={idea.author} color={idea.authorColor} size={20} />
-                  <span className="text-[10px] text-white/30">{idea.author}</span>
+                  <AvatarCircle name={t(idea.author)} color={idea.authorColor} size={20} />
+                  <span className="text-[10px] text-white/30">{t(idea.author)}</span>
                 </div>
-                <Tag label={idea.category} color={idea.categoryColor} tc={tc} />
-                <span className="text-[10px] text-white/15 ml-auto">{idea.time}</span>
+                <Tag label={t(idea.category)} color={idea.categoryColor} tc={tc} />
+                <span className="text-[10px] text-white/15 ml-auto">{t(idea.time)}</span>
               </div>
 
               {/* Actions */}
@@ -586,7 +608,7 @@ function TabIdeas({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                   className="flex items-center gap-1 text-[10px] text-white/25 hover:text-white/50 transition-colors"
                   onClick={() => {}}
                 >
-                  <MessageSquare className="w-3 h-3" /> 评论
+                  <MessageSquare className="w-3 h-3" /> {t('ccp.comment')}
                 </button>
                 <div className="ml-auto flex items-center gap-2">
                   <button
@@ -642,15 +664,15 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               }}
             >
               <AvatarCircle
-                name={member.name}
+                name={t(member.name)}
                 color={member.color}
                 size={36}
                 online={member.online}
               />
               <div className="flex-1 min-w-0">
-                <p className="text-[12px] text-white/65 truncate">{member.name}</p>
+                <p className="text-[12px] text-white/65 truncate">{t(member.name)}</p>
                 <p className="text-[10px]" style={{ color: '#22c55e' }}>
-                  在线
+                  {t('ccp.online')}
                 </p>
               </div>
               <button
@@ -681,12 +703,12 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               className="flex items-start gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 hover:bg-white/[0.02]"
               style={{ animation: `spring-in 0.3s var(--spring-easing) ${idx * 0.04}s both` }}
             >
-              <AvatarCircle name={activity.actor} color={activity.actorColor} size={32} />
+              <AvatarCircle name={t(activity.actor)} color={activity.actorColor} size={32} />
               <div className="flex-1 min-w-0">
                 <p className="text-[11px] text-white/45 leading-relaxed">
-                  <span className="text-white/65">{activity.actor}</span> {activity.action}
+                  <span className="text-white/65">{t(activity.actor)}</span> {t(activity.action)}
                 </p>
-                <p className="text-[9px] text-white/15 mt-0.5">{activity.time}</p>
+                <p className="text-[9px] text-white/15 mt-0.5">{t(activity.time)}</p>
               </div>
             </div>
           ))}
@@ -698,6 +720,7 @@ function TabTeam({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
 // ---------- Tab 4: AI工具 ----------
 function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
+  const { t } = useI18n()
   return (
     <div
       className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
@@ -720,15 +743,15 @@ function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 >
                   <Icon className="w-4 h-4" style={{ color: tool.gradient[0] }} />
                 </div>
-                <h4 className="text-[13px] text-white/75">{tool.title}</h4>
+                <h4 className="text-[13px] text-white/75">{t(tool.title)}</h4>
               </div>
 
               {/* Description */}
-              <p className="text-[11px] text-white/25 leading-relaxed mb-4">{tool.desc}</p>
+              <p className="text-[11px] text-white/25 leading-relaxed mb-4">{t(tool.desc)}</p>
 
               {/* Stat */}
               <div className="flex items-center justify-between mb-4">
-                <span className="text-[10px] text-white/20">{tool.stat}</span>
+                <span className="text-[10px] text-white/20">{t(tool.stat)}</span>
                 <span
                   className="text-[11px] px-2 py-0.5 rounded-full"
                   style={{
@@ -737,7 +760,7 @@ function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                     border: `1px solid ${tc.alpha(tool.statColor, 0.15)}`,
                   }}
                 >
-                  {tool.statValue}
+                  {t(tool.statValue)}
                 </span>
               </div>
 
@@ -751,7 +774,7 @@ function TabAITools({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 }}
               >
                 <BtnIcon className="w-3.5 h-3.5" />
-                {tool.btnLabel}
+                {t(tool.btnLabel)}
               </button>
             </div>
           </NeonCard>
@@ -809,7 +832,7 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         <NeonCard color={tc.secondary} hoverable={false}>
           <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-5">
             <Users className="w-4 h-4" style={{ color: tc.secondary }} />
-            团队协作效率
+            {t('ccp.analytics.teamEfficiency')}
           </h3>
           <div className="space-y-4">
             {metrics2.map((m, i) => (
@@ -831,7 +854,7 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       <NeonCard color={tc.primary} hoverable={false}>
         <h3 className="text-[13px] text-white/60 flex items-center gap-2 mb-5">
           <Brain className="w-4 h-4" style={{ color: tc.primary }} />
-          AI辅助效果统计
+          {t('ccp.analytics.aiEffect')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {aiStats.map((stat, i) => (
@@ -865,11 +888,11 @@ function TabAnalytics({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 type TabKey = 'projects' | 'ideas' | 'team' | 'tools' | 'analytics'
 
 const TAB_CONFIG: { key: TabKey; label: string }[] = [
-  { key: 'projects', label: '创意项目' },
-  { key: 'ideas', label: '创意库' },
-  { key: 'team', label: '团队协作' },
-  { key: 'tools', label: 'AI工具' },
-  { key: 'analytics', label: '数据分析' },
+  { key: 'projects', label: 'ccp.tab.projects' },
+  { key: 'ideas', label: 'ccp.tab.ideas' },
+  { key: 'team', label: 'ccp.tab.team' },
+  { key: 'tools', label: 'ccp.tab.tools' },
+  { key: 'analytics', label: 'ccp.tab.analytics' },
 ]
 
 export function CollabCreationPage() {
@@ -881,40 +904,40 @@ export function CollabCreationPage() {
   const overviewCards = useMemo(
     () => [
       {
-        title: '活跃项目',
+        title: 'ccp.overview.activeProjects',
         value: 12,
-        trend: '+15% 本月',
+        trend: 'ccp.trend.monthly15',
         trendUp: true,
         icon: Rocket,
         color: '#8b5cf6',
       },
       {
-        title: '创意想法',
+        title: 'ccp.overview.ideas',
         value: 156,
-        trend: '+8 今日新增',
+        trend: 'ccp.trend.todayNew',
         trendUp: true,
         icon: Lightbulb,
         color: '#22c55e',
       },
       {
-        title: '协作成员',
+        title: 'ccp.overview.members',
         value: 28,
-        trend: '15人在线',
+        trend: 'ccp.trend.online15',
         trendUp: null,
         icon: Users,
         color: '#3b82f6',
       },
       {
-        title: 'AI辅助率',
+        title: 'ccp.overview.aiRate',
         value: 85,
         isPercent: true,
-        trend: '效率提升40%',
+        trend: 'ccp.trend.efficiency40',
         trendUp: true,
         icon: Brain,
         color: '#22c55e',
       },
     ],
-    [],
+    [t],
   )
 
   return (
@@ -965,7 +988,7 @@ export function CollabCreationPage() {
                 color: tc.primary,
               }}
             >
-              <Brain className="w-3.5 h-3.5" /> AI头脑风暴
+              <Brain className="w-3.5 h-3.5" /> {t('ccp.aiBrainstorm')}
             </button>
             <button
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-[11px] text-white transition-all hover:-translate-y-0.5"
@@ -975,7 +998,7 @@ export function CollabCreationPage() {
                 boxShadow: `0 4px 12px ${tc.alpha(tc.primary, 0.25)}`,
               }}
             >
-              <Plus className="w-3.5 h-3.5" /> 新建项目
+              <Plus className="w-3.5 h-3.5" /> {t('ccp.newProject')}
             </button>
           </div>
         </div>
@@ -992,7 +1015,7 @@ export function CollabCreationPage() {
                   style={{ animation: `spring-in 0.4s var(--spring-easing) ${idx * 0.06}s both` }}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] text-white/35">{card.title}</span>
+                    <span className="text-[11px] text-white/35">{t(card.title)}</span>
                     <div
                       className="w-8 h-8 rounded-xl flex items-center justify-center"
                       style={{
@@ -1032,7 +1055,7 @@ export function CollabCreationPage() {
                               : 'rgba(255,255,255,0.2)',
                       }}
                     >
-                      {card.trend}
+                      {t(card.trend)}
                     </span>
                   </div>
                 </div>
@@ -1065,7 +1088,7 @@ export function CollabCreationPage() {
                   boxShadow: isActive ? `0 0 12px ${tc.alpha(tc.primary, 0.08)}` : 'none',
                 }}
               >
-                {tab.label}
+                {t(tab.label)}
                 {isActive && (
                   <div
                     className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full"

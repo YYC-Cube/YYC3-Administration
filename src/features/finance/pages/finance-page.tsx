@@ -38,10 +38,10 @@ export function FinancePage() {
 
   const tabs: { id: FinanceTab; label: string; icon: typeof Wallet }[] = useMemo(
     () => [
-      { id: 'dashboard', label: t('finance.tab.dashboard'), icon: BarChart3 },
-      { id: 'vouchers', label: t('finance.tab.vouchers'), icon: FileText },
-      { id: 'expenses', label: t('finance.tab.expenses'), icon: Receipt },
-      { id: 'budget', label: t('finance.tab.budget'), icon: Wallet },
+      { id: 'dashboard', label: t('fin.tab.dashboard'), icon: BarChart3 },
+      { id: 'vouchers', label: t('fin.tab.vouchers'), icon: FileText },
+      { id: 'expenses', label: t('fin.tab.expenses'), icon: Receipt },
+      { id: 'budget', label: t('fin.tab.budget'), icon: Wallet },
     ],
     [t],
   )
@@ -59,7 +59,7 @@ export function FinancePage() {
             style={{ color: '#06b6d4', textShadow: '0 0 15px rgba(6,182,212,0.5)' }}
           >
             <Landmark className="w-6 h-6" />
-            {t('finance.title')}
+            {t('fin.title')}
           </h1>
           <p className="text-xs text-white/25 mt-1 tracking-wider">
             Finance Management System — AI-Powered Financial Intelligence
@@ -86,7 +86,7 @@ export function FinancePage() {
             }}
           >
             <Plus className="w-3 h-3" />
-            {t('finance.newVoucher')}
+            {t('fin.newVoucher')}
           </button>
         </div>
       </div>
@@ -134,7 +134,7 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
   const kpiCards = useMemo(
     () => [
       {
-        label: t('finance.kpi.income'),
+        label: t('fin.kpi.income'),
         value: '¥1,280,000',
         change: '+12.3%',
         up: true,
@@ -142,7 +142,7 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
         color: '#10b981',
       },
       {
-        label: t('finance.kpi.expense'),
+        label: t('fin.kpi.expense'),
         value: '¥856,000',
         change: '-3.2%',
         up: false,
@@ -150,7 +150,7 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
         color: '#ef4444',
       },
       {
-        label: t('finance.kpi.profit'),
+        label: t('fin.kpi.profit'),
         value: '¥424,000',
         change: '+28.5%',
         up: true,
@@ -158,7 +158,7 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
         color: '#06b6d4',
       },
       {
-        label: t('finance.kpi.cash'),
+        label: t('fin.kpi.cash'),
         value: '¥3,560,000',
         change: '+5.1%',
         up: true,
@@ -172,20 +172,35 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
   const pendingItems = useMemo(
     () => [
       {
-        title: '报销审批 — 张三 差旅报销 ¥3,200',
+        titleKey: 'fin.pending.expenseZhangSan',
         status: 'pending',
-        time: '2小时前',
+        timeKey: 'fin.time.2hoursAgo',
         color: '#f59e0b',
       },
       {
-        title: '报销审批 — 李四 办公用品 ¥1,580',
+        titleKey: 'fin.pending.expenseLiSi',
         status: 'pending',
-        time: '4小时前',
+        timeKey: 'fin.time.4hoursAgo',
         color: '#f59e0b',
       },
-      { title: '凭证审核 — 6月第23号凭证', status: 'pending', time: '昨天', color: '#06b6d4' },
-      { title: '预算预警 — 销售部已达85%', status: 'warning', time: '今天', color: '#ef4444' },
-      { title: '税务申报 — 截止6月15日', status: 'info', time: '提醒', color: '#3b82f6' },
+      {
+        titleKey: 'fin.pending.voucherJune23',
+        status: 'pending',
+        timeKey: 'fin.time.yesterday',
+        color: '#06b6d4',
+      },
+      {
+        titleKey: 'fin.pending.budgetSales',
+        status: 'warning',
+        timeKey: 'fin.time.today',
+        color: '#ef4444',
+      },
+      {
+        titleKey: 'fin.pending.taxDueJune15',
+        status: 'info',
+        timeKey: 'fin.time.reminder',
+        color: '#3b82f6',
+      },
     ],
     [],
   )
@@ -226,7 +241,7 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
                 <span className="text-[10px]" style={{ color: card.up ? '#10b981' : '#ef4444' }}>
                   {card.change}
                 </span>
-                <span className="text-[10px] text-white/15 ml-1">vs 上月</span>
+                <span className="text-[10px] text-white/15 ml-1">{t('fin.vsLastMonth')}</span>
               </div>
             </NeonCard>
           )
@@ -237,17 +252,17 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
         {/* Budget Execution */}
         <NeonCard color="#06b6d4" hoverable={false}>
           <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
-            {t('finance.budgetExecution')}
+            {t('fin.budgetExecution')}
           </h3>
           {[
-            { dept: '技术部', used: 72, total: '¥420,000', color: '#10b981' },
-            { dept: '销售部', used: 85, total: '¥380,000', color: '#f59e0b' },
-            { dept: '运营部', used: 58, total: '¥280,000', color: '#06b6d4' },
-            { dept: '管理层', used: 41, total: '¥200,000', color: '#8b5cf6' },
+            { deptKey: 'fin.dept.tech', used: 72, total: '¥420,000', color: '#10b981' },
+            { deptKey: 'fin.dept.sales', used: 85, total: '¥380,000', color: '#f59e0b' },
+            { deptKey: 'fin.dept.ops', used: 58, total: '¥280,000', color: '#06b6d4' },
+            { deptKey: 'fin.dept.mgmt', used: 41, total: '¥200,000', color: '#8b5cf6' },
           ].map((item, i) => (
             <div key={i} className="mb-3 last:mb-0">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-white/50">{item.dept}</span>
+                <span className="text-xs text-white/50">{t(item.deptKey)}</span>
                 <span className="text-[10px]" style={{ color: item.color }}>
                   {item.total} · {item.used}%
                 </span>
@@ -269,7 +284,7 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
         {/* Pending Items */}
         <NeonCard color="#f59e0b" hoverable={false}>
           <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
-            {t('finance.pendingItems')}
+            {t('fin.pendingItems')}
           </h3>
           <div className="space-y-2.5">
             {pendingItems.map((item, i) => (
@@ -286,8 +301,8 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
                   style={{ background: item.color, boxShadow: `0 0 6px ${item.color}60` }}
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs text-white/60 truncate">{item.title}</p>
-                  <p className="text-[10px] text-white/20 mt-0.5">{item.time}</p>
+                  <p className="text-xs text-white/60 truncate">{t(item.titleKey)}</p>
+                  <p className="text-[10px] text-white/20 mt-0.5">{t(item.timeKey)}</p>
                 </div>
               </div>
             ))}
@@ -300,27 +315,27 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
         <div className="flex items-center gap-2 mb-3">
           <Brain className="w-4 h-4" style={{ color: '#8b5cf6' }} />
           <h3 className="text-xs text-white/40 uppercase tracking-wider">
-            AI {t('finance.aiInsight')}
+            AI {t('fin.aiInsight')}
           </h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[
             {
               icon: TrendingUp,
-              title: t('finance.ai.revenueTrend'),
-              desc: '预计下月收入增长 8-12%，建议加大营销投入',
+              title: t('fin.ai.revenueTrend'),
+              descKey: 'fin.ai.revenueTrendDesc',
               color: '#10b981',
             },
             {
               icon: ShieldCheck,
-              title: t('finance.ai.riskAlert'),
-              desc: '应收账款逾期风险增加，建议加强催收',
+              title: t('fin.ai.riskAlert'),
+              descKey: 'fin.ai.riskAlertDesc',
               color: '#f59e0b',
             },
             {
               icon: AlertTriangle,
-              title: t('finance.ai.costOptimize'),
-              desc: '办公费用同比上升 15%，存在优化空间',
+              title: t('fin.ai.costOptimize'),
+              descKey: 'fin.ai.costOptimizeDesc',
               color: '#06b6d4',
             },
           ].map((insight, i) => {
@@ -340,7 +355,7 @@ function FinanceDashboard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }
                     {insight.title}
                   </span>
                 </div>
-                <p className="text-xs text-white/40 leading-relaxed">{insight.desc}</p>
+                <p className="text-xs text-white/40 leading-relaxed">{t(insight.descKey)}</p>
               </div>
             )
           })}
@@ -360,41 +375,41 @@ function VoucherManagement({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> 
       {
         no: 'PZ-202606-001',
         date: '2026-06-01',
-        type: t('finance.voucherType.receipt'),
+        type: t('fin.voucherType.receipt'),
         amount: '¥128,000',
-        status: t('finance.status.posted'),
+        status: t('fin.status.posted'),
         statusColor: '#10b981',
       },
       {
         no: 'PZ-202606-002',
         date: '2026-06-01',
-        type: t('finance.voucherType.payment'),
+        type: t('fin.voucherType.payment'),
         amount: '¥56,000',
-        status: t('finance.status.posted'),
+        status: t('fin.status.posted'),
         statusColor: '#10b981',
       },
       {
         no: 'PZ-202606-003',
         date: '2026-06-02',
-        type: t('finance.voucherType.transfer'),
+        type: t('fin.voucherType.transfer'),
         amount: '¥35,000',
-        status: t('finance.status.approved'),
+        status: t('fin.status.approved'),
         statusColor: '#06b6d4',
       },
       {
         no: 'PZ-202606-004',
         date: '2026-06-02',
-        type: t('finance.voucherType.auto'),
+        type: t('fin.voucherType.auto'),
         amount: '¥24,000',
-        status: t('finance.status.pending'),
+        status: t('fin.status.pending'),
         statusColor: '#f59e0b',
       },
       {
         no: 'PZ-202606-005',
         date: '2026-06-03',
-        type: t('finance.voucherType.payment'),
+        type: t('fin.voucherType.payment'),
         amount: '¥8,500',
-        status: t('finance.status.draft'),
+        status: t('fin.status.draft'),
         statusColor: '#6b7280',
       },
     ],
@@ -405,9 +420,7 @@ function VoucherManagement({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> 
     <div className="space-y-4">
       <NeonCard color="#06b6d4" hoverable={false}>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xs text-white/40 uppercase tracking-wider">
-            {t('finance.voucherList')}
-          </h3>
+          <h3 className="text-xs text-white/40 uppercase tracking-wider">{t('fin.voucherList')}</h3>
           <div className="flex gap-2">
             <button
               className="px-3 py-1 rounded-lg text-[10px]"
@@ -418,7 +431,7 @@ function VoucherManagement({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> 
               }}
             >
               <Brain className="w-3 h-3 inline mr-1" />
-              AI {t('finance.autoGenerate')}
+              AI {t('fin.autoGenerate')}
             </button>
           </div>
         </div>
@@ -478,38 +491,38 @@ function ExpenseCenter({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const expenses = useMemo(
     () => [
       {
-        applicant: '张三',
-        dept: '销售部',
-        type: t('finance.expenseType.travel'),
+        applicantKey: 'fin.name.zhangsan',
+        deptKey: 'fin.dept.sales',
+        type: t('fin.expenseType.travel'),
         amount: '¥3,200',
-        status: t('finance.status.pending'),
+        status: t('fin.status.pending'),
         statusColor: '#f59e0b',
         date: '2026-06-02',
       },
       {
-        applicant: '李四',
-        dept: '技术部',
-        type: t('finance.expenseType.office'),
+        applicantKey: 'fin.name.lisi',
+        deptKey: 'fin.dept.tech',
+        type: t('fin.expenseType.office'),
         amount: '¥1,580',
-        status: t('finance.status.pending'),
+        status: t('fin.status.pending'),
         statusColor: '#f59e0b',
         date: '2026-06-01',
       },
       {
-        applicant: '王五',
-        dept: '运营部',
-        type: t('finance.expenseType.marketing'),
+        applicantKey: 'fin.name.wangwu',
+        deptKey: 'fin.dept.ops',
+        type: t('fin.expenseType.marketing'),
         amount: '¥8,600',
-        status: t('finance.status.approved'),
+        status: t('fin.status.approved'),
         statusColor: '#10b981',
         date: '2026-05-30',
       },
       {
-        applicant: '赵六',
-        dept: '管理层',
-        type: t('finance.expenseType.travel'),
+        applicantKey: 'fin.name.zhaoliu',
+        deptKey: 'fin.dept.mgmt',
+        type: t('fin.expenseType.travel'),
         amount: '¥5,400',
-        status: t('finance.status.paid'),
+        status: t('fin.status.paid'),
         statusColor: '#06b6d4',
         date: '2026-05-28',
       },
@@ -522,15 +535,15 @@ function ExpenseCenter({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: t('finance.expense.pending'), value: '2', color: '#f59e0b', icon: Clock },
+          { label: t('fin.expense.pending'), value: '2', color: '#f59e0b', icon: Clock },
           {
-            label: t('finance.expense.approved'),
+            label: t('fin.expense.approved'),
             value: '5',
             color: '#10b981',
             icon: CheckCircle2,
           },
           {
-            label: t('finance.expense.totalMonth'),
+            label: t('fin.expense.totalMonth'),
             value: '¥18,780',
             color: '#06b6d4',
             icon: CreditCard,
@@ -556,9 +569,7 @@ function ExpenseCenter({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Expense List */}
       <NeonCard color="#f59e0b" hoverable={false}>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xs text-white/40 uppercase tracking-wider">
-            {t('finance.expenseList')}
-          </h3>
+          <h3 className="text-xs text-white/40 uppercase tracking-wider">{t('fin.expenseList')}</h3>
           <button
             className="px-3 py-1 rounded-lg text-[10px]"
             style={{
@@ -568,7 +579,7 @@ function ExpenseCenter({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
             }}
           >
             <Plus className="w-3 h-3 inline mr-1" />
-            {t('finance.newExpense')}
+            {t('fin.newExpense')}
           </button>
         </div>
         <div className="space-y-2">
@@ -590,7 +601,7 @@ function ExpenseCenter({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-white/70">
-                    {e.applicant} · {e.type}
+                    {t(e.applicantKey)} · {e.type}
                   </span>
                   <span
                     className="text-[10px] px-1.5 py-0.5 rounded"
@@ -604,7 +615,7 @@ function ExpenseCenter({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
                   </span>
                 </div>
                 <p className="text-[10px] text-white/25 mt-0.5">
-                  {e.dept} · {e.date}
+                  {t(e.deptKey)} · {e.date}
                 </p>
               </div>
               <span className="text-sm" style={{ color: '#ef4444' }}>
@@ -625,12 +636,48 @@ function BudgetBoard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const { t } = useI18n()
   const budgetItems = useMemo(
     () => [
-      { account: '办公费用', planned: 50000, used: 38000, dept: '全公司', color: '#06b6d4' },
-      { account: '差旅费用', planned: 80000, used: 62000, dept: '销售部', color: '#10b981' },
-      { account: '营销推广', planned: 200000, used: 168000, dept: '市场部', color: '#8b5cf6' },
-      { account: '设备采购', planned: 120000, used: 45000, dept: '技术部', color: '#3b82f6' },
-      { account: '培训费用', planned: 30000, used: 12000, dept: '人力部', color: '#f59e0b' },
-      { account: '招待费用', planned: 20000, used: 18500, dept: '管理层', color: '#ef4444' },
+      {
+        accountKey: 'fin.budget.account.office',
+        planned: 50000,
+        used: 38000,
+        deptKey: 'fin.dept.all',
+        color: '#06b6d4',
+      },
+      {
+        accountKey: 'fin.budget.account.travel',
+        planned: 80000,
+        used: 62000,
+        deptKey: 'fin.dept.sales',
+        color: '#10b981',
+      },
+      {
+        accountKey: 'fin.budget.account.marketing',
+        planned: 200000,
+        used: 168000,
+        deptKey: 'fin.dept.market',
+        color: '#8b5cf6',
+      },
+      {
+        accountKey: 'fin.budget.account.equipment',
+        planned: 120000,
+        used: 45000,
+        deptKey: 'fin.dept.tech',
+        color: '#3b82f6',
+      },
+      {
+        accountKey: 'fin.budget.account.training',
+        planned: 30000,
+        used: 12000,
+        deptKey: 'fin.dept.hr',
+        color: '#f59e0b',
+      },
+      {
+        accountKey: 'fin.budget.account.entertainment',
+        planned: 20000,
+        used: 18500,
+        deptKey: 'fin.dept.mgmt',
+        color: '#ef4444',
+      },
     ],
     [],
   )
@@ -641,7 +688,7 @@ function BudgetBoard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
       <div className="grid grid-cols-2 gap-4">
         <NeonCard color="#10b981">
           <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">
-            {t('finance.budget.total')}
+            {t('fin.budget.total')}
           </p>
           <p
             className="text-xl"
@@ -649,11 +696,11 @@ function BudgetBoard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
           >
             ¥500,000
           </p>
-          <p className="text-[10px] text-white/15 mt-1">年度预算总额</p>
+          <p className="text-[10px] text-white/15 mt-1">{t('fin.budget.annualTotal')}</p>
         </NeonCard>
         <NeonCard color="#06b6d4">
           <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">
-            {t('finance.budget.used')}
+            {t('fin.budget.used')}
           </p>
           <p
             className="text-xl"
@@ -680,7 +727,7 @@ function BudgetBoard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Budget Items */}
       <NeonCard color="#8b5cf6" hoverable={false}>
         <h3 className="text-xs text-white/40 mb-4 uppercase tracking-wider">
-          {t('finance.budget.items')}
+          {t('fin.budget.items')}
         </h3>
         <div className="space-y-3">
           {budgetItems.map((item, i) => {
@@ -696,8 +743,8 @@ function BudgetBoard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
               >
                 <div className="flex justify-between items-center mb-2">
                   <div>
-                    <span className="text-xs text-white/60">{item.account}</span>
-                    <span className="text-[10px] text-white/20 ml-2">{item.dept}</span>
+                    <span className="text-xs text-white/60">{t(item.accountKey)}</span>
+                    <span className="text-[10px] text-white/20 ml-2">{t(item.deptKey)}</span>
                   </div>
                   <div className="text-right">
                     <span className="text-xs" style={{ color: item.color }}>
@@ -721,7 +768,11 @@ function BudgetBoard({ tc: _tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 </div>
                 <div className="flex justify-between mt-1">
                   <span className="text-[10px] text-white/15">
-                    {pct >= 90 ? '⚠️ 预算紧张' : pct >= 75 ? '接近预警线' : '正常'}
+                    {pct >= 90
+                      ? t('fin.budget.tight')
+                      : pct >= 75
+                        ? t('fin.budget.warning')
+                        : t('fin.budget.normal')}
                   </span>
                   <span
                     className="text-[10px]"

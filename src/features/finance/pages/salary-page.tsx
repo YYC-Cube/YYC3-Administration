@@ -34,10 +34,10 @@ export function SalaryPage() {
 
   const tabs: { id: SalaryTab; label: string; icon: typeof Wallet }[] = useMemo(
     () => [
-      { id: 'dashboard', label: t('salary.tab.dashboard'), icon: BarChart3 },
-      { id: 'calculation', label: t('salary.tab.calculation'), icon: Calculator },
-      { id: 'tax', label: t('salary.tab.tax'), icon: Percent },
-      { id: 'attendance', label: t('salary.tab.attendance'), icon: Clock },
+      { id: 'dashboard', label: t('sal.tab.dashboard'), icon: BarChart3 },
+      { id: 'calculation', label: t('sal.tab.calculation'), icon: Calculator },
+      { id: 'tax', label: t('sal.tab.tax'), icon: Percent },
+      { id: 'attendance', label: t('sal.tab.attendance'), icon: Clock },
     ],
     [t],
   )
@@ -55,7 +55,7 @@ export function SalaryPage() {
             style={{ color: tc.primary, textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.5)}` }}
           >
             <Wallet className="w-6 h-6" />
-            {t('salary.title')}
+            {t('sal.title')}
           </h1>
           <p className="text-xs text-white/25 mt-1 tracking-wider">
             Salary Management System — Intelligent Payroll Engine
@@ -82,7 +82,7 @@ export function SalaryPage() {
             }}
           >
             <Calculator className="w-3 h-3" />
-            {t('salary.runCalculation')}
+            {t('sal.runCalculation')}
           </button>
         </div>
       </div>
@@ -133,7 +133,7 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const kpiCards = useMemo(
     () => [
       {
-        label: t('salary.kpi.grossPay'),
+        label: t('sal.kpi.grossPay'),
         value: '¥1,280,000',
         change: '+5.2%',
         up: true,
@@ -141,7 +141,7 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         color: '#10b981',
       },
       {
-        label: t('salary.kpi.netPay'),
+        label: t('sal.kpi.netPay'),
         value: '¥968,000',
         change: '+4.8%',
         up: true,
@@ -149,7 +149,7 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         color: '#3b82f6',
       },
       {
-        label: t('salary.kpi.companyCost'),
+        label: t('sal.kpi.companyCost'),
         value: '¥358,400',
         change: '+3.1%',
         up: true,
@@ -157,7 +157,7 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         color: '#8b5cf6',
       },
       {
-        label: t('salary.kpi.avgSalary'),
+        label: t('sal.kpi.avgSalary'),
         value: '¥12,800',
         change: '+2.1%',
         up: true,
@@ -170,10 +170,10 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
 
   const deptBreakdown = useMemo(
     () => [
-      { dept: '技术部', count: 18, total: '¥420,000', pct: 32.8, color: '#06b6d4' },
-      { dept: '销售部', count: 22, total: '¥380,000', pct: 29.7, color: '#10b981' },
-      { dept: '运营部', count: 12, total: '¥280,000', pct: 21.9, color: '#8b5cf6' },
-      { dept: '管理层', count: 5, total: '¥200,000', pct: 15.6, color: '#f59e0b' },
+      { deptKey: 'sal.dept.tech', count: 18, total: '¥420,000', pct: 32.8, color: '#06b6d4' },
+      { deptKey: 'sal.dept.sales', count: 22, total: '¥380,000', pct: 29.7, color: '#10b981' },
+      { deptKey: 'sal.dept.ops', count: 12, total: '¥280,000', pct: 21.9, color: '#8b5cf6' },
+      { deptKey: 'sal.dept.mgmt', count: 5, total: '¥200,000', pct: 15.6, color: '#f59e0b' },
     ],
     [],
   )
@@ -214,7 +214,7 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 <span className="text-[10px]" style={{ color: card.up ? '#10b981' : '#ef4444' }}>
                   {card.change}
                 </span>
-                <span className="text-[10px] text-white/15 ml-1">vs 上月</span>
+                <span className="text-[10px] text-white/15 ml-1">{t('sal.vsLastMonth')}</span>
               </div>
             </NeonCard>
           )
@@ -225,7 +225,7 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         {/* Department Breakdown */}
         <NeonCard color="#8b5cf6" hoverable={false}>
           <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
-            {t('salary.deptBreakdown')}
+            {t('sal.deptBreakdown')}
           </h3>
           <div className="space-y-3">
             {deptBreakdown.map((d, i) => (
@@ -233,8 +233,10 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                 <div className="flex justify-between items-center mb-1">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full" style={{ background: d.color }} />
-                    <span className="text-xs text-white/50">{d.dept}</span>
-                    <span className="text-[10px] text-white/20">{d.count}人</span>
+                    <span className="text-xs text-white/50">{t(d.deptKey)}</span>
+                    <span className="text-[10px] text-white/20">
+                      {t('sal.unit.people', { n: d.count })}
+                    </span>
                   </div>
                   <span className="text-[10px]" style={{ color: d.color }}>
                     {d.total} · {d.pct}%
@@ -258,14 +260,14 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         {/* Salary Composition */}
         <NeonCard color="#10b981" hoverable={false}>
           <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
-            {t('salary.composition')}
+            {t('sal.composition')}
           </h3>
           {[
-            { name: t('salary.comp.base'), pct: 62, color: '#10b981' },
-            { name: t('salary.comp.performance'), pct: 18, color: '#3b82f6' },
-            { name: t('salary.comp.allowance'), pct: 12, color: '#f59e0b' },
-            { name: t('salary.comp.overtime'), pct: 5, color: '#06b6d4' },
-            { name: t('salary.comp.other'), pct: 3, color: '#6b7280' },
+            { name: t('sal.comp.base'), pct: 62, color: '#10b981' },
+            { name: t('sal.comp.performance'), pct: 18, color: '#3b82f6' },
+            { name: t('sal.comp.allowance'), pct: 12, color: '#f59e0b' },
+            { name: t('sal.comp.overtime'), pct: 5, color: '#06b6d4' },
+            { name: t('sal.comp.other'), pct: 3, color: '#6b7280' },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-3 mb-2.5">
               <div className="w-3 h-3 rounded" style={{ background: item.color }} />
@@ -287,26 +289,26 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         <div className="flex items-center gap-2 mb-3">
           <Brain className="w-4 h-4" style={{ color: '#8b5cf6' }} />
           <h3 className="text-xs text-white/40 uppercase tracking-wider">
-            AI {t('salary.aiInsight')}
+            AI {t('sal.aiInsight')}
           </h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[
             {
-              title: t('salary.ai.costForecast'),
-              desc: '预计下半年人力成本增长 6-8%，建议优化绩效激励结构',
+              title: t('sal.ai.costForecast'),
+              descKey: 'sal.ai.costForecastDesc',
               icon: TrendingUp,
               color: '#10b981',
             },
             {
-              title: t('salary.ai.taxOptimize'),
-              desc: '3名员工可增加专项附加扣除，预计月节税 ¥420',
+              title: t('sal.ai.taxOptimize'),
+              descKey: 'sal.ai.taxOptimizeDesc',
               icon: ShieldCheck,
               color: '#8b5cf6',
             },
             {
-              title: t('salary.ai.anomalyDetect'),
-              desc: '销售部本月加班费异常增长 35%，建议关注',
+              title: t('sal.ai.anomalyDetect'),
+              descKey: 'sal.ai.anomalyDetectDesc',
               icon: Clock,
               color: '#f59e0b',
             },
@@ -327,7 +329,7 @@ function SalaryDashboard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                     {insight.title}
                   </span>
                 </div>
-                <p className="text-xs text-white/40 leading-relaxed">{insight.desc}</p>
+                <p className="text-xs text-white/40 leading-relaxed">{t(insight.descKey)}</p>
               </div>
             )
           })}
@@ -345,53 +347,53 @@ function SalaryCalculation({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const employees = useMemo(
     () => [
       {
-        name: '张三',
-        dept: '销售部',
+        nameKey: 'sal.name.zhangsan',
+        deptKey: 'sal.dept.sales',
         base: 8000,
         gross: 12800,
         deductions: 2180,
         net: 10620,
-        status: t('salary.status.calculated'),
+        status: t('sal.status.calculated'),
         statusColor: '#06b6d4',
       },
       {
-        name: '李四',
-        dept: '技术部',
+        nameKey: 'sal.name.lisi',
+        deptKey: 'sal.dept.tech',
         base: 12000,
         gross: 15600,
         deductions: 2890,
         net: 12710,
-        status: t('salary.status.calculated'),
+        status: t('sal.status.calculated'),
         statusColor: '#06b6d4',
       },
       {
-        name: '王五',
-        dept: '运营部',
+        nameKey: 'sal.name.wangwu',
+        deptKey: 'sal.dept.ops',
         base: 9000,
         gross: 11200,
         deductions: 1750,
         net: 9450,
-        status: t('salary.status.approved'),
+        status: t('sal.status.approved'),
         statusColor: '#10b981',
       },
       {
-        name: '赵六',
-        dept: '管理层',
+        nameKey: 'sal.name.zhaoliu',
+        deptKey: 'sal.dept.mgmt',
         base: 15000,
         gross: 22500,
         deductions: 4820,
         net: 17680,
-        status: t('salary.status.approved'),
+        status: t('sal.status.approved'),
         statusColor: '#10b981',
       },
       {
-        name: '孙七',
-        dept: '销售部',
+        nameKey: 'sal.name.sunqi',
+        deptKey: 'sal.dept.sales',
         base: 8000,
         gross: 9600,
         deductions: 1420,
         net: 8180,
-        status: t('salary.status.paid'),
+        status: t('sal.status.paid'),
         statusColor: '#8b5cf6',
       },
     ],
@@ -404,20 +406,20 @@ function SalaryCalculation({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       <div className="grid grid-cols-3 gap-3">
         {[
           {
-            label: t('salary.action.batchCalc'),
-            desc: '全员月度薪资计算',
+            label: t('sal.action.batchCalc'),
+            descKey: 'sal.action.batchCalcDesc',
             icon: Calculator,
             color: '#8b5cf6',
           },
           {
-            label: t('salary.action.approve'),
-            desc: '审批薪资发放',
+            label: t('sal.action.approve'),
+            descKey: 'sal.action.approveDesc',
             icon: UserCheck,
             color: '#10b981',
           },
           {
-            label: t('salary.action.export'),
-            desc: '导出银行打款文件',
+            label: t('sal.action.export'),
+            descKey: 'sal.action.exportDesc',
             icon: Download,
             color: '#06b6d4',
           },
@@ -430,7 +432,7 @@ function SalaryCalculation({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
                   <Icon className="w-4 h-4" style={{ color: action.color }} />
                   <span className="text-xs text-white/70">{action.label}</span>
                 </div>
-                <p className="text-[10px] text-white/25">{action.desc}</p>
+                <p className="text-[10px] text-white/25">{t(action.descKey)}</p>
               </button>
             </NeonCard>
           )
@@ -440,16 +442,24 @@ function SalaryCalculation({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Employee Salary Table */}
       <NeonCard color="#8b5cf6" hoverable={false}>
         <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
-          {t('salary.employeeList')}
+          {t('sal.employeeList')}
         </h3>
         {/* Table Header */}
         <div
           className="grid grid-cols-7 gap-2 pb-2 mb-2"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
         >
-          {['姓名', '部门', '基本工资', '应发合计', '扣减合计', '实发金额', '状态'].map((h, i) => (
+          {[
+            'sal.table.name',
+            'sal.table.dept',
+            'sal.table.base',
+            'sal.table.gross',
+            'sal.table.deductions',
+            'sal.table.net',
+            'sal.table.status',
+          ].map((h, i) => (
             <span key={i} className="text-[10px] text-white/25 uppercase tracking-wider">
-              {h}
+              {t(h)}
             </span>
           ))}
         </div>
@@ -459,8 +469,8 @@ function SalaryCalculation({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
             className="grid grid-cols-7 gap-2 py-2 items-center"
             style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}
           >
-            <span className="text-xs text-white/70">{emp.name}</span>
-            <span className="text-[10px] text-white/40">{emp.dept}</span>
+            <span className="text-xs text-white/70">{t(emp.nameKey)}</span>
+            <span className="text-[10px] text-white/40">{t(emp.deptKey)}</span>
             <span className="text-[10px] text-white/50">¥{emp.base.toLocaleString()}</span>
             <span className="text-xs" style={{ color: '#10b981' }}>
               ¥{emp.gross.toLocaleString()}
@@ -512,9 +522,9 @@ function TaxManagement({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Tax Summary */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: t('salary.tax.monthlyTotal'), value: '¥42,800', color: '#8b5cf6' },
-          { label: t('salary.tax.ytdTotal'), value: '¥256,800', color: '#06b6d4' },
-          { label: t('salary.tax.avgPerPerson'), value: '¥1,069', color: '#10b981' },
+          { label: t('sal.tax.monthlyTotal'), value: '¥42,800', color: '#8b5cf6' },
+          { label: t('sal.tax.ytdTotal'), value: '¥256,800', color: '#06b6d4' },
+          { label: t('sal.tax.avgPerPerson'), value: '¥1,069', color: '#10b981' },
         ].map((s, i) => (
           <NeonCard key={i} color={s.color}>
             <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">{s.label}</p>
@@ -528,15 +538,21 @@ function TaxManagement({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Tax Bracket Table */}
       <NeonCard color="#8b5cf6" hoverable={false}>
         <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
-          {t('salary.tax.brackets')}
+          {t('sal.tax.brackets')}
         </h3>
         <div
           className="grid grid-cols-5 gap-2 pb-2 mb-2"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
         >
-          {['级数', '应纳税所得额', '税率', '速算扣除数', '人数'].map((h, i) => (
+          {[
+            'sal.tax.level',
+            'sal.tax.taxableIncome',
+            'sal.tax.rate',
+            'sal.tax.quickDeduction',
+            'sal.tax.people',
+          ].map((h, i) => (
             <span key={i} className="text-[10px] text-white/25 uppercase tracking-wider">
-              {h}
+              {t(h)}
             </span>
           ))}
         </div>
@@ -552,7 +568,9 @@ function TaxManagement({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
               {bracket.rate}
             </span>
             <span className="text-[10px] text-white/40">{bracket.deduction}</span>
-            <span className="text-[10px] text-white/30">{bracket.employees}人</span>
+            <span className="text-[10px] text-white/30">
+              {t('sal.unit.people', { n: bracket.employees })}
+            </span>
           </div>
         ))}
       </NeonCard>
@@ -568,8 +586,8 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const attendanceData = useMemo(
     () => [
       {
-        name: '张三',
-        dept: '销售部',
+        nameKey: 'sal.name.zhangsan',
+        deptKey: 'sal.dept.sales',
         workDays: 22,
         actual: 21,
         late: 1,
@@ -578,8 +596,8 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         color: '#10b981',
       },
       {
-        name: '李四',
-        dept: '技术部',
+        nameKey: 'sal.name.lisi',
+        deptKey: 'sal.dept.tech',
         workDays: 22,
         actual: 22,
         late: 0,
@@ -588,8 +606,8 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         color: '#06b6d4',
       },
       {
-        name: '王五',
-        dept: '运营部',
+        nameKey: 'sal.name.wangwu',
+        deptKey: 'sal.dept.ops',
         workDays: 22,
         actual: 20,
         late: 2,
@@ -598,8 +616,8 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         color: '#8b5cf6',
       },
       {
-        name: '赵六',
-        dept: '管理层',
+        nameKey: 'sal.name.zhaoliu',
+        deptKey: 'sal.dept.mgmt',
         workDays: 22,
         actual: 22,
         late: 0,
@@ -608,8 +626,8 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
         color: '#f59e0b',
       },
       {
-        name: '孙七',
-        dept: '销售部',
+        nameKey: 'sal.name.sunqi',
+        deptKey: 'sal.dept.sales',
         workDays: 22,
         actual: 19,
         late: 3,
@@ -626,10 +644,10 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Attendance Summary */}
       <div className="grid grid-cols-4 gap-3">
         {[
-          { label: t('salary.att.totalEmployees'), value: '42', color: '#8b5cf6' },
-          { label: t('salary.att.fullAttendance'), value: '35', color: '#10b981' },
-          { label: t('salary.att.lateCount'), value: '6', color: '#f59e0b' },
-          { label: t('salary.att.absentCount'), value: '3', color: '#ef4444' },
+          { label: t('sal.att.totalEmployees'), value: '42', color: '#8b5cf6' },
+          { label: t('sal.att.fullAttendance'), value: '35', color: '#10b981' },
+          { label: t('sal.att.lateCount'), value: '6', color: '#f59e0b' },
+          { label: t('sal.att.absentCount'), value: '3', color: '#ef4444' },
         ].map((s, i) => (
           <NeonCard key={i} color={s.color}>
             <p className="text-[10px] text-white/25 uppercase tracking-wider mb-1">{s.label}</p>
@@ -643,15 +661,23 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
       {/* Attendance Table */}
       <NeonCard color="#8b5cf6" hoverable={false}>
         <h3 className="text-xs mb-4 uppercase tracking-wider" style={{ color: tc.textSecondary }}>
-          {t('salary.att.summary')}
+          {t('sal.att.summary')}
         </h3>
         <div
           className="grid grid-cols-7 gap-2 pb-2 mb-2"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
         >
-          {['姓名', '部门', '应出勤', '实出勤', '迟到', '请假', '加班(h)'].map((h, i) => (
+          {[
+            'sal.att.name',
+            'sal.att.dept',
+            'sal.att.workDays',
+            'sal.att.actual',
+            'sal.att.late',
+            'sal.att.leave',
+            'sal.att.overtime',
+          ].map((h, i) => (
             <span key={i} className="text-[10px] text-white/25 uppercase tracking-wider">
-              {h}
+              {t(h)}
             </span>
           ))}
         </div>
@@ -661,32 +687,34 @@ function AttendanceBoard({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
             className="grid grid-cols-7 gap-2 py-2 items-center"
             style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}
           >
-            <span className="text-xs text-white/70">{emp.name}</span>
-            <span className="text-[10px] text-white/40">{emp.dept}</span>
-            <span className="text-[10px] text-white/40">{emp.workDays}天</span>
+            <span className="text-xs text-white/70">{t(emp.nameKey)}</span>
+            <span className="text-[10px] text-white/40">{t(emp.deptKey)}</span>
+            <span className="text-[10px] text-white/40">
+              {t('sal.unit.day', { n: emp.workDays })}
+            </span>
             <span
               className="text-xs"
               style={{ color: emp.actual === emp.workDays ? '#10b981' : '#f59e0b' }}
             >
-              {emp.actual}天
+              {t('sal.unit.day', { n: emp.actual })}
             </span>
             <span
               className="text-[10px]"
               style={{ color: emp.late > 0 ? '#f59e0b' : 'rgba(255,255,255,0.3)' }}
             >
-              {emp.late}次
+              {t('sal.unit.times', { n: emp.late })}
             </span>
             <span
               className="text-[10px]"
               style={{ color: emp.leave > 0 ? '#06b6d4' : 'rgba(255,255,255,0.3)' }}
             >
-              {emp.leave}天
+              {t('sal.unit.day', { n: emp.leave })}
             </span>
             <span
               className="text-[10px]"
               style={{ color: emp.overtime > 20 ? '#ef4444' : '#8b5cf6' }}
             >
-              {emp.overtime}h
+              {t('sal.unit.hours', { n: emp.overtime })}
             </span>
           </div>
         ))}

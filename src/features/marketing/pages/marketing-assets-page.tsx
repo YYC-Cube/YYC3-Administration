@@ -50,67 +50,67 @@ export function MarketingAssetsPage() {
   const assets: Asset[] = [
     {
       id: 'A001',
-      name: '618大促主视觉.jpg',
+      name: 'ast.asset.a001',
       type: 'image',
       size: '2.4 MB',
       format: 'JPG',
       uploadDate: '2024-05-28',
-      tags: ['618', '促销', '主视觉'],
+      tags: ['618', 'ast.tag.promotion', 'ast.tag.mainVisual'],
       usage: 12,
       status: 'approved',
     },
     {
       id: 'A002',
-      name: '产品宣传片_V2.mp4',
+      name: 'ast.asset.a002',
       type: 'video',
       size: '45.8 MB',
       format: 'MP4',
       uploadDate: '2024-05-25',
-      tags: ['产品', '宣传片', 'V2'],
+      tags: ['ast.tag.product', 'ast.tag.promoVideo', 'V2'],
       usage: 8,
       status: 'approved',
     },
     {
       id: 'A003',
-      name: '品牌故事文案.docx',
+      name: 'ast.asset.a003',
       type: 'document',
       size: '156 KB',
       format: 'DOCX',
       uploadDate: '2024-05-20',
-      tags: ['品牌', '文案', '故事'],
+      tags: ['ast.tag.brand', 'ast.tag.copywriting', 'ast.tag.story'],
       usage: 5,
       status: 'approved',
     },
     {
       id: 'A004',
-      name: '品牌BGM.mp3',
+      name: 'ast.asset.a004',
       type: 'audio',
       size: '3.2 MB',
       format: 'MP3',
       uploadDate: '2024-05-15',
-      tags: ['BGM', '品牌', '音乐'],
+      tags: ['BGM', 'ast.tag.brand', 'ast.tag.music'],
       usage: 15,
       status: 'approved',
     },
     {
       id: 'A005',
-      name: '新品发布海报.psd',
+      name: 'ast.asset.a005',
       type: 'image',
       size: '18.5 MB',
       format: 'PSD',
       uploadDate: '2024-05-12',
-      tags: ['新品', '海报', '源文件'],
+      tags: ['ast.tag.newProduct', 'ast.tag.poster', 'ast.tag.sourceFile'],
       usage: 3,
       status: 'pending',
     },
     {
       id: 'A006',
-      name: '会员权益说明视频.mp4',
+      name: 'ast.asset.a006',
       type: 'video',
       size: '28.3 MB',
       format: 'MP4',
       uploadDate: '2024-05-10',
-      tags: ['会员', '权益', '说明'],
+      tags: ['ast.tag.member', 'ast.tag.benefit', 'ast.tag.description'],
       usage: 7,
       status: 'approved',
     },
@@ -127,28 +127,28 @@ export function MarketingAssetsPage() {
   const typeStats = [
     {
       type: 'image' as const,
-      label: '图片素材',
+      label: 'ast.type.image',
       count: assets.filter((a) => a.type === 'image').length,
       icon: Image,
       color: tc.primary,
     },
     {
       type: 'video' as const,
-      label: '视频素材',
+      label: 'ast.type.video',
       count: assets.filter((a) => a.type === 'video').length,
       icon: Video,
       color: tc.secondary,
     },
     {
       type: 'document' as const,
-      label: '文档素材',
+      label: 'ast.type.document',
       count: assets.filter((a) => a.type === 'document').length,
       icon: FileText,
       color: tc.accent,
     },
     {
       type: 'audio' as const,
-      label: '音频素材',
+      label: 'ast.type.audio',
       count: assets.filter((a) => a.type === 'audio').length,
       icon: Music,
       color: tc.success,
@@ -171,11 +171,11 @@ export function MarketingAssetsPage() {
   const getStatusConfig = (status: Asset['status']) => {
     switch (status) {
       case 'approved':
-        return { label: '已批准', color: tc.success, icon: CheckCircle2 }
+        return { label: t('ast.status.approved'), color: tc.success, icon: CheckCircle2 }
       case 'pending':
-        return { label: '待审核', color: tc.warning, icon: Calendar }
+        return { label: t('ast.status.pending'), color: tc.warning, icon: Calendar }
       case 'rejected':
-        return { label: '已拒绝', color: tc.danger, icon: Trash2 }
+        return { label: t('ast.status.rejected'), color: tc.danger, icon: Trash2 }
     }
   }
 
@@ -188,7 +188,7 @@ export function MarketingAssetsPage() {
             {t('nav.marketingAssets')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            智能分类 · 版权管理 · 快速检索
+            {t('ast.subtitle')}
           </p>
         </div>
         <button
@@ -201,7 +201,7 @@ export function MarketingAssetsPage() {
           }}
         >
           <Upload className="w-5 h-5" />
-          上传素材
+          {t('ast.uploadAsset')}
         </button>
       </div>
 
@@ -226,7 +226,7 @@ export function MarketingAssetsPage() {
                 </span>
               </div>
               <p className="text-sm" style={{ color: tc.textSecondary }}>
-                {stat.label}
+                {t(stat.label)}
               </p>
             </NeonCard>
           )
@@ -243,7 +243,7 @@ export function MarketingAssetsPage() {
           />
           <input
             type="text"
-            placeholder="搜索素材名称或标签..."
+            placeholder={t('ast.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-3 rounded-lg text-sm transition-all"
@@ -265,7 +265,7 @@ export function MarketingAssetsPage() {
             border: `1px solid ${selectedType === 'all' ? tc.primary : tc.borderSubtle}`,
           }}
         >
-          全部
+          {t('ast.all')}
         </button>
 
         {/* 视图切换 */}
@@ -305,7 +305,7 @@ export function MarketingAssetsPage() {
           }}
         >
           <Filter className="w-4 h-4" />
-          筛选
+          {t('ast.filter')}
         </button>
       </div>
 
@@ -337,7 +337,7 @@ export function MarketingAssetsPage() {
                       className="font-medium text-sm line-clamp-1"
                       style={{ color: tc.textPrimary }}
                     >
-                      {asset.name}
+                      {t(asset.name)}
                     </h3>
                     <div
                       className="flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium flex-shrink-0"
@@ -358,7 +358,7 @@ export function MarketingAssetsPage() {
                     <span>
                       {asset.format} · {asset.size}
                     </span>
-                    <span>使用{asset.usage}次</span>
+                    <span>{t('ast.usageCount', { n: asset.usage })}</span>
                   </div>
 
                   {/* 标签 */}
@@ -372,7 +372,7 @@ export function MarketingAssetsPage() {
                           color: tc.textSecondary,
                         }}
                       >
-                        #{tag}
+                        #{t(tag)}
                       </span>
                     ))}
                   </div>
@@ -389,7 +389,7 @@ export function MarketingAssetsPage() {
                       }}
                     >
                       <Eye className="w-3 h-3" />
-                      预览
+                      {t('ast.preview')}
                     </button>
                     <button
                       className="px-3 py-2 rounded-lg transition-all"
@@ -432,43 +432,43 @@ export function MarketingAssetsPage() {
                     className="text-left py-3 px-4 text-sm font-medium"
                     style={{ color: tc.textMuted }}
                   >
-                    名称
+                    {t('ast.th.name')}
                   </th>
                   <th
                     className="text-left py-3 px-4 text-sm font-medium"
                     style={{ color: tc.textMuted }}
                   >
-                    类型
+                    {t('ast.th.type')}
                   </th>
                   <th
                     className="text-left py-3 px-4 text-sm font-medium"
                     style={{ color: tc.textMuted }}
                   >
-                    大小
+                    {t('ast.th.size')}
                   </th>
                   <th
                     className="text-left py-3 px-4 text-sm font-medium"
                     style={{ color: tc.textMuted }}
                   >
-                    上传日期
+                    {t('ast.th.uploadDate')}
                   </th>
                   <th
                     className="text-left py-3 px-4 text-sm font-medium"
                     style={{ color: tc.textMuted }}
                   >
-                    状态
+                    {t('ast.th.status')}
                   </th>
                   <th
                     className="text-center py-3 px-4 text-sm font-medium"
                     style={{ color: tc.textMuted }}
                   >
-                    使用次数
+                    {t('ast.th.usageCount')}
                   </th>
                   <th
                     className="text-right py-3 px-4 text-sm font-medium"
                     style={{ color: tc.textMuted }}
                   >
-                    操作
+                    {t('ast.th.action')}
                   </th>
                 </tr>
               </thead>
@@ -495,7 +495,7 @@ export function MarketingAssetsPage() {
                             <TypeIcon className="w-5 h-5" style={{ color: tc.textMuted }} />
                           </div>
                           <span className="font-medium" style={{ color: tc.textPrimary }}>
-                            {asset.name}
+                            {t(asset.name)}
                           </span>
                         </div>
                       </td>

@@ -41,54 +41,54 @@ export function SmartCreationPage() {
   const templates: CreationTemplate[] = [
     {
       id: 'T001',
-      name: '产品文案生成',
+      name: 'sc.tpl.t001.name',
       type: 'text',
-      description: 'AI生成吸引人的产品描述文案',
+      description: 'sc.tpl.t001.desc',
       icon: FileText,
       usage: 1250,
       rating: 4.8,
     },
     {
       id: 'T002',
-      name: '社交媒体图文',
+      name: 'sc.tpl.t002.name',
       type: 'image',
-      description: '快速生成社交媒体配图和文案',
+      description: 'sc.tpl.t002.desc',
       icon: Image,
       usage: 980,
       rating: 4.7,
     },
     {
       id: 'T003',
-      name: '短视频脚本',
+      name: 'sc.tpl.t003.name',
       type: 'video',
-      description: 'AI生成短视频拍摄脚本和分镜',
+      description: 'sc.tpl.t003.desc',
       icon: Video,
       usage: 750,
       rating: 4.9,
     },
     {
       id: 'T004',
-      name: '品牌BGM制作',
+      name: 'sc.tpl.t004.name',
       type: 'audio',
-      description: 'AI生成符合品牌调性的背景音乐',
+      description: 'sc.tpl.t004.desc',
       icon: Music,
       usage: 420,
       rating: 4.6,
     },
     {
       id: 'T005',
-      name: '广告标语生成',
+      name: 'sc.tpl.t005.name',
       type: 'text',
-      description: '创意广告语和Slogan生成',
+      description: 'sc.tpl.t005.desc',
       icon: Sparkles,
       usage: 1580,
       rating: 4.9,
     },
     {
       id: 'T006',
-      name: '海报设计',
+      name: 'sc.tpl.t006.name',
       type: 'image',
-      description: 'AI辅助海报设计和排版',
+      description: 'sc.tpl.t006.desc',
       icon: Image,
       usage: 890,
       rating: 4.7,
@@ -100,23 +100,40 @@ export function SmartCreationPage() {
   )
 
   const stats = [
-    { label: '创作总量', value: '12.5K', change: '+28.3%', icon: Wand2, color: tc.primary },
-    { label: '用户满意度', value: '96.8%', change: '+4.2%', icon: Star, color: tc.success },
-    { label: 'AI生成速度', value: '2.3s', change: '-15.8%', icon: Zap, color: tc.secondary },
-    { label: '采纳率', value: '89.2%', change: '+6.5%', icon: TrendingUp, color: tc.accent },
+    { label: 'sc.stat.total', value: '12.5K', change: '+28.3%', icon: Wand2, color: tc.primary },
+    { label: 'sc.stat.satisfaction', value: '96.8%', change: '+4.2%', icon: Star, color: tc.success },
+    { label: 'sc.stat.aiSpeed', value: '2.3s', change: '-15.8%', icon: Zap, color: tc.secondary },
+    { label: 'sc.stat.adoption', value: '89.2%', change: '+6.5%', icon: TrendingUp, color: tc.accent },
   ]
 
   const recentCreations = [
-    { id: 'C001', title: '618大促海报', type: 'image', status: 'completed', time: '5分钟前' },
+    { id: 'C001', title: 'sc.recent.c001.title', type: 'image', status: 'completed', time: 'sc.recent.c001.time' },
     {
       id: 'C002',
-      title: '产品介绍视频脚本',
+      title: 'sc.recent.c002.title',
       type: 'video',
       status: 'processing',
-      time: '10分钟前',
+      time: 'sc.recent.c002.time',
     },
-    { id: 'C003', title: '品牌故事文案', type: 'text', status: 'completed', time: '15分钟前' },
+    { id: 'C003', title: 'sc.recent.c003.title', type: 'text', status: 'completed', time: 'sc.recent.c003.time' },
   ]
+
+  const getTypeLabel = (type: string) => {
+    switch (type) {
+      case 'all':
+        return t('sc.filter.all')
+      case 'text':
+        return t('sc.filter.text')
+      case 'image':
+        return t('sc.filter.image')
+      case 'video':
+        return t('sc.filter.video')
+      case 'audio':
+        return t('sc.filter.audio')
+      default:
+        return type
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -126,7 +143,7 @@ export function SmartCreationPage() {
             {t('nav.aiCreativeTools')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            AI文案生成 · 图片设计 · 视频制作
+            {t('sc.subtitle')}
           </p>
         </div>
         <button
@@ -134,7 +151,7 @@ export function SmartCreationPage() {
           style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
         >
           <Wand2 className="w-5 h-5" />
-          开始创作
+          {t('sc.startCreating')}
         </button>
       </div>
 
@@ -164,7 +181,7 @@ export function SmartCreationPage() {
                 </div>
               </div>
               <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-                {stat.label}
+                {t(stat.label)}
               </p>
               <p className="text-2xl font-bold" style={{ color: tc.textPrimary }}>
                 {stat.value}
@@ -176,7 +193,7 @@ export function SmartCreationPage() {
 
       <NeonCard className="p-6">
         <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-          最近创作
+          {t('sc.recentCreations')}
         </h2>
         <div className="space-y-3">
           {recentCreations.map((item) => (
@@ -189,10 +206,10 @@ export function SmartCreationPage() {
                 <Brain className="w-5 h-5" style={{ color: tc.primary }} />
                 <div>
                   <h3 className="font-medium" style={{ color: tc.textPrimary }}>
-                    {item.title}
+                    {t(item.title)}
                   </h3>
                   <p className="text-xs" style={{ color: tc.textMuted }}>
-                    {item.type} · {item.time}
+                    {getTypeLabel(item.type)} · {t(item.time)}
                   </p>
                 </div>
               </div>
@@ -203,7 +220,7 @@ export function SmartCreationPage() {
                     style={{ background: tc.alpha(tc.success, 0.1), color: tc.success }}
                   >
                     <CheckCircle2 className="w-3 h-3" />
-                    已完成
+                    {t('sc.status.completed')}
                   </div>
                 ) : (
                   <div
@@ -211,7 +228,7 @@ export function SmartCreationPage() {
                     style={{ background: tc.alpha(tc.primary, 0.1), color: tc.primary }}
                   >
                     <Clock className="w-3 h-3 animate-spin" />
-                    生成中
+                    {t('sc.status.processing')}
                   </div>
                 )}
               </div>
@@ -233,15 +250,7 @@ export function SmartCreationPage() {
               boxShadow: selectedType === type ? tc.neonGlow(tc.primary, 0.3) : 'none',
             }}
           >
-            {type === 'all'
-              ? '全部'
-              : type === 'text'
-                ? '文案'
-                : type === 'image'
-                  ? '图片'
-                  : type === 'video'
-                    ? '视频'
-                    : '音频'}
+            {getTypeLabel(type)}
           </button>
         ))}
       </div>
@@ -268,10 +277,10 @@ export function SmartCreationPage() {
               </div>
 
               <h3 className="text-lg font-bold mb-2" style={{ color: tc.textPrimary }}>
-                {template.name}
+                {t(template.name)}
               </h3>
               <p className="text-sm mb-4 line-clamp-2" style={{ color: tc.textSecondary }}>
-                {template.description}
+                {t(template.description)}
               </p>
 
               <div
@@ -279,7 +288,7 @@ export function SmartCreationPage() {
                 style={{ borderBottom: `1px solid ${tc.borderSubtle}` }}
               >
                 <span className="text-xs" style={{ color: tc.textMuted }}>
-                  使用 {template.usage} 次
+                  {t('sc.usageCount', { n: template.usage })}
                 </span>
               </div>
 
@@ -292,7 +301,7 @@ export function SmartCreationPage() {
                 }}
               >
                 <Wand2 className="w-4 h-4" />
-                立即使用
+                {t('sc.useNow')}
               </button>
             </NeonCard>
           )

@@ -514,7 +514,7 @@ export function ChatInterface({ compact = false, onInsertReady }: ChatInterfaceP
               }}
               onClick={() => switchSession(s.id)}
             >
-              <span className="truncate">{s.title}</span>
+              <span className="truncate">{t(s.title)}</span>
               {sessions.length > 1 && (
                 <button
                   onClick={(e) => {

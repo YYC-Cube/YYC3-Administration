@@ -142,7 +142,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
         desc: t('dash.toolsDesc'),
       },
       {
-        label: t('insights.title'),
+        label: t('ins.title'),
         page: 'insights' as const,
         icon: BarChart3,
         color: tc.primary,
@@ -665,9 +665,9 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs truncate" style={{ color: tc.textSecondary }}>
-                        <span style={{ color: `${act.color}90` }}>{act.action}</span>
+                        <span style={{ color: `${act.color}90` }}>{t(act.action)}</span>
                         <span style={{ color: tc.textMuted }}> · </span>
-                        {act.target}
+                        {t(act.target)}
                       </p>
                     </div>
                     <span className="text-[9px] shrink-0" style={{ color: tc.textMuted }}>

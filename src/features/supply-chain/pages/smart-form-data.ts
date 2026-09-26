@@ -2,6 +2,7 @@
  * @file smart-form-data.ts
  * @description 智能表单数据层:字段/模板类型、内置模板库、字段类型元信息、
  *   校验器与 AI 建议池(P2-③ 巨石拆分,自 smart-form-system.tsx 抽出)
+ *   注:显示值均为 i18n 键(sfd.*),渲染点须以 t() 包裹
  * @author YanYuCloudCube Team <admin@0379.email>
  * @tags forms,data,supply-chain
  */
@@ -79,55 +80,57 @@ export interface FormTemplate {
 }
 
 // ---- Built-in Templates ----
+// Display strings (title/description/label/placeholder/options/aiHint) are i18n keys (sfd.*);
+// render points must wrap them with t(). Non-key legacy values fall through t() unchanged.
 export const formTemplates: FormTemplate[] = [
   {
     id: 'customer-intake',
-    title: '客户录入表',
+    title: 'sfd.tpl.customerIntake.title',
     subtitle: 'Customer Intake',
     icon: Users,
     color: '#00d4ff',
-    description: '新客户信息录入，AI 自动补全公司信息与行业标签',
+    description: 'sfd.tpl.customerIntake.description',
     fields: [
       {
         id: 'name',
         type: 'text',
-        label: '客户姓名',
-        placeholder: '请输入客户全名',
+        label: 'sfd.field.customerName.label',
+        placeholder: 'sfd.field.customerName.placeholder',
         required: true,
-        aiHint: 'AI 可从通话记录中自动提取姓名',
+        aiHint: 'sfd.field.customerName.aiHint',
         color: '#00d4ff',
       },
       {
         id: 'company',
         type: 'text',
-        label: '公司名称',
-        placeholder: '请输入公司名称',
+        label: 'sfd.field.companyName.label',
+        placeholder: 'sfd.field.companyName.placeholder',
         required: true,
-        aiHint: '输入后 AI 将自动匹配工商信息',
+        aiHint: 'sfd.field.companyName.aiHint',
         color: '#00d4ff',
       },
       {
         id: 'industry',
         type: 'select',
-        label: '行业领域',
+        label: 'sfd.field.industry.label',
         required: true,
         options: [
-          '科技/互联网',
-          '金融/保险',
-          '制造/工业',
-          '医疗/健康',
-          '教育/培训',
-          '零售/电商',
-          '能源/环保',
-          '其他',
+          'sfd.opt.industry.tech',
+          'sfd.opt.industry.finance',
+          'sfd.opt.industry.manufacturing',
+          'sfd.opt.industry.healthcare',
+          'sfd.opt.industry.education',
+          'sfd.opt.industry.retail',
+          'sfd.opt.industry.energy',
+          'sfd.opt.other',
         ],
         color: '#00d4ff',
       },
       {
         id: 'phone',
         type: 'text',
-        label: '联系电话',
-        placeholder: '手机号码',
+        label: 'sfd.field.phone.label',
+        placeholder: 'sfd.field.phone.placeholder',
         required: true,
         validation: 'phone',
         color: '#00f0ff',
@@ -135,16 +138,16 @@ export const formTemplates: FormTemplate[] = [
       {
         id: 'email',
         type: 'text',
-        label: '电子邮箱',
-        placeholder: '工作邮箱',
+        label: 'sfd.field.email.label',
+        placeholder: 'sfd.field.email.placeholder',
         validation: 'email',
         color: '#00f0ff',
       },
       {
         id: 'value',
         type: 'number',
-        label: '预估价值 (¥)',
-        placeholder: '客户预估年度价值',
+        label: 'sfd.field.estimatedValue.label',
+        placeholder: 'sfd.field.estimatedValue.placeholder',
         min: 0,
         max: 10000000,
         color: '#00ffcc',
@@ -152,175 +155,227 @@ export const formTemplates: FormTemplate[] = [
       {
         id: 'source',
         type: 'radio',
-        label: '客户来源',
+        label: 'sfd.field.source.label',
         required: true,
-        options: ['官网注册', 'AI 外呼', '合作伙伴', '行业活动', '社交媒体', '客户推荐'],
+        options: [
+          'sfd.opt.source.website',
+          'sfd.opt.source.aiCall',
+          'sfd.opt.source.partner',
+          'sfd.opt.source.event',
+          'sfd.opt.source.social',
+          'sfd.opt.source.referral',
+        ],
         color: '#00ffc8',
       },
-      { id: 'priority', type: 'rating', label: '优先级评估', defaultValue: 3, color: '#00ffcc' },
+      {
+        id: 'priority',
+        type: 'rating',
+        label: 'sfd.field.priority.label',
+        defaultValue: 3,
+        color: '#00ffcc',
+      },
       {
         id: 'tags',
         type: 'checkbox',
-        label: '客户标签',
-        options: ['高价值', '决策者', '技术型', '价格敏感', '长期合作', '需要跟进'],
+        label: 'sfd.field.tags.label',
+        options: [
+          'sfd.opt.tag.highValue',
+          'sfd.opt.tag.decisionMaker',
+          'sfd.opt.tag.technical',
+          'sfd.opt.tag.priceSensitive',
+          'sfd.opt.tag.longTerm',
+          'sfd.opt.tag.needsFollowUp',
+        ],
         color: '#00f0ff',
       },
       {
         id: 'notes',
         type: 'textarea',
-        label: '备注信息',
-        placeholder: '补充信息（AI 将分析并生成跟进建议）',
-        aiHint: '输入客户详情，AI 将自动生成客户画像',
+        label: 'sfd.field.notes.label',
+        placeholder: 'sfd.field.notes.placeholder',
+        aiHint: 'sfd.field.notes.aiHint',
         color: '#00d4ff',
       },
     ],
   },
   {
     id: 'call-report',
-    title: '呼叫报告',
+    title: 'sfd.tpl.callReport.title',
     subtitle: 'Call Report',
     icon: Phone,
     color: '#00ffcc',
-    description: '通话结束后快速填写，AI 自动分析对话质量与转化建议',
+    description: 'sfd.tpl.callReport.description',
     fields: [
       {
         id: 'customer',
         type: 'text',
-        label: '通话客户',
-        placeholder: '客户姓名 · 公司',
+        label: 'sfd.field.callContact.label',
+        placeholder: 'sfd.field.callContact.placeholder',
         required: true,
-        aiHint: 'AI 将从最近通话队列中匹配',
+        aiHint: 'sfd.field.callContact.aiHint',
         color: '#00ffcc',
       },
       {
         id: 'duration',
         type: 'text',
-        label: '通话时长',
-        placeholder: '如 4:32',
+        label: 'sfd.field.callDuration.label',
+        placeholder: 'sfd.field.callDuration.placeholder',
         required: true,
         color: '#00ffcc',
       },
       {
         id: 'type',
         type: 'select',
-        label: '通话类型',
+        label: 'sfd.field.callType.label',
         required: true,
-        options: ['AI 外呼', 'AI 跟进', '人工转接', 'AI 回访', '紧急联络'],
+        options: [
+          'sfd.opt.source.aiCall',
+          'sfd.opt.callType.aiFollowUp',
+          'sfd.opt.callType.manualTransfer',
+          'sfd.opt.callType.aiCallback',
+          'sfd.opt.callType.urgent',
+        ],
         color: '#00ffcc',
       },
       {
         id: 'sentiment',
         type: 'slider',
-        label: '客户情感评分',
+        label: 'sfd.field.sentimentScore.label',
         min: 0,
         max: 100,
         step: 1,
         defaultValue: 65,
-        aiHint: 'AI 已预分析情感指数，可手动微调',
+        aiHint: 'sfd.field.sentimentScore.aiHint',
         color: '#00ffc8',
       },
       {
         id: 'intent',
         type: 'radio',
-        label: '客户意向',
+        label: 'sfd.field.intent.label',
         required: true,
-        options: ['强烈购买', '有兴趣', '需考虑', '暂无需求', '明确拒绝'],
+        options: [
+          'sfd.opt.intent.strongBuy',
+          'sfd.opt.intent.interested',
+          'sfd.opt.intent.considering',
+          'sfd.opt.intent.noNeed',
+          'sfd.opt.intent.declined',
+        ],
         color: '#00d4ff',
       },
       {
         id: 'outcome',
         type: 'select',
-        label: '通话结果',
+        label: 'sfd.field.outcome.label',
         required: true,
-        options: ['成功转化', '需要回访', '转人工跟进', '客户挂断', '未接通', '加入黑名单'],
+        options: [
+          'sfd.opt.outcome.converted',
+          'sfd.opt.outcome.needsCallback',
+          'sfd.opt.outcome.transferHuman',
+          'sfd.opt.outcome.hungUp',
+          'sfd.opt.outcome.noAnswer',
+          'sfd.opt.outcome.blacklisted',
+        ],
         color: '#00f0ff',
       },
       {
         id: 'aiScore',
         type: 'slider',
-        label: 'AI 质量评分',
+        label: 'sfd.field.aiQualityScore.label',
         min: 0,
         max: 100,
         step: 1,
         defaultValue: 78,
         color: '#00f0ff',
       },
-      { id: 'followup', type: 'toggle', label: '需要跟进', defaultValue: true, color: '#41ffdd' },
-      { id: 'followupDate', type: 'date', label: '跟进日期', color: '#41ffdd' },
+      {
+        id: 'followup',
+        type: 'toggle',
+        label: 'sfd.field.needsFollowUp.label',
+        defaultValue: true,
+        color: '#41ffdd',
+      },
+      { id: 'followupDate', type: 'date', label: 'sfd.field.followUpDate.label', color: '#41ffdd' },
       {
         id: 'summary',
         type: 'textarea',
-        label: '通话摘要',
-        placeholder: '通话要点（AI 将自动生成结构化摘要）',
+        label: 'sfd.field.callSummary.label',
+        placeholder: 'sfd.field.callSummary.placeholder',
         required: true,
-        aiHint: '输入关键词即可，AI 会扩写为完整摘要',
+        aiHint: 'sfd.field.callSummary.aiHint',
         color: '#00ffcc',
       },
     ],
   },
   {
     id: 'feedback-survey',
-    title: '满意度调研',
+    title: 'sfd.tpl.feedbackSurvey.title',
     subtitle: 'Satisfaction Survey',
     icon: MessageSquare,
     color: '#00f0ff',
-    description: '客户服务质量评价表，数据自动汇入数据洞察仪表板',
+    description: 'sfd.tpl.feedbackSurvey.description',
     fields: [
       {
         id: 'customer',
         type: 'text',
-        label: '客户姓名',
-        placeholder: '填写客户姓名',
+        label: 'sfd.field.customerName.label',
+        placeholder: 'sfd.field.surveyCustomer.placeholder',
         required: true,
         color: '#00f0ff',
       },
       {
         id: 'overall',
         type: 'rating',
-        label: '整体满意度',
+        label: 'sfd.field.overallSatisfaction.label',
         defaultValue: 4,
         required: true,
         color: '#00ffcc',
       },
-      { id: 'service', type: 'rating', label: '服务质量', defaultValue: 4, color: '#00ffc8' },
-      { id: 'response', type: 'rating', label: '响应速度', defaultValue: 3, color: '#00f0ff' },
+      { id: 'service', type: 'rating', label: 'sfd.field.serviceQuality.label', defaultValue: 4, color: '#00ffc8' },
+      { id: 'response', type: 'rating', label: 'sfd.field.responseSpeed.label', defaultValue: 3, color: '#00f0ff' },
       {
         id: 'professionalism',
         type: 'rating',
-        label: '专业程度',
+        label: 'sfd.field.professionalism.label',
         defaultValue: 4,
         color: '#00d4ff',
       },
       {
         id: 'recommend',
         type: 'slider',
-        label: '推荐指数 (NPS)',
+        label: 'sfd.field.nps.label',
         min: 0,
         max: 10,
         step: 1,
         defaultValue: 7,
-        aiHint: '0=绝不推荐 10=强烈推荐',
+        aiHint: 'sfd.field.nps.aiHint',
         color: '#00ffcc',
       },
       {
         id: 'channels',
         type: 'checkbox',
-        label: '常用沟通渠道',
-        options: ['电话', '邮件', '微信', '在线会议', '线下见面', 'AI 客服'],
+        label: 'sfd.field.channels.label',
+        options: [
+          'sfd.opt.channel.phone',
+          'sfd.opt.channel.email',
+          'sfd.opt.channel.wechat',
+          'sfd.opt.channel.onlineMeeting',
+          'sfd.opt.channel.inPerson',
+          'sfd.opt.channel.aiAgent',
+        ],
         color: '#00f0ff',
       },
       {
         id: 'improvement',
         type: 'textarea',
-        label: '改进建议',
-        placeholder: '请分享您的宝贵建议…',
-        aiHint: 'AI 将分析情感倾向并分类归档',
+        label: 'sfd.field.improvement.label',
+        placeholder: 'sfd.field.improvement.placeholder',
+        aiHint: 'sfd.field.improvement.aiHint',
         color: '#00d4ff',
       },
       {
         id: 'recontact',
         type: 'toggle',
-        label: '愿意接受回访',
+        label: 'sfd.field.openToRecontact.label',
         defaultValue: true,
         color: '#00ffc8',
       },
@@ -328,40 +383,52 @@ export const formTemplates: FormTemplate[] = [
   },
   {
     id: 'ai-task-config',
-    title: 'AI 任务配置',
+    title: 'sfd.tpl.aiTaskConfig.title',
     subtitle: 'AI Task Config',
     icon: Brain,
     color: '#00ffc8',
-    description: '配置 AI 自动化任务参数，精细控制执行策略与触发条件',
+    description: 'sfd.tpl.aiTaskConfig.description',
     fields: [
       {
         id: 'taskName',
         type: 'text',
-        label: '任务名称',
-        placeholder: '为此任务命名',
+        label: 'sfd.field.taskName.label',
+        placeholder: 'sfd.field.taskName.placeholder',
         required: true,
         color: '#00ffc8',
       },
       {
         id: 'taskType',
         type: 'select',
-        label: '任务类型',
+        label: 'sfd.field.taskType.label',
         required: true,
-        options: ['批量外呼', '数据分析', '客户画像', '话术生成', '智能排期', '自动跟进'],
+        options: [
+          'sfd.opt.taskType.bulkCalls',
+          'sfd.opt.taskType.dataAnalysis',
+          'sfd.opt.taskType.profiling',
+          'sfd.opt.taskType.scriptGen',
+          'sfd.opt.taskType.scheduling',
+          'sfd.opt.taskType.autoFollowUp',
+        ],
         color: '#00ffc8',
       },
       {
         id: 'priority',
         type: 'radio',
-        label: '执行优先级',
+        label: 'sfd.field.executionPriority.label',
         required: true,
-        options: ['紧急', '高', '中', '低'],
+        options: [
+          'sfd.opt.priority.urgent',
+          'sfd.opt.priority.high',
+          'sfd.opt.priority.medium',
+          'sfd.opt.priority.low',
+        ],
         color: '#00ffcc',
       },
       {
         id: 'concurrency',
         type: 'slider',
-        label: '并发数',
+        label: 'sfd.field.concurrency.label',
         min: 1,
         max: 50,
         step: 1,
@@ -371,7 +438,7 @@ export const formTemplates: FormTemplate[] = [
       {
         id: 'retryCount',
         type: 'number',
-        label: '失败重试次数',
+        label: 'sfd.field.retryCount.label',
         placeholder: '0-5',
         min: 0,
         max: 5,
@@ -381,25 +448,34 @@ export const formTemplates: FormTemplate[] = [
       {
         id: 'aiModel',
         type: 'select',
-        label: 'AI 模型',
-        options: ['YYC³-Ultra (最强)', 'YYC³-Fast (高速)', 'YYC³-Eco (节能)'],
+        label: 'sfd.field.aiModel.label',
+        options: [
+          'sfd.opt.aiModel.ultra',
+          'sfd.opt.aiModel.fast',
+          'sfd.opt.aiModel.eco',
+        ],
         color: '#00d4ff',
       },
-      { id: 'autoStart', type: 'toggle', label: '立即执行', defaultValue: false, color: '#00ffc8' },
-      { id: 'scheduleDate', type: 'date', label: '计划执行时间', color: '#00f0ff' },
+      { id: 'autoStart', type: 'toggle', label: 'sfd.field.autoStart.label', defaultValue: false, color: '#00ffc8' },
+      { id: 'scheduleDate', type: 'date', label: 'sfd.field.scheduleDate.label', color: '#00f0ff' },
       {
         id: 'notifications',
         type: 'checkbox',
-        label: '通知方式',
-        options: ['系统通知', '邮件通知', '钉钉/企微', '短信通知'],
+        label: 'sfd.field.notifications.label',
+        options: [
+          'sfd.opt.notify.system',
+          'sfd.opt.notify.email',
+          'sfd.opt.notify.dingtalk',
+          'sfd.opt.notify.sms',
+        ],
         color: '#00d4ff',
       },
       {
         id: 'description',
         type: 'textarea',
-        label: '任务描述',
-        placeholder: '描述任务目标与约束条件…',
-        aiHint: 'AI 将根据描述自动优化执行策略',
+        label: 'sfd.field.taskDescription.label',
+        placeholder: 'sfd.field.taskDescription.placeholder',
+        aiHint: 'sfd.field.taskDescription.aiHint',
         color: '#00ffc8',
       },
     ],
@@ -407,23 +483,28 @@ export const formTemplates: FormTemplate[] = [
 ]
 
 // ---- Field Type metadata ----
-/** Lookup table mapping each {@link FieldType} to its display label, icon component, and theme color. */
+/** Lookup table mapping each {@link FieldType} to its display label (i18n key), icon component, and theme color. */
 export const fieldTypeInfo: Record<FieldType, { label: string; icon: typeof Type; color: string }> =
   {
-    text: { label: '文本', icon: Type, color: '#00f0ff' },
-    textarea: { label: '多行文本', icon: AlignLeft, color: '#00f0ff' },
-    number: { label: '数字', icon: Hash, color: '#00ffcc' },
-    select: { label: '下拉选择', icon: List, color: '#00d4ff' },
-    radio: { label: '单选', icon: CheckCircle2, color: '#00d4ff' },
-    checkbox: { label: '多选', icon: Check, color: '#00ffc8' },
-    toggle: { label: '开关', icon: ToggleLeft, color: '#41ffdd' },
-    slider: { label: '滑块', icon: Sliders, color: '#00f0ff' },
-    date: { label: '日期', icon: Calendar, color: '#00ffcc' },
-    rating: { label: '评分', icon: Star, color: '#00ffcc' },
-    file: { label: '文件', icon: Upload, color: '#41ffdd' },
+    text: { label: 'sfd.fieldType.text', icon: Type, color: '#00f0ff' },
+    textarea: { label: 'sfd.fieldType.textarea', icon: AlignLeft, color: '#00f0ff' },
+    number: { label: 'sfd.fieldType.number', icon: Hash, color: '#00ffcc' },
+    select: { label: 'sfd.fieldType.select', icon: List, color: '#00d4ff' },
+    radio: { label: 'sfd.fieldType.radio', icon: CheckCircle2, color: '#00d4ff' },
+    checkbox: { label: 'sfd.fieldType.checkbox', icon: Check, color: '#00ffc8' },
+    toggle: { label: 'sfd.fieldType.toggle', icon: ToggleLeft, color: '#41ffdd' },
+    slider: { label: 'sfd.fieldType.slider', icon: Sliders, color: '#00f0ff' },
+    date: { label: 'sfd.fieldType.date', icon: Calendar, color: '#00ffcc' },
+    rating: { label: 'sfd.fieldType.rating', icon: Star, color: '#00ffcc' },
+    file: { label: 'sfd.fieldType.file', icon: Upload, color: '#41ffdd' },
   }
 
 // ---- Validation helpers ----
+/**
+ * Returns an i18n message key (sfd.validation.*) describing the first validation
+ * failure, or null when the value is valid. Callers resolve the key via t();
+ * the required-message placeholder {label} is filled with t(field.label).
+ */
 export function validateField(field: FieldDef, value: FormFieldValue): string | null {
   if (
     field.required &&
@@ -432,31 +513,35 @@ export function validateField(field: FieldDef, value: FormFieldValue): string | 
       value === '' ||
       (Array.isArray(value) && value.length === 0))
   ) {
-    return `${field.label} 为必填项`
+    return 'sfd.validation.required'
   }
   if (field.validation === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value))) {
-    return '请输入有效的邮箱地址'
+    return 'sfd.validation.email'
   }
   if (
     field.validation === 'phone' &&
     value &&
     !/^1[3-9]\d{9}$/.test(String(value).replace(/\s/g, ''))
   ) {
-    return '请输入有效的手机号码'
+    return 'sfd.validation.phone'
   }
   return null
 }
 
 // ---- AI suggestion simulator ----
+// Suggestion strings are i18n keys (sfd.sugg.*); render points wrap them with t().
 export const aiSuggestions: Record<string, string[]> = {
-  company: ['星际科技有限公司', '云端据科技', '量子计算集团', '智链网络科技', '未来能源集团'],
-  name: ['张明远', '李思琪', '王建华', '陈雅文', '赵鹏飞'],
-  taskName: ['Q1 客户复盘外呼', '高价值客户画像分析', '话术 A/B 测试', '流失预警追踪'],
-  summary: [
-    '客户对新产品方案表现出浓厚兴趣，要求下周安排产品演示会议。',
-    '价格敏感，需要提供定制报价方案。建议下次沟通时强调 ROI。',
+  company: [
+    'sfd.sugg.company.1',
+    'sfd.sugg.company.2',
+    'sfd.sugg.company.3',
+    'sfd.sugg.company.4',
+    'sfd.sugg.company.5',
   ],
-  improvement: ['响应速度还可以更快', '希望有更多自助服务选项', 'AI 客服的回答还需要更精准'],
+  name: ['sfd.sugg.name.1', 'sfd.sugg.name.2', 'sfd.sugg.name.3', 'sfd.sugg.name.4', 'sfd.sugg.name.5'],
+  taskName: ['sfd.sugg.taskName.1', 'sfd.sugg.taskName.2', 'sfd.sugg.taskName.3', 'sfd.sugg.taskName.4'],
+  summary: ['sfd.sugg.summary.1', 'sfd.sugg.summary.2'],
+  improvement: ['sfd.sugg.improvement.1', 'sfd.sugg.improvement.2', 'sfd.sugg.improvement.3'],
 }
 
 // ==========================================

@@ -198,12 +198,12 @@ describe('Platform Detection', () => {
     expect(caps.maxStorageSize).toBeGreaterThan(0)
   })
 
-  it('getPlatformLabel returns Chinese labels', () => {
+  it('getPlatformLabel returns i18n keys', () => {
     const labels = getPlatformLabel()
-    expect(labels.web).toBe('Web 端')
-    expect(labels.pwa).toBe('PWA 应用')
-    expect(labels.mobile).toBe('移动端')
-    expect(labels.desktop).toBe('桌面端')
+    expect(labels.web).toBe('mep.web')
+    expect(labels.pwa).toBe('mep.pwa')
+    expect(labels.mobile).toBe('mep.mobile')
+    expect(labels.desktop).toBe('mep.desktop')
   })
 })
 

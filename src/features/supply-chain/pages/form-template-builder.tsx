@@ -25,6 +25,7 @@ import { useCallback, useRef, useState } from 'react'
 
 import { CUSTOM_TEMPLATES_KEY, type FieldDef, type FieldType } from './smart-form-data'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { NeonCard } from '@/app/components/neon-card'
 
 // ==========================================
@@ -46,17 +47,18 @@ interface CustomTemplate {
   createdAt: string
 }
 
+// Palette labels are i18n keys (ftb.fieldType.*); render points wrap them with t().
 const FIELD_PALETTE: { type: FieldType; label: string; icon: typeof Type; color: string }[] = [
-  { type: 'text', label: '文本', icon: Type, color: '#00f0ff' },
-  { type: 'textarea', label: '多行文本', icon: AlignLeft, color: '#00f0ff' },
-  { type: 'number', label: '数字', icon: Hash, color: '#00ffcc' },
-  { type: 'select', label: '下拉选择', icon: List, color: '#00d4ff' },
-  { type: 'radio', label: '单选', icon: CheckCircle2, color: '#00d4ff' },
-  { type: 'checkbox', label: '多选', icon: Check, color: '#00ffc8' },
-  { type: 'toggle', label: '开关', icon: ToggleLeft, color: '#008b9d' },
-  { type: 'slider', label: '滑块', icon: Sliders, color: '#00f0ff' },
-  { type: 'date', label: '日期', icon: Calendar, color: '#00ffcc' },
-  { type: 'rating', label: '评分', icon: Star, color: '#00ffcc' },
+  { type: 'text', label: 'ftb.fieldType.text', icon: Type, color: '#00f0ff' },
+  { type: 'textarea', label: 'ftb.fieldType.textarea', icon: AlignLeft, color: '#00f0ff' },
+  { type: 'number', label: 'ftb.fieldType.number', icon: Hash, color: '#00ffcc' },
+  { type: 'select', label: 'ftb.fieldType.select', icon: List, color: '#00d4ff' },
+  { type: 'radio', label: 'ftb.fieldType.radio', icon: CheckCircle2, color: '#00d4ff' },
+  { type: 'checkbox', label: 'ftb.fieldType.checkbox', icon: Check, color: '#00ffc8' },
+  { type: 'toggle', label: 'ftb.fieldType.toggle', icon: ToggleLeft, color: '#008b9d' },
+  { type: 'slider', label: 'ftb.fieldType.slider', icon: Sliders, color: '#00f0ff' },
+  { type: 'date', label: 'ftb.fieldType.date', icon: Calendar, color: '#00ffcc' },
+  { type: 'rating', label: 'ftb.fieldType.rating', icon: Star, color: '#00ffcc' },
 ]
 
 const COLOR_OPTIONS = ['#00f0ff', '#00d4ff', '#00ffcc', '#00ffc8', '#008b9d', '#005f73']
@@ -85,8 +87,9 @@ function saveTpl(templates: CustomTemplate[]) {
  * Persists templates to localStorage under `yyc3_custom_templates`.
  */
 export function FormTemplateBuilder() {
+  const { t } = useI18n()
   // Template meta
-  const [title, setTitle] = useState('自定义表单')
+  const [title, setTitle] = useState(() => t('ftb.title.default'))
   const [subtitle, setSubtitle] = useState('Custom Form')
   const [description, setDescription] = useState('')
   const [tplColor, setTplColor] = useState('#00f0ff')
@@ -108,30 +111,35 @@ export function FormTemplateBuilder() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Add field
-  const addField = useCallback((type: FieldType) => {
-    fieldCounter.current += 1
-    const info = FIELD_PALETTE.find((f) => f.type === type)!
-    const newField: BuilderField = {
-      id: `field_${fieldCounter.current}_${Date.now()}`,
-      type,
-      label: `${info.label}字段 ${fieldCounter.current}`,
-      placeholder:
-        type === 'text' || type === 'textarea' || type === 'number' ? '请输入…' : undefined,
-      required: false,
-      options:
-        type === 'select' || type === 'radio' || type === 'checkbox'
-          ? ['选项 1', '选项 2', '选项 3']
-          : undefined,
-      min: type === 'slider' ? 0 : type === 'number' ? 0 : undefined,
-      max: type === 'slider' ? 100 : type === 'number' ? 999999 : undefined,
-      step: type === 'slider' ? 1 : undefined,
-      defaultValue:
-        type === 'toggle' ? false : type === 'rating' ? 0 : type === 'slider' ? 50 : undefined,
-      color: info.color,
-    }
-    setFields((prev) => [...prev, newField])
-    setEditingFieldId(newField.id)
-  }, [])
+  const addField = useCallback(
+    (type: FieldType) => {
+      fieldCounter.current += 1
+      const info = FIELD_PALETTE.find((f) => f.type === type)!
+      const newField: BuilderField = {
+        id: `field_${fieldCounter.current}_${Date.now()}`,
+        type,
+        label: t('ftb.defaultFieldLabel', { label: t(info.label), n: fieldCounter.current }),
+        placeholder:
+          type === 'text' || type === 'textarea' || type === 'number'
+            ? t('ftb.placeholder.default')
+            : undefined,
+        required: false,
+        options:
+          type === 'select' || type === 'radio' || type === 'checkbox'
+            ? [1, 2, 3].map((n) => t('ftb.defaultOption', { n }))
+            : undefined,
+        min: type === 'slider' ? 0 : type === 'number' ? 0 : undefined,
+        max: type === 'slider' ? 100 : type === 'number' ? 999999 : undefined,
+        step: type === 'slider' ? 1 : undefined,
+        defaultValue:
+          type === 'toggle' ? false : type === 'rating' ? 0 : type === 'slider' ? 50 : undefined,
+        color: info.color,
+      }
+      setFields((prev) => [...prev, newField])
+      setEditingFieldId(newField.id)
+    },
+    [t],
+  )
 
   // Remove field
   const removeField = useCallback(
@@ -247,7 +255,7 @@ export function FormTemplateBuilder() {
     const tpl = {
       _yyc3_template: true,
       version: '1.8.5',
-      title: title.trim() || '未命名模板',
+      title: title.trim() || t('ftb.untitledTemplate'),
       subtitle: subtitle.trim(),
       color: tplColor,
       description: description.trim(),
@@ -261,36 +269,39 @@ export function FormTemplateBuilder() {
     a.download = `yyc3_template_${(title.trim() || 'custom').replace(/\s+/g, '_')}_${Date.now()}.json`
     a.click()
     URL.revokeObjectURL(url)
-  }, [title, subtitle, tplColor, description, fields])
+  }, [title, subtitle, tplColor, description, fields, t])
 
   // Phase 8.5: Import template from JSON file
-  const handleImportJSON = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onload = (ev) => {
-      try {
-        const data = JSON.parse(ev.target?.result as string)
-        if (data && data.fields && Array.isArray(data.fields)) {
-          setTitle(data.title || '导入模板')
-          setSubtitle(data.subtitle || 'Imported Template')
-          setTplColor(data.color || '#00f0ff')
-          setDescription(data.description || '')
-          setFields(
-            data.fields.map((f: Record<string, unknown>) => ({ ...f }) as unknown as FieldDef),
-          )
-          setEditingFieldId(null)
-          setImportSuccess(true)
-          setTimeout(() => setImportSuccess(false), 2000)
+  const handleImportJSON = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        try {
+          const data = JSON.parse(ev.target?.result as string)
+          if (data && data.fields && Array.isArray(data.fields)) {
+            setTitle(data.title || t('ftb.importedTemplate'))
+            setSubtitle(data.subtitle || 'Imported Template')
+            setTplColor(data.color || '#00f0ff')
+            setDescription(data.description || '')
+            setFields(
+              data.fields.map((f: Record<string, unknown>) => ({ ...f }) as unknown as FieldDef),
+            )
+            setEditingFieldId(null)
+            setImportSuccess(true)
+            setTimeout(() => setImportSuccess(false), 2000)
+          }
+        } catch {
+          /* invalid JSON */
         }
-      } catch {
-        /* invalid JSON */
       }
-    }
-    reader.readAsText(file)
-    // Reset input so same file can be re-imported
-    e.target.value = ''
-  }, [])
+      reader.readAsText(file)
+      // Reset input so same file can be re-imported
+      e.target.value = ''
+    },
+    [t],
+  )
 
   // Current editing field
   const editingField = editingFieldId ? fields.find((f) => f.id === editingFieldId) : null
@@ -311,13 +322,13 @@ export function FormTemplateBuilder() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full text-sm bg-transparent border-none outline-none text-white/70"
-              placeholder="模板名称…"
+              placeholder={t('ftb.title.placeholder')}
             />
             <input
               value={subtitle}
               onChange={(e) => setSubtitle(e.target.value)}
               className="w-full text-[10px] bg-transparent border-none outline-none text-white/25"
-              placeholder="英文副标题…"
+              placeholder={t('ftb.subtitle.placeholder')}
             />
           </div>
         </div>
@@ -357,7 +368,7 @@ export function FormTemplateBuilder() {
             }}
           >
             <List className="w-3 h-3" />
-            已保存 ({savedTemplates.length})
+            {t('ftb.savedCount', { n: savedTemplates.length })}
           </button>
 
           {/* Preview */}
@@ -385,7 +396,7 @@ export function FormTemplateBuilder() {
             }}
           >
             {saveSuccess ? <CheckCircle2 className="w-3 h-3" /> : <Save className="w-3 h-3" />}
-            {saveSuccess ? '已保存' : '保存'}
+            {saveSuccess ? t('ftb.saved') : t('ftb.save')}
           </button>
         </div>
       </div>
@@ -397,7 +408,9 @@ export function FormTemplateBuilder() {
             className="space-y-2 mb-4"
             style={{ animation: 'spring-in 0.25s var(--spring-easing) both' }}
           >
-            <h4 className="text-[10px] text-white/25 uppercase tracking-wider mb-2">已保存模板</h4>
+            <h4 className="text-[10px] text-white/25 uppercase tracking-wider mb-2">
+              {t('ftb.savedTemplates')}
+            </h4>
             {savedTemplates.map((tpl) => (
               <div
                 key={tpl.id}
@@ -416,7 +429,8 @@ export function FormTemplateBuilder() {
                 <div className="flex-1 min-w-0">
                   <p className="text-[10px] text-white/50 truncate">{tpl.title}</p>
                   <p className="text-[8px] text-white/15">
-                    {tpl.fields.length} 字段 · {new Date(tpl.createdAt).toLocaleDateString('zh-CN')}
+                    {t('ftb.fieldCountShort', { n: tpl.fields.length })} ·{' '}
+                    {new Date(tpl.createdAt).toLocaleDateString('zh-CN')}
                   </p>
                 </div>
                 <button
@@ -428,7 +442,7 @@ export function FormTemplateBuilder() {
                     border: `1px solid ${tpl.color}20`,
                   }}
                 >
-                  加载
+                  {t('ftb.load')}
                 </button>
                 <button
                   onClick={() => deleteSaved(tpl.id)}
@@ -447,7 +461,7 @@ export function FormTemplateBuilder() {
         <input
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="模板描述（可选）…"
+          placeholder={t('ftb.description.placeholder')}
           className="w-full px-4 py-2 text-xs rounded-xl"
           style={{
             background: 'rgba(10,10,10,0.4)',
@@ -477,7 +491,7 @@ export function FormTemplateBuilder() {
           }}
         >
           {importSuccess ? <CheckCircle2 className="w-3 h-3" /> : <Upload className="w-3 h-3" />}
-          {importSuccess ? '导入成功' : '导入 JSON 模板'}
+          {importSuccess ? t('ftb.importSuccess') : t('ftb.importJson')}
         </button>
         <button
           onClick={handleExportJSON}
@@ -490,9 +504,9 @@ export function FormTemplateBuilder() {
           }}
         >
           <Download className="w-3 h-3" />
-          导出 JSON
+          {t('ftb.exportJson')}
         </button>
-        <span className="text-[9px] text-white/15 ml-1">跨设备模板共享</span>
+        <span className="text-[9px] text-white/15 ml-1">{t('ftb.crossDeviceShare')}</span>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
@@ -501,7 +515,7 @@ export function FormTemplateBuilder() {
           {/* Field Palette */}
           <NeonCard color={tplColor} hoverable={false} noReveal>
             <h4 className="text-[10px] text-white/25 uppercase tracking-wider mb-3">
-              字段面板 · 点击添加
+              {t('ftb.palette.title')}
             </h4>
             <div className="flex flex-wrap gap-2 mb-5">
               {FIELD_PALETTE.map((fp) => {
@@ -518,7 +532,7 @@ export function FormTemplateBuilder() {
                     }}
                   >
                     <Icon className="w-3 h-3" />
-                    {fp.label}
+                    {t(fp.label)}
                   </button>
                 )
               })}
@@ -528,10 +542,10 @@ export function FormTemplateBuilder() {
             <div className="border-t pt-4" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
               <div className="flex items-center justify-between mb-3">
                 <h4 className="text-[10px] text-white/25 uppercase tracking-wider">
-                  表单字段 ({fields.length})
+                  {t('ftb.formFields', { n: fields.length })}
                 </h4>
                 {fields.length > 0 && (
-                  <span className="text-[9px] text-white/15">拖拽排序 · 点击编辑</span>
+                  <span className="text-[9px] text-white/15">{t('ftb.dragHint')}</span>
                 )}
               </div>
 
@@ -541,7 +555,7 @@ export function FormTemplateBuilder() {
                   style={{ borderColor: 'rgba(255,255,255,0.04)' }}
                 >
                   <Plus className="w-8 h-8 text-white/8 mx-auto mb-2" />
-                  <p className="text-[10px] text-white/15">点击上方字段类型添加到表单</p>
+                  <p className="text-[10px] text-white/15">{t('ftb.emptyCanvasHint')}</p>
                 </div>
               )}
 
@@ -595,10 +609,10 @@ export function FormTemplateBuilder() {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs text-white/50 truncate">{field.label}</p>
+                        <p className="text-xs text-white/50 truncate">{t(field.label)}</p>
                         <p className="text-[9px] text-white/15">
-                          {fInfo?.label || field.type}
-                          {field.required ? ' · 必填' : ''}
+                          {fInfo ? t(fInfo.label) : field.type}
+                          {field.required ? t('ftb.requiredSuffix') : ''}
                         </p>
                       </div>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -638,7 +652,7 @@ export function FormTemplateBuilder() {
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-[10px] text-white/30 uppercase tracking-wider flex items-center gap-1.5">
                     <Settings2 className="w-3 h-3" />
-                    字段配置
+                    {t('ftb.fieldConfig')}
                   </h4>
                   <button
                     onClick={() => setEditingFieldId(null)}
@@ -650,7 +664,9 @@ export function FormTemplateBuilder() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {/* Label */}
                   <div>
-                    <label className="text-[9px] text-white/20 mb-1 block">字段名称</label>
+                    <label className="text-[9px] text-white/20 mb-1 block">
+                      {t('ftb.fieldName')}
+                    </label>
                     <input
                       value={editingField.label}
                       onChange={(e) => updateField(editingField.id, { label: e.target.value })}
@@ -668,7 +684,9 @@ export function FormTemplateBuilder() {
                     editingField.type === 'textarea' ||
                     editingField.type === 'number') && (
                     <div>
-                      <label className="text-[9px] text-white/20 mb-1 block">占位文本</label>
+                      <label className="text-[9px] text-white/20 mb-1 block">
+                        {t('ftb.placeholderLabel')}
+                      </label>
                       <input
                         value={editingField.placeholder || ''}
                         onChange={(e) =>
@@ -686,7 +704,7 @@ export function FormTemplateBuilder() {
                   )}
                   {/* Required toggle */}
                   <div className="flex items-center gap-2">
-                    <label className="text-[9px] text-white/20">必填项</label>
+                    <label className="text-[9px] text-white/20">{t('ftb.requiredToggle')}</label>
                     <button
                       onClick={() =>
                         updateField(editingField.id, { required: !editingField.required })
@@ -712,7 +730,7 @@ export function FormTemplateBuilder() {
                   </div>
                   {/* Color */}
                   <div>
-                    <label className="text-[9px] text-white/20 mb-1 block">颜色</label>
+                    <label className="text-[9px] text-white/20 mb-1 block">{t('ftb.color')}</label>
                     <div className="flex gap-1.5">
                       {COLOR_OPTIONS.map((c) => (
                         <button
@@ -737,7 +755,7 @@ export function FormTemplateBuilder() {
                     editingField.type === 'checkbox') && (
                     <div className="sm:col-span-2">
                       <label className="text-[9px] text-white/20 mb-1 block">
-                        选项（每行一个）
+                        {t('ftb.optionsPerLine')}
                       </label>
                       <textarea
                         value={(editingField.options || []).join('\n')}
@@ -762,7 +780,9 @@ export function FormTemplateBuilder() {
                   {editingField.type === 'slider' && (
                     <>
                       <div>
-                        <label className="text-[9px] text-white/20 mb-1 block">最小值</label>
+                        <label className="text-[9px] text-white/20 mb-1 block">
+                          {t('ftb.min')}
+                        </label>
                         <input
                           type="number"
                           value={editingField.min ?? 0}
@@ -779,7 +799,9 @@ export function FormTemplateBuilder() {
                         />
                       </div>
                       <div>
-                        <label className="text-[9px] text-white/20 mb-1 block">最大值</label>
+                        <label className="text-[9px] text-white/20 mb-1 block">
+                          {t('ftb.max')}
+                        </label>
                         <input
                           type="number"
                           value={editingField.max ?? 100}
@@ -800,7 +822,9 @@ export function FormTemplateBuilder() {
                   {/* Validation */}
                   {editingField.type === 'text' && (
                     <div>
-                      <label className="text-[9px] text-white/20 mb-1 block">验证规则</label>
+                      <label className="text-[9px] text-white/20 mb-1 block">
+                        {t('ftb.validationRule')}
+                      </label>
                       <select
                         value={editingField.validation || 'none'}
                         onChange={(e) =>
@@ -816,13 +840,13 @@ export function FormTemplateBuilder() {
                         }}
                       >
                         <option value="none" style={{ background: '#0a0a0a' }}>
-                          无
+                          {t('ftb.validationNone')}
                         </option>
                         <option value="email" style={{ background: '#0a0a0a' }}>
-                          邮箱
+                          {t('ftb.validationEmail')}
                         </option>
                         <option value="phone" style={{ background: '#0a0a0a' }}>
-                          手机号
+                          {t('ftb.validationPhone')}
                         </option>
                         <option value="url" style={{ background: '#0a0a0a' }}>
                           URL
@@ -845,7 +869,7 @@ export function FormTemplateBuilder() {
             <NeonCard color={tplColor} hoverable={false} noReveal>
               <h4 className="text-[10px] text-white/25 uppercase tracking-wider mb-3 flex items-center gap-1.5">
                 <Eye className="w-3 h-3" />
-                模板预览
+                {t('ftb.templatePreview')}
               </h4>
               <div className="space-y-3">
                 <div
@@ -853,7 +877,7 @@ export function FormTemplateBuilder() {
                   style={{ background: `${tplColor}08`, border: `1px solid ${tplColor}15` }}
                 >
                   <p className="text-xs" style={{ color: tplColor }}>
-                    {title || '未命名模板'}
+                    {title || t('ftb.untitledTemplate')}
                   </p>
                   <p className="text-[9px] text-white/20">{subtitle}</p>
                 </div>
@@ -869,22 +893,24 @@ export function FormTemplateBuilder() {
                         className="w-3 h-3 shrink-0"
                         style={{ color: `${f.color || tplColor}60` }}
                       />
-                      <span className="text-[10px] text-white/40 truncate flex-1">{f.label}</span>
+                      <span className="text-[10px] text-white/40 truncate flex-1">
+                        {t(f.label)}
+                      </span>
                       {f.required && <span className="text-[8px] text-[#005f73]">*</span>}
                     </div>
                   )
                 })}
                 {fields.length === 0 && (
-                  <p className="text-[10px] text-white/15 text-center py-4">暂无字段</p>
+                  <p className="text-[10px] text-white/15 text-center py-4">{t('ftb.noFields')}</p>
                 )}
               </div>
               <div
                 className="mt-3 pt-2 border-t flex justify-between text-[9px]"
                 style={{ borderColor: 'rgba(255,255,255,0.04)' }}
               >
-                <span className="text-white/15">{fields.length} 个字段</span>
+                <span className="text-white/15">{t('ftb.fieldCount', { n: fields.length })}</span>
                 <span className="text-white/15">
-                  {fields.filter((f) => f.required).length} 必填
+                  {t('ftb.requiredCount', { n: fields.filter((f) => f.required).length })}
                 </span>
               </div>
             </NeonCard>

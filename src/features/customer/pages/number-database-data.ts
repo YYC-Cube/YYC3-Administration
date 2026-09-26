@@ -80,56 +80,56 @@ export const TAG_COLORS: Record<string, string> = {
 
 // ---- Chart Data ----
 export const weeklyTrend = [
-  { day: '周一', 新客户: 42, 跟进: 65, 成交: 12 },
-  { day: '周二', 新客户: 56, 跟进: 72, 成交: 18 },
-  { day: '周三', 新客户: 38, 跟进: 58, 成交: 8 },
-  { day: '周四', 新客户: 67, 跟进: 85, 成交: 22 },
-  { day: '周五', 新客户: 72, 跟进: 91, 成交: 28 },
-  { day: '周六', 新客户: 45, 跟进: 42, 成交: 14 },
-  { day: '周日', 新客户: 52, 跟进: 55, 成交: 16 },
+  { day: 'ndb.day.mon', 新客户: 42, 跟进: 65, 成交: 12 },
+  { day: 'ndb.day.tue', 新客户: 56, 跟进: 72, 成交: 18 },
+  { day: 'ndb.day.wed', 新客户: 38, 跟进: 58, 成交: 8 },
+  { day: 'ndb.day.thu', 新客户: 67, 跟进: 85, 成交: 22 },
+  { day: 'ndb.day.fri', 新客户: 72, 跟进: 91, 成交: 28 },
+  { day: 'ndb.day.sat', 新客户: 45, 跟进: 42, 成交: 14 },
+  { day: 'ndb.day.sun', 新客户: 52, 跟进: 55, 成交: 16 },
 ]
 
 export const stagePieData = [
-  { name: '获客', value: 342, color: '#00f0ff' },
-  { name: '转化', value: 156, color: '#00d4ff' },
-  { name: '成交', value: 89, color: '#00ffcc' },
-  { name: '服务', value: 534, color: '#00ffc8' },
-  { name: '忠诚', value: 267, color: '#008b9d' },
+  { name: 'ndb.pie.acquisition', value: 342, color: '#00f0ff' },
+  { name: 'ndb.pie.conversion', value: 156, color: '#00d4ff' },
+  { name: 'ndb.pie.deal', value: 89, color: '#00ffcc' },
+  { name: 'ndb.pie.service', value: 534, color: '#00ffc8' },
+  { name: 'ndb.pie.loyalty', value: 267, color: '#008b9d' },
 ]
 
 export const channelData = [
-  { channel: '官网', value: 320, color: '#00f0ff' },
-  { channel: '展会', value: 245, color: '#00d4ff' },
-  { channel: '推荐', value: 198, color: '#00ffcc' },
-  { channel: '搜索', value: 156, color: '#00ffc8' },
-  { channel: '社媒', value: 132, color: '#008b9d' },
-  { channel: '线下', value: 98, color: '#005f73' },
+  { channel: 'ndb.channel.official', value: 320, color: '#00f0ff' },
+  { channel: 'ndb.channel.expo', value: 245, color: '#00d4ff' },
+  { channel: 'ndb.channel.referral', value: 198, color: '#00ffcc' },
+  { channel: 'ndb.channel.search', value: 156, color: '#00ffc8' },
+  { channel: 'ndb.channel.social', value: 132, color: '#008b9d' },
+  { channel: 'ndb.channel.offline', value: 98, color: '#005f73' },
 ]
 
 export const funnelData = [
-  { name: '曝光', value: 5200, fill: '#00f0ff' },
-  { name: '点击', value: 3800, fill: '#00d4ff' },
-  { name: '注册', value: 2100, fill: '#00ffcc' },
-  { name: '转化', value: 890, fill: '#00ffc8' },
-  { name: '成交', value: 420, fill: '#008b9d' },
+  { name: 'ndb.exposure', value: 5200, fill: '#00f0ff' },
+  { name: 'ndb.clicks', value: 3800, fill: '#00d4ff' },
+  { name: 'ndb.registrations', value: 2100, fill: '#00ffcc' },
+  { name: 'ndb.conversions', value: 890, fill: '#00ffc8' },
+  { name: 'ndb.closings', value: 420, fill: '#008b9d' },
 ]
 
 export const monthlyRevenue = [
-  { month: '1月', revenue: 245, target: 300 },
-  { month: '2月', revenue: 312, target: 300 },
-  { month: '3月', revenue: 289, target: 320 },
-  { month: '4月', revenue: 378, target: 350 },
-  { month: '5月', revenue: 425, target: 380 },
-  { month: '6月', revenue: 398, target: 400 },
+  { month: 'ndb.month.1', revenue: 245, target: 300 },
+  { month: 'ndb.month.2', revenue: 312, target: 300 },
+  { month: 'ndb.month.3', revenue: 289, target: 320 },
+  { month: 'ndb.month.4', revenue: 378, target: 350 },
+  { month: 'ndb.month.5', revenue: 425, target: 380 },
+  { month: 'ndb.month.6', revenue: 398, target: 400 },
 ]
 
 export const radarData = [
-  { dim: '响应速度', value: 92 },
-  { dim: '客户满意度', value: 88 },
-  { dim: '转化效率', value: 76 },
-  { dim: '服务质量', value: 95 },
-  { dim: '团队协作', value: 82 },
-  { dim: '数据利用', value: 71 },
+  { dim: 'ndb.radar.response', value: 92 },
+  { dim: 'ndb.radar.satisfaction', value: 88 },
+  { dim: 'ndb.radar.conversion', value: 76 },
+  { dim: 'ndb.radar.quality', value: 95 },
+  { dim: 'ndb.radar.teamwork', value: 82 },
+  { dim: 'ndb.radar.data', value: 71 },
 ]
 
 // ---- Neon Tooltip ----
@@ -141,13 +141,13 @@ export interface TooltipPayloadEntry {
 }
 
 export const ALL_TAGS = [
-  'VIP',
-  '重点客户',
-  '新客户',
-  '高潜力',
-  '待跟进',
-  '休眠',
-  '决策人',
-  '技术对接',
-  '战略合作',
+  'ndb.tag.vip',
+  'ndb.tag.keyClient',
+  'ndb.tag.newClient',
+  'ndb.tag.highPotential',
+  'ndb.tag.pending',
+  'ndb.tag.dormant',
+  'ndb.tag.decisionMaker',
+  'ndb.tag.techContact',
+  'ndb.tag.strategicPartner',
 ]

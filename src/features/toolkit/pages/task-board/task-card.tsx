@@ -32,6 +32,7 @@ import { useTaskStore } from '../task-board-store'
 
 import type { Task, TaskStatus } from '../task-board-data'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 export function DraggableTaskCard({
@@ -53,6 +54,7 @@ export function DraggableTaskCard({
   onArchive: (id: string) => void
   onDuplicate: (id: string) => void
 }) {
+  const { t } = useI18n()
   const moveTask = useTaskStore((s) => s.moveTask)
   const reorderInColumn = useTaskStore((s) => s.reorderInColumn)
   const [showMenu, setShowMenu] = useState(false)
@@ -271,13 +273,13 @@ export function DraggableTaskCard({
 
       {/* Title */}
       <h4 className="text-[13px] mb-1 line-clamp-2 pl-3" style={{ color: tc.textPrimary }}>
-        {task.title}
+        {t(task.title)}
       </h4>
 
       {/* Description */}
       {task.description && (
         <p className="text-[10px] mb-2 line-clamp-2 pl-3" style={{ color: tc.textMuted }}>
-          {task.description}
+          {t(task.description)}
         </p>
       )}
 

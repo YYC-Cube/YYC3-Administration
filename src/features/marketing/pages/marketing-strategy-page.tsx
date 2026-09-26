@@ -42,49 +42,49 @@ export function MarketingStrategyPage() {
   const strategies: StrategyPlan[] = [
     {
       id: 'S001',
-      name: 'Q1新品上市推广方案',
-      objective: '提升新产品市场认知度，首月达成1000+订单',
+      name: 'strat.plan.s001.name',
+      objective: 'strat.plan.s001.objective',
       status: 'active',
       budget: 50000,
       startDate: '2024-01-01',
       endDate: '2024-03-31',
-      channels: ['微信', '抖音', '小红书', '百度'],
+      channels: ['strat.channel.wechat', 'strat.channel.douyin', 'strat.channel.xiaohongshu', 'strat.channel.baidu'],
       kpis: [
-        { name: '品牌曝光', target: 1000000, current: 650000 },
-        { name: '注册用户', target: 5000, current: 3200 },
-        { name: '订单转化', target: 1000, current: 580 },
+        { name: 'strat.kpi.brandExposure', target: 1000000, current: 650000 },
+        { name: 'strat.kpi.registeredUsers', target: 5000, current: 3200 },
+        { name: 'strat.kpi.orderConversion', target: 1000, current: 580 },
       ],
       aiScore: 87,
     },
     {
       id: 'S002',
-      name: '618大促营销方案',
-      objective: '提升销售额300%，扩大用户基数50%',
+      name: 'strat.plan.s002.name',
+      objective: 'strat.plan.s002.objective',
       status: 'approved',
       budget: 120000,
       startDate: '2024-06-01',
       endDate: '2024-06-18',
-      channels: ['全渠道'],
+      channels: ['strat.channel.all'],
       kpis: [
-        { name: '销售额', target: 3000000, current: 0 },
-        { name: '新增用户', target: 10000, current: 0 },
-        { name: '复购率', target: 35, current: 0 },
+        { name: 'strat.kpi.sales', target: 3000000, current: 0 },
+        { name: 'strat.kpi.newUsers', target: 10000, current: 0 },
+        { name: 'strat.kpi.repurchaseRate', target: 35, current: 0 },
       ],
       aiScore: 92,
     },
     {
       id: 'S003',
-      name: '品牌年度传播计划',
-      objective: '建立行业领先品牌形象，提升品牌美誉度',
+      name: 'strat.plan.s003.name',
+      objective: 'strat.plan.s003.objective',
       status: 'draft',
       budget: 200000,
       startDate: '2024-01-01',
       endDate: '2024-12-31',
-      channels: ['微信', '微博', '知乎', 'B站'],
+      channels: ['strat.channel.wechat', 'strat.channel.weibo', 'strat.channel.zhihu', 'strat.channel.bilibili'],
       kpis: [
-        { name: '品牌提及', target: 5000000, current: 0 },
-        { name: '正面评价', target: 90, current: 0 },
-        { name: '粉丝增长', target: 50000, current: 0 },
+        { name: 'strat.kpi.brandMentions', target: 5000000, current: 0 },
+        { name: 'strat.kpi.positiveReviews', target: 90, current: 0 },
+        { name: 'strat.kpi.fansGrowth', target: 50000, current: 0 },
       ],
       aiScore: 85,
     },
@@ -93,20 +93,20 @@ export function MarketingStrategyPage() {
   const getStatusConfig = (status: StrategyPlan['status']) => {
     switch (status) {
       case 'draft':
-        return { label: '草稿', color: tc.textMuted, icon: FileText }
+        return { label: t('strat.status.draft'), color: tc.textMuted, icon: FileText }
       case 'approved':
-        return { label: '已批准', color: tc.success, icon: CheckCircle2 }
+        return { label: t('strat.status.approved'), color: tc.success, icon: CheckCircle2 }
       case 'active':
-        return { label: '执行中', color: tc.primary, icon: Clock }
+        return { label: t('strat.status.active'), color: tc.primary, icon: Clock }
       case 'completed':
-        return { label: '已完成', color: tc.secondary, icon: CheckCircle2 }
+        return { label: t('strat.status.completed'), color: tc.secondary, icon: CheckCircle2 }
     }
   }
 
   const aiInsights = [
-    { icon: Brain, text: '基于历史数据，建议提升抖音渠道投放比例至35%', score: 94 },
-    { icon: TrendingUp, text: '周末投放CTR提升23%，建议增加预算配比', score: 88 },
-    { icon: Users, text: '目标人群画像分析完成，精准定向可提升ROI 40%', score: 91 },
+    { icon: Brain, text: 'strat.insight.i1', score: 94 },
+    { icon: TrendingUp, text: 'strat.insight.i2', score: 88 },
+    { icon: Users, text: 'strat.insight.i3', score: 91 },
   ]
 
   return (
@@ -118,7 +118,7 @@ export function MarketingStrategyPage() {
             {t('nav.marketingPlan')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            AI智能方案生成 · 数据驱动决策 · 多维度策略分析
+            {t('strat.subtitle')}
           </p>
         </div>
         <button
@@ -138,7 +138,7 @@ export function MarketingStrategyPage() {
           }}
         >
           <Plus className="w-5 h-5" />
-          创建新方案
+          {t('strat.createPlan')}
         </button>
       </div>
 
@@ -147,7 +147,7 @@ export function MarketingStrategyPage() {
         <div className="flex items-center gap-3 mb-4">
           <Sparkles className="w-6 h-6" style={{ color: tc.primary }} />
           <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-            AI智能洞察
+            {t('strat.aiInsights')}
           </h2>
         </div>
         <div className="grid grid-cols-1 gap-4">
@@ -165,7 +165,7 @@ export function MarketingStrategyPage() {
                 style={{ color: tc.primary }}
               />
               <div className="flex-1">
-                <p style={{ color: tc.textPrimary }}>{insight.text}</p>
+                <p style={{ color: tc.textPrimary }}>{t(insight.text)}</p>
               </div>
               <div
                 className="flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium"
@@ -175,7 +175,7 @@ export function MarketingStrategyPage() {
                 }}
               >
                 <Zap className="w-4 h-4" />
-                {insight.score}分
+                {t('strat.scoreUnit', { score: insight.score })}
               </div>
             </div>
           ))}
@@ -224,17 +224,17 @@ export function MarketingStrategyPage() {
 
               {/* 方案名称和目标 */}
               <h3 className="text-lg font-bold mb-2" style={{ color: tc.textPrimary }}>
-                {plan.name}
+                {t(plan.name)}
               </h3>
               <p className="text-sm mb-4 line-clamp-2" style={{ color: tc.textSecondary }}>
-                {plan.objective}
+                {t(plan.objective)}
               </p>
 
               {/* 预算和时间 */}
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
                   <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                    预算
+                    {t('strat.budget')}
                   </p>
                   <p className="font-bold" style={{ color: tc.primary }}>
                     ¥{plan.budget.toLocaleString()}
@@ -242,7 +242,7 @@ export function MarketingStrategyPage() {
                 </div>
                 <div>
                   <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                    周期
+                    {t('strat.period')}
                   </p>
                   <p className="text-sm font-medium" style={{ color: tc.textPrimary }}>
                     {new Date(plan.startDate).toLocaleDateString()} -
@@ -254,7 +254,7 @@ export function MarketingStrategyPage() {
               {/* 渠道 */}
               <div className="mb-4">
                 <p className="text-xs mb-2" style={{ color: tc.textMuted }}>
-                  推广渠道
+                  {t('strat.channels')}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {plan.channels.map((channel) => (
@@ -267,7 +267,7 @@ export function MarketingStrategyPage() {
                         border: `1px solid ${tc.borderSubtle}`,
                       }}
                     >
-                      {channel}
+                      {t(channel)}
                     </span>
                   ))}
                 </div>
@@ -276,7 +276,7 @@ export function MarketingStrategyPage() {
               {/* KPI进度 */}
               <div className="space-y-2">
                 <p className="text-xs mb-2" style={{ color: tc.textMuted }}>
-                  KPI达成进度
+                  {t('strat.kpiProgress')}
                 </p>
                 {plan.kpis.slice(0, 2).map((kpi) => {
                   const progress = plan.status === 'draft' ? 0 : (kpi.current / kpi.target) * 100
@@ -284,7 +284,7 @@ export function MarketingStrategyPage() {
                     <div key={kpi.name}>
                       <div className="flex items-center justify-between mb-1">
                         <span className="text-xs" style={{ color: tc.textSecondary }}>
-                          {kpi.name}
+                          {t(kpi.name)}
                         </span>
                         <span className="text-xs font-medium" style={{ color: tc.primary }}>
                           {progress.toFixed(0)}%
@@ -325,7 +325,7 @@ export function MarketingStrategyPage() {
                   e.currentTarget.style.borderColor = tc.borderSubtle
                 }}
               >
-                查看详情
+                {t('strat.viewDetail')}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </NeonCard>

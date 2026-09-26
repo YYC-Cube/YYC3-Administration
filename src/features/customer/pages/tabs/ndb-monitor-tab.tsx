@@ -75,6 +75,7 @@ export function MonitorTab() {
                 tick={{ fill: 'rgba(255,255,255,0.2)', fontSize: 10 }}
                 axisLine={false}
                 tickLine={false}
+                tickFormatter={(v) => t(v)}
               />
               <YAxis
                 tick={{ fill: 'rgba(255,255,255,0.15)', fontSize: 10 }}
@@ -82,7 +83,7 @@ export function MonitorTab() {
                 tickLine={false}
               />
               <Tooltip content={<NeonTooltip />} />
-              <Bar dataKey="value" name="数量" radius={[4, 4, 0, 0]}>
+              <Bar dataKey="value" name={t('ndbm2.quantity')} radius={[4, 4, 0, 0]}>
                 {funnelData.map((entry, i) => (
                   <Cell key={i} fill={entry.fill} opacity={0.7} />
                 ))}
@@ -98,12 +99,12 @@ export function MonitorTab() {
         >
           <h3 className="text-[10px] text-white/30 uppercase tracking-wider mb-4 flex items-center gap-2">
             <Radio className="w-3.5 h-3.5 text-[#005f73]" />
-            关键指标监控面板
+            {t('ndb.metricsPanel')}
           </h3>
           <div className="grid grid-cols-2 gap-3">
             {[
               {
-                label: 'CPU 使用率',
+                label: 'ndbm2.metric.1.label',
                 value: '34%',
                 max: 100,
                 current: 34,
@@ -111,7 +112,7 @@ export function MonitorTab() {
                 threshold: 80,
               },
               {
-                label: '内存使用',
+                label: 'ndbm2.metric.2.label',
                 value: '62%',
                 max: 100,
                 current: 62,
@@ -119,7 +120,7 @@ export function MonitorTab() {
                 threshold: 85,
               },
               {
-                label: '磁盘 I/O',
+                label: 'ndbm2.metric.3.label',
                 value: '18MB/s',
                 max: 100,
                 current: 18,
@@ -127,7 +128,7 @@ export function MonitorTab() {
                 threshold: 90,
               },
               {
-                label: '网络吞吐',
+                label: 'ndbm2.metric.4.label',
                 value: '245Mbps',
                 max: 1000,
                 current: 24.5,
@@ -135,7 +136,7 @@ export function MonitorTab() {
                 threshold: 80,
               },
               {
-                label: '并发连接',
+                label: 'ndbm2.metric.5.label',
                 value: '1,247',
                 max: 5000,
                 current: 25,
@@ -143,7 +144,7 @@ export function MonitorTab() {
                 threshold: 80,
               },
               {
-                label: '队列积压',
+                label: 'ndbm2.metric.6.label',
                 value: '3',
                 max: 100,
                 current: 3,
@@ -160,7 +161,7 @@ export function MonitorTab() {
                 }}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[9px] text-white/25">{m.label}</span>
+                  <span className="text-[9px] text-white/25">{t(m.label)}</span>
                   <span className="text-xs tabular-nums" style={{ color: m.color }}>
                     {m.value}
                   </span>
@@ -188,16 +189,52 @@ export function MonitorTab() {
       >
         <h3 className="text-[10px] text-white/30 uppercase tracking-wider mb-4 flex items-center gap-2">
           <Activity className="w-3.5 h-3.5 text-[#00ffcc]" />
-          用户行为路径 · 页面停留热点
+          {t('ndb.behaviorAnalysis')}
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
           {[
-            { page: '数据驾驶舱', visits: 4523, avgTime: '3:42', heat: 95, color: '#00f0ff' },
-            { page: '客户管理', visits: 3891, avgTime: '5:18', heat: 88, color: '#00d4ff' },
-            { page: 'AI 呼叫', visits: 2674, avgTime: '8:45', heat: 82, color: '#00ffcc' },
-            { page: '智能表单', visits: 2145, avgTime: '2:56', heat: 72, color: '#00ffc8' },
-            { page: '数据洞察', visits: 1892, avgTime: '4:12', heat: 65, color: '#008b9d' },
-            { page: '号码库', visits: 1567, avgTime: '6:33', heat: 58, color: '#005f73' },
+            {
+              page: 'ndbm2.page.1.page',
+              visits: 4523,
+              avgTime: '3:42',
+              heat: 95,
+              color: '#00f0ff',
+            },
+            {
+              page: 'ndbm2.page.2.page',
+              visits: 3891,
+              avgTime: '5:18',
+              heat: 88,
+              color: '#00d4ff',
+            },
+            {
+              page: 'ndbm2.page.3.page',
+              visits: 2674,
+              avgTime: '8:45',
+              heat: 82,
+              color: '#00ffcc',
+            },
+            {
+              page: 'ndbm2.page.4.page',
+              visits: 2145,
+              avgTime: '2:56',
+              heat: 72,
+              color: '#00ffc8',
+            },
+            {
+              page: 'ndbm2.page.5.page',
+              visits: 1892,
+              avgTime: '4:12',
+              heat: 65,
+              color: '#008b9d',
+            },
+            {
+              page: 'ndbm2.page.6.page',
+              visits: 1567,
+              avgTime: '6:33',
+              heat: 58,
+              color: '#005f73',
+            },
           ].map((p, i) => (
             <div
               key={i}
@@ -220,9 +257,11 @@ export function MonitorTab() {
                   }}
                 />
               </div>
-              <p className="text-[10px] text-white/50">{p.page}</p>
-              <p className="text-[9px] text-white/20">{p.visits.toLocaleString()} 访问</p>
-              <p className="text-[8px] text-white/15">均停留 {p.avgTime}</p>
+              <p className="text-[10px] text-white/50">{t(p.page)}</p>
+              <p className="text-[9px] text-white/20">
+                {t('ndbm2.visits', { visits: p.visits.toLocaleString() })}
+              </p>
+              <p className="text-[8px] text-white/15">{t('ndbm2.avgStay', { time: p.avgTime })}</p>
             </div>
           ))}
         </div>

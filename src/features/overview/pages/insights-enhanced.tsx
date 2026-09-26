@@ -50,28 +50,28 @@ export function InsightsEnhancedPage() {
 
   const insightMetrics = [
     {
-      label: t('insights.responseTime'),
+      label: t('ins.responseTime'),
       value: '12ms',
       change: '-18%',
       color: tc.primary,
       positive: true,
     },
     {
-      label: t('insights.taskSuccess'),
+      label: t('ins.taskSuccess'),
       value: '98.7%',
       change: '+2.3%',
       color: tc.success,
       positive: true,
     },
     {
-      label: t('insights.satisfaction'),
+      label: t('ins.satisfaction'),
       value: '4.8/5',
       change: '+0.3',
       color: tc.accent,
       positive: true,
     },
     {
-      label: t('insights.sysLoad'),
+      label: t('ins.sysLoad'),
       value: '42%',
       change: '-5%',
       color: tc.secondary,
@@ -95,30 +95,30 @@ export function InsightsEnhancedPage() {
 
   // Conversion funnel
   const funnelData = [
-    { stage: '曝光', value: 12400, color: tc.primary },
-    { stage: '点击', value: 8200, color: tc.secondary },
-    { stage: '注册', value: 3400, color: tc.accent },
-    { stage: 'conversion', value: 1560, color: tc.success },
-    { stage: 'deal', value: 890, color: tc.warning },
+    { stageKey: 'ins.funnel.impression', value: 12400, color: tc.primary },
+    { stageKey: 'ins.funnel.click', value: 8200, color: tc.secondary },
+    { stageKey: 'ins.funnel.register', value: 3400, color: tc.accent },
+    { stageKey: 'ins.funnel.conversion', value: 1560, color: tc.success },
+    { stageKey: 'ins.funnel.deal', value: 890, color: tc.warning },
   ]
 
   // AI Capability Radar
   const radarData = [
-    { subject: '意图识别', score: 95, fullMark: 100 },
-    { subject: '情感分析', score: 88, fullMark: 100 },
-    { subject: '话术匹配', score: 92, fullMark: 100 },
-    { subject: '转化预测', score: 85, fullMark: 100 },
-    { subject: '异常检测', score: 91, fullMark: 100 },
-    { subject: '知识推理', score: 87, fullMark: 100 },
+    { subjectKey: 'ins.radar.intent', score: 95, fullMark: 100 },
+    { subjectKey: 'ins.radar.sentiment', score: 88, fullMark: 100 },
+    { subjectKey: 'ins.radar.script', score: 92, fullMark: 100 },
+    { subjectKey: 'ins.radar.conversion', score: 85, fullMark: 100 },
+    { subjectKey: 'ins.radar.anomaly', score: 91, fullMark: 100 },
+    { subjectKey: 'ins.radar.reasoning', score: 87, fullMark: 100 },
   ]
 
   // Channel performance
   const channelData = [
-    { name: 'AI 外呼', value: 42, color: tc.primary },
-    { name: '官网注册', value: 28, color: tc.secondary },
-    { name: '社交媒体', value: 15, color: tc.accent },
-    { name: '合作伙伴', value: 10, color: tc.success },
-    { name: '客户推荐', value: 5, color: tc.warning },
+    { nameKey: 'ins.channel.aiOutbound', value: 42, color: tc.primary },
+    { nameKey: 'ins.channel.website', value: 28, color: tc.secondary },
+    { nameKey: 'ins.channel.social', value: 15, color: tc.accent },
+    { nameKey: 'ins.channel.partner', value: 10, color: tc.success },
+    { nameKey: 'ins.channel.referral', value: 5, color: tc.warning },
   ]
 
   // Hourly heatmap
@@ -138,38 +138,37 @@ export function InsightsEnhancedPage() {
       type: 'trend' as const,
       icon: TrendingUp,
       color: tc.success,
-      title: '转化率趋势分析',
-      description: '近 7 天转化率持续上升，周四达到峰值 44.2%。建议在周四-周五加大营销投入。',
+      titleKey: 'ins.ai.trend.title',
+      descKey: 'ins.ai.trend.desc',
       confidence: 92,
-      impact: '高',
+      impactKey: 'ins.impact.high',
     },
     {
       type: 'anomaly' as const,
       icon: AlertCircle,
       color: tc.secondary,
-      title: '周末流量异常',
-      description: '周六呼叫量同比下降 38%，建议调整周末排班策略或增加 AI 自动外呼占比。',
+      titleKey: 'ins.ai.anomaly.title',
+      descKey: 'ins.ai.anomaly.desc',
       confidence: 87,
-      impact: '中',
+      impactKey: 'ins.impact.mid',
     },
     {
       type: 'prediction' as const,
       icon: Brain,
       color: tc.primary,
-      title: '下周业绩预测',
-      description:
-        '基于当前趋势，预测下周新增客户 380-420 人，转化率约 43.5%。建议储备充足客服资源。',
+      titleKey: 'ins.ai.prediction.title',
+      descKey: 'ins.ai.prediction.desc',
       confidence: 85,
-      impact: '高',
+      impactKey: 'ins.impact.high',
     },
     {
       type: 'recommendation' as const,
       icon: Lightbulb,
       color: tc.accent,
-      title: 'AI 话术优化建议',
-      description: '产品咨询场景话术匹配率偏低（78%），建议更新话术模板并增加 FAQ 训练数据。',
+      titleKey: 'ins.ai.recommendation.title',
+      descKey: 'ins.ai.recommendation.desc',
       confidence: 90,
-      impact: '中',
+      impactKey: 'ins.impact.mid',
     },
   ]
 
@@ -186,7 +185,7 @@ export function InsightsEnhancedPage() {
             style={{ color: tc.primary, textShadow: `0 0 15px ${tc.alpha(tc.primary, 0.5)}` }}
           >
             <BarChart3 className="w-6 h-6" />
-            {t('insights.title')}
+            {t('ins.title')}
           </h2>
           <p className="text-xs text-white/25 mt-1 tracking-wider">
             AI-Powered Data Insights · Phase 2A Enhanced Analytics
@@ -206,7 +205,11 @@ export function InsightsEnhancedPage() {
                 color: timeRange === range ? tc.primary : 'rgba(255,255,255,0.3)',
               }}
             >
-              {range === '7d' ? '7 天' : range === '30d' ? '30 天' : '90 天'}
+              {range === '7d'
+                ? t('ins.range.7d')
+                : range === '30d'
+                  ? t('ins.range.30d')
+                  : t('ins.range.90d')}
             </button>
           ))}
         </div>
@@ -246,7 +249,7 @@ export function InsightsEnhancedPage() {
               className="w-3.5 h-3.5"
               style={{ color: tc.secondary, animation: 'neon-pulse 2s ease-in-out infinite' }}
             />
-            AI 智能洞察 · AI-Driven Insights
+            AI {t('ins.aiInsightsTitle')}
           </h3>
           <button
             onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
@@ -257,7 +260,7 @@ export function InsightsEnhancedPage() {
               color: tc.secondary,
             }}
           >
-            {aiInsightsExpanded ? '收起' : '展开'}
+            {aiInsightsExpanded ? t('ins.collapse') : t('ins.expand')}
           </button>
         </div>
         {aiInsightsExpanded && (
@@ -294,29 +297,30 @@ export function InsightsEnhancedPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <h4 className="text-sm text-white/70">{insight.title}</h4>
+                        <h4 className="text-sm text-white/70">{t(insight.titleKey)}</h4>
                         <span
                           className="text-[8px] px-1.5 py-0.5 rounded-full"
                           style={{
                             background: tc.alpha(
-                              insight.impact === '高' ? tc.success : tc.secondary,
+                              insight.impactKey === 'ins.impact.high' ? tc.success : tc.secondary,
                               0.1,
                             ),
-                            color: insight.impact === '高' ? tc.success : tc.secondary,
-                            border: `1px solid ${tc.alpha(insight.impact === '高' ? tc.success : tc.secondary, 0.2)}`,
+                            color:
+                              insight.impactKey === 'ins.impact.high' ? tc.success : tc.secondary,
+                            border: `1px solid ${tc.alpha(insight.impactKey === 'ins.impact.high' ? tc.success : tc.secondary, 0.2)}`,
                           }}
                         >
-                          {insight.impact}影响
+                          {t('ins.impact.label', { level: t(insight.impactKey) })}
                         </span>
                       </div>
                       <p className="text-[11px] text-white/35 leading-relaxed mb-2">
-                        {insight.description}
+                        {t(insight.descKey)}
                       </p>
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1">
                           <Brain className="w-3 h-3" style={{ color: `${insight.color}60` }} />
                           <span className="text-[9px]" style={{ color: `${insight.color}80` }}>
-                            置信度 {insight.confidence}%
+                            {t('ins.ai.confidence', { n: insight.confidence })}
                           </span>
                         </div>
                         <div className="flex-1 h-1 rounded-full bg-white/5">
@@ -345,7 +349,7 @@ export function InsightsEnhancedPage() {
         <div className="xl:col-span-2">
           <NeonCard color={tc.primary} hoverable={false}>
             <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-              {t('insights.weeklyTrend')} · Multi-Metric
+              {t('ins.weeklyTrend')} · Multi-Metric
             </h3>
             <div className="h-56">
               <ResponsiveContainer width="100%" height="100%">
@@ -380,7 +384,7 @@ export function InsightsEnhancedPage() {
                   <Area
                     type="monotone"
                     dataKey="customers"
-                    name="客户"
+                    name={t('ins.chart.customers')}
                     stroke={tc.primary}
                     strokeWidth={2}
                     fill="url(#gradCustomers)"
@@ -388,7 +392,7 @@ export function InsightsEnhancedPage() {
                   <Area
                     type="monotone"
                     dataKey="calls"
-                    name="呼叫"
+                    name={t('ins.chart.calls')}
                     stroke={tc.accent}
                     strokeWidth={2}
                     fill="url(#gradCalls)"
@@ -396,7 +400,7 @@ export function InsightsEnhancedPage() {
                   <Area
                     type="monotone"
                     dataKey="conversion"
-                    name="转化率%"
+                    name={t('ins.chart.conversionRate')}
                     stroke={tc.secondary}
                     strokeWidth={1.5}
                     fill="url(#gradConversion)"
@@ -411,7 +415,7 @@ export function InsightsEnhancedPage() {
         {/* Conversion Funnel */}
         <NeonCard color="#00ffc8" hoverable={false}>
           <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-            转化漏斗 · Conversion Funnel
+            {t('ins.funnel.title')}
           </h3>
           <div className="space-y-3">
             {funnelData.map((stage, i) => {
@@ -424,7 +428,7 @@ export function InsightsEnhancedPage() {
                   style={{ animation: `spring-in 0.3s var(--spring-easing) ${i * 0.08}s both` }}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] text-white/40">{stage.stage}</span>
+                    <span className="text-[10px] text-white/40">{t(stage.stageKey)}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-xs" style={{ color: stage.color }}>
                         {stage.value.toLocaleString()}
@@ -452,7 +456,7 @@ export function InsightsEnhancedPage() {
           </div>
           <div className="mt-4 pt-3 border-t" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
             <div className="flex justify-between text-[10px]">
-              <span className="text-white/20">总转化率</span>
+              <span className="text-white/20">{t('ins.funnel.totalRate')}</span>
               <span
                 style={{ color: tc.success, textShadow: `0 0 6px ${tc.alpha(tc.success, 0.3)}` }}
               >
@@ -469,19 +473,20 @@ export function InsightsEnhancedPage() {
         {/* AI Capability Radar */}
         <NeonCard color={tc.secondary} hoverable={false}>
           <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-            AI 能力矩阵 · Capability Radar
+            {t('ins.radar.title')}
           </h3>
           <div className="h-52">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={radarData}>
                 <PolarGrid stroke="rgba(255,255,255,0.06)" />
                 <PolarAngleAxis
-                  dataKey="subject"
+                  dataKey="subjectKey"
                   tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 9 }}
+                  tickFormatter={(v: string) => t(v)}
                 />
                 <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                 <Radar
-                  name="AI 能力"
+                  name={t('ins.radar.name')}
                   dataKey="score"
                   stroke={tc.secondary}
                   fill={tc.secondary}
@@ -497,7 +502,9 @@ export function InsightsEnhancedPage() {
                 className="w-2 h-2 rounded-full"
                 style={{ background: tc.secondary, boxShadow: `0 0 4px ${tc.secondary}` }}
               />
-              平均 {Math.round(radarData.reduce((s, r) => s + r.score, 0) / radarData.length)}分
+              {t('ins.radar.avg', {
+                n: Math.round(radarData.reduce((s, r) => s + r.score, 0) / radarData.length),
+              })}
             </span>
           </div>
         </NeonCard>
@@ -505,7 +512,7 @@ export function InsightsEnhancedPage() {
         {/* Channel Distribution */}
         <NeonCard color={tc.accent} hoverable={false}>
           <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-            渠道分布 · Channel Distribution
+            {t('ins.channel.title')}
           </h3>
           <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
@@ -532,7 +539,7 @@ export function InsightsEnhancedPage() {
             {channelData.map((ch, i) => (
               <span key={i} className="text-[9px] flex items-center gap-1 text-white/30">
                 <div className="w-2 h-2 rounded-full" style={{ background: ch.color }} />
-                {ch.name} {ch.value}%
+                {ch.nameKey && t(ch.nameKey)} {ch.value}%
               </span>
             ))}
           </div>
@@ -541,7 +548,7 @@ export function InsightsEnhancedPage() {
         {/* Hourly Activity */}
         <NeonCard color={tc.primary} hoverable={false}>
           <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-            24h 活跃度 · Hourly Activity
+            {t('ins.hourly.title')}
           </h3>
           <div className="h-44">
             <ResponsiveContainer width="100%" height="100%">
@@ -561,14 +568,14 @@ export function InsightsEnhancedPage() {
                 <Tooltip content={<CyberTooltip />} />
                 <Bar
                   dataKey="calls"
-                  name="呼叫"
+                  name={t('ins.chart.calls')}
                   fill={tc.primary}
                   fillOpacity={0.6}
                   radius={[2, 2, 0, 0]}
                 />
                 <Bar
                   dataKey="ai"
-                  name="AI任务"
+                  name={t('ins.chart.aiTasks')}
                   fill={tc.secondary}
                   fillOpacity={0.4}
                   radius={[2, 2, 0, 0]}
@@ -578,10 +585,12 @@ export function InsightsEnhancedPage() {
           </div>
           <div className="flex justify-center gap-4 mt-2">
             <span className="text-[9px] text-white/20 flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full" style={{ background: tc.primary }} /> 呼叫
+              <div className="w-2 h-2 rounded-full" style={{ background: tc.primary }} />{' '}
+              {t('ins.chart.calls')}
             </span>
             <span className="text-[9px] text-white/20 flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full" style={{ background: tc.secondary }} /> AI任务
+              <div className="w-2 h-2 rounded-full" style={{ background: tc.secondary }} />{' '}
+              {t('ins.chart.aiTasks')}
             </span>
           </div>
         </NeonCard>
@@ -597,6 +606,7 @@ export function InsightsEnhancedPage() {
 // Form Analytics Sub-section (inline)
 // ==========================================
 function FormInsightsAnalytics() {
+  const { t } = useI18n()
   const tc = useThemeColors()
   const [stats, setStats] = useState({
     total: 0,
@@ -631,32 +641,38 @@ function FormInsightsAnalytics() {
       }))
 
       const now = Date.now()
-      const dayLabels = ['日', '一', '二', '三', '四', '五', '六']
+      const dayLabels = [
+        'ins.weekday.sun',
+        'ins.weekday.mon',
+        'ins.weekday.tue',
+        'ins.weekday.wed',
+        'ins.weekday.thu',
+        'ins.weekday.fri',
+        'ins.weekday.sat',
+      ]
       const dailyTrend: { day: string; count: number }[] = []
       for (let i = 6; i >= 0; i--) {
         const d = new Date(now - i * 86400000)
         const dayStr = d.toISOString().slice(0, 10)
         const count = data.filter((s) => s.submittedAt?.startsWith(dayStr)).length
         const mockExtra = Math.floor(Math.random() * 5) + 1
-        dailyTrend.push({ day: `周${dayLabels[d.getDay()]}`, count: count + mockExtra })
+        dailyTrend.push({ day: t(dayLabels[d.getDay()]), count: count + mockExtra })
       }
 
       setStats({ total: data.length, byTemplate, dailyTrend })
     } catch {
       /* */
     }
-  }, [])
+  }, [t])
 
   if (stats.total === 0) return null
 
   return (
     <NeonCard color={tc.muted} hoverable={false}>
-      <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">
-        表单提交分析 · Form Analytics
-      </h3>
+      <h3 className="text-xs text-white/40 uppercase tracking-wider mb-4">{t('ins.form.title')}</h3>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         <div>
-          <p className="text-[10px] text-white/20">总提交数</p>
+          <p className="text-[10px] text-white/20">{t('ins.form.totalSubmissions')}</p>
           <p
             className="text-xl"
             style={{ color: tc.muted, textShadow: `0 0 10px ${tc.alpha(tc.muted, 0.4)}` }}
@@ -665,7 +681,7 @@ function FormInsightsAnalytics() {
           </p>
         </div>
         <div>
-          <p className="text-[10px] text-white/20">模板类型</p>
+          <p className="text-[10px] text-white/20">{t('ins.form.templateTypes')}</p>
           <p
             className="text-xl"
             style={{ color: tc.primary, textShadow: `0 0 10px ${tc.alpha(tc.primary, 0.4)}` }}
@@ -674,7 +690,7 @@ function FormInsightsAnalytics() {
           </p>
         </div>
         <div>
-          <p className="text-[10px] text-white/20">日均提交</p>
+          <p className="text-[10px] text-white/20">{t('ins.form.dailyAvg')}</p>
           <p
             className="text-xl"
             style={{ color: tc.secondary, textShadow: `0 0 10px ${tc.alpha(tc.secondary, 0.4)}` }}
@@ -683,7 +699,7 @@ function FormInsightsAnalytics() {
           </p>
         </div>
         <div>
-          <p className="text-[10px] text-white/20">数据质量</p>
+          <p className="text-[10px] text-white/20">{t('ins.form.dataQuality')}</p>
           <p
             className="text-xl"
             style={{ color: tc.success, textShadow: `0 0 10px ${tc.alpha(tc.success, 0.4)}` }}
@@ -718,7 +734,7 @@ function FormInsightsAnalytics() {
               <Area
                 type="monotone"
                 dataKey="count"
-                name="提交数"
+                name={t('ins.form.submissions')}
                 stroke={tc.muted}
                 strokeWidth={2}
                 fill="url(#gradFormTrend2)"

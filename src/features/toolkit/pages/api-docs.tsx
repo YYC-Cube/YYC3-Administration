@@ -31,61 +31,61 @@ const apiEndpoints: ApiEndpoint[] = [
     id: 'auth-login',
     method: 'POST',
     path: '/api/auth/login',
-    description: '用户登录，获取访问令牌',
-    tags: ['认证'],
+    description: 'apd.ep.authLogin.desc',
+    tags: ['apd.tag.auth'],
     request: {
-      username: { type: 'string', required: true, description: '用户名或邮箱' },
-      password: { type: 'string', required: true, description: '密码' },
-      rememberMe: { type: 'boolean', required: false, description: '记住我' },
+      username: { type: 'string', required: true, description: 'apd.field.usernameOrEmail' },
+      password: { type: 'string', required: true, description: 'apd.field.password' },
+      rememberMe: { type: 'boolean', required: false, description: 'apd.field.rememberMe' },
     },
     response: {
-      accessToken: { type: 'string', description: '访问令牌' },
-      refreshToken: { type: 'string', description: '刷新令牌' },
-      user: { type: 'UserProfile', description: '用户信息' },
-      expiresIn: { type: 'number', description: '过期时间（秒）' },
+      accessToken: { type: 'string', description: 'apd.field.accessToken' },
+      refreshToken: { type: 'string', description: 'apd.field.refreshToken' },
+      user: { type: 'UserProfile', description: 'apd.field.userInfo' },
+      expiresIn: { type: 'number', description: 'apd.field.expiresIn' },
     },
   },
   {
     id: 'auth-refresh',
     method: 'POST',
     path: '/api/auth/refresh',
-    description: '使用刷新令牌获取新的访问令牌',
-    tags: ['认证'],
+    description: 'apd.ep.authRefresh.desc',
+    tags: ['apd.tag.auth'],
     request: {
-      refreshToken: { type: 'string', required: true, description: '刷新令牌' },
+      refreshToken: { type: 'string', required: true, description: 'apd.field.refreshToken' },
     },
     response: {
-      accessToken: { type: 'string', description: '新访问令牌' },
-      expiresIn: { type: 'number', description: '过期时间（秒）' },
+      accessToken: { type: 'string', description: 'apd.field.newAccessToken' },
+      expiresIn: { type: 'number', description: 'apd.field.expiresIn' },
     },
   },
   {
     id: 'auth-logout',
     method: 'POST',
     path: '/api/auth/logout',
-    description: '用户登出，失效令牌',
-    tags: ['认证'],
+    description: 'apd.ep.authLogout.desc',
+    tags: ['apd.tag.auth'],
   },
   {
     id: 'chat-send',
     method: 'POST',
     path: '/api/chat',
-    description: '发送消息给AI模型',
-    tags: ['AI对话'],
+    description: 'apd.ep.chatSend.desc',
+    tags: ['apd.tag.chat'],
     request: {
-      message: { type: 'string', required: true, description: '消息内容' },
-      conversationId: { type: 'string', required: false, description: '对话ID' },
-      model: { type: 'AIModelType', required: false, description: '模型类型' },
-      stream: { type: 'boolean', required: false, description: '流式响应' },
+      message: { type: 'string', required: true, description: 'apd.field.messageContent' },
+      conversationId: { type: 'string', required: false, description: 'apd.field.conversationId' },
+      model: { type: 'AIModelType', required: false, description: 'apd.field.modelType' },
+      stream: { type: 'boolean', required: false, description: 'apd.field.stream' },
     },
     response: {
-      id: { type: 'string', description: '响应ID' },
-      conversationId: { type: 'string', description: '对话ID' },
-      content: { type: 'string', description: '响应内容' },
-      model: { type: 'AIModelType', description: '使用的模型' },
+      id: { type: 'string', description: 'apd.field.responseId' },
+      conversationId: { type: 'string', description: 'apd.field.conversationId' },
+      content: { type: 'string', description: 'apd.field.responseContent' },
+      model: { type: 'AIModelType', description: 'apd.field.usedModel' },
       usage: {
         type: '{ promptTokens, completionTokens, totalTokens }',
-        description: '令牌使用情况',
+        description: 'apd.field.tokenUsage',
       },
     },
   },
@@ -93,42 +93,42 @@ const apiEndpoints: ApiEndpoint[] = [
     id: 'chat-history',
     method: 'GET',
     path: '/api/chat/history',
-    description: '获取对话历史列表',
-    tags: ['AI对话'],
+    description: 'apd.ep.chatHistory.desc',
+    tags: ['apd.tag.chat'],
     response: {
-      conversations: { type: 'Conversation[]', description: '对话列表' },
-      total: { type: 'number', description: '总数' },
+      conversations: { type: 'Conversation[]', description: 'apd.field.conversationList' },
+      total: { type: 'number', description: 'apd.field.total' },
     },
   },
   {
     id: 'contacts-list',
     method: 'GET',
     path: '/api/contacts',
-    description: '获取联系人列表',
-    tags: ['联系人'],
+    description: 'apd.ep.contactsList.desc',
+    tags: ['apd.tag.contacts'],
     response: {
-      items: { type: 'SharedContact[]', description: '联系人列表' },
-      total: { type: 'number', description: '总数' },
-      page: { type: 'number', description: '当前页' },
-      pageSize: { type: 'number', description: '每页数量' },
+      items: { type: 'SharedContact[]', description: 'apd.field.contactsList' },
+      total: { type: 'number', description: 'apd.field.total' },
+      page: { type: 'number', description: 'apd.field.page' },
+      pageSize: { type: 'number', description: 'apd.field.pageSize' },
     },
   },
   {
     id: 'contacts-create',
     method: 'POST',
     path: '/api/contacts',
-    description: '创建新联系人',
-    tags: ['联系人'],
+    description: 'apd.ep.contactsCreate.desc',
+    tags: ['apd.tag.contacts'],
     request: {
-      name: { type: 'string', required: true, description: '姓名' },
-      phone: { type: 'string', required: true, description: '电话' },
-      email: { type: 'string', required: false, description: '邮箱' },
-      company: { type: 'string', required: false, description: '公司' },
-      stage: { type: 'CustomerStage', required: false, description: '生命周期阶段' },
-      tags: { type: 'string[]', required: false, description: '标签' },
+      name: { type: 'string', required: true, description: 'apd.field.name' },
+      phone: { type: 'string', required: true, description: 'apd.field.phone' },
+      email: { type: 'string', required: false, description: 'apd.field.email' },
+      company: { type: 'string', required: false, description: 'apd.field.company' },
+      stage: { type: 'CustomerStage', required: false, description: 'apd.field.stage' },
+      tags: { type: 'string[]', required: false, description: 'apd.field.tags' },
     },
     response: {
-      id: { type: 'string', description: '联系人ID' },
+      id: { type: 'string', description: 'apd.field.contactId' },
       ...{ name: { type: 'string' }, phone: { type: 'string' }, email: { type: 'string' } },
     },
   },
@@ -136,89 +136,93 @@ const apiEndpoints: ApiEndpoint[] = [
     id: 'contacts-update',
     method: 'PUT',
     path: '/api/contacts/{id}',
-    description: '更新联系人信息',
-    tags: ['联系人'],
+    description: 'apd.ep.contactsUpdate.desc',
+    tags: ['apd.tag.contacts'],
     request: {
-      name: { type: 'string', required: false, description: '姓名' },
-      phone: { type: 'string', required: false, description: '电话' },
-      email: { type: 'string', required: false, description: '邮箱' },
-      stage: { type: 'CustomerStage', required: false, description: '生命周期阶段' },
+      name: { type: 'string', required: false, description: 'apd.field.name' },
+      phone: { type: 'string', required: false, description: 'apd.field.phone' },
+      email: { type: 'string', required: false, description: 'apd.field.email' },
+      stage: { type: 'CustomerStage', required: false, description: 'apd.field.stage' },
     },
   },
   {
     id: 'contacts-delete',
     method: 'DELETE',
     path: '/api/contacts/{id}',
-    description: '删除联系人',
-    tags: ['联系人'],
+    description: 'apd.ep.contactsDelete.desc',
+    tags: ['apd.tag.contacts'],
   },
   {
     id: 'calls-initiate',
     method: 'POST',
     path: '/api/calls',
-    description: '发起AI呼叫',
-    tags: ['AI呼叫'],
+    description: 'apd.ep.callsInitiate.desc',
+    tags: ['apd.tag.calls'],
     request: {
-      phoneNumber: { type: 'string', required: true, description: '目标号码' },
-      contactId: { type: 'string', required: false, description: '联系人ID' },
-      script: { type: 'string', required: false, description: '呼叫脚本' },
-      record: { type: 'boolean', required: false, description: '录音设置' },
+      phoneNumber: { type: 'string', required: true, description: 'apd.field.phoneNumber' },
+      contactId: { type: 'string', required: false, description: 'apd.field.contactId' },
+      script: { type: 'string', required: false, description: 'apd.field.script' },
+      record: { type: 'boolean', required: false, description: 'apd.field.record' },
     },
     response: {
-      callId: { type: 'string', description: '呼叫ID' },
-      status: { type: 'string', description: '状态' },
-      startTime: { type: 'string', description: '开始时间' },
+      callId: { type: 'string', description: 'apd.field.callId' },
+      status: { type: 'string', description: 'apd.field.status' },
+      startTime: { type: 'string', description: 'apd.field.startTime' },
     },
   },
   {
     id: 'calls-list',
     method: 'GET',
     path: '/api/calls',
-    description: '获取通话记录列表',
-    tags: ['AI呼叫'],
+    description: 'apd.ep.callsList.desc',
+    tags: ['apd.tag.calls'],
     response: {
-      items: { type: 'CallRecord[]', description: '通话记录列表' },
-      total: { type: 'number', description: '总数' },
+      items: { type: 'CallRecord[]', description: 'apd.field.callsList' },
+      total: { type: 'number', description: 'apd.field.total' },
     },
   },
   {
     id: 'export-data',
     method: 'POST',
     path: '/api/export',
-    description: '导出数据',
-    tags: ['数据导出'],
+    description: 'apd.ep.exportData.desc',
+    tags: ['apd.tag.export'],
     request: {
-      dataType: { type: 'string', required: true, description: '数据类型' },
-      format: { type: 'string', required: true, description: '导出格式' },
-      filters: { type: 'Record<string, unknown>', required: false, description: '筛选条件' },
-      dateRange: { type: '{ from, to }', required: false, description: '日期范围' },
+      dataType: { type: 'string', required: true, description: 'apd.field.dataType' },
+      format: { type: 'string', required: true, description: 'apd.field.format' },
+      filters: {
+        type: 'Record<string, unknown>',
+        required: false,
+        description: 'apd.field.filters',
+      },
+      dateRange: { type: '{ from, to }', required: false, description: 'apd.field.dateRange' },
     },
     response: {
-      exportId: { type: 'string', description: '导出ID' },
-      fileUrl: { type: 'string', description: '文件URL' },
-      fileSize: { type: 'number', description: '文件大小' },
+      exportId: { type: 'string', description: 'apd.field.exportId' },
+      fileUrl: { type: 'string', description: 'apd.field.fileUrl' },
+      fileSize: { type: 'number', description: 'apd.field.fileSize' },
     },
   },
   {
     id: 'models-list',
     method: 'GET',
     path: '/api/models',
-    description: '获取可用AI模型列表',
-    tags: ['AI模型'],
+    description: 'apd.ep.modelsList.desc',
+    tags: ['apd.tag.models'],
     response: {
-      models: { type: 'AIModelConfig[]', description: '模型配置列表' },
+      models: { type: 'AIModelConfig[]', description: 'apd.field.modelsList' },
     },
   },
   {
     id: 'models-config',
     method: 'PUT',
     path: '/api/models/{id}',
-    description: '更新模型配置',
-    tags: ['AI模型'],
+    description: 'apd.ep.modelsConfig.desc',
+    tags: ['apd.tag.models'],
     request: {
-      temperature: { type: 'number', required: false, description: '温度' },
-      maxTokens: { type: 'number', required: false, description: '最大令牌数' },
-      systemPrompt: { type: 'string', required: false, description: '系统提示' },
+      temperature: { type: 'number', required: false, description: 'apd.field.temperature' },
+      maxTokens: { type: 'number', required: false, description: 'apd.field.maxTokens' },
+      systemPrompt: { type: 'string', required: false, description: 'apd.field.systemPrompt' },
     },
   },
 ]
@@ -296,7 +300,7 @@ export function ApiDocs() {
             onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
             className={`px-3 py-1.5 rounded-lg text-xs transition-all ${selectedTag === tag ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:bg-accent'}`}
           >
-            {tag}
+            {t(tag)}
           </button>
         ))}
       </div>
@@ -330,14 +334,14 @@ export function ApiDocs() {
                       className="px-2 py-0.5 rounded text-[10px]"
                       style={{ background: tc.muted + '20', color: tc.textMuted }}
                     >
-                      {tag}
+                      {t(tag)}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs" style={{ color: tc.textMuted }}>
-                  {endpoint.description}
+                  {t(endpoint.description)}
                 </span>
                 {expandedId === endpoint.id ? (
                   <ChevronDown className="w-4 h-4" style={{ color: tc.textMuted }} />
@@ -408,7 +412,7 @@ export function ApiDocs() {
                                 )}
                               </td>
                               <td className="py-2 px-3" style={{ color: tc.textMuted }}>
-                                {field.description || '-'}
+                                {field.description ? t(field.description) : '-'}
                               </td>
                             </tr>
                           ))}
@@ -454,7 +458,7 @@ export function ApiDocs() {
                                 {field.type}
                               </td>
                               <td className="py-2 px-3" style={{ color: tc.textMuted }}>
-                                {field.description || '-'}
+                                {field.description ? t(field.description) : '-'}
                               </td>
                             </tr>
                           ))}

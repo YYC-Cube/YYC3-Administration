@@ -12,7 +12,10 @@ import { funnelData } from '../number-database-data'
 
 import type { Contact } from '../number-database-data'
 
+import { useI18n } from '@/app/components/i18n-context'
+
 export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
+  const { t } = useI18n()
   return (
     <div className="space-y-6">
       {/* Funnel */}
@@ -23,7 +26,7 @@ export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
         >
           <h3 className="text-[10px] text-white/30 uppercase tracking-wider mb-4 flex items-center gap-2">
             <Target className="w-3.5 h-3.5 text-[#008b9d]" />
-            销售漏斗 · Conversion Funnel
+            {t('ndbv.funnelTitle')}
           </h3>
           <div className="space-y-2">
             {funnelData.map((stage, i) => {
@@ -39,7 +42,7 @@ export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-[10px] text-white/30 w-8 text-right shrink-0">
-                      {stage.name}
+                      {t(stage.name)}
                     </span>
                     <div className="flex-1 relative">
                       <div
@@ -75,51 +78,51 @@ export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
         >
           <h3 className="text-[10px] text-white/30 uppercase tracking-wider mb-4 flex items-center gap-2">
             <Brain className="w-3.5 h-3.5 text-[#00d4ff]" />
-            全景客户画像 · RFM 分层
+            {t('ndbv.rfmTitle')}
           </h3>
           <div className="space-y-2">
             {[
               {
-                tier: 'S 级',
-                label: '战略客户',
+                tier: 'ndb.tierS',
+                label: 'ndb.strategicCustomers',
                 count: 5,
                 value: '¥1,920K',
                 color: '#00d4ff',
-                desc: '高频·高价值·活跃',
+                desc: 'ndbv.desc.s',
               },
               {
-                tier: 'A 级',
-                label: '核心客户',
+                tier: 'ndb.tierA',
+                label: 'ndb.coreCustomers',
                 count: 12,
                 value: '¥864K',
                 color: '#00ffcc',
-                desc: '高频·中高价值',
+                desc: 'ndbv.desc.a',
               },
               {
-                tier: 'B 级',
-                label: '成长客户',
+                tier: 'ndb.tierB',
+                label: 'ndb.growthCustomers',
                 count: 28,
                 value: '¥420K',
                 color: '#00f0ff',
-                desc: '中频·中等价值',
+                desc: 'ndbv.desc.b',
               },
               {
-                tier: 'C 级',
-                label: '潜力客户',
+                tier: 'ndb.tierC',
+                label: 'ndb.potentialCustomers',
                 count: 45,
                 value: '¥156K',
                 color: '#00ffc8',
-                desc: '低频·待培育',
+                desc: 'ndbv.desc.c',
               },
               {
-                tier: 'D 级',
-                label: '休眠客户',
+                tier: 'ndb.tierD',
+                label: 'ndb.dormantCustomers',
                 count: 18,
                 value: '¥32K',
                 color: '#005f73',
-                desc: '极低频·需唤醒',
+                desc: 'ndbv.desc.d',
               },
-            ].map((t, i) => (
+            ].map((item, i) => (
               <div
                 key={i}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 hover:border-white/10"
@@ -130,20 +133,22 @@ export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
               >
                 <div
                   className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ background: `${t.color}15`, border: `1px solid ${t.color}30` }}
+                  style={{ background: `${item.color}15`, border: `1px solid ${item.color}30` }}
                 >
-                  <span className="text-[10px]" style={{ color: t.color }}>
-                    {t.tier}
+                  <span className="text-[10px]" style={{ color: item.color }}>
+                    {t(item.tier)}
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[11px] text-white/60">
-                    {t.label} <span className="text-white/20">· {t.desc}</span>
+                    {t(item.label)} <span className="text-white/20">· {t(item.desc)}</span>
                   </p>
-                  <p className="text-[9px] text-white/20">{t.count}位客户</p>
+                  <p className="text-[9px] text-white/20">
+                    {t('ndbv.customerCount', { count: item.count })}
+                  </p>
                 </div>
-                <span className="text-xs tabular-nums" style={{ color: t.color }}>
-                  {t.value}
+                <span className="text-xs tabular-nums" style={{ color: item.color }}>
+                  {item.value}
                 </span>
               </div>
             ))}
@@ -158,7 +163,7 @@ export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
       >
         <h3 className="text-[10px] text-white/30 uppercase tracking-wider mb-4 flex items-center gap-2">
           <Clock className="w-3.5 h-3.5 text-[#00f0ff]" />
-          跟进记录图谱 · Follow-up Timeline
+          {t('ndbv.timelineTitle')}
         </h3>
         <div className="relative pl-6">
           <div
@@ -167,45 +172,45 @@ export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
           />
           {[
             {
-              time: '今天 14:30',
-              action: 'AI 自动跟进',
-              target: '陈雅文 · 智链网络',
-              detail: '发送续约方案v2.1，客户已读',
+              time: 'ndbv.tl.1.time',
+              action: 'ndbv.tl.1.action',
+              target: 'ndbv.tl.1.target',
+              detail: 'ndbv.tl.1.detail',
               color: '#00ffc8',
             },
             {
-              time: '今天 10:15',
-              action: '电话沟通',
-              target: '张明远 · 星际科技',
-              detail: '技术方案讨论，客户反馈积极',
+              time: 'ndbv.tl.2.time',
+              action: 'ndbv.tl.2.action',
+              target: 'ndbv.tl.2.target',
+              detail: 'ndbv.tl.2.detail',
               color: '#00f0ff',
             },
             {
-              time: '昨天 16:00',
-              action: '邮���发送',
-              target: '孙浩然 · 智造工业',
-              detail: '产品对比文档+报价单',
+              time: 'ndbv.tl.3.time',
+              action: 'ndbv.tl.3.action',
+              target: 'ndbv.tl.3.target',
+              detail: 'ndbv.tl.3.detail',
               color: '#00ffcc',
             },
             {
-              time: '昨天 11:30',
-              action: 'AI 智能提醒',
-              target: '王建华 · 量子计算',
-              detail: '客户3天未响应，建议换种方式联系',
+              time: 'ndbv.tl.4.time',
+              action: 'ndbv.tl.4.action',
+              target: 'ndbv.tl.4.target',
+              detail: 'ndbv.tl.4.detail',
               color: '#005f73',
             },
             {
-              time: '3月11日',
-              action: '视频会议',
-              target: '赵鹏飞 · 未来能源',
-              detail: '年度合作复盘，双方确认续约意向',
+              time: 'ndbv.tl.5.time',
+              action: 'ndbv.tl.5.action',
+              target: 'ndbv.tl.5.target',
+              detail: 'ndbv.tl.5.detail',
               color: '#00d4ff',
             },
             {
-              time: '3月10日',
-              action: '工单创建',
-              target: '李思琪 · 云端数据',
-              detail: '数据分析模块优化需求 #T-892',
+              time: 'ndbv.tl.6.time',
+              action: 'ndbv.tl.6.action',
+              target: 'ndbv.tl.6.target',
+              detail: 'ndbv.tl.6.detail',
               color: '#008b9d',
             },
           ].map((item, i) => (
@@ -221,16 +226,16 @@ export function ValueTab({ contacts: _contacts }: { contacts: Contact[] }) {
               <div className="flex items-start gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[9px] text-white/20">{item.time}</span>
+                    <span className="text-[9px] text-white/20">{t(item.time)}</span>
                     <span
                       className="text-[10px] px-1.5 py-0.5 rounded"
                       style={{ background: `${item.color}15`, color: item.color }}
                     >
-                      {item.action}
+                      {t(item.action)}
                     </span>
                   </div>
-                  <p className="text-[11px] text-white/60 mt-0.5">{item.target}</p>
-                  <p className="text-[9px] text-white/25">{item.detail}</p>
+                  <p className="text-[11px] text-white/60 mt-0.5">{t(item.target)}</p>
+                  <p className="text-[9px] text-white/25">{t(item.detail)}</p>
                 </div>
               </div>
             </div>

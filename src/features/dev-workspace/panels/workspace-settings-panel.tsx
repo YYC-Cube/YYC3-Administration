@@ -30,7 +30,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
   const settings = useSettingsStore((s) => s.settings)
   const updateGeneralSettings = useSettingsStore((s) => s.updateGeneralSettings)
   const { theme, setTheme } = useThemeSwitcher()
-  const { locale, setLocale } = useI18n()
+  const { locale, setLocale, t } = useI18n()
   const { panelWidth, setPanelWidth } = usePanelStore()
   const activeModel = useActiveModel()
   const [activeSection, setActiveSection] = useState<SettingsSection>('editor')
@@ -38,11 +38,11 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
   const { general } = settings
 
   const sections: { key: SettingsSection; label: string; icon: typeof Settings }[] = [
-    { key: 'editor', label: '编辑器', icon: Code },
-    { key: 'theme', label: '主题', icon: Palette },
-    { key: 'keybindings', label: '快捷键', icon: Zap },
-    { key: 'ai', label: 'AI 配置', icon: Monitor },
-    { key: 'workspace', label: '工作区', icon: Settings },
+    { key: 'editor', label: 'wsp.section.editor', icon: Code },
+    { key: 'theme', label: 'wsp.section.theme', icon: Palette },
+    { key: 'keybindings', label: 'wsp.section.keybindings', icon: Zap },
+    { key: 'ai', label: 'wsp.section.ai', icon: Monitor },
+    { key: 'workspace', label: 'wsp.section.workspace', icon: Settings },
   ]
 
   return (
@@ -53,7 +53,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
       >
         <Settings className="w-3 h-3 mr-1.5" style={{ color: tc.textMuted }} />
         <span className="text-[11px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-          工作区设置
+          {t('wsp.title')}
         </span>
       </div>
 
@@ -75,7 +75,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
               }}
             >
               <Icon className="w-3 h-3" />
-              {s.label}
+              {t(s.label)}
             </button>
           )
         })}
@@ -92,7 +92,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
           >
             {activeSection === 'editor' && (
               <div className="space-y-3">
-                <SettingRow label="字体" tc={tc}>
+                <SettingRow label={t('wsp.font')} tc={tc}>
                   <select
                     value={general.editorFont}
                     onChange={(e) => updateGeneralSettings({ editorFont: e.target.value })}
@@ -112,7 +112,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                   </select>
                 </SettingRow>
 
-                <SettingRow label="字号" tc={tc}>
+                <SettingRow label={t('wsp.fontSize')} tc={tc}>
                   <div className="flex items-center gap-2">
                     <input
                       type="range"
@@ -134,7 +134,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                   </div>
                 </SettingRow>
 
-                <SettingRow label="自动换行" tc={tc}>
+                <SettingRow label={t('wsp.wordWrap')} tc={tc}>
                   <ToggleSwitch
                     checked={general.wordWrap}
                     onChange={(v) => updateGeneralSettings({ wordWrap: v })}
@@ -142,7 +142,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                   />
                 </SettingRow>
 
-                <SettingRow label="动画效果" tc={tc}>
+                <SettingRow label={t('wsp.animations')} tc={tc}>
                   <ToggleSwitch
                     checked={general.enableAnimations}
                     onChange={(v) => updateGeneralSettings({ enableAnimations: v })}
@@ -150,7 +150,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                   />
                 </SettingRow>
 
-                <SettingRow label="音效" tc={tc}>
+                <SettingRow label={t('wsp.sounds')} tc={tc}>
                   <ToggleSwitch
                     checked={general.enableSounds}
                     onChange={(v) => updateGeneralSettings({ enableSounds: v })}
@@ -162,27 +162,29 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
 
             {activeSection === 'theme' && (
               <div className="space-y-3">
-                <SettingRow label="主题" tc={tc}>
+                <SettingRow label={t('wsp.theme')} tc={tc}>
                   <div className="flex gap-2">
-                    {(['cyberpunk', 'liquidGlass'] as const).map((t) => (
+                    {(['cyberpunk', 'liquidGlass'] as const).map((themeKey) => (
                       <button
-                        key={t}
-                        onClick={() => setTheme(t)}
+                        key={themeKey}
+                        onClick={() => setTheme(themeKey)}
                         className="flex-1 text-[9px] px-2 py-2 rounded-lg border transition-all text-center"
                         style={{
-                          background: theme === t ? `${tc.primary}15` : 'transparent',
-                          borderColor: theme === t ? `${tc.primary}40` : tc.borderSubtle,
-                          color: theme === t ? tc.primary : tc.textMuted,
+                          background: theme === themeKey ? `${tc.primary}15` : 'transparent',
+                          borderColor: theme === themeKey ? `${tc.primary}40` : tc.borderSubtle,
+                          color: theme === themeKey ? tc.primary : tc.textMuted,
                         }}
                       >
-                        {theme === t && <Check className="w-3 h-3 inline mr-1" />}
-                        {t === 'cyberpunk' ? '赛博朋克' : '液态玻璃'}
+                        {theme === themeKey && <Check className="w-3 h-3 inline mr-1" />}
+                        {themeKey === 'cyberpunk'
+                          ? t('wsp.theme.cyberpunk')
+                          : t('wsp.theme.liquidGlass')}
                       </button>
                     ))}
                   </div>
                 </SettingRow>
 
-                <SettingRow label="语言" tc={tc}>
+                <SettingRow label={t('wsp.language')} tc={tc}>
                   <select
                     value={locale}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -194,7 +196,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                       color: tc.textPrimary,
                     }}
                   >
-                    <option value="zh">中文</option>
+                    <option value="zh">{t('wsp.lang.zh')}</option>
                     <option value="en">English</option>
                   </select>
                 </SettingRow>
@@ -203,7 +205,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
 
             {activeSection === 'keybindings' && (
               <div className="space-y-2">
-                <SettingRow label="快捷键方案" tc={tc}>
+                <SettingRow label={t('wsp.keybindingScheme')} tc={tc}>
                   <select
                     value={general.keybindingScheme}
                     onChange={(e) =>
@@ -228,16 +230,16 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                     className="text-[9px] uppercase tracking-wider"
                     style={{ color: tc.textMuted }}
                   >
-                    快捷键列表
+                    {t('wsp.keybindingList')}
                   </p>
                   {[
-                    { keys: 'Ctrl+B', action: '切换面板' },
-                    { keys: 'Ctrl+P', action: '快速打开 / 搜索' },
-                    { keys: 'Ctrl+E', action: '文件浏览器' },
-                    { keys: 'Ctrl+S', action: '保存文件' },
-                    { keys: 'Ctrl+Shift+P', action: '命令面板' },
-                    { keys: 'Ctrl+/', action: '切换注释' },
-                    { keys: 'Ctrl+D', action: '选中下一匹配' },
+                    { keys: 'Ctrl+B', action: t('wsp.kb.togglePanel') },
+                    { keys: 'Ctrl+P', action: t('wsp.kb.quickOpen') },
+                    { keys: 'Ctrl+E', action: t('wsp.kb.fileExplorer') },
+                    { keys: 'Ctrl+S', action: t('wsp.kb.saveFile') },
+                    { keys: 'Ctrl+Shift+P', action: t('wsp.kb.commandPalette') },
+                    { keys: 'Ctrl+/', action: t('wsp.kb.toggleComment') },
+                    { keys: 'Ctrl+D', action: t('wsp.kb.selectNext') },
                   ].map((s) => (
                     <div key={s.keys} className="flex items-center justify-between py-1 px-1">
                       <span className="text-[10px]" style={{ color: tc.textSecondary }}>
@@ -261,7 +263,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
 
             {activeSection === 'ai' && (
               <div className="space-y-3">
-                <SettingRow label="提供商" tc={tc}>
+                <SettingRow label={t('wsp.provider')} tc={tc}>
                   <span
                     className="text-[10px] px-2 py-1 rounded-lg border"
                     style={{
@@ -270,37 +272,37 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                       background: tc.bgInput,
                     }}
                   >
-                    {activeModel ? activeModel.provider.toUpperCase() : '模拟（内置）'}
+                    {activeModel ? activeModel.provider.toUpperCase() : t('wsp.mockBuiltin')}
                   </span>
                 </SettingRow>
 
-                <SettingRow label="模型" tc={tc}>
+                <SettingRow label={t('wsp.model')} tc={tc}>
                   <span className="text-[10px]" style={{ color: tc.textSecondary }}>
                     {activeModel?.name ?? 'mock-v1'}
                   </span>
                 </SettingRow>
 
-                <SettingRow label="温度" tc={tc}>
+                <SettingRow label={t('wsp.temperature')} tc={tc}>
                   <span className="text-[10px]" style={{ color: tc.textSecondary }}>
                     0.7
                   </span>
                 </SettingRow>
 
-                <SettingRow label="最大令牌数" tc={tc}>
+                <SettingRow label={t('wsp.maxTokens')} tc={tc}>
                   <span className="text-[10px]" style={{ color: tc.textSecondary }}>
                     4096
                   </span>
                 </SettingRow>
 
                 <p className="text-[8px]" style={{ color: tc.textMuted }}>
-                  在 AI 助手面板（⚙️ 图标）中配置 AI 提供商详情。
+                  {t('wsp.aiConfigNote')}
                 </p>
               </div>
             )}
 
             {activeSection === 'workspace' && (
               <div className="space-y-3">
-                <SettingRow label="面板宽度" tc={tc}>
+                <SettingRow label={t('wsp.panelWidth')} tc={tc}>
                   <div className="flex items-center gap-2">
                     <input
                       type="range"
@@ -336,7 +338,7 @@ export function WorkspaceSettingsPanel({ tc }: { tc: ThemeColors }) {
                     style={{ borderColor: 'rgba(239,68,68,0.3)', color: '#ef4444' }}
                   >
                     <RotateCcw className="w-3 h-3" />
-                    重置工作区默认值
+                    {t('wsp.resetDefaults')}
                   </button>
                 </div>
               </div>

@@ -14,17 +14,17 @@ export function SmartOperationsPage() {
   const { t } = useI18n()
 
   const systemMetrics = [
-    { label: '系统正常运行时间', value: '99.98%', icon: CheckCircle2, color: tc.success },
-    { label: 'CPU使用率', value: '42%', icon: Cpu, color: tc.primary },
-    { label: '内存使用', value: '68%', icon: HardDrive, color: tc.secondary },
-    { label: '网络流量', value: '2.4GB/s', icon: Wifi, color: tc.accent },
+    { label: t('sop.metric.uptime'), value: '99.98%', icon: CheckCircle2, color: tc.success },
+    { label: t('sop.metric.cpu'), value: '42%', icon: Cpu, color: tc.primary },
+    { label: t('sop.metric.memory'), value: '68%', icon: HardDrive, color: tc.secondary },
+    { label: t('sop.metric.network'), value: '2.4GB/s', icon: Wifi, color: tc.accent },
   ]
 
   const services = [
-    { name: 'API服务', status: 'online', uptime: 99.99, requests: 125000 },
-    { name: '数据库', status: 'online', uptime: 99.95, requests: 89000 },
-    { name: '缓存服务', status: 'online', uptime: 99.98, requests: 210000 },
-    { name: '消息队列', status: 'warning', uptime: 98.5, requests: 45000 },
+    { name: t('sop.service.api'), status: 'online', uptime: 99.99, requests: 125000 },
+    { name: t('sop.service.database'), status: 'online', uptime: 99.95, requests: 89000 },
+    { name: t('sop.service.cache'), status: 'online', uptime: 99.98, requests: 210000 },
+    { name: t('sop.service.mq'), status: 'warning', uptime: 98.5, requests: 45000 },
   ]
 
   return (
@@ -35,7 +35,7 @@ export function SmartOperationsPage() {
             {t('nav.intelligentOps')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            系统监控 · 性能优化 · 自动化运维
+            {t('sop.desc')}
           </p>
         </div>
         <div className="flex gap-3">
@@ -48,14 +48,14 @@ export function SmartOperationsPage() {
             }}
           >
             <RefreshCw className="w-4 h-4" />
-            刷新
+            {t('sop.action.refresh')}
           </button>
           <button
             className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium"
             style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
           >
             <Settings className="w-5 h-5" />
-            配置
+            {t('sop.action.configure')}
           </button>
         </div>
       </div>
@@ -81,7 +81,7 @@ export function SmartOperationsPage() {
 
       <NeonCard className="p-6">
         <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-          服务状态监控
+          {t('sop.serviceMonitor')}
         </h2>
         <div className="space-y-4">
           {services.map((service) => (
@@ -110,13 +110,13 @@ export function SmartOperationsPage() {
                   className="text-sm font-medium"
                   style={{ color: service.status === 'online' ? tc.success : tc.warning }}
                 >
-                  {service.status === 'online' ? '正常运行' : '警告'}
+                  {service.status === 'online' ? t('sop.status.normal') : t('sop.status.warning')}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                    正常运行时间
+                    {t('sop.uptime')}
                   </p>
                   <p className="font-bold" style={{ color: tc.textPrimary }}>
                     {service.uptime}%
@@ -124,7 +124,7 @@ export function SmartOperationsPage() {
                 </div>
                 <div>
                   <p className="text-xs mb-1" style={{ color: tc.textMuted }}>
-                    请求处理
+                    {t('sop.requests')}
                   </p>
                   <p className="font-bold" style={{ color: tc.primary }}>
                     {service.requests.toLocaleString()}

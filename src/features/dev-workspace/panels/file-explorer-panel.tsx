@@ -31,6 +31,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FileNode } from '@/features/dev-workspace/panels/panel-types'
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import {
   formatFileSize,
   getFileIcon,
@@ -40,6 +41,7 @@ import {
 import { usePanelStore } from '@/features/dev-workspace/panels/panel-store'
 
 export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
+  const { t } = useI18n()
   const {
     expandedFolders,
     toggleFolder,
@@ -226,7 +228,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
         style={{ borderColor: tc.borderSubtle }}
       >
         <span className="text-[11px] uppercase tracking-wider" style={{ color: tc.textMuted }}>
-          文件浏览器
+          {t('fe.title')}
         </span>
         <div className="flex items-center gap-1">
           <button
@@ -235,7 +237,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
               setNewItemName('')
             }}
             className="w-5 h-5 flex items-center justify-center rounded hover:bg-white/5 transition-colors"
-            title="新建文件"
+            title={t('fe.newFile')}
           >
             <Plus className="w-3 h-3" style={{ color: tc.textMuted }} />
           </button>
@@ -245,7 +247,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
               setTimeout(() => setFileTree(MOCK_FILE_TREE), 100)
             }}
             className="w-5 h-5 flex items-center justify-center rounded hover:bg-white/5 transition-colors"
-            title="刷新"
+            title={t('fe.refresh')}
           >
             <RefreshCw className="w-3 h-3" style={{ color: tc.textMuted }} />
           </button>
@@ -278,7 +280,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
               onClick={(e) => e.stopPropagation()}
             >
               <p className="text-[12px] mb-2" style={{ color: tc.textPrimary }}>
-                {newItemDialog.type === 'file' ? '新建文件' : '新建文件夹'}
+                {newItemDialog.type === 'file' ? t('fe.newFile') : t('fe.newFolder')}
               </p>
               <input
                 autoFocus
@@ -321,7 +323,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                   className="text-[10px] px-3 py-1 rounded-lg border"
                   style={{ borderColor: tc.borderDefault, color: tc.textMuted }}
                 >
-                  取消
+                  {t('fe.cancel')}
                 </button>
                 <button
                   onClick={() => {
@@ -351,7 +353,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                     color: tc.primary,
                   }}
                 >
-                  创建
+                  {t('fe.create')}
                 </button>
               </div>
             </motion.div>
@@ -382,12 +384,12 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
               onClick={(e) => e.stopPropagation()}
             >
               <p className="text-[12px] mb-1" style={{ color: tc.textPrimary }}>
-                删除 "{deleteConfirm.name}"？
+                {t('fe.deleteConfirm', { name: deleteConfirm.name })}
               </p>
               <p className="text-[10px] mb-3" style={{ color: tc.textMuted }}>
                 {deleteConfirm.type === 'directory'
-                  ? '此操作将删除文件夹及其所有内容。'
-                  : '此操作不可撤销。'}
+                  ? t('fe.deleteDirNote')
+                  : t('fe.deleteFileNote')}
               </p>
               <div className="flex justify-end gap-1.5">
                 <button
@@ -395,7 +397,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                   className="text-[10px] px-3 py-1 rounded-lg border"
                   style={{ borderColor: tc.borderDefault, color: tc.textMuted }}
                 >
-                  取消
+                  {t('fe.cancel')}
                 </button>
                 <button
                   onClick={() => {
@@ -409,7 +411,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                     color: '#ef4444',
                   }}
                 >
-                  删除
+                  {t('fe.delete')}
                 </button>
               </div>
             </motion.div>
@@ -436,7 +438,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
           >
             {[
               {
-                label: '打开',
+                label: 'fe.open',
                 icon: ExternalLink,
                 action: () => {
                   handleFileClick(contextMenu.node)
@@ -446,7 +448,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
               ...(contextMenu.node.type === 'directory'
                 ? [
                     {
-                      label: '新建文件',
+                      label: 'fe.newFile',
                       icon: Plus,
                       action: () => {
                         setNewItemDialog({
@@ -458,7 +460,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                       },
                     },
                     {
-                      label: '新建文件夹',
+                      label: 'fe.newFolder',
                       icon: Folder,
                       action: () => {
                         setNewItemDialog({
@@ -472,7 +474,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                   ]
                 : []),
               {
-                label: isFavorite(contextMenu.node.path) ? '取消收藏' : '收藏',
+                label: isFavorite(contextMenu.node.path) ? 'fe.unfavorite' : 'fe.favorite',
                 icon: Heart,
                 action: () => {
                   toggleFavorite({
@@ -487,7 +489,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                 },
               },
               {
-                label: '复制路径',
+                label: 'fe.copyPath',
                 icon: Copy,
                 action: () => {
                   navigator.clipboard?.writeText(contextMenu.node.path)
@@ -495,7 +497,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                 },
               },
               {
-                label: '重命名',
+                label: 'fe.rename',
                 icon: Edit3,
                 action: () => {
                   setRenamingPath(contextMenu.node.path)
@@ -504,7 +506,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                 },
               },
               {
-                label: '删除',
+                label: 'fe.delete',
                 icon: Trash2,
                 action: () => {
                   setDeleteConfirm(contextMenu.node)
@@ -521,7 +523,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                 style={{ color: (item as any).color ?? tc.textSecondary }}
               >
                 <item.icon className="w-3.5 h-3.5" />
-                {item.label}
+                {t(item.label)}
               </button>
             ))}
           </motion.div>

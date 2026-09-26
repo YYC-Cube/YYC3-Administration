@@ -83,6 +83,7 @@ export function AnalyticsTab() {
                 tick={{ fill: 'rgba(255,255,255,0.2)', fontSize: 10 }}
                 axisLine={false}
                 tickLine={false}
+                tickFormatter={(v) => t(v)}
               />
               <YAxis
                 tick={{ fill: 'rgba(255,255,255,0.15)', fontSize: 10 }}
@@ -95,14 +96,14 @@ export function AnalyticsTab() {
                 fill="#00f0ff"
                 radius={[4, 4, 0, 0]}
                 opacity={0.8}
-                name="实际营收"
+                name={t('ndb.actualRevenue')}
               />
               <Bar
                 dataKey="target"
                 fill="#00d4ff"
                 radius={[4, 4, 0, 0]}
                 opacity={0.3}
-                name="目标"
+                name={t('ndb.target')}
               />
             </BarChart>
           </ResponsiveContainer>
@@ -133,9 +134,10 @@ export function AnalyticsTab() {
                 axisLine={false}
                 tickLine={false}
                 width={40}
+                tickFormatter={(v) => t(v)}
               />
               <Tooltip content={<NeonTooltip />} />
-              <Bar dataKey="value" name="客户数" radius={[0, 4, 4, 0]}>
+              <Bar dataKey="value" name={t('ndb.customerCount')} radius={[0, 4, 4, 0]}>
                 {channelData.map((entry, i) => (
                   <Cell key={i} fill={entry.color} opacity={0.7} />
                 ))}
@@ -159,14 +161,18 @@ export function AnalyticsTab() {
           <ResponsiveContainer width="100%" height={220}>
             <RadarChart outerRadius={80} data={radarData}>
               <PolarGrid stroke="rgba(255,255,255,0.08)" />
-              <PolarAngleAxis dataKey="dim" tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 9 }} />
+              <PolarAngleAxis
+                dataKey="dim"
+                tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 9 }}
+                tickFormatter={(v) => t(v)}
+              />
               <PolarRadiusAxis
                 angle={30}
                 tick={{ fill: 'rgba(255,255,255,0.1)', fontSize: 8 }}
                 domain={[0, 100]}
               />
               <Radar
-                name="能力值"
+                name={t('ndba.capability')}
                 dataKey="value"
                 stroke="#00f0ff"
                 fill="#00f0ff"
@@ -189,26 +195,26 @@ export function AnalyticsTab() {
           <div className="space-y-3">
             {[
               {
-                title: 'Q2 营收预测',
-                desc: '基于当前增长趋势，预计 Q2 可达 ¥165万，超额完成目标 12%',
+                title: 'ndba.predict.1.title',
+                desc: 'ndba.predict.1.desc',
                 confidence: 87,
                 color: '#00ffc8',
               },
               {
-                title: '客户流失预警',
-                desc: '3位客户健康度持续下降，建议72小时内安排专项跟进',
+                title: 'ndba.predict.2.title',
+                desc: 'ndba.predict.2.desc',
                 confidence: 92,
                 color: '#005f73',
               },
               {
-                title: '转化率优化',
-                desc: '「官网注册」渠道转化率低于均值，建议优化落地页内容',
+                title: 'ndba.predict.3.title',
+                desc: 'ndba.predict.3.desc',
                 confidence: 78,
                 color: '#00ffcc',
               },
               {
-                title: '团队效能建议',
-                desc: '张明远负载偏高(18客户)，建议将3位获客阶段客户分配给新人',
+                title: 'ndba.predict.4.title',
+                desc: 'ndba.predict.4.desc',
                 confidence: 85,
                 color: '#00d4ff',
               },
@@ -222,15 +228,15 @@ export function AnalyticsTab() {
                 }}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] text-white/60">{p.title}</span>
+                  <span className="text-[11px] text-white/60">{t(p.title)}</span>
                   <span
                     className="text-[9px] px-1.5 py-0.5 rounded"
                     style={{ background: `${p.color}15`, color: p.color }}
                   >
-                    置信度 {p.confidence}%
+                    {t('ndb.confidence', { pct: p.confidence })}
                   </span>
                 </div>
-                <p className="text-[10px] text-white/30">{p.desc}</p>
+                <p className="text-[10px] text-white/30">{t(p.desc)}</p>
               </div>
             ))}
           </div>

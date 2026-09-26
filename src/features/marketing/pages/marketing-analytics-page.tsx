@@ -69,15 +69,15 @@ export function MarketingAnalyticsPage() {
   ]
 
   const channelPerformance = [
-    { channel: '抖音', roi: 4.2, cost: 45000, revenue: 189000, conversion: 5.8 },
-    { channel: '微信', roi: 3.8, cost: 38000, revenue: 144400, conversion: 4.2 },
-    { channel: '小红书', roi: 3.5, cost: 28000, revenue: 98000, conversion: 3.9 },
-    { channel: '百度', roi: 2.9, cost: 35000, revenue: 101500, conversion: 3.1 },
+    { channel: 'ma.channel.douyin', roi: 4.2, cost: 45000, revenue: 189000, conversion: 5.8 },
+    { channel: 'ma.channel.wechat', roi: 3.8, cost: 38000, revenue: 144400, conversion: 4.2 },
+    { channel: 'ma.channel.xiaohongshu', roi: 3.5, cost: 28000, revenue: 98000, conversion: 3.9 },
+    { channel: 'ma.channel.baidu', roi: 2.9, cost: 35000, revenue: 101500, conversion: 3.1 },
   ]
 
   const campaignAnalytics = [
     {
-      name: '618预热活动',
+      name: 'ma.campaign.c1',
       impressions: 1250000,
       clicks: 52000,
       conversions: 2100,
@@ -85,7 +85,7 @@ export function MarketingAnalyticsPage() {
       roi: 4.5,
     },
     {
-      name: '新品上市推广',
+      name: 'ma.campaign.c2',
       impressions: 850000,
       clicks: 34000,
       conversions: 1420,
@@ -93,7 +93,7 @@ export function MarketingAnalyticsPage() {
       roi: 3.8,
     },
     {
-      name: '会员专属优惠',
+      name: 'ma.campaign.c3',
       impressions: 420000,
       clicks: 18500,
       conversions: 890,
@@ -104,19 +104,19 @@ export function MarketingAnalyticsPage() {
 
   const aiInsights = [
     {
-      title: '最佳投放时段',
-      content: '晚上20:00-22:00转化率最高，建议增加该时段预算配比30%',
-      impact: '预计提升ROI 15%',
+      title: 'ma.insight.i1.title',
+      content: 'ma.insight.i1.content',
+      impact: 'ma.insight.i1.impact',
     },
     {
-      title: '受众优化建议',
-      content: '25-34岁女性用户转化率高出平均值42%，建议精准定向',
-      impact: '预计降低获客成本 18%',
+      title: 'ma.insight.i2.title',
+      content: 'ma.insight.i2.content',
+      impact: 'ma.insight.i2.impact',
     },
     {
-      title: '渠道组合优化',
-      content: '抖音+小红书组合投放效果提升35%，建议增加联动策略',
-      impact: '预计提升整体转化率 12%',
+      title: 'ma.insight.i3.title',
+      content: 'ma.insight.i3.content',
+      impact: 'ma.insight.i3.impact',
     },
   ]
 
@@ -202,11 +202,11 @@ export function MarketingAnalyticsPage() {
                 borderColor: 'rgba(255,255,255,0.04)',
               }}
             >
-              <h3 className="text-[11px] text-white/70 font-medium mb-2">{insight.title}</h3>
-              <p className="text-[11px] text-white/40 mb-3">{insight.content}</p>
+              <h3 className="text-[11px] text-white/70 font-medium mb-2">{t(insight.title)}</h3>
+              <p className="text-[11px] text-white/40 mb-3">{t(insight.content)}</p>
               <div className="flex items-center gap-1.5 text-[10px]" style={{ color: '#00ffc8' }}>
                 <TrendingUp className="w-3 h-3" />
-                {insight.impact}
+                {t(insight.impact)}
               </div>
             </div>
           ))}
@@ -237,19 +237,19 @@ export function MarketingAnalyticsPage() {
             <thead>
               <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <th className="text-left py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
-                  渠道
+                  {t('ma.th.channel')}
                 </th>
                 <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
-                  投入成本
+                  {t('ma.th.cost')}
                 </th>
                 <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
-                  营收
+                  {t('ma.th.revenue')}
                 </th>
                 <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
                   ROI
                 </th>
                 <th className="text-right py-2.5 px-3 text-[9px] text-white/20 uppercase tracking-wider">
-                  转化率
+                  {t('ma.th.conversion')}
                 </th>
               </tr>
             </thead>
@@ -265,7 +265,7 @@ export function MarketingAnalyticsPage() {
                   }}
                 >
                   <td className="py-3 px-3">
-                    <span className="text-[11px] text-white/60">{channel.channel}</span>
+                    <span className="text-[11px] text-white/60">{t(channel.channel)}</span>
                   </td>
                   <td className="py-3 px-3 text-right text-[11px] text-white/40">
                     ¥{channel.cost.toLocaleString()}
@@ -316,7 +316,7 @@ export function MarketingAnalyticsPage() {
                 }}
               >
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-[11px] text-white/70 font-medium">{campaign.name}</h3>
+                  <h3 className="text-[11px] text-white/70 font-medium">{t(campaign.name)}</h3>
                   <span
                     className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px]"
                     style={{
@@ -332,7 +332,7 @@ export function MarketingAnalyticsPage() {
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                   <div>
                     <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
-                      曝光量
+                      {t('ma.camp.impressions')}
                     </p>
                     <p className="text-[11px] text-white/60 tabular-nums">
                       {(campaign.impressions / 1000).toFixed(0)}K
@@ -340,7 +340,7 @@ export function MarketingAnalyticsPage() {
                   </div>
                   <div>
                     <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
-                      点击量
+                      {t('ma.camp.clicks')}
                     </p>
                     <p className="text-[11px] text-white/60 tabular-nums">
                       {(campaign.clicks / 1000).toFixed(1)}K
@@ -348,7 +348,7 @@ export function MarketingAnalyticsPage() {
                   </div>
                   <div>
                     <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
-                      点击率
+                      {t('ma.camp.ctr')}
                     </p>
                     <p className="text-[11px]" style={{ color: '#00d4ff' }}>
                       {ctr}%
@@ -356,7 +356,7 @@ export function MarketingAnalyticsPage() {
                   </div>
                   <div>
                     <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
-                      转化数
+                      {t('ma.camp.conversions')}
                     </p>
                     <p className="text-[11px]" style={{ color: '#00ffc8' }}>
                       {campaign.conversions}
@@ -364,7 +364,7 @@ export function MarketingAnalyticsPage() {
                   </div>
                   <div>
                     <p className="text-[9px] text-white/20 uppercase tracking-wider mb-0.5">
-                      转化率
+                      {t('ma.camp.conversionRate')}
                     </p>
                     <p className="text-[11px]" style={{ color: '#00ffcc' }}>
                       {conversionRate}%

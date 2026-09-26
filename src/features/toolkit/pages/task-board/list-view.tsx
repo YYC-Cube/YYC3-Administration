@@ -11,6 +11,7 @@ import { PRIORITY_CONFIG, STATUS_CONFIG, TYPE_CONFIG } from '../task-board-data'
 
 import type { Task } from '../task-board-data'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 export function ListView({
@@ -28,6 +29,7 @@ export function ListView({
   onEdit: (task: Task) => void
   onDelete: (id: string) => void
 }) {
+  const { t } = useI18n()
   return (
     <div
       className="rounded-xl border overflow-hidden"
@@ -75,7 +77,7 @@ export function ListView({
             </div>
             <div className="col-span-4">
               <p className="text-[12px] truncate" style={{ color: tc.textPrimary }}>
-                {task.title}
+                {t(task.title)}
               </p>
               {task.tags && task.tags.length > 0 && (
                 <div className="flex gap-1 mt-0.5">

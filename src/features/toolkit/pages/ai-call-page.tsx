@@ -49,48 +49,48 @@ export function AICallPage() {
   const [callHistory, setCallHistory] = useState<CallRecord[]>([
     {
       id: '1',
-      name: '张明远',
+      name: 'aicall2.name.zhangMingyuan',
       phone: '138-0000-1234',
       duration: '08:32',
       status: 'completed',
-      time: '10分钟前',
-      aiAnalysis: '客户意向度高，建议重点跟进',
+      time: 'acp.time.10minAgo',
+      aiAnalysis: 'acp.analysis.1',
     },
     {
       id: '2',
-      name: '李思琪',
+      name: 'aicall2.name.liSiqi',
       phone: '139-1111-5678',
       duration: '03:15',
       status: 'completed',
-      time: '30分钟前',
-      aiAnalysis: '需求明确，价格敏感',
+      time: 'acp.time.30minAgo',
+      aiAnalysis: 'acp.analysis.2',
     },
     {
       id: '3',
-      name: '王建华',
+      name: 'aicall2.name.wangJianhua',
       phone: '137-2222-9012',
       duration: '00:00',
       status: 'missed',
-      time: '1小时前',
-      aiAnalysis: '未接来电，建议回拨',
+      time: 'acp.time.1hAgo',
+      aiAnalysis: 'acp.analysis.3',
     },
     {
       id: '4',
-      name: '陈雅文',
+      name: 'aicall2.name.chenYawen',
       phone: '136-3333-3456',
       duration: '12:45',
       status: 'completed',
-      time: '2小时前',
-      aiAnalysis: '已成交，需后续服务跟进',
+      time: 'acp.time.2hAgo',
+      aiAnalysis: 'acp.analysis.4',
     },
     {
       id: '5',
-      name: '赵鹏飞',
+      name: 'aicall2.name.zhaoPengfei',
       phone: '135-4444-7890',
       duration: '05:20',
       status: 'outgoing',
-      time: '3小时前',
-      aiAnalysis: 'AI推荐优质客户',
+      time: 'acp.time.3hAgo',
+      aiAnalysis: 'acp.analysis.5',
     },
   ])
 
@@ -111,8 +111,8 @@ export function AICallPage() {
           ...activeCall,
           duration: formatDuration(activeCall.duration),
           status: 'completed',
-          time: '刚刚',
-          aiAnalysis: 'AI正在分析通话内容...',
+          time: 'acp.time.justNow',
+          aiAnalysis: 'acp.analysis.pending',
         },
         ...prev,
       ])
@@ -127,14 +127,14 @@ export function AICallPage() {
   }
 
   const recentStats = [
-    { label: translate('ac.callsToday'), value: '28', icon: Phone, change: '+12%' },
-    { label: translate('ac.connectRate'), value: '87%', icon: Activity, change: '+5%' },
-    { label: translate('ac.avgDuration'), value: '6.5min', icon: Clock, change: '-1.2min' },
+    { label: translate('aicall2.callsToday'), value: '28', icon: Phone, change: '+12%' },
+    { label: translate('aicall.successRate'), value: '87%', icon: Activity, change: '+5%' },
+    { label: translate('aicall.avgDuration'), value: '6.5min', icon: Clock, change: '-1.2min' },
     {
-      label: translate('ac.aiAnalysis'),
+      label: translate('aicall2.aiAnalysis'),
       value: '100%',
       icon: Headphones,
-      change: translate('ac.fullCoverage'),
+      change: translate('aicall2.fullCoverage'),
     },
   ]
 
@@ -146,7 +146,7 @@ export function AICallPage() {
             {translate('nav.aicall')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            {translate('ac.subtitle')}
+            {translate('aicall2.subtitle')}
           </p>
         </div>
         <button
@@ -154,7 +154,7 @@ export function AICallPage() {
           style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
         >
           <Settings className="w-5 h-5" />
-          {translate('ac.callSettings')}
+          {translate('aicall2.callSettings')}
         </button>
       </div>
 
@@ -189,7 +189,7 @@ export function AICallPage() {
         <NeonCard color={tc.primary} hoverable={false} className="lg:col-span-2 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-              {translate('ac.callHistory')}
+              {translate('aicall2.callHistory')}
             </h2>
             <div className="flex gap-2">
               <button
@@ -200,7 +200,7 @@ export function AICallPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                {translate('ac.all')}
+                {translate('aicall2.all')}
               </button>
               <button
                 className="px-4 py-2 rounded-lg text-sm"
@@ -210,7 +210,7 @@ export function AICallPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                {translate('ac.missed')}
+                {translate('aicall2.missed')}
               </button>
               <button
                 className="px-4 py-2 rounded-lg text-sm"
@@ -220,7 +220,7 @@ export function AICallPage() {
                   border: `1px solid ${tc.borderSubtle}`,
                 }}
               >
-                {translate('ac.aiAnalysis')}
+                {translate('aicall2.aiAnalysis')}
               </button>
             </div>
           </div>
@@ -242,7 +242,7 @@ export function AICallPage() {
                   <User className="w-12 h-12" style={{ color: tc.accent }} />
                 </div>
                 <h3 className="text-2xl font-bold mb-2" style={{ color: tc.textPrimary }}>
-                  {activeCall.name}
+                  {translate(activeCall.name)}
                 </h3>
                 <p style={{ color: tc.textSecondary }}>{activeCall.phone}</p>
                 <p className="text-3xl font-mono mt-4" style={{ color: tc.accent }}>
@@ -250,8 +250,8 @@ export function AICallPage() {
                 </p>
                 <p className="text-sm mt-2" style={{ color: tc.textMuted }}>
                   {activeCall.status === 'connecting'
-                    ? translate('ac.connecting')
-                    : translate('ac.inCall')}
+                    ? translate('aicall2.connecting')
+                    : translate('aicall2.inCall')}
                 </p>
               </div>
               <div className="flex justify-center gap-4">
@@ -342,7 +342,7 @@ export function AICallPage() {
                     </div>
                     <div>
                       <h4 className="font-medium" style={{ color: tc.textPrimary }}>
-                        {record.name}
+                        {translate(record.name)}
                       </h4>
                       <p className="text-sm" style={{ color: tc.textSecondary }}>
                         {record.phone}
@@ -351,7 +351,7 @@ export function AICallPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-sm" style={{ color: tc.textSecondary }}>
-                      {record.time}
+                      {translate(record.time)}
                     </p>
                     <p className="text-xs" style={{ color: tc.textMuted }}>
                       {record.duration}
@@ -365,7 +365,7 @@ export function AICallPage() {
 
         <NeonCard color={tc.secondary} hoverable={false} className="p-6">
           <h2 className="text-xl font-semibold mb-4" style={{ color: tc.textPrimary }}>
-            {translate('ac.aiCallAnalysis')}
+            {translate('aicall2.aiCallAnalysis')}
           </h2>
           <div className="space-y-3">
             {callHistory.slice(0, 3).map((record) => (
@@ -377,11 +377,11 @@ export function AICallPage() {
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-4 h-4" style={{ color: tc.accent }} />
                   <span className="text-sm font-medium" style={{ color: tc.textPrimary }}>
-                    {record.name}
+                    {translate(record.name)}
                   </span>
                 </div>
                 <p className="text-xs" style={{ color: tc.textSecondary }}>
-                  {record.aiAnalysis}
+                  {translate(record.aiAnalysis)}
                 </p>
               </div>
             ))}
@@ -391,29 +391,31 @@ export function AICallPage() {
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-5 h-5" style={{ color: tc.success }} />
               <span className="font-medium" style={{ color: tc.success }}>
-                {translate('ac.aiRecommendedCall')}
+                {translate('aicall2.aiRecommendedCall')}
               </span>
             </div>
             <p className="text-sm" style={{ color: tc.textSecondary }}>
-              {translate('ac.aiRecommendDesc')}
+              {translate('aicall2.aiRecommendDesc')}
             </p>
             <div className="mt-3 space-y-2">
               <div
                 className="flex items-center justify-between p-2 rounded-lg"
                 style={{ background: tc.bgCard }}
               >
-                <span style={{ color: tc.textPrimary }}>张明远</span>
+                <span style={{ color: tc.textPrimary }}>
+                  {translate('aicall2.name.zhangMingyuan')}
+                </span>
                 <span className="text-xs" style={{ color: tc.accent }}>
-                  {translate('ac.intentScore')} 92%
+                  {translate('aicall2.intentScore')} 92%
                 </span>
               </div>
               <div
                 className="flex items-center justify-between p-2 rounded-lg"
                 style={{ background: tc.bgCard }}
               >
-                <span style={{ color: tc.textPrimary }}>李思琪</span>
+                <span style={{ color: tc.textPrimary }}>{translate('aicall2.name.liSiqi')}</span>
                 <span className="text-xs" style={{ color: tc.accent }}>
-                  {translate('ac.intentScore')} 85%
+                  {translate('aicall2.intentScore')} 85%
                 </span>
               </div>
             </div>

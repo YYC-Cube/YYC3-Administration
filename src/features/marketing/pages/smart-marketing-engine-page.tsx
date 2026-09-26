@@ -14,42 +14,42 @@ export function SmartMarketingEnginePage() {
   const { t } = useI18n()
 
   const engineStats = [
-    { label: '自动化任务', value: '128', change: '+32', icon: Rocket, color: tc.primary },
-    { label: '优化建议', value: '45', change: '+12', icon: Brain, color: tc.secondary },
-    { label: 'ROI提升', value: '+42%', change: '+8%', icon: TrendingUp, color: tc.success },
-    { label: '覆盖用户', value: '2.8M', change: '+18%', icon: Users, color: tc.accent },
+    { label: 'sme.stat.automation', value: '128', change: '+32', icon: Rocket, color: tc.primary },
+    { label: 'sme.stat.suggestions', value: '45', change: '+12', icon: Brain, color: tc.secondary },
+    { label: 'sme.stat.roiBoost', value: '+42%', change: '+8%', icon: TrendingUp, color: tc.success },
+    { label: 'sme.stat.coverage', value: '2.8M', change: '+18%', icon: Users, color: tc.accent },
   ]
 
   const automationTasks = [
     {
       id: 'A001',
-      name: '自动推送营销内容',
+      name: 'sme.task.a001.name',
       status: 'running',
-      frequency: '每日 09:00',
+      frequency: 'sme.task.a001.freq',
       target: 25000,
       reached: 18500,
     },
     {
       id: 'A002',
-      name: '智能受众分组',
+      name: 'sme.task.a002.name',
       status: 'running',
-      frequency: '实时',
+      frequency: 'sme.task.a002.freq',
       target: 0,
       reached: 0,
     },
     {
       id: 'A003',
-      name: '自动优化出价',
+      name: 'sme.task.a003.name',
       status: 'running',
-      frequency: '每小时',
+      frequency: 'sme.task.a003.freq',
       target: 0,
       reached: 0,
     },
     {
       id: 'A004',
-      name: '效果自动报告',
+      name: 'sme.task.a004.name',
       status: 'paused',
-      frequency: '每周一',
+      frequency: 'sme.task.a004.freq',
       target: 0,
       reached: 0,
     },
@@ -57,24 +57,29 @@ export function SmartMarketingEnginePage() {
 
   const aiRecommendations = [
     {
-      title: '预算重新分配',
-      impact: '高',
-      description: '建议将30%预算从低效渠道转移至高转化渠道',
+      title: 'sme.rec.r1.title',
+      impact: 'high',
+      description: 'sme.rec.r1.desc',
       expectedROI: '+28%',
     },
     {
-      title: '受众精准定向',
-      impact: '中',
-      description: 'AI识别出3个高价值受众群体，建议增加定向投放',
+      title: 'sme.rec.r2.title',
+      impact: 'medium',
+      description: 'sme.rec.r2.desc',
       expectedROI: '+15%',
     },
     {
-      title: '投放时段优化',
-      impact: '高',
-      description: '晚间20:00-22:00转化率提升40%，建议增加预算',
+      title: 'sme.rec.r3.title',
+      impact: 'high',
+      description: 'sme.rec.r3.desc',
       expectedROI: '+22%',
     },
   ]
+
+  const getImpactLabel = (impact: string) => {
+    if (impact === 'high') return t('sme.impact.high')
+    return t('sme.impact.medium')
+  }
 
   return (
     <div className="space-y-6">
@@ -84,7 +89,7 @@ export function SmartMarketingEnginePage() {
             {t('nav.aiMarketingEngine')}
           </h1>
           <p className="text-sm" style={{ color: tc.textSecondary }}>
-            AI自动化 · 策略优化 · 效果最大化
+            {t('sme.subtitle')}
           </p>
         </div>
         <button
@@ -92,7 +97,7 @@ export function SmartMarketingEnginePage() {
           style={{ background: tc.gradientButton, color: tc.textPrimary, boxShadow: tc.shadowMd }}
         >
           <Zap className="w-5 h-5" />
-          启动引擎
+          {t('sme.startEngine')}
         </button>
       </div>
 
@@ -111,7 +116,7 @@ export function SmartMarketingEnginePage() {
                 </div>
               </div>
               <p className="text-sm mb-1" style={{ color: tc.textMuted }}>
-                {stat.label}
+                {t(stat.label)}
               </p>
               <p className="text-2xl font-bold" style={{ color: tc.textPrimary }}>
                 {stat.value}
@@ -125,7 +130,7 @@ export function SmartMarketingEnginePage() {
         <div className="flex items-center gap-3 mb-6">
           <Brain className="w-6 h-6" style={{ color: tc.primary }} />
           <h2 className="text-xl font-semibold" style={{ color: tc.textPrimary }}>
-            AI智能优化建议
+            {t('sme.aiRecommendations')}
           </h2>
         </div>
         <div className="space-y-4">
@@ -139,7 +144,7 @@ export function SmartMarketingEnginePage() {
                 <div className="flex items-center gap-3">
                   <Sparkles className="w-5 h-5" style={{ color: tc.primary }} />
                   <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                    {rec.title}
+                    {t(rec.title)}
                   </h3>
                 </div>
                 <div className="flex items-center gap-2">
@@ -147,11 +152,11 @@ export function SmartMarketingEnginePage() {
                     className={`px-3 py-1 rounded-full text-xs font-medium`}
                     style={{
                       background:
-                        rec.impact === '高' ? tc.alpha(tc.danger, 0.1) : tc.alpha(tc.warning, 0.1),
-                      color: rec.impact === '高' ? tc.danger : tc.warning,
+                        rec.impact === 'high' ? tc.alpha(tc.danger, 0.1) : tc.alpha(tc.warning, 0.1),
+                      color: rec.impact === 'high' ? tc.danger : tc.warning,
                     }}
                   >
-                    {rec.impact}影响
+                    {t('sme.impactSuffix', { impact: getImpactLabel(rec.impact) })}
                   </span>
                   <span
                     className="px-3 py-1 rounded-full text-xs font-bold"
@@ -162,7 +167,7 @@ export function SmartMarketingEnginePage() {
                 </div>
               </div>
               <p className="text-sm" style={{ color: tc.textSecondary }}>
-                {rec.description}
+                {t(rec.description)}
               </p>
             </div>
           ))}
@@ -171,7 +176,7 @@ export function SmartMarketingEnginePage() {
 
       <NeonCard className="p-6">
         <h2 className="text-xl font-semibold mb-6" style={{ color: tc.textPrimary }}>
-          自动化任务
+          {t('sme.automationTasks')}
         </h2>
         <div className="space-y-4">
           {automationTasks.map((task) => (
@@ -191,12 +196,12 @@ export function SmartMarketingEnginePage() {
                     <div className="w-3 h-3 rounded-full" style={{ background: tc.textMuted }} />
                   )}
                   <h3 className="font-semibold" style={{ color: tc.textPrimary }}>
-                    {task.name}
+                    {t(task.name)}
                   </h3>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-xs" style={{ color: tc.textMuted }}>
-                    {task.frequency}
+                    {t(task.frequency)}
                   </span>
                   <button
                     className="p-2 rounded-lg"
@@ -216,7 +221,7 @@ export function SmartMarketingEnginePage() {
               {task.target > 0 && (
                 <div>
                   <div className="flex items-center justify-between mb-2 text-sm">
-                    <span style={{ color: tc.textMuted }}>进度</span>
+                    <span style={{ color: tc.textMuted }}>{t('sme.progress')}</span>
                     <span style={{ color: tc.textPrimary }}>
                       {task.reached.toLocaleString()} / {task.target.toLocaleString()}
                     </span>

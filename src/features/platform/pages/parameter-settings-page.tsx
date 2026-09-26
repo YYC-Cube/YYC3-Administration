@@ -397,7 +397,7 @@ export function ParameterSettingsPage() {
                       color: tc.foreground,
                     }}
                   >
-                    <option value="zh-CN">简体中文</option>
+                    <option value="zh-CN">{t('psp.lang.simplifiedChinese')}</option>
                     <option value="en-US">English</option>
                     <option value="ja-JP">日本語</option>
                   </select>
@@ -420,9 +420,9 @@ export function ParameterSettingsPage() {
                       color: tc.foreground,
                     }}
                   >
-                    <option value="CNY">人民币 (¥)</option>
-                    <option value="USD">美元 ($)</option>
-                    <option value="EUR">欧元 (€)</option>
+                    <option value="CNY">{t('psp.currency.cny')}</option>
+                    <option value="USD">{t('psp.currency.usd')}</option>
+                    <option value="EUR">{t('psp.currency.eur')}</option>
                   </select>
                 </div>
               </div>

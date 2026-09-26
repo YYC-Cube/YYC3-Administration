@@ -123,13 +123,14 @@ function estimateStorageQuota(): number {
 }
 
 /**
- * 获取平台标签（中文）
+ * 获取平台标签 i18n 键（非组件模块，返回键字符串；
+ * 渲染点需通过 useI18n() 的 t() 解析为对应语言文案）
  */
 export function getPlatformLabel(): Record<Platform, string> {
   return {
-    web: 'Web 端',
-    pwa: 'PWA 应用',
-    mobile: '移动端',
-    desktop: '桌面端',
+    web: 'mep.web',
+    pwa: 'mep.pwa',
+    mobile: 'mep.mobile',
+    desktop: 'mep.desktop',
   }
 }

@@ -232,7 +232,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
               ref={inputRef}
               value={search}
               onValueChange={setSearch}
-              placeholder="搜索命令 / Search commands..."
+              placeholder={t('cp.searchPlaceholder')}
               className="w-full bg-transparent border-none outline-none text-sm placeholder-white/20"
               style={{ color: '#e2e8f0' }}
             />

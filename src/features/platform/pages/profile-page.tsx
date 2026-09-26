@@ -49,14 +49,15 @@ interface UserProfile {
   joinDate: string
 }
 
+// 默认资料值为 i18n 键，渲染点用 t() 解析；用户自定义输入不含键时 t() 原样返回
 const defaultProfile: UserProfile = {
-  name: '管理员',
+  name: 'pfp.profile.defaultName',
   email: 'admin@yyc3.ai',
-  role: '系统管理员',
-  department: 'AI 智能营销部',
-  location: '中国 · 上海',
+  role: 'pfp.profile.defaultRole',
+  department: 'pfp.profile.defaultDepartment',
+  location: 'pfp.profile.defaultLocation',
   website: 'https://yyc3.ai',
-  bio: 'YYC³ 言语智能系统管理员，负责 AI 营销自动化终端的运营与管理。',
+  bio: 'pfp.profile.defaultBio',
   avatar: '',
   joinDate: '2024-06-15',
 }
@@ -85,7 +86,7 @@ function saveProfile(profile: UserProfile) {
  * and system preferences with editable profile fields.
  */
 export function ProfilePage() {
-  const { t: _t } = useI18n()
+  const { t } = useI18n()
   const { recentActivities, notifications, setActivePage, theme } = useApp()
   const tc = useThemeColors()
   const [profile, setProfile] = useState<UserProfile>(loadProfile)
@@ -127,10 +128,15 @@ export function ProfilePage() {
   }, [profile])
 
   const tabs = [
-    { id: 'overview' as const, label: '概览', icon: UserCircle, color: tc.primary },
-    { id: 'activity' as const, label: '活动', icon: Activity, color: tc.success },
-    { id: 'stats' as const, label: '统计', icon: BarChart3, color: tc.secondary },
-    { id: 'preferences' as const, label: '偏好', icon: Settings, color: tc.accent },
+    { id: 'overview' as const, label: t('pfp.tab.overview'), icon: UserCircle, color: tc.primary },
+    { id: 'activity' as const, label: t('pfp.tab.activity'), icon: Activity, color: tc.success },
+    { id: 'stats' as const, label: t('pfp.tab.stats'), icon: BarChart3, color: tc.secondary },
+    {
+      id: 'preferences' as const,
+      label: t('pfp.tab.preferences'),
+      icon: Settings,
+      color: tc.accent,
+    },
   ]
 
   return (
@@ -146,10 +152,10 @@ export function ProfilePage() {
             style={{ color: tc.secondary, textShadow: `0 0 15px ${tc.alpha(tc.secondary, 0.5)}` }}
           >
             <UserCircle className="w-6 h-6" />
-            个人中心
+            {t('pfp.title')}
           </h1>
           <p className="text-xs mt-1 tracking-wider" style={{ color: tc.textMuted }}>
-            Personal Center — 用户档案与使用统计
+            {t('pfp.subtitle')}
           </p>
         </div>
       </div>
@@ -171,7 +177,7 @@ export function ProfilePage() {
               }}
             >
               <span className="text-2xl" style={{ color: tc.textSecondary }}>
-                {profile.name[0]}
+                {t(profile.name)[0]}
               </span>
               {/* Online indicator */}
               <div
@@ -186,7 +192,7 @@ export function ProfilePage() {
               </div>
             </div>
             <h3 style={{ color: tc.textPrimary }} className="mb-0.5">
-              {profile.name}
+              {t(profile.name)}
             </h3>
             <p className="text-xs mb-2" style={{ color: tc.textMuted }}>
               {profile.email}
@@ -199,22 +205,32 @@ export function ProfilePage() {
                 border: `1px solid ${tc.alpha(tc.secondary, 0.25)}`,
               }}
             >
-              {profile.role}
+              {t(profile.role)}
             </span>
           </div>
 
           <div className="space-y-2.5 pt-3 border-t" style={{ borderColor: tc.borderSubtle }}>
             <InfoRow
               icon={Briefcase}
-              label="部门"
-              value={profile.department}
+              label={t('pfp.field.department')}
+              value={t(profile.department)}
               color={tc.secondary}
             />
-            <InfoRow icon={MapPin} label="位置" value={profile.location} color={tc.primary} />
-            <InfoRow icon={Globe} label="网站" value={profile.website} color={tc.accent} />
+            <InfoRow
+              icon={MapPin}
+              label={t('pfp.field.location')}
+              value={t(profile.location)}
+              color={tc.primary}
+            />
+            <InfoRow
+              icon={Globe}
+              label={t('pfp.field.website')}
+              value={profile.website}
+              color={tc.accent}
+            />
             <InfoRow
               icon={Clock}
-              label="加入"
+              label={t('pfp.field.joinDate')}
               value={formatDate(profile.joinDate)}
               color={tc.success}
             />
@@ -232,7 +248,7 @@ export function ProfilePage() {
               color: tc.secondary,
             }}
           >
-            <Edit3 className="w-3 h-3" /> 编辑资料
+            <Edit3 className="w-3 h-3" /> {t('pfp.action.editProfile')}
           </button>
         </NeonCard>
 
@@ -240,46 +256,46 @@ export function ProfilePage() {
         <div className="xl:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
           {[
             {
-              label: '活跃天数',
+              label: t('pfp.stat.activeDays'),
               value: `${usageStats.daysActive}`,
               icon: Clock,
               color: tc.primary,
-              sub: '天',
+              sub: t('pfp.unit.day'),
             },
             {
-              label: '连续登录',
+              label: t('pfp.stat.loginStreak'),
               value: `${usageStats.loginStreak}`,
               icon: Zap,
               color: tc.success,
-              sub: '天',
+              sub: t('pfp.unit.day'),
             },
             {
-              label: 'AI 交互',
+              label: t('pfp.stat.aiInteractions'),
               value: `${usageStats.aiInteractions.toLocaleString()}`,
               icon: Brain,
               color: tc.secondary,
-              sub: '次',
+              sub: t('pfp.unit.times'),
             },
             {
-              label: '表单提交',
+              label: t('pfp.stat.formSubmissions'),
               value: `${usageStats.formSubmissions}`,
               icon: Target,
               color: tc.accent,
-              sub: '份',
+              sub: t('pfp.unit.forms'),
             },
             {
-              label: '活动记录',
+              label: t('pfp.stat.activities'),
               value: `${usageStats.totalActivities}`,
               icon: Activity,
               color: tc.highlight,
-              sub: '条',
+              sub: t('pfp.unit.items'),
             },
             {
-              label: '系统通知',
+              label: t('pfp.stat.notifications'),
               value: `${usageStats.totalNotifications}`,
               icon: Bell,
               color: tc.muted,
-              sub: '条',
+              sub: t('pfp.unit.items'),
             },
           ].map((stat, i) => {
             const Icon = stat.icon
@@ -354,7 +370,7 @@ export function ProfilePage() {
           {/* Bio Card */}
           <NeonCard color={tc.secondary} hoverable={false}>
             <h3 className="text-xs uppercase tracking-wider mb-3" style={{ color: tc.textMuted }}>
-              个人简介 · Bio
+              {t('pfp.section.bio')}
             </h3>
             <p className="text-sm leading-relaxed" style={{ color: tc.textSecondary }}>
               {profile.bio}
@@ -364,48 +380,48 @@ export function ProfilePage() {
           {/* Skills/Badges */}
           <NeonCard color={tc.success} hoverable={false}>
             <h3 className="text-xs uppercase tracking-wider mb-3" style={{ color: tc.textMuted }}>
-              成就徽章 · Achievements
+              {t('pfp.section.achievements')}
             </h3>
             <div className="grid grid-cols-2 gap-2">
               {[
                 {
-                  label: 'AI 先锋',
-                  desc: '首次使用 AI 工具',
+                  label: t('pfp.badge.aiPioneer'),
+                  desc: t('pfp.badge.aiPioneerDesc'),
                   icon: Brain,
                   color: tc.primary,
                   unlocked: true,
                 },
                 {
-                  label: '数据大师',
-                  desc: '提交 50+ 表单',
+                  label: t('pfp.badge.dataMaster'),
+                  desc: t('pfp.badge.dataMasterDesc'),
                   icon: BarChart3,
                   color: tc.secondary,
                   unlocked: usageStats.formSubmissions >= 5,
                 },
                 {
-                  label: '社交达人',
-                  desc: '管理 100+ 客户',
+                  label: t('pfp.badge.socialExpert'),
+                  desc: t('pfp.badge.socialExpertDesc'),
                   icon: Users,
                   color: tc.accent,
                   unlocked: true,
                 },
                 {
-                  label: '效率之星',
-                  desc: '连续登录 7 天',
+                  label: t('pfp.badge.efficiencyStar'),
+                  desc: t('pfp.badge.efficiencyStarDesc'),
                   icon: Star,
                   color: tc.success,
                   unlocked: usageStats.loginStreak >= 7,
                 },
                 {
-                  label: '安全卫士',
-                  desc: '完成安全认证',
+                  label: t('pfp.badge.securityGuard'),
+                  desc: t('pfp.badge.securityGuardDesc'),
                   icon: Shield,
                   color: tc.highlight,
                   unlocked: true,
                 },
                 {
-                  label: '趋势猎手',
-                  desc: '查看 100+ 洞察',
+                  label: t('pfp.badge.trendHunter'),
+                  desc: t('pfp.badge.trendHunterDesc'),
                   icon: TrendingUp,
                   color: tc.muted,
                   unlocked: true,
@@ -448,19 +464,29 @@ export function ProfilePage() {
           {/* Quick Actions */}
           <NeonCard color={tc.primary} hoverable={false} className="xl:col-span-2">
             <h3 className="text-xs uppercase tracking-wider mb-3" style={{ color: tc.textMuted }}>
-              快捷操作 · Quick Actions
+              {t('pfp.section.quickActions')}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {[
                 {
-                  label: '数据驾驶舱',
+                  label: t('pfp.page.dashboard'),
                   icon: BarChart3,
                   color: tc.primary,
                   page: 'dashboard' as const,
                 },
-                { label: 'AI 聊天', icon: Brain, color: tc.secondary, page: 'chat' as const },
-                { label: '客户管理', icon: Users, color: tc.accent, page: 'clm' as const },
-                { label: '系统设置', icon: Settings, color: tc.muted, page: 'settings' as const },
+                {
+                  label: t('pfp.page.chat'),
+                  icon: Brain,
+                  color: tc.secondary,
+                  page: 'chat' as const,
+                },
+                { label: t('pfp.page.clm'), icon: Users, color: tc.accent, page: 'clm' as const },
+                {
+                  label: t('pfp.page.settings'),
+                  icon: Settings,
+                  color: tc.muted,
+                  page: 'settings' as const,
+                },
               ].map((action, i) => {
                 const Icon = action.icon
                 return (
@@ -499,7 +525,7 @@ export function ProfilePage() {
       {activeTab === 'activity' && (
         <NeonCard color={tc.success} hoverable={false}>
           <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textMuted }}>
-            最近活动 · Recent Activity
+            {t('pfp.section.recentActivity')}
           </h3>
           <div className="space-y-2">
             {recentActivities.slice(0, 15).map((act, i) => (
@@ -518,14 +544,14 @@ export function ProfilePage() {
                 />
                 <div className="flex-1 min-w-0">
                   <p className="text-xs truncate" style={{ color: tc.textSecondary }}>
-                    {act.action}
+                    {t(act.action)}
                   </p>
                   <p className="text-[10px] truncate" style={{ color: tc.textMuted }}>
-                    {act.target}
+                    {t(act.target)}
                   </p>
                 </div>
                 <span className="text-[9px] shrink-0" style={{ color: tc.textMuted }}>
-                  {formatTimeAgo(act.timestamp)}
+                  {formatTimeAgo(act.timestamp, t)}
                 </span>
               </div>
             ))}
@@ -533,7 +559,7 @@ export function ProfilePage() {
               <div className="text-center py-8">
                 <Activity className="w-8 h-8 mx-auto mb-2" style={{ color: tc.textMuted }} />
                 <p className="text-xs" style={{ color: tc.textMuted }}>
-                  暂无活动记录
+                  {t('pfp.empty.activities')}
                 </p>
               </div>
             )}
@@ -548,16 +574,16 @@ export function ProfilePage() {
         >
           <NeonCard color={tc.primary} hoverable={false}>
             <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textMuted }}>
-              使用频率 · Usage Frequency
+              {t('pfp.section.usageFrequency')}
             </h3>
             <div className="space-y-3">
               {[
-                { label: '数据驾驶舱', pct: 85, color: tc.primary },
-                { label: 'AI 聊天', pct: 72, color: tc.secondary },
-                { label: '客户管理', pct: 64, color: tc.accent },
-                { label: 'AI 呼叫', pct: 58, color: tc.success },
-                { label: '智能表单', pct: 45, color: tc.highlight },
-                { label: '数据洞察', pct: 38, color: tc.muted },
+                { label: t('pfp.page.dashboard'), pct: 85, color: tc.primary },
+                { label: t('pfp.page.chat'), pct: 72, color: tc.secondary },
+                { label: t('pfp.page.clm'), pct: 64, color: tc.accent },
+                { label: t('pfp.page.aiCall'), pct: 58, color: tc.success },
+                { label: t('pfp.page.smartForm'), pct: 45, color: tc.highlight },
+                { label: t('pfp.page.insights'), pct: 38, color: tc.muted },
               ].map((item, i) => (
                 <div key={i}>
                   <div className="flex justify-between mb-1">
@@ -590,35 +616,35 @@ export function ProfilePage() {
 
           <NeonCard color={tc.secondary} hoverable={false}>
             <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textMuted }}>
-              效能指标 · Performance
+              {t('pfp.section.performance')}
             </h3>
             <div className="space-y-4">
               {[
                 {
-                  label: '响应效率',
+                  label: t('pfp.perf.responseEfficiency'),
                   value: '98.2%',
-                  desc: '平均响应时间 < 2s',
+                  desc: t('pfp.perf.responseEfficiencyDesc'),
                   color: tc.success,
                   icon: Zap,
                 },
                 {
-                  label: '任务完成率',
+                  label: t('pfp.perf.taskCompletion'),
                   value: '94.7%',
-                  desc: '本月任务完成情况',
+                  desc: t('pfp.perf.taskCompletionDesc'),
                   color: tc.secondary,
                   icon: Target,
                 },
                 {
-                  label: '客户满意度',
+                  label: t('pfp.perf.customerSatisfaction'),
                   value: '4.8/5',
-                  desc: '最近 30 天评分',
+                  desc: t('pfp.perf.customerSatisfactionDesc'),
                   color: tc.accent,
                   icon: Star,
                 },
                 {
-                  label: 'AI 辅助率',
+                  label: t('pfp.perf.aiAssistRate'),
                   value: '87.3%',
-                  desc: 'AI 协助完成的工作',
+                  desc: t('pfp.perf.aiAssistRateDesc'),
                   color: tc.primary,
                   icon: Brain,
                 },
@@ -669,15 +695,35 @@ export function ProfilePage() {
         >
           <NeonCard color={tc.accent} hoverable={false}>
             <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textMuted }}>
-              通知偏好 · Notification Preferences
+              {t('pfp.section.notificationPrefs')}
             </h3>
             <div className="space-y-3">
               {[
-                { label: '系统通知', desc: '重要系统更新和维护通知', enabled: true },
-                { label: '客户动态', desc: '客户状态变更和跟进提醒', enabled: true },
-                { label: 'AI 任务', desc: 'AI 任务完成和异常提醒', enabled: true },
-                { label: '呼叫提醒', desc: '呼叫任务和回访提醒', enabled: false },
-                { label: '数据报告', desc: '每日/周报数据摘要', enabled: true },
+                {
+                  label: t('pfp.pref.systemNotification'),
+                  desc: t('pfp.pref.systemNotificationDesc'),
+                  enabled: true,
+                },
+                {
+                  label: t('pfp.pref.customerUpdates'),
+                  desc: t('pfp.pref.customerUpdatesDesc'),
+                  enabled: true,
+                },
+                {
+                  label: t('pfp.pref.aiTasks'),
+                  desc: t('pfp.pref.aiTasksDesc'),
+                  enabled: true,
+                },
+                {
+                  label: t('pfp.pref.callAlerts'),
+                  desc: t('pfp.pref.callAlertsDesc'),
+                  enabled: false,
+                },
+                {
+                  label: t('pfp.pref.dataReports'),
+                  desc: t('pfp.pref.dataReportsDesc'),
+                  enabled: true,
+                },
               ].map((pref, i) => (
                 <PreferenceToggle
                   key={i}
@@ -692,15 +738,35 @@ export function ProfilePage() {
 
           <NeonCard color={tc.secondary} hoverable={false}>
             <h3 className="text-xs uppercase tracking-wider mb-4" style={{ color: tc.textMuted }}>
-              显示设置 · Display Settings
+              {t('pfp.section.displaySettings')}
             </h3>
             <div className="space-y-3">
               {[
-                { label: '紧凑模式', desc: '减少元素间距，显示更多内容', enabled: false },
-                { label: '动画效果', desc: '弹簧动画和过渡效果', enabled: theme.springAnimEnabled },
-                { label: '实时更新', desc: '自动刷新数据和通知推送', enabled: true },
-                { label: '声音提醒', desc: '通知和呼叫声音提醒', enabled: false },
-                { label: '键盘快捷键', desc: '启用全局键盘快捷键', enabled: true },
+                {
+                  label: t('pfp.display.compactMode'),
+                  desc: t('pfp.display.compactModeDesc'),
+                  enabled: false,
+                },
+                {
+                  label: t('pfp.display.animations'),
+                  desc: t('pfp.display.animationsDesc'),
+                  enabled: theme.springAnimEnabled,
+                },
+                {
+                  label: t('pfp.display.realtimeUpdates'),
+                  desc: t('pfp.display.realtimeUpdatesDesc'),
+                  enabled: true,
+                },
+                {
+                  label: t('pfp.display.soundAlerts'),
+                  desc: t('pfp.display.soundAlertsDesc'),
+                  enabled: false,
+                },
+                {
+                  label: t('pfp.display.keyboardShortcuts'),
+                  desc: t('pfp.display.keyboardShortcutsDesc'),
+                  enabled: true,
+                },
               ].map((pref, i) => (
                 <PreferenceToggle
                   key={i}
@@ -737,7 +803,7 @@ export function ProfilePage() {
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-sm flex items-center gap-2" style={{ color: tc.secondary }}>
                 <Edit3 className="w-4 h-4" />
-                编辑个人资料
+                {t('pfp.modal.editProfile')}
               </h3>
               <button
                 onClick={handleCancel}
@@ -750,16 +816,41 @@ export function ProfilePage() {
 
             <div className="space-y-4">
               {[
-                { key: 'name' as const, label: '姓名', icon: UserCircle, placeholder: '输入姓名' },
-                { key: 'email' as const, label: '邮箱', icon: Mail, placeholder: '输入邮箱' },
-                { key: 'role' as const, label: '职位', icon: Briefcase, placeholder: '输入职位' },
-                { key: 'department' as const, label: '部门', icon: Users, placeholder: '输入部门' },
-                { key: 'location' as const, label: '位置', icon: MapPin, placeholder: '输入位置' },
+                {
+                  key: 'name' as const,
+                  label: t('pfp.field.name'),
+                  icon: UserCircle,
+                  placeholder: t('pfp.placeholder.name'),
+                },
+                {
+                  key: 'email' as const,
+                  label: t('pfp.field.email'),
+                  icon: Mail,
+                  placeholder: t('pfp.placeholder.email'),
+                },
+                {
+                  key: 'role' as const,
+                  label: t('pfp.field.role'),
+                  icon: Briefcase,
+                  placeholder: t('pfp.placeholder.role'),
+                },
+                {
+                  key: 'department' as const,
+                  label: t('pfp.field.department'),
+                  icon: Users,
+                  placeholder: t('pfp.placeholder.department'),
+                },
+                {
+                  key: 'location' as const,
+                  label: t('pfp.field.location'),
+                  icon: MapPin,
+                  placeholder: t('pfp.placeholder.location'),
+                },
                 {
                   key: 'website' as const,
-                  label: '网站',
+                  label: t('pfp.field.website'),
                   icon: Globe,
-                  placeholder: '输入网站 URL',
+                  placeholder: t('pfp.placeholder.website'),
                 },
               ].map((field) => {
                 const Icon = field.icon
@@ -773,7 +864,7 @@ export function ProfilePage() {
                     </label>
                     <input
                       type="text"
-                      value={editForm[field.key]}
+                      value={t(editForm[field.key])}
                       onChange={(e) =>
                         setEditForm((prev) => ({ ...prev, [field.key]: e.target.value }))
                       }
@@ -799,12 +890,12 @@ export function ProfilePage() {
 
               <div>
                 <label className="text-[10px] mb-1 block" style={{ color: tc.textMuted }}>
-                  个人简介
+                  {t('pfp.field.bio')}
                 </label>
                 <textarea
-                  value={editForm.bio}
+                  value={t(editForm.bio)}
                   onChange={(e) => setEditForm((prev) => ({ ...prev, bio: e.target.value }))}
-                  placeholder="介绍自己…"
+                  placeholder={t('pfp.placeholder.bio')}
                   rows={3}
                   className="w-full px-3 py-2 text-sm rounded-xl bg-transparent resize-none"
                   style={{
@@ -836,7 +927,7 @@ export function ProfilePage() {
                   color: tc.textMuted,
                 }}
               >
-                <X className="w-3 h-3" /> 取消
+                <X className="w-3 h-3" /> {t('pfp.action.cancel')}
               </button>
               <button
                 onClick={handleSave}
@@ -848,7 +939,7 @@ export function ProfilePage() {
                   boxShadow: tc.neonGlow(tc.secondary, 0.3),
                 }}
               >
-                <Save className="w-3 h-3" /> 保存
+                <Save className="w-3 h-3" /> {t('pfp.action.save')}
               </button>
             </div>
           </div>
@@ -943,13 +1034,16 @@ function formatDate(dateStr: string): string {
   }
 }
 
-function formatTimeAgo(date: Date): string {
+function formatTimeAgo(
+  date: Date,
+  t: (key: string, params?: Record<string, string | number>) => string,
+): string {
   const diff = Date.now() - date.getTime()
   const s = Math.floor(diff / 1000)
-  if (s < 60) return `${s}秒前`
+  if (s < 60) return t('pfp.time.secondsAgo', { n: s })
   const m = Math.floor(s / 60)
-  if (m < 60) return `${m}分钟前`
+  if (m < 60) return t('pfp.time.minutesAgo', { n: m })
   const h = Math.floor(m / 60)
-  if (h < 24) return `${h}小时前`
-  return `${Math.floor(h / 24)}天前`
+  if (h < 24) return t('pfp.time.hoursAgo', { n: h })
+  return t('pfp.time.daysAgo', { n: Math.floor(h / 24) })
 }

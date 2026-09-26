@@ -61,50 +61,50 @@ export function ServiceTab() {
             {[
               {
                 id: 'T-892',
-                title: '数据分析模块优化',
-                customer: '李思琪',
-                channel: '在线',
-                priority: '中',
-                status: '处理中',
+                title: 'ndbs.ticket.1.title',
+                customer: 'ndbs.ticket.1.customer',
+                channel: 'ndbs.channel.online',
+                priority: 'ndb.medium',
+                status: 'ndbs.ticketStatus.processing',
                 color: '#00f0ff',
               },
               {
                 id: 'T-893',
-                title: 'API集成异常反馈',
-                customer: '陈雅文',
-                channel: '邮件',
-                priority: '高',
-                status: '待分配',
+                title: 'ndbs.ticket.2.title',
+                customer: 'ndbs.ticket.2.customer',
+                channel: 'ndbs.channel.email',
+                priority: 'ndb.high',
+                status: 'ndbs.ticketStatus.pending',
                 color: '#005f73',
               },
               {
                 id: 'T-894',
-                title: '报表导出格式需求',
-                customer: '赵鹏飞',
-                channel: '电话',
-                priority: '低',
-                status: '已解决',
+                title: 'ndbs.ticket.3.title',
+                customer: 'ndbs.ticket.3.customer',
+                channel: 'ndbs.channel.phone',
+                priority: 'ndb.low',
+                status: 'ndbs.ticketStatus.resolved',
                 color: '#00ffc8',
               },
               {
                 id: 'T-895',
-                title: '权限配置咨询',
-                customer: '周小敏',
-                channel: '在线',
-                priority: '中',
-                status: '处理中',
+                title: 'ndbs.ticket.4.title',
+                customer: 'ndbs.ticket.4.customer',
+                channel: 'ndbs.channel.online',
+                priority: 'ndb.medium',
+                status: 'ndbs.ticketStatus.processing',
                 color: '#00ffcc',
               },
               {
                 id: 'T-896',
-                title: '安全合规文档申请',
-                customer: '吴志强',
-                channel: '邮件',
-                priority: '高',
-                status: '待分配',
+                title: 'ndbs.ticket.5.title',
+                customer: 'ndbs.ticket.5.customer',
+                channel: 'ndbs.channel.email',
+                priority: 'ndb.high',
+                status: 'ndbs.ticketStatus.pending',
                 color: '#005f73',
               },
-            ].map((t, i) => (
+            ].map((ticket, i) => (
               <div
                 key={i}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200"
@@ -113,46 +113,52 @@ export function ServiceTab() {
                   borderColor: 'rgba(255,255,255,0.04)',
                 }}
               >
-                <span className="text-[9px] text-white/15 tabular-nums w-12 shrink-0">{t.id}</span>
+                <span className="text-[9px] text-white/15 tabular-nums w-12 shrink-0">
+                  {ticket.id}
+                </span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] text-white/60 truncate">{t.title}</p>
+                  <p className="text-[11px] text-white/60 truncate">{t(ticket.title)}</p>
                   <p className="text-[9px] text-white/20">
-                    {t.customer} · {t.channel}
+                    {t(ticket.customer)} · {t(ticket.channel)}
                   </p>
                 </div>
                 <span
                   className="text-[8px] px-1.5 py-0.5 rounded-full"
                   style={{
                     background:
-                      t.priority === '高'
+                      ticket.priority === 'ndb.high'
                         ? 'rgba(0,95,115,0.1)'
-                        : t.priority === '中'
+                        : ticket.priority === 'ndb.medium'
                           ? 'rgba(0,255,204,0.1)'
                           : 'rgba(0,255,200,0.1)',
                     color:
-                      t.priority === '高' ? '#005f73' : t.priority === '中' ? '#00ffcc' : '#00ffc8',
+                      ticket.priority === 'ndb.high'
+                        ? '#005f73'
+                        : ticket.priority === 'ndb.medium'
+                          ? '#00ffcc'
+                          : '#00ffc8',
                   }}
                 >
-                  {t.priority}
+                  {t(ticket.priority)}
                 </span>
                 <span
                   className="text-[8px] px-1.5 py-0.5 rounded-full"
                   style={{
                     background:
-                      t.status === '已解决'
+                      ticket.status === 'ndbs.ticketStatus.resolved'
                         ? 'rgba(0,255,200,0.1)'
-                        : t.status === '处理中'
+                        : ticket.status === 'ndbs.ticketStatus.processing'
                           ? 'rgba(0,240,255,0.1)'
                           : 'rgba(0,95,115,0.1)',
                     color:
-                      t.status === '已解决'
+                      ticket.status === 'ndbs.ticketStatus.resolved'
                         ? '#00ffc8'
-                        : t.status === '处理中'
+                        : ticket.status === 'ndbs.ticketStatus.processing'
                           ? '#00f0ff'
                           : '#005f73',
                   }}
                 >
-                  {t.status}
+                  {t(ticket.status)}
                 </span>
               </div>
             ))}
@@ -171,30 +177,30 @@ export function ServiceTab() {
           <div className="space-y-3">
             {[
               {
-                name: '刘芳芳',
-                company: '生物智能',
+                name: 'ndbs.churn.1.name',
+                company: 'ndbs.churn.1.company',
                 days: 7,
                 health: 38,
-                strategy: '发送行业白皮书+预约技术演示',
-                channel: '邮件+电话',
+                strategy: 'ndbs.churn.1.strategy',
+                channel: 'ndbs.churn.1.channel',
                 color: '#005f73',
               },
               {
-                name: '黄丽华',
-                company: '健康智能',
+                name: 'ndbs.churn.2.name',
+                company: 'ndbs.churn.2.company',
                 days: 5,
                 health: 42,
-                strategy: '推送行业案例+优惠方案',
-                channel: '微信+短信',
+                strategy: 'ndbs.churn.2.strategy',
+                channel: 'ndbs.churn.2.channel',
                 color: '#005f73',
               },
               {
-                name: '王建华',
-                company: '量子计算',
+                name: 'ndbs.churn.3.name',
+                company: 'ndbs.churn.3.company',
                 days: 3,
                 health: 55,
-                strategy: '技术团队直接对接+定制演示',
-                channel: '视频会议',
+                strategy: 'ndbs.churn.3.strategy',
+                channel: 'ndbs.churn.3.channel',
                 color: '#00ffcc',
               },
             ].map((a, i) => (
@@ -205,18 +211,18 @@ export function ServiceTab() {
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-white/60">{a.name}</span>
-                    <span className="text-[9px] text-white/20">{a.company}</span>
+                    <span className="text-[11px] text-white/60">{t(a.name)}</span>
+                    <span className="text-[9px] text-white/20">{t(a.company)}</span>
                   </div>
                   <span
                     className="text-[9px] px-1.5 py-0.5 rounded"
                     style={{ background: `${a.color}15`, color: a.color }}
                   >
-                    {a.days}天未联系
+                    {t('ndb.daysNoContact', { days: a.days })}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[9px] text-white/20">健康度</span>
+                  <span className="text-[9px] text-white/20">{t('ndb.healthScore')}</span>
                   <div className="flex-1 h-1.5 rounded-full bg-white/5">
                     <div
                       className="h-full rounded-full"
@@ -235,9 +241,11 @@ export function ServiceTab() {
                 </div>
                 <p className="text-[9px] text-white/25 mb-1">
                   <Sparkles className="w-2.5 h-2.5 inline text-[#00d4ff]/60 mr-1" />
-                  AI策略: {a.strategy}
+                  {t('ndb.aiStrategy')}: {t(a.strategy)}
                 </p>
-                <p className="text-[8px] text-white/15">推荐渠道: {a.channel}</p>
+                <p className="text-[8px] text-white/15">
+                  {t('ndb.recommendChannel')}: {t(a.channel)}
+                </p>
               </div>
             ))}
           </div>

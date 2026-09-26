@@ -38,11 +38,17 @@ const GHOST_MODE_ENABLED = import.meta.env.DEV && import.meta.env.VITE_GHOST_MOD
 /** E2E 自动登录：仅当 Playwright webServer 以 VITE_E2E=true 构建时生效 */
 const E2E_AUTO_LOGIN = import.meta.env.VITE_E2E === 'true'
 
+// `label` holds an i18n key; resolve via t() where the display name is consumed
 const GHOST_ACCOUNTS = [
-  { label: '管理员 Admin', username: 'admin', role: 'admin', password: 'admin123' },
-  { label: '经理 Manager', username: 'manager', role: 'manager', password: 'ghost-manager' },
-  { label: '客服 Agent', username: 'agent', role: 'agent', password: 'ghost-agent' },
-  { label: '观察者 Viewer', username: 'viewer', role: 'viewer', password: 'ghost-viewer' },
+  { label: 'auc.ghostRoleAdmin', username: 'admin', role: 'admin', password: 'admin123' },
+  {
+    label: 'auc.ghostRoleManager',
+    username: 'manager',
+    role: 'manager',
+    password: 'ghost-manager',
+  },
+  { label: 'auc.ghostRoleAgent', username: 'agent', role: 'agent', password: 'ghost-agent' },
+  { label: 'auc.ghostRoleViewer', username: 'viewer', role: 'viewer', password: 'ghost-viewer' },
 ]
 
 // ==========================================
@@ -143,7 +149,7 @@ function AuthPage() {
             username: gu.username,
             email: gu.username + '@ghost.yyc3',
             password: gu.password,
-            displayName: gu.label,
+            displayName: t(gu.label),
           })
           r = await login({
             username: gu.username,
@@ -622,7 +628,7 @@ function AuthPage() {
                   border: '1px solid ' + (active ? tc.alpha(tc.primary, 0.2) : 'transparent'),
                 }}
               >
-                {code === 'zh' ? '🇨🇳 中文' : '🇺🇸 English'}
+                {code === 'zh' ? t('auc.langZh') : '🇺🇸 English'}
               </button>
             )
           })}

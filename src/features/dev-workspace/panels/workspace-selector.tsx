@@ -30,19 +30,21 @@ import { useCallback, useState } from 'react'
 import type { WorkspaceType } from '@/features/dev-workspace/multi-instance/types'
 import type { ThemeColors } from '@/shared/hooks/use-theme-colors'
 
+import { useI18n } from '@/app/components/i18n-context'
 import { useWorkspaceStore } from '@/features/dev-workspace/multi-instance/workspace-manager'
 
 const WS_TYPE_ICONS: Record<
   WorkspaceType,
   { icon: typeof Briefcase; color: string; label: string }
 > = {
-  project: { icon: Briefcase, color: '#3b82f6', label: '项目' },
-  'ai-session': { icon: Bot, color: '#a78bfa', label: 'AI 会话' },
-  debug: { icon: Bug, color: '#ef4444', label: '调试' },
-  custom: { icon: Layers, color: '#22c55e', label: '自定义' },
+  project: { icon: Briefcase, color: '#3b82f6', label: 'ws.type.project' },
+  'ai-session': { icon: Bot, color: '#a78bfa', label: 'ws.type.aiSession' },
+  debug: { icon: Bug, color: '#ef4444', label: 'ws.type.debug' },
+  custom: { icon: Layers, color: '#22c55e', label: 'ws.type.custom' },
 }
 
 export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
+  const { t } = useI18n()
   const {
     workspaces,
     activeWorkspaceId,
@@ -81,7 +83,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
       >
         <FolderOpen className="w-3 h-3" style={{ color: activeCfg?.color ?? tc.textMuted }} />
         <span className="text-[9px] max-w-[100px] truncate" style={{ color: tc.textPrimary }}>
-          {activeWs?.name ?? '无工作区'}
+          {activeWs?.name ?? t('ws.noWorkspace')}
         </span>
         <ChevronDown
           className="w-3 h-3"
@@ -117,7 +119,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
                     style={{ color: tc.textMuted }}
                   />
                   <p className="text-[9px]" style={{ color: tc.textMuted }}>
-                    暂无工作区
+                    {t('ws.empty')}
                   </p>
                 </div>
               )}
@@ -146,7 +148,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
                         {ws.name}
                       </p>
                       <p className="text-[7px]" style={{ color: tc.textMuted }}>
-                        {cfg.label}
+                        {t(cfg.label)}
                       </p>
                     </div>
                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -182,7 +184,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
                   className="w-full flex items-center gap-2 px-3 py-1.5 text-[10px] transition-colors hover:bg-white/5"
                   style={{ color: tc.primary }}
                 >
-                  <Plus className="w-3 h-3" /> 新建工作区
+                  <Plus className="w-3 h-3" /> {t('ws.newWorkspace')}
                 </button>
               </div>
             </motion.div>
@@ -214,7 +216,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
             >
               <div className="flex items-center justify-between mb-3">
                 <p className="text-[12px]" style={{ color: tc.textPrimary }}>
-                  新建工作区
+                  {t('ws.newWorkspace')}
                 </p>
                 <button onClick={() => setShowCreateDialog(false)}>
                   <X className="w-3.5 h-3.5" style={{ color: tc.textMuted }} />
@@ -224,13 +226,13 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
               <div className="space-y-3">
                 <div>
                   <label className="text-[9px] block mb-1" style={{ color: tc.textMuted }}>
-                    名称
+                    {t('ws.name')}
                   </label>
                   <input
                     autoFocus
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
-                    placeholder="我的项目"
+                    placeholder={t('ws.namePlaceholder')}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') handleCreate()
                     }}
@@ -245,7 +247,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
 
                 <div>
                   <label className="text-[9px] block mb-1" style={{ color: tc.textMuted }}>
-                    类型
+                    {t('ws.typeLabel')}
                   </label>
                   <div className="grid grid-cols-2 gap-1.5">
                     {(
@@ -265,7 +267,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
                         }}
                       >
                         <cfg.icon className="w-3 h-3" />
-                        {cfg.label}
+                        {t(cfg.label)}
                       </button>
                     ))}
                   </div>
@@ -277,7 +279,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
                     className="text-[10px] px-3 py-1 rounded-lg border"
                     style={{ borderColor: tc.borderDefault, color: tc.textMuted }}
                   >
-                    取消
+                    {t('ws.cancel')}
                   </button>
                   <button
                     onClick={handleCreate}
@@ -290,7 +292,7 @@ export function WorkspaceSelector({ tc }: { tc: ThemeColors }) {
                       opacity: newName.trim() ? 1 : 0.4,
                     }}
                   >
-                    创建
+                    {t('ws.create')}
                   </button>
                 </div>
               </div>

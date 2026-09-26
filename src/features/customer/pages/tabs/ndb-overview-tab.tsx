@@ -113,6 +113,7 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
                 tick={{ fill: 'rgba(255,255,255,0.2)', fontSize: 10 }}
                 axisLine={false}
                 tickLine={false}
+                tickFormatter={(v) => t(v)}
               />
               <YAxis
                 tick={{ fill: 'rgba(255,255,255,0.15)', fontSize: 10 }}
@@ -123,6 +124,7 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
               <Area
                 type="monotone"
                 dataKey="新客户"
+                name={t('ndb.newCustomers')}
                 stroke="#00f0ff"
                 fill="url(#gradCyan)"
                 strokeWidth={2}
@@ -130,6 +132,7 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
               <Area
                 type="monotone"
                 dataKey="跟进"
+                name={t('ndb.followUp')}
                 stroke="#00d4ff"
                 fill="url(#gradMagenta)"
                 strokeWidth={2}
@@ -137,6 +140,7 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
               <Area
                 type="monotone"
                 dataKey="成交"
+                name={t('ndb.deals')}
                 stroke="#00ffcc"
                 fill="rgba(0,255,204,0.05)"
                 strokeWidth={2}
@@ -188,7 +192,7 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
                   className="w-1.5 h-1.5 rounded-full inline-block"
                   style={{ background: s.color }}
                 />
-                {s.name} {s.value}
+                {t(s.name)} {s.value}
               </span>
             ))}
           </div>
@@ -208,12 +212,37 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
           </h3>
           <div className="space-y-2">
             {[
-              { task: '跟进王建华技术方案评估', priority: '高', time: '10:00', color: '#005f73' },
-              { task: '准备李思琪季度采购合同', priority: '中', time: '14:00', color: '#00ffcc' },
-              { task: '陈雅文续约方案审批', priority: '高', time: '15:30', color: '#005f73' },
-              { task: '孙浩然竞品分析报告', priority: '中', time: '16:00', color: '#00ffcc' },
-              { task: '吴志强安全合规文档准备', priority: '低', time: '17:00', color: '#00ffc8' },
-            ].map((t, i) => (
+              {
+                task: 'ndbo.task.1.task',
+                priority: 'ndb.high',
+                time: 'ndbo.task.1.time',
+                color: '#005f73',
+              },
+              {
+                task: 'ndbo.task.2.task',
+                priority: 'ndb.medium',
+                time: 'ndbo.task.2.time',
+                color: '#00ffcc',
+              },
+              {
+                task: 'ndbo.task.3.task',
+                priority: 'ndb.high',
+                time: 'ndbo.task.3.time',
+                color: '#005f73',
+              },
+              {
+                task: 'ndbo.task.4.task',
+                priority: 'ndb.medium',
+                time: 'ndbo.task.4.time',
+                color: '#00ffcc',
+              },
+              {
+                task: 'ndbo.task.5.task',
+                priority: 'ndb.low',
+                time: 'ndbo.task.5.time',
+                color: '#00ffc8',
+              },
+            ].map((item, i) => (
               <div
                 key={i}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-200 hover:border-white/10"
@@ -224,21 +253,21 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
               >
                 <div
                   className="w-1.5 h-8 rounded-full"
-                  style={{ background: t.color, boxShadow: `0 0 6px ${t.color}40` }}
+                  style={{ background: item.color, boxShadow: `0 0 6px ${item.color}40` }}
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] text-white/60 truncate">{t.task}</p>
-                  <p className="text-[9px] text-white/20">{t.time}</p>
+                  <p className="text-[11px] text-white/60 truncate">{t(item.task)}</p>
+                  <p className="text-[9px] text-white/20">{t(item.time)}</p>
                 </div>
                 <span
                   className="text-[8px] px-1.5 py-0.5 rounded-full"
                   style={{
-                    background: `${t.color}15`,
-                    color: t.color,
-                    border: `1px solid ${t.color}25`,
+                    background: `${item.color}15`,
+                    color: item.color,
+                    border: `1px solid ${item.color}25`,
                   }}
                 >
-                  {t.priority}
+                  {t(item.priority)}
                 </span>
               </div>
             ))}
@@ -257,37 +286,37 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
           <div className="space-y-2">
             {[
               {
-                action: '立即联系',
-                target: '王建华（量子计算）',
-                reason: '健康度连续3天下降，风险升至中级',
+                action: 'ndbo.rec.1.action',
+                target: 'ndbo.rec.1.target',
+                reason: 'ndbo.rec.1.reason',
                 icon: AlertTriangle,
                 color: '#005f73',
               },
               {
-                action: '发送方案',
-                target: '孙浩然（智造工业）',
-                reason: '竞对报价中，需加速推进',
+                action: 'ndbo.rec.2.action',
+                target: 'ndbo.rec.2.target',
+                reason: 'ndbo.rec.2.reason',
                 icon: Send,
                 color: '#00ffcc',
               },
               {
-                action: '安排续约',
-                target: '周小敏（新智教育）',
-                reason: '合同30天内到期，满意度高',
+                action: 'ndbo.rec.3.action',
+                target: 'ndbo.rec.3.target',
+                reason: 'ndbo.rec.3.reason',
                 icon: Repeat,
                 color: '#00ffc8',
               },
               {
-                action: '提档升级',
-                target: '吴志强（金融云）',
-                reason: 'AI评分78→85可能，建议安全架构会议',
+                action: 'ndbo.rec.4.action',
+                target: 'ndbo.rec.4.target',
+                reason: 'ndbo.rec.4.reason',
                 icon: Zap,
                 color: '#00d4ff',
               },
               {
-                action: '唤醒跟进',
-                target: '刘芳芳（生物智能）',
-                reason: '7天未联系，初期客户需持续培育',
+                action: 'ndbo.rec.5.action',
+                target: 'ndbo.rec.5.target',
+                reason: 'ndbo.rec.5.reason',
                 icon: Flame,
                 color: '#008b9d',
               },
@@ -312,11 +341,11 @@ export function OverviewTab({ contacts }: { contacts: Contact[] }) {
                       className="text-[10px] px-1.5 py-0.5 rounded"
                       style={{ background: `${r.color}15`, color: r.color }}
                     >
-                      {r.action}
+                      {t(r.action)}
                     </span>
-                    <span className="text-[11px] text-white/60 truncate">{r.target}</span>
+                    <span className="text-[11px] text-white/60 truncate">{t(r.target)}</span>
                   </div>
-                  <p className="text-[9px] text-white/25 mt-0.5">{r.reason}</p>
+                  <p className="text-[9px] text-white/25 mt-0.5">{t(r.reason)}</p>
                 </div>
                 <ChevronRight className="w-3.5 h-3.5 text-white/10 group-hover:text-white/30 transition-colors shrink-0" />
               </div>

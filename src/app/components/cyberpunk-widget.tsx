@@ -16,6 +16,8 @@ import {
 } from 'lucide-react'
 import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
+import { useI18n } from '@/app/components/i18n-context'
+
 // F-07: 懒加载 ChatInterface——它携带 react-markdown/highlight.js(vendor-markdown),
 // 静态导入会把整个 markdown 栈拖进首屏 index chunk
 const LazyChatInterface = lazy(() =>
@@ -26,13 +28,14 @@ const LazyChatInterface = lazy(() =>
 
 type WidgetTab = 'chat' | 'clm' | 'aicall' | 'tools' | 'workflow' | 'insights'
 
+// Tab labels hold i18n keys; resolved via t() at render site
 const tabs = [
-  { id: 'chat' as WidgetTab, label: '聊天', icon: MessageCircle, color: '#00f0ff' },
-  { id: 'clm' as WidgetTab, label: '客户', icon: Users, color: '#00d4ff' },
-  { id: 'aicall' as WidgetTab, label: '呼叫', icon: Phone, color: '#00ffcc' },
-  { id: 'tools' as WidgetTab, label: '工具', icon: Wrench, color: '#00ffc8' },
-  { id: 'workflow' as WidgetTab, label: '工作流', icon: GitBranch, color: '#00d4ff' },
-  { id: 'insights' as WidgetTab, label: '洞察', icon: BarChart3, color: '#00f0ff' },
+  { id: 'chat' as WidgetTab, label: 'cwk.tabChat', icon: MessageCircle, color: '#00f0ff' },
+  { id: 'clm' as WidgetTab, label: 'cwk.tabClm', icon: Users, color: '#00d4ff' },
+  { id: 'aicall' as WidgetTab, label: 'cwk.tabAicall', icon: Phone, color: '#00ffcc' },
+  { id: 'tools' as WidgetTab, label: 'cwk.tabTools', icon: Wrench, color: '#00ffc8' },
+  { id: 'workflow' as WidgetTab, label: 'cwk.tabWorkflow', icon: GitBranch, color: '#00d4ff' },
+  { id: 'insights' as WidgetTab, label: 'cwk.tabInsights', icon: BarChart3, color: '#00f0ff' },
 ]
 
 /**
@@ -43,6 +46,7 @@ const tabs = [
  * @param onSwitchMode - Callback to switch to standalone (full-screen) mode.
  */
 export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) {
+  const { t } = useI18n()
   const [minimized, setMinimized] = useState(false)
   const [maximized, setMaximized] = useState(false)
   const [activeTab, setActiveTab] = useState<WidgetTab>('chat')
@@ -178,7 +182,7 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
       >
         <div className="h-full flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-white/10 text-4xl tracking-widest mb-2">宿主应用</h1>
+            <h1 className="text-white/10 text-4xl tracking-widest mb-2">{t('cwk.hostApp')}</h1>
             <p className="text-white/5 text-sm">HOST APPLICATION</p>
           </div>
         </div>
@@ -189,7 +193,7 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
         ref={widgetRef}
         className="fixed z-[10000] flex flex-col"
         role="dialog"
-        aria-label="YYC³ AI 助手"
+        aria-label={t('cwk.aiAssistant')}
         style={{
           width: maximized ? '100vw' : size.w,
           height: maximized ? '100vh' : size.h,
@@ -279,7 +283,7 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
                   className="text-[#00d4ff]"
                   style={{ textShadow: '0 0 6px rgba(0,212,255,0.5)' }}
                 >
-                  言语智能
+                  {t('cwk.brandName')}
                 </span>
               </span>
               <span className="text-[8px] text-[#00f0ff]/40 block -mt-0.5 tracking-widest">
@@ -291,21 +295,21 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
             <button
               onClick={onSwitchMode}
               className="p-1.5 rounded-lg transition-all duration-300 hover:bg-white/10 group"
-              title="独立应用模式"
+              title={t('cwk.switchToStandalone')}
             >
               <ArrowLeft className="w-3.5 h-3.5 text-white/30 group-hover:text-[#00d4ff]" />
             </button>
             <button
               onClick={() => setMinimized(true)}
               className="p-1.5 rounded-lg transition-all duration-300 hover:bg-white/10 group"
-              aria-label="最小化"
+              aria-label={t('cwk.minimize')}
             >
               <Minus className="w-3.5 h-3.5 text-white/30 group-hover:text-[#00ffcc]" />
             </button>
             <button
               onClick={toggleMaximize}
               className="p-1.5 rounded-lg transition-all duration-300 hover:bg-white/10 group"
-              aria-label={maximized ? '还原' : '最大化'}
+              aria-label={maximized ? t('cwk.restore') : t('cwk.maximize')}
             >
               {maximized ? (
                 <Minimize2 className="w-3.5 h-3.5 text-white/30 group-hover:text-[#00ffc8]" />
@@ -316,7 +320,7 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
             <button
               onClick={() => setMinimized(true)}
               className="p-1.5 rounded-lg transition-all duration-300 hover:bg-[#005f7320] group"
-              aria-label="关闭"
+              aria-label={t('cwk.close')}
             >
               <X className="w-3.5 h-3.5 text-white/30 group-hover:text-[#005f73]" />
             </button>
@@ -344,7 +348,7 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
                 }}
               >
                 <Icon className="w-3.5 h-3.5" />
-                <span>{tab.label}</span>
+                <span>{t(tab.label)}</span>
               </button>
             )
           })}
@@ -380,14 +384,14 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
           }}
         >
           {[
-            { label: '新对话', icon: MessageCircle, color: '#00f0ff' },
+            { label: t('cwk.qaNewChat'), icon: MessageCircle, color: '#00f0ff' },
             {
-              label: '历史',
+              label: t('cwk.qaHistory'),
               icon: () => <span className="text-[10px]">📜</span>,
               color: '#00d4ff',
             },
             {
-              label: '设置',
+              label: t('cwk.qaSettings'),
               icon: () => <span className="text-[10px]">⚙️</span>,
               color: '#00ffcc',
             },
@@ -426,12 +430,13 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
 
 /* Mini tool list for widget */
 function WidgetTools() {
+  const { t } = useI18n()
   const miniTools = [
-    { name: '智能代码生成', icon: '💻', color: '#00f0ff' },
-    { name: '数据流分析', icon: '📊', color: '#00d4ff' },
-    { name: '安全防护盾', icon: '🛡️', color: '#00ffcc' },
-    { name: '知识图谱', icon: '🧠', color: '#00ffc8' },
-    { name: '性能优化器', icon: '⚡', color: '#005f73' },
+    { name: t('cwk.toolCodeGen'), icon: '💻', color: '#00f0ff' },
+    { name: t('cwk.toolDataFlow'), icon: '📊', color: '#00d4ff' },
+    { name: t('cwk.toolSecurityShield'), icon: '🛡️', color: '#00ffcc' },
+    { name: t('cwk.toolKnowledgeGraph'), icon: '🧠', color: '#00ffc8' },
+    { name: t('cwk.toolPerfOptimizer'), icon: '⚡', color: '#005f73' },
   ]
   return (
     <div
@@ -462,7 +467,7 @@ function WidgetTools() {
             className="ml-auto text-[10px] px-2 py-0.5 rounded"
             style={{ background: `${tool.color}15`, color: tool.color }}
           >
-            启动
+            {t('cwk.launch')}
           </span>
         </div>
       ))}
@@ -471,18 +476,21 @@ function WidgetTools() {
 }
 
 function WidgetWorkflow() {
+  const { t } = useI18n()
   const nodes = [
-    { label: '分析', status: 'done', emoji: '📥' },
-    { label: '识别', status: 'done', emoji: '🧠' },
-    { label: '执行', status: 'active', emoji: '⚡' },
-    { label: '优化', status: 'pending', emoji: '🔧' },
+    { label: t('cwk.nodeAnalyze'), status: 'done', emoji: '📥' },
+    { label: t('cwk.nodeRecognize'), status: 'done', emoji: '🧠' },
+    { label: t('cwk.nodeExecute'), status: 'active', emoji: '⚡' },
+    { label: t('cwk.nodeOptimize'), status: 'pending', emoji: '🔧' },
   ]
   return (
     <div
       className="p-4 h-full overflow-y-auto"
       style={{ scrollbarWidth: 'none', animation: 'spring-in 0.3s var(--spring-easing) both' }}
     >
-      <p className="text-[10px] text-white/30 tracking-wider mb-4 uppercase">活跃工作流 Pipeline</p>
+      <p className="text-[10px] text-white/30 tracking-wider mb-4 uppercase">
+        {t('cwk.activePipeline')}
+      </p>
       <div className="space-y-3">
         {nodes.map((node, i) => (
           <div
@@ -521,7 +529,11 @@ function WidgetWorkflow() {
                       : 'rgba(255,255,255,0.15)',
               }}
             >
-              {node.status === 'done' ? '✓ 完成' : node.status === 'active' ? '● 执行中' : '○ 等待'}
+              {node.status === 'done'
+                ? t('cwk.statusDone')
+                : node.status === 'active'
+                  ? t('cwk.statusActive')
+                  : t('cwk.statusPending')}
             </span>
           </div>
         ))}
@@ -531,17 +543,21 @@ function WidgetWorkflow() {
 }
 
 function WidgetInsights() {
+  const { t } = useI18n()
+  // `id` drives bar-width logic; label holds the translated text
   const metrics = [
-    { label: '响应', value: '12ms', color: '#00f0ff' },
-    { label: '成功率', value: '98.7%', color: '#00ffc8' },
-    { label: '负载', value: '42%', color: '#00d4ff' },
+    { id: 'response', label: t('cwk.metricResponse'), value: '12ms', color: '#00f0ff' },
+    { id: 'success', label: t('cwk.metricSuccessRate'), value: '98.7%', color: '#00ffc8' },
+    { id: 'load', label: t('cwk.metricLoad'), value: '42%', color: '#00d4ff' },
   ]
   return (
     <div
       className="p-4 h-full overflow-y-auto"
       style={{ scrollbarWidth: 'none', animation: 'spring-in 0.3s var(--spring-easing) both' }}
     >
-      <p className="text-[10px] text-white/30 tracking-wider mb-4 uppercase">实时指标</p>
+      <p className="text-[10px] text-white/30 tracking-wider mb-4 uppercase">
+        {t('cwk.realtimeMetrics')}
+      </p>
       <div className="space-y-3">
         {metrics.map((m, i) => (
           <div
@@ -565,7 +581,7 @@ function WidgetInsights() {
               <div
                 className="h-full rounded-full"
                 style={{
-                  width: m.label === '负载' ? '42%' : m.label === '成功率' ? '98.7%' : '88%',
+                  width: m.id === 'load' ? '42%' : m.id === 'success' ? '98.7%' : '88%',
                   background: `linear-gradient(90deg, ${m.color}, ${m.color}80)`,
                   boxShadow: `0 0 6px ${m.color}50`,
                 }}
@@ -579,6 +595,7 @@ function WidgetInsights() {
 }
 
 function WidgetCLM() {
+  const { t } = useI18n()
   const customers = [
     { name: '张明远', stage: 'conversion', health: 92, color: '#00ffc8' },
     { name: '李思琪', stage: 'deal', health: 88, color: '#00ffc8' },
@@ -587,18 +604,18 @@ function WidgetCLM() {
     { name: '赵鹏飞', stage: 'loyalty', health: 98, color: '#00ffc8' },
   ]
   const stageColors: Record<string, string> = {
-    获客: '#00f0ff',
-    转化: '#00d4ff',
-    成交: '#00ffcc',
-    服务: '#00ffc8',
-    忠诚: '#008b9d',
+    acquisition: '#00f0ff',
+    conversion: '#00d4ff',
+    deal: '#00ffcc',
+    service: '#00ffc8',
+    loyalty: '#008b9d',
   }
   return (
     <div
       className="p-3 space-y-2 overflow-y-auto h-full"
       style={{ scrollbarWidth: 'none', animation: 'spring-in 0.3s var(--spring-easing) both' }}
     >
-      <p className="text-[10px] text-white/30 tracking-wider mb-3 uppercase">客户生命周期 · CLM</p>
+      <p className="text-[10px] text-white/30 tracking-wider mb-3 uppercase">{t('cwk.clmTitle')}</p>
       {/* Mini funnel */}
       <div className="flex gap-1 mb-3">
         {['acquisition', 'conversion', 'deal', 'service', 'loyalty'].map((s) => (
@@ -611,7 +628,7 @@ function WidgetCLM() {
               border: `1px solid ${stageColors[s]}20`,
             }}
           >
-            {s}
+            {t(`cwk.stage.${s}`)}
           </div>
         ))}
       </div>
@@ -635,7 +652,7 @@ function WidgetCLM() {
             className="text-[9px] px-1.5 py-0.5 rounded"
             style={{ background: `${stageColors[c.stage]}10`, color: stageColors[c.stage] }}
           >
-            {c.stage}
+            {t(`cwk.stage.${c.stage}`)}
           </span>
           <span className="text-[10px]" style={{ color: c.color }}>
             {c.health}
@@ -647,24 +664,52 @@ function WidgetCLM() {
 }
 
 function WidgetAICall() {
+  const { t } = useI18n()
+  // type/status hold i18n keys; `ai`/`active` keep the original style-gating semantics
   const calls = [
-    { name: '张明远', type: 'AI外呼', status: '通话中', color: '#00ffc8' },
-    { name: '李思琪', type: 'AI跟进', status: '等待中', color: '#00ffcc' },
-    { name: '王建华', type: '人工转接', status: '排队中', color: '#008b9d' },
-    { name: '陈雅文', type: 'AI回访', status: '已完成', color: '#00f0ff' },
+    {
+      name: '张明远',
+      type: 'cwk.callTypeOutbound',
+      status: 'cwk.callStatusInCall',
+      ai: true,
+      active: true,
+      color: '#00ffc8',
+    },
+    {
+      name: '李思琪',
+      type: 'cwk.callTypeFollowup',
+      status: 'cwk.callStatusWaiting',
+      ai: true,
+      color: '#00ffcc',
+    },
+    {
+      name: '王建华',
+      type: 'cwk.callTypeTransfer',
+      status: 'cwk.callStatusQueued',
+      color: '#008b9d',
+    },
+    {
+      name: '陈雅文',
+      type: 'cwk.callTypeCallback',
+      status: 'cwk.callStatusDone',
+      ai: true,
+      color: '#00f0ff',
+    },
   ]
   return (
     <div
       className="p-3 space-y-2 overflow-y-auto h-full"
       style={{ scrollbarWidth: 'none', animation: 'spring-in 0.3s var(--spring-easing) both' }}
     >
-      <p className="text-[10px] text-white/30 tracking-wider mb-3 uppercase">AI 智能呼叫</p>
+      <p className="text-[10px] text-white/30 tracking-wider mb-3 uppercase">
+        {t('cwk.aiCallTitle')}
+      </p>
       {/* Quick stats */}
       <div className="flex gap-2 mb-3">
         {[
-          { l: '今日', v: '247', c: '#00ffcc' },
-          { l: '接通', v: '78%', c: '#00ffc8' },
-          { l: 'AI转化', v: '24%', c: '#00d4ff' },
+          { l: t('cwk.statToday'), v: '247', c: '#00ffcc' },
+          { l: t('cwk.statConnected'), v: '78%', c: '#00ffc8' },
+          { l: t('cwk.statAiConversion'), v: '24%', c: '#00d4ff' },
         ].map((s, i) => (
           <div
             key={i}
@@ -683,31 +728,31 @@ function WidgetAICall() {
           key={i}
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all duration-300 cursor-pointer"
           style={{
-            background: c.status === '通话中' ? 'rgba(0,255,200,0.05)' : 'rgba(10,10,10,0.4)',
-            borderColor: c.status === '通话中' ? 'rgba(0,255,200,0.15)' : 'rgba(255,255,255,0.04)',
-            animation: c.status === '通话中' ? 'border-glow 3s ease-in-out infinite' : 'none',
+            background: c.active ? 'rgba(0,255,200,0.05)' : 'rgba(10,10,10,0.4)',
+            borderColor: c.active ? 'rgba(0,255,200,0.15)' : 'rgba(255,255,255,0.04)',
+            animation: c.active ? 'border-glow 3s ease-in-out infinite' : 'none',
           }}
         >
           <div
             className="w-2 h-2 rounded-full shrink-0"
             style={{
               background: c.color,
-              boxShadow: c.status === '通话中' ? `0 0 6px ${c.color}` : 'none',
-              animation: c.status === '通话中' ? 'neon-pulse 1.5s ease-in-out infinite' : 'none',
+              boxShadow: c.active ? `0 0 6px ${c.color}` : 'none',
+              animation: c.active ? 'neon-pulse 1.5s ease-in-out infinite' : 'none',
             }}
           />
           <span className="text-sm text-white/60 flex-1">{c.name}</span>
           <span
             className="text-[9px] px-1.5 py-0.5 rounded"
             style={{
-              background: c.type.includes('AI') ? 'rgba(0,212,255,0.1)' : 'rgba(0,139,157,0.1)',
-              color: c.type.includes('AI') ? '#00d4ff' : '#008b9d',
+              background: c.ai ? 'rgba(0,212,255,0.1)' : 'rgba(0,139,157,0.1)',
+              color: c.ai ? '#00d4ff' : '#008b9d',
             }}
           >
-            {c.type}
+            {t(c.type)}
           </span>
           <span className="text-[10px]" style={{ color: c.color }}>
-            {c.status}
+            {t(c.status)}
           </span>
         </div>
       ))}

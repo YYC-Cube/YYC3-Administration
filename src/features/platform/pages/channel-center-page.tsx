@@ -53,7 +53,7 @@ export function ChannelCenterPage() {
   const channels: Channel[] = [
     {
       id: 'wechat',
-      name: '微信公众号',
+      name: t('chc.channel.wechat'),
       type: 'WeChat',
       status: 'connected',
       users: 28500,
@@ -63,7 +63,7 @@ export function ChannelCenterPage() {
     },
     {
       id: 'douyin',
-      name: '抖音',
+      name: t('chc.channel.douyin'),
       type: 'Douyin',
       status: 'connected',
       users: 15200,
@@ -73,7 +73,7 @@ export function ChannelCenterPage() {
     },
     {
       id: 'xiaohongshu',
-      name: '小红书',
+      name: t('chc.channel.xiaohongshu'),
       type: 'XHS',
       status: 'connected',
       users: 12800,
@@ -83,7 +83,7 @@ export function ChannelCenterPage() {
     },
     {
       id: 'feishu',
-      name: '飞书',
+      name: t('chc.channel.feishu'),
       type: 'Feishu',
       status: 'warning',
       users: 8600,
@@ -93,7 +93,7 @@ export function ChannelCenterPage() {
     },
     {
       id: 'dingtalk',
-      name: '钉钉',
+      name: t('chc.channel.dingtalk'),
       type: 'DingTalk',
       status: 'connected',
       users: 6400,
@@ -103,7 +103,7 @@ export function ChannelCenterPage() {
     },
     {
       id: 'alipay',
-      name: '支付宝生活号',
+      name: t('chc.channel.alipayLife'),
       type: 'Alipay',
       status: 'disconnected',
       users: 0,
@@ -158,7 +158,7 @@ export function ChannelCenterPage() {
       case 'disconnected':
         return t('ch.status.disconnected')
       default:
-        return '未知'
+        return t('chc.status.unknown')
     }
   }
 
@@ -217,21 +217,21 @@ export function ChannelCenterPage() {
           {[
             {
               label: t('ch.stat.channels'),
-              value: '6个',
+              value: t('chc.stat.countValue', { n: 6 }),
               trend: t('ch.allOnline'),
               trendUp: true,
               color: '#f97316',
             },
             {
               label: t('ch.stat.dau'),
-              value: '5.8万',
+              value: t('chc.stat.dauValue'),
               trend: '+12%',
               trendUp: true,
               color: '#22c55e',
             },
             {
               label: t('ch.stat.syncTasks'),
-              value: '32个',
+              value: t('chc.stat.countValue', { n: 32 }),
               trend: t('ch.sync.running'),
               color: '#3b82f6',
             },
@@ -329,15 +329,15 @@ export function ChannelCenterPage() {
                     {channel.status !== 'disconnected' && (
                       <div className="grid grid-cols-2 gap-2 text-[10px]">
                         <div>
-                          <p className="text-white/30">用户数</p>
+                          <p className="text-white/30">{t('chc.field.users')}</p>
                           <p className="text-white/60">{channel.users.toLocaleString()}</p>
                         </div>
                         <div>
-                          <p className="text-white/30">订单数</p>
+                          <p className="text-white/30">{t('chc.field.orders')}</p>
                           <p className="text-white/60">{channel.orders.toLocaleString()}</p>
                         </div>
                         <div>
-                          <p className="text-white/30">营收</p>
+                          <p className="text-white/30">{t('chc.field.revenue')}</p>
                           <p className="text-white/60">¥{(channel.revenue / 1000).toFixed(1)}K</p>
                         </div>
                         <div>
@@ -357,7 +357,7 @@ export function ChannelCenterPage() {
                           color: tc.primary,
                         }}
                       >
-                        立即配置
+                        {t('chc.action.configureNow')}
                       </button>
                     )}
                   </div>
@@ -367,7 +367,7 @@ export function ChannelCenterPage() {
 
             {/* Growth Trend */}
             <NeonCard color={tc.accent}>
-              <h3 className="text-[12px] text-white/60 mb-3">渠道用户增长趋势</h3>
+              <h3 className="text-[12px] text-white/60 mb-3">{t('chc.chart.growthTrend')}</h3>
               <div className="h-48">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={channelGrowthData}>
@@ -440,7 +440,7 @@ export function ChannelCenterPage() {
                         color: tc.secondary,
                       }}
                     >
-                      配置
+                      {t('chc.action.configure')}
                     </button>
                     <button
                       className="px-3 py-1 rounded-lg text-[10px] transition-all"
@@ -451,7 +451,7 @@ export function ChannelCenterPage() {
                         color: tc.accent,
                       }}
                     >
-                      测试连接
+                      {t('chc.action.testConnection')}
                     </button>
                   </div>
                 </div>
@@ -465,37 +465,37 @@ export function ChannelCenterPage() {
             <NeonCard color={tc.secondary}>
               <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
                 <Activity className="w-4 h-4" style={{ color: tc.secondary }} />
-                数据同步任务
+                {t('chc.sync.tasks')}
               </h3>
               <div className="space-y-3">
                 {[
                   {
-                    source: '微信公众号',
-                    target: '主数据库',
-                    type: '实时同步',
+                    source: t('chc.channel.wechat'),
+                    target: t('chc.target.mainDb'),
+                    type: t('chc.syncType.realtime'),
                     status: 'running',
-                    lastSync: '1分钟前',
+                    lastSync: t('chc.time.minAgo', { n: 1 }),
                   },
                   {
-                    source: '抖音',
-                    target: '主数据库',
-                    type: '定时同步',
+                    source: t('chc.channel.douyin'),
+                    target: t('chc.target.mainDb'),
+                    type: t('chc.syncType.scheduled'),
                     status: 'running',
-                    lastSync: '5分钟前',
+                    lastSync: t('chc.time.minAgo', { n: 5 }),
                   },
                   {
-                    source: '小红书',
-                    target: '主数据库',
-                    type: '增量同步',
+                    source: t('chc.channel.xiaohongshu'),
+                    target: t('chc.target.mainDb'),
+                    type: t('chc.syncType.incremental'),
                     status: 'running',
-                    lastSync: '8分钟前',
+                    lastSync: t('chc.time.minAgo', { n: 8 }),
                   },
                   {
-                    source: '飞书',
-                    target: '主数据库',
-                    type: '定时同步',
+                    source: t('chc.channel.feishu'),
+                    target: t('chc.target.mainDb'),
+                    type: t('chc.syncType.scheduled'),
                     status: 'warning',
-                    lastSync: '2小时前',
+                    lastSync: t('chc.time.hoursAgo', { n: 2 }),
                   },
                 ].map((task, idx) => (
                   <div
@@ -532,12 +532,16 @@ export function ChannelCenterPage() {
                         ) : (
                           <AlertTriangle className="w-2.5 h-2.5" />
                         )}
-                        {task.status === 'running' ? '运行中' : '异常'}
+                        {task.status === 'running'
+                          ? t('chc.status.running')
+                          : t('chc.status.error')}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-[9px] text-white/40">
                       <Clock className="w-3 h-3" />
-                      <span>最近同步: {task.lastSync}</span>
+                      <span>
+                        {t('chc.field.lastSync')}: {task.lastSync}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -550,7 +554,7 @@ export function ChannelCenterPage() {
           <div className="space-y-4">
             {/* ROI Comparison */}
             <NeonCard color={tc.accent}>
-              <h3 className="text-[12px] text-white/60 mb-3">渠道ROI对比</h3>
+              <h3 className="text-[12px] text-white/60 mb-3">{t('chc.chart.roiCompare')}</h3>
               <div className="h-48">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={channels.filter((c) => c.status !== 'disconnected')}>
@@ -580,9 +584,24 @@ export function ChannelCenterPage() {
             {/* Revenue Analysis */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
-                { metric: '总营收', value: '¥380K', trend: '+15%', icon: DollarSign },
-                { metric: '平均订单价值', value: '¥139', trend: '+8%', icon: TrendingUp },
-                { metric: '转化率', value: '4.8%', trend: '+1.2%', icon: Users },
+                {
+                  metric: t('chc.metric.totalRevenue'),
+                  value: '¥380K',
+                  trend: '+15%',
+                  icon: DollarSign,
+                },
+                {
+                  metric: t('chc.metric.avgOrderValue'),
+                  value: '¥139',
+                  trend: '+8%',
+                  icon: TrendingUp,
+                },
+                {
+                  metric: t('chc.metric.conversionRate'),
+                  value: '4.8%',
+                  trend: '+1.2%',
+                  icon: Users,
+                },
               ].map((item, idx) => (
                 <NeonCard key={idx} color={tc.success}>
                   <div className="flex items-start justify-between">
@@ -613,27 +632,31 @@ export function ChannelCenterPage() {
           <NeonCard color={tc.warning}>
             <h3 className="text-[12px] text-white/60 mb-4 flex items-center gap-2">
               <Megaphone className="w-4 h-4" style={{ color: tc.warning }} />
-              跨渠道营销活动
+              {t('chc.campaign.title')}
             </h3>
             <div className="space-y-3">
               {[
                 {
-                  name: '春季促销活动',
-                  channels: ['微信', '抖音', '小红书'],
+                  name: t('chc.campaign.springPromo'),
+                  channels: [
+                    t('chc.channelShort.wechat'),
+                    t('chc.channel.douyin'),
+                    t('chc.channel.xiaohongshu'),
+                  ],
                   status: 'active',
-                  reach: '18.5万',
+                  reach: t('chc.campaign.springReach'),
                 },
                 {
-                  name: '新品发布会',
-                  channels: ['全渠道'],
+                  name: t('chc.campaign.launchEvent'),
+                  channels: [t('chc.channel.all')],
                   status: 'scheduled',
-                  reach: '预计25万',
+                  reach: t('chc.campaign.launchReach'),
                 },
                 {
-                  name: '会员日活动',
-                  channels: ['微信', '支付宝'],
+                  name: t('chc.campaign.memberDay'),
+                  channels: [t('chc.channelShort.wechat'), t('chc.channelShort.alipay')],
                   status: 'ended',
-                  reach: '12.3万',
+                  reach: t('chc.campaign.memberReach'),
                 },
               ].map((campaign, idx) => (
                 <div
@@ -674,15 +697,19 @@ export function ChannelCenterPage() {
                       }}
                     >
                       {campaign.status === 'active'
-                        ? '进行中'
+                        ? t('chc.campaignStatus.active')
                         : campaign.status === 'scheduled'
-                          ? '已排期'
-                          : '已结束'}
+                          ? t('chc.campaignStatus.scheduled')
+                          : t('chc.campaignStatus.ended')}
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-[9px] text-white/40">
-                    <span>渠道: {campaign.channels.join(', ')}</span>
-                    <span>触达: {campaign.reach}</span>
+                    <span>
+                      {t('chc.field.channels')}: {campaign.channels.join(', ')}
+                    </span>
+                    <span>
+                      {t('chc.field.reach')}: {campaign.reach}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -697,15 +724,15 @@ export function ChannelCenterPage() {
           <div className="flex items-start gap-3">
             <TrendingUp className="w-5 h-5 shrink-0" style={{ color: tc.accent }} />
             <div>
-              <h4 className="text-[11px] text-white/60 mb-2">AI 智能特性</h4>
+              <h4 className="text-[11px] text-white/60 mb-2">{t('chc.ai.features')}</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                 {[
-                  '渠道配置智能验证与错误诊断',
-                  '数据冲突AI智能解决',
-                  '渠道效果AI评估与排名',
-                  '转化归因AI模型',
-                  '内容发布时间AI优化',
-                  '渠道选择AI推荐',
+                  t('chc.ai.configValidation'),
+                  t('chc.ai.conflictResolve'),
+                  t('chc.ai.effectRanking'),
+                  t('chc.ai.attributionModel'),
+                  t('chc.ai.publishTiming'),
+                  t('chc.ai.channelRecommend'),
                 ].map((cap, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <div
