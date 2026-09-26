@@ -155,9 +155,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       // 因此仅当引擎 locale 已与 React locale 对齐时才信任引擎结果,
       // 否则直接走全量扁平字典(双语包全量打包,查表确定、零竞态)。
       const engineReady = engine.getLocale() === UI_TO_CORE[locale]
-      const str = engineReady
-        ? engine.t(key, params as Record<string, string> | undefined)
-        : key
+      const str = engineReady ? engine.t(key, params as Record<string, string> | undefined) : key
 
       // Engine miss (or not yet aligned): resolve from flat dict directly
       if (str === key) {

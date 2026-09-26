@@ -1520,7 +1520,8 @@ export const enMessages: Record<string, string> = {
   'quickActions.clipboard.text': 'Text',
   'quickActions.codePreview.selected': '28 lines selected',
   'quickActions.context.current': 'Current context',
-  'quickActions.context.desc': 'AI analyzes your selection and project context to recommend relevant actions',
+  'quickActions.context.desc':
+    'AI analyzes your selection and project context to recommend relevant actions',
   'quickActions.context.file': 'UserCard.tsx',
   'quickActions.context.language': 'TypeScript React',
   'quickActions.context.project': 'Project: YYC³',
@@ -1684,7 +1685,7 @@ export const enMessages: Record<string, string> = {
   'tools.status.running': 'Running',
   'tools.status.runningState': 'Running',
   'tools.successRate': 'Success rate',
-  'tools.todayExec': 'Today\'s runs',
+  'tools.todayExec': "Today's runs",
   'tools.toolsReady': 'Tools ready',
   'tools.totalTools': 'Total tools',
   'tools.vsYesterday': 'vs yesterday',
@@ -1795,17 +1796,21 @@ export const enMessages: Record<string, string> = {
   'prc.cat.orders': 'Purchase Orders',
   'prc.cat.contracts': 'Contract Management',
   'prc.ai.riskAlert': 'Supply Chain Risk Alerts',
-  'prc.ai.riskAlertDesc': 'AI monitors supplier risks and market fluctuations in real time, warning of potential supply disruptions',
+  'prc.ai.riskAlertDesc':
+    'AI monitors supplier risks and market fluctuations in real time, warning of potential supply disruptions',
   'prc.ai.costOpt': 'Procurement Cost Optimization',
-  'prc.ai.costOptDesc': 'Recommends optimal purchase timing and volume based on historical prices and market trends',
+  'prc.ai.costOptDesc':
+    'Recommends optimal purchase timing and volume based on historical prices and market trends',
   'prc.ai.supplierRec': 'Smart Supplier Matching',
-  'prc.ai.supplierRecDesc': 'Matches the best suppliers by category, price, and delivery performance',
+  'prc.ai.supplierRecDesc':
+    'Matches the best suppliers by category, price, and delivery performance',
   'inv.cat.overview': 'Inventory Overview',
   'inv.cat.stockList': 'Stock List',
   'inv.cat.inOutRecords': 'In-Out Records',
   'inv.cat.warehouses': 'Warehouse Management',
   'inv.ai.restockAlert': 'Smart Restock Alerts',
-  'inv.ai.restockAlertDesc': 'Generates restock suggestions from sales velocity and safety stock levels',
+  'inv.ai.restockAlertDesc':
+    'Generates restock suggestions from sales velocity and safety stock levels',
   'inv.ai.slowMoving': 'Slow-Moving Analysis',
   'inv.ai.slowMovingDesc': 'Identifies stagnant stock and suggests disposal strategies',
   'inv.ai.turnoverOpt': 'Turnover Optimization',
@@ -1864,7 +1869,7 @@ export const enMessages: Record<string, string> = {
   // ---- i18n 全量统一性修复批次(2026-09-26): 动态键 + auth 页文案 ----
   'quickActions.title': 'AI Quick Actions',
   'quickActions.search': 'Search actions...',
-  'quickActions.today': 'Today\'s actions',
+  'quickActions.today': "Today's actions",
   'quickActions.calls': 'AI calls',
   'quickActions.clipboard': 'Clipboard items',
   'quickActions.timeSaved': 'Time saved',
@@ -1929,5 +1934,4 @@ export const enMessages: Record<string, string> = {
   'quickActions.aiBadge': 'AI',
 
   // ---- i18n 全量统一性修复批次(2026-09-26): 动态键 + auth 页文案 ----
-
 }
