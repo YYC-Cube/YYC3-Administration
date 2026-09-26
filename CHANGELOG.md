@@ -10,6 +10,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > 本版本整合了 1.0.3 以来的三轮整改（2026-08-19 安全止血 P0/P1、2026-08-29 P2 路由化/重组、
 > 2026-09-26 全面审计 P0 修复），并由《00-项目现状审核报告》（docs/YYC3-Administration-trae-20260926）实测验证。
 
+### Performance（F-07 首屏包体，2026-09-26）
+
+- 首屏 JS gzip **570.6KB → 398.0KB（-30%）**：dashboard/chat/forms 三大页面转入
+  懒加载注册表（此前经 shell-pages/cyberpunk-standalone 静态导入打穿分割，拖入
+  vendor-charts 102KB + vendor-markdown 84KB gz）；widget 的 ChatInterface 同步懒加载
+- 破除 vendor ↔ vendor-markdown 循环 chunk：manualChunks 收窄为纯叶子
+  （highlight.js/react-markdown/remark-gfm/rehype-highlight/lowlight/refractor），
+  unified 解析族落回 vendor，vendor-markdown 不再被 index.html 预加载
+- **F-15 顺带根治**：tsc -b 产物 vite.config.js 因 Vite ".js 优先于 .ts" 的解析顺序
+  屏蔽对 vite.config.ts 的修改（实测改 manualChunks 无效的根因）；tsconfig.node.json
+  outDir 重定向 node_modules/.cache，删除根目录 6 个编译产物
+
+### Refactored（F-11 巨石续拆，2026-09-26）
+
+- number-database-tabs.tsx 2,149 行 → barrel(17 行) + `tabs/` 8 个域文件
+  （208~461 行/个，按 Tab 边界切片）
+- task-board-components.tsx 1,411 行 → barrel + `task-board/` 7 个组件文件；
+  连带清除 219 个未用 import，全仓 lint 告警 147 → 107
+
+### Changed（F-12 覆盖率诚实化，2026-09-26）
+
+- 覆盖率双口径：默认为排除口径（CI 棘轮 44/31/47/46）；新增
+  `pnpm test:coverage:all`（COV_ALL=1 全口径，业务页面计入分母，不设门禁）——
+  全口径实测 S 19.8% / B 10.3% / F 18.3% / L 20.0%，README 双口径公示
+
+### Docs（P3 决策更新，2026-09-26）
+
+- P3 决策变更：放弃 Supabase 激活，改为本地数据库架构；选型分析见
+  `docs/YYC3-Administration-trae-20260926/05-本地数据库替代方案分析.md`
+  （推荐 Dexie.js，三阶段实施：数据收口 → 本地账户库 PBKDF2 → JSON 同步出口）
+
 ### Removed（F-06 死代码清偿，2026-09-26）
 
 - 删除 45 个生产入口不可达文件（约 1.4 万行，占 src 20%）：`advanced/` 整模块（10 文件

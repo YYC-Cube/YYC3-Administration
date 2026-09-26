@@ -1,52 +1,19 @@
 import {
-  Award,
-  BarChart3,
   Bell,
   Bot,
-  Brain,
   Check,
   ChevronDown,
-  ClipboardList,
-  Code,
   Cpu,
-  Database,
-  GitBranch,
   Globe,
-  Heart,
-  History,
-  Image,
-  Languages,
-  Layers,
-  LayoutDashboard,
-  Link,
-  Megaphone,
   Menu,
-  MessageCircle,
-  MessageSquare,
-  PenTool,
-  Phone,
-  PlayCircle,
-  Radio,
-  Rocket,
-  ScrollText,
   Search,
-  Server,
   Settings,
   Shield,
-  Star,
-  Target,
-  UserCircle,
-  UserPlus,
-  Users,
   Wifi,
-  Wrench,
   X,
-  Zap,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-
-import type { NavGroup, NavItem } from '@/app/components/cyberpunk-nav'
 
 import { type PageId, useApp, useRealtimeSimulation } from '@/app/components/app-context'
 import { CommandPalette, useCommandPalette } from '@/app/components/command-palette'
@@ -60,9 +27,7 @@ import { NotificationDrawer } from '@/app/components/notification-drawer'
 import { OnboardingTutorial } from '@/app/components/onboarding-tutorial'
 import { PageTransition } from '@/app/components/page-transition'
 import { ParticleCanvas } from '@/app/components/particle-canvas'
-import { ChatPage, FormsTabPage } from '@/app/components/shell-pages'
 import { ThemeSwitcherButtonCompact } from '@/app/components/theme-switcher-button'
-import { DashboardPage } from '@/features/overview/pages/dashboard-page'
 import { ProfilePage } from '@/features/platform/pages/profile-page'
 import { ModelSettings } from '@/features/settings/model-settings/model-settings'
 import { SettingsPage } from '@/features/settings/pages/settings-page-standalone'
@@ -1021,25 +986,14 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
           aria-label={t('ui.mainContent')}
         >
           <PageTransition pageKey={activePage}>
-            {activePage === 'dashboard' && (
-              <ErrorBoundary name="Dashboard">
-                <DashboardPage onOpenExport={() => setExportModalOpen(true)} />
-              </ErrorBoundary>
-            )}
-            {activePage === 'chat' && (
-              <ErrorBoundary name="Chat">
-                <ChatPage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'dashboard' &&
+              renderLazyPage('dashboard', { onOpenExport: () => setExportModalOpen(true) })}
+            {activePage === 'chat' && renderLazyPage('chat')}
             {activePage === 'clm' && renderLazyPage('clm')}
             {activePage === 'aicall' && renderLazyPage('aicall')}
             {activePage === 'customerCare' && renderLazyPage('customerCare')}
             {activePage === 'contacts' && renderLazyPage('contacts')}
-            {activePage === 'forms' && (
-              <ErrorBoundary name="Forms">
-                <FormsTabPage />
-              </ErrorBoundary>
-            )}
+            {activePage === 'forms' && renderLazyPage('forms')}
             {activePage === 'smartForm' && renderLazyPage('smartForm')}
             {activePage === 'tools' && renderLazyPage('tools')}
             {activePage === 'workflow' && renderLazyPage('workflow')}

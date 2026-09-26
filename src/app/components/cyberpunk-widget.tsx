@@ -4,6 +4,7 @@ import {
   GitBranch,
   GripVertical,
   Layers,
+  Loader2,
   Maximize2,
   MessageCircle,
   Minimize2,
@@ -13,9 +14,15 @@ import {
   Wrench,
   X,
 } from 'lucide-react'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
-import { ChatInterface } from '@/features/conversation/pages/chat-interface'
+// F-07: 懒加载 ChatInterface——它携带 react-markdown/highlight.js(vendor-markdown),
+// 静态导入会把整个 markdown 栈拖进首屏 index chunk
+const LazyChatInterface = lazy(() =>
+  import('@/features/conversation/pages/chat-interface').then((m) => ({
+    default: m.ChatInterface,
+  })),
+)
 
 type WidgetTab = 'chat' | 'clm' | 'aicall' | 'tools' | 'workflow' | 'insights'
 
@@ -345,7 +352,17 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
 
         {/* ==== CONTENT ==== */}
         <div className="relative z-20 flex-1 overflow-hidden">
-          {activeTab === 'chat' && <ChatInterface compact />}
+          {activeTab === 'chat' && (
+            <Suspense
+              fallback={
+                <div className="flex items-center justify-center h-full">
+                  <Loader2 className="w-6 h-6 animate-spin text-cyan-400" />
+                </div>
+              }
+            >
+              <LazyChatInterface compact />
+            </Suspense>
+          )}
           {activeTab === 'clm' && <WidgetCLM />}
           {activeTab === 'aicall' && <WidgetAICall />}
           {activeTab === 'tools' && <WidgetTools />}

@@ -61,6 +61,22 @@ const LazyNumberDatabasePage = lazy(() =>
     default: m.NumberDatabasePage,
   })),
 )
+// ── F-07: 三大首屏巨件改懒加载(recharts/markdown/表单构建器离开首屏) ──
+// dashboard 携 recharts(vendor-charts);chat 携 react-markdown+highlight.js
+// (vendor-markdown);forms 携表单构建器——此前经 shell-pages 静态导入,
+// 全部落入 index 首屏 chunk(审计 F-07)。着陆页 dashboard 的加载骨架
+// 由 PageLoadingFallback 提供,可接受。
+const LazyDashboardPage = lazy(() =>
+  import('@/features/overview/pages/dashboard-page').then((m) => ({
+    default: m.DashboardPage,
+  })),
+)
+const LazyChatPage = lazy(() =>
+  import('@/app/components/shell-pages').then((m) => ({ default: m.ChatPage })),
+)
+const LazyFormsTabPage = lazy(() =>
+  import('@/app/components/shell-pages').then((m) => ({ default: m.FormsTabPage })),
+)
 const LazyAIToolsPage = lazy(() =>
   import('@/features/toolkit/pages/ai-tools-page').then((m) => ({ default: m.AIToolsPage })),
 )
@@ -248,11 +264,15 @@ const lazyPageRegistry: Partial<Record<PageId, LazyPageEntry>> = {
   nlpProcessing: { component: LazyNLPProcessingPage, name: 'NLP Processing' },
   procurement: { component: LazyProcurementPage, name: 'Procurement' },
   inventory: { component: LazyInventoryPage, name: 'Inventory' },
+  dashboard: { component: LazyDashboardPage, name: 'Dashboard' },
+  chat: { component: LazyChatPage, name: 'Chat' },
+  forms: { component: LazyFormsTabPage, name: 'Forms' },
 }
 
 /**
  * Check if a page has a lazy-loaded component.
- * Pages not in this map are rendered eagerly (dashboard, chat, settings).
+ * Pages not in this map are rendered eagerly (settings only — F-07 后
+ * dashboard/chat/forms 均已转入懒加载注册表)。
  */
 export function hasLazyPage(pageId: PageId): boolean {
   return pageId in lazyPageRegistry

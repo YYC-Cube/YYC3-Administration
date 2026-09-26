@@ -13,40 +13,63 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       reporter: ['text', 'json', 'html', 'lcov', 'text-summary'],
-      exclude: [
-        'node_modules/',
-        'tests/',
-        '**/*.d.ts',
-        '**/*.config.*',
-        '**/dist/**',
-        '**/coverage/**',
-        'src/app/version.ts',
-        // 大型 UI 页面组件(E2E 覆盖,单元测试代价过高)——P2-④ 重组后路径
-        'src/features/**/pages/**',
-        'src/features/**/chat-interface*.tsx',
-        'src/features/dev-workspace/left-panel-page.tsx',
-        'src/features/dev-workspace/window-bar.tsx',
-        'src/features/dev-workspace/panels/**',
-        'src/features/settings/model-settings/**',
-        'src/app/components/**/command-palette*.tsx',
-        'src/app/components/**/cyberpunk-*.tsx',
-        // 入口文件
-        'src/app/App.tsx',
-        'src/main.tsx',
-        'src/vite-env.d.ts',
-      ],
+      // F-12 覆盖率双口径:
+      //   默认(排除口径):业务页面组件由 E2E 覆盖,排除出单测分母,
+      //     棘轮阈值基于此口径(只升不降)。
+      //   COV_ALL=1(全口径):仅排除基建噪音,业务页面计入分母——
+      //     `pnpm test:coverage:all`,用于诚实公示真实整体覆盖水平,
+      //     不参与 CI 门禁(大 UI 组件的交互由 Playwright 守护)。
+      exclude: process.env.COV_ALL
+        ? [
+            'node_modules/',
+            'tests/',
+            '**/*.d.ts',
+            '**/*.config.*',
+            '**/dist/**',
+            '**/coverage/**',
+            'src/app/version.ts',
+            'src/main.tsx',
+            'src/vite-env.d.ts',
+          ]
+        : [
+            'node_modules/',
+            'tests/',
+            '**/*.d.ts',
+            '**/*.config.*',
+            '**/dist/**',
+            '**/coverage/**',
+            'src/app/version.ts',
+            // 大型 UI 页面组件(E2E 覆盖,单元测试代价过高)——P2-④ 重组后路径
+            'src/features/**/pages/**',
+            'src/features/**/chat-interface*.tsx',
+            'src/features/dev-workspace/left-panel-page.tsx',
+            'src/features/dev-workspace/window-bar.tsx',
+            'src/features/dev-workspace/panels/**',
+            'src/features/settings/model-settings/**',
+            'src/app/components/**/command-palette*.tsx',
+            'src/app/components/**/cyberpunk-*.tsx',
+            // 入口文件
+            'src/app/App.tsx',
+            'src/main.tsx',
+            'src/vite-env.d.ts',
+          ],
       include: ['src/**/*.{ts,tsx}'],
       // 注:vitest 4 移除 coverage.all 选项——include 列出的未测试文件
       // 仍会计入分母(语义等价于 v3 的 all: true)
       // 基线棘轮 = 当前实际覆盖率,只升不降。2026-09-26 F-06 死代码清理
       // (46 文件/1.45 万行移出分母)后实测:statements 44.85 / branches 31.78 /
       // functions 47.87 / lines 46.4,取整略低防抖动。P2 目标:核心路径 ≥60%
-      thresholds: {
-        statements: 44,
-        branches: 31,
-        functions: 47,
-        lines: 46,
-      },
+      // 棘轮仅约束默认(排除)口径;COV_ALL 全口径为公示口径,不设门禁
+      ...(process.env.COV_ALL
+        ? {}
+        : {
+            thresholds: {
+              statements: 44,
+              branches: 31,
+              functions: 47,
+              lines: 46,
+            },
+          }),
     },
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],
     exclude: ['tests/e2e/**/*', 'node_modules/**/*'],

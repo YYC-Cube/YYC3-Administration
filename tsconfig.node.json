@@ -1,14 +1,16 @@
 {
-    "compilerOptions": {
-        "composite": true,
-        "skipLibCheck": true,
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "allowSyntheticDefaultImports": true
-    },
-    "include": [
-        "vite.config.ts",
-        "vitest.config.ts",
-        "playwright.config.ts"
-    ]
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    // F-15 根治:tsc -b 的产物此前落在仓库根目录,而 Vite 解析配置
+    // .js 优先于 .ts —— 陈旧的 vite.config.js 会屏蔽对 vite.config.ts
+    // 的修改(本次 F-07 实测踩中:改了 manualChunks 毫无效果)。
+    // 重定向到 gitignore 的缓存目录,根目录永不再出现 .js/.d.ts。
+    "outDir": "node_modules/.cache/tsc-node",
+    "tsBuildInfoFile": "node_modules/.cache/tsc-node/.tsbuildinfo"
+  },
+  "include": ["vite.config.ts", "vitest.config.ts", "playwright.config.ts"]
 }

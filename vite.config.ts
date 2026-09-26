@@ -185,13 +185,17 @@ export default defineConfig(({ mode }) => {
             return 'vendor-charts'
           }
           if (
+            // F-07: vendor-markdown 收窄为"纯叶子"——仅重型渲染层。
+            // 此前把 unified/micromark/mdast/remark/rehype 全家也归入,
+            // 与 vendor 形成循环 chunk(vendor ↔ vendor-markdown),导致
+            // vendor-markdown 被 index.html 预加载、markdown 栈始终在首屏。
+            // 底层解析族(unified 等)落回 vendor,保持单向依赖。
             id.includes('highlight.js') ||
             id.includes('react-markdown') ||
-            id.includes('remark') ||
-            id.includes('rehype') ||
-            id.includes('unified') ||
-            id.includes('micromark') ||
-            id.includes('mdast')
+            id.includes('remark-gfm') ||
+            id.includes('rehype-highlight') ||
+            id.includes('lowlight') ||
+            id.includes('refractor')
           ) {
             return 'vendor-markdown'
           }

@@ -498,13 +498,13 @@ xl: 1280 // 桌面大屏
 
 ### 📊 性能指标
 
-| 指标               | 目标    | 说明                  |
-| :----------------- | :------ | :-------------------- |
-| Lighthouse 性能    | ≥90     | 优化目标              |
-| 首次内容绘制 (FCP) | <1.5s   | 资源预加载 + 代码分割 |
-| 总包体积           | <500KB  | Tree-shaking + 压缩   |
-| 可访问性           | WCAG AA | Radix UI 无障碍原语   |
-| 构建时间           | <30s    | Vite SWC 快速编译     |
+| 指标               | 目标                             | 说明                           |
+| :----------------- | :------------------------------- | :----------------------------- |
+| Lighthouse 性能    | ≥90                              | 优化目标                       |
+| 首次内容绘制 (FCP) | <1.5s                            | 资源预加载 + 代码分割          |
+| 首屏 JS (gzip)     | **398KB 实测**（原 570KB，-30%） | 路由级懒加载 + vendor 分组去环 |
+| 可访问性           | WCAG AA                          | Radix UI 无障碍原语            |
+| 构建时间           | <30s                             | Vite 快速编译                  |
 
 ---
 
@@ -537,7 +537,10 @@ pnpm test:e2e:ui
 - **Vitest**: 单元测试 + 组件测试（39 文件 / 557 用例 / 0 失败；F-06 死代码清理后净删 94 个死代码用例）
 - **Playwright**: E2E 测试（6 个 spec / 65 用例，Chromium 全绿 56 + 跳过 9；CI 含 PR 触发）
 - **多端适配测试**: 覆盖断点系统、平台检测、离线存储
-- **覆盖率**: `@vitest/coverage-istanbul`，棘轮阈值只升不降（当前 S 44.9% / L 46.4%，口径已排除 E2E 覆盖的大型 UI 页面组件；目标核心路径 ≥60%）
+- **覆盖率（双口径，F-12）**：`@vitest/coverage-istanbul`
+  - 排除口径（CI 棘轮门禁，E2E 覆盖的大型 UI 页面不计入分母）：S 44.7% / B 31.8% / F 47.5% / L 46.3%
+  - 全口径（诚实公示，`pnpm test:coverage:all`，全部业务页面计入）：S 19.8% / B 10.3% / F 18.3% / L 20.0%
+  - 目标：核心路径 ≥60%（排除口径）
 - **静态门禁（CI）**: unimported 死代码/死依赖 0 容忍、madge 循环依赖 0 容忍、`pnpm audit --prod --audit-level high` 供应链门
 - **CI/CD**: GitHub Actions 自动运行 — 详见 [CI 工作流](.github/workflows/ci.yml) / [Deploy 工作流](.github/workflows/deploy.yml)（部署仅在 CI 全绿后触发）
 
@@ -839,13 +842,13 @@ src/
 
 ### 📊 Performance
 
-| Metric                 | Target  | Description                |
-| :--------------------- | :------ | :------------------------- |
-| Lighthouse Performance | ≥90     | Optimization target        |
-| FCP                    | <1.5s   | Preload + code splitting   |
-| Bundle Size            | <500KB  | Tree-shaking + compression |
-| Accessibility          | WCAG AA | Radix UI primitives        |
-| Build Time             | <30s    | Vite SWC fast compilation  |
+| Metric                 | Target                               | Description                                        |
+| :--------------------- | :----------------------------------- | :------------------------------------------------- |
+| Lighthouse Performance | ≥90                                  | Optimization target                                |
+| FCP                    | <1.5s                                | Preload + code splitting                           |
+| First-screen JS (gzip) | **398KB measured** (was 570KB, -30%) | Route-level lazy loading + de-cycled vendor chunks |
+| Accessibility          | WCAG AA                              | Radix UI primitives                                |
+| Build Time             | <30s                                 | Fast compilation                                   |
 
 ---
 
@@ -877,7 +880,10 @@ pnpm test:e2e:ui
 
 - **Vitest**: Unit + component tests (39 files / 557 tests / 0 failures; 94 dead-code cases removed with F-06 cleanup)
 - **Playwright**: E2E (6 specs / 65 cases; Chromium 56 green + 9 skipped; CI runs on PRs too)
-- **Coverage**: `@vitest/coverage-istanbul`, ratchet thresholds only go up (currently S 44.9% / L 46.4%, excluding large UI page components covered by E2E; target ≥60% for core paths)
+- **Coverage (dual-scope, F-12)**: `@vitest/coverage-istanbul`
+  - Excluded scope (CI ratchet gate; large E2E-covered UI pages out of denominator): S 44.7% / B 31.8% / F 47.5% / L 46.3%
+  - Full scope (honest disclosure, `pnpm test:coverage:all`, all business pages included): S 19.8% / B 10.3% / F 18.3% / L 20.0%
+  - Target: ≥60% core paths (excluded scope)
 - **Static gates (CI)**: unimported dead-code/unused-deps zero tolerance, madge circular-dependency zero tolerance, `pnpm audit --prod --audit-level high` supply-chain gate
 - **CI/CD**: GitHub Actions automated pipeline (TypeCheck → Lint → Audit → Dead-code/Circular gates → Unit tests + Coverage → Build → E2E → Deploy-after-CI-green)
 
