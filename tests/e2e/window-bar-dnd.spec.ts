@@ -21,7 +21,7 @@ import { CATEGORY_ENTRY, dismissOnboarding, navigateTo } from './helpers'
 // 测试配置
 // ==========================================
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3171'
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:5173'
 
 // 辅助函数：导航到开发者工作区
 // devWorkspace 非分类首项：先点 toolkit 分类（首项 aicall），再点侧边栏 devWorkspace

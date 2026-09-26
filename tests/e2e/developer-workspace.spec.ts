@@ -24,7 +24,7 @@ import { CATEGORY_ENTRY, dismissOnboarding, navigateTo } from './helpers'
 // Test Configuration
 // ==========================================
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3171'
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:5173'
 const _DEV_WORKSPACE_NAV = 'Developer Workspace' // nav item text or PageId
 
 // Helper: navigate to Developer Workspace page

@@ -331,7 +331,7 @@ pnpm install
 
 # 3. 启动开发服务器
 pnpm dev
-# → http://localhost:3171
+# → http://localhost:5173
 
 # 4. 构建生产版本
 pnpm build
@@ -703,7 +703,7 @@ pnpm install
 
 # 3. Dev server
 pnpm dev
-# → http://localhost:3171
+# → http://localhost:5173
 
 # 4. Build
 pnpm build

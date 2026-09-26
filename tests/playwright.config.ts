@@ -58,7 +58,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "pnpm dev",
+    // VITE_E2E=true:注入 E2E 认证旁路并关闭演示横幅/mock 实时数据——
+    // 与 spec 文件头注释的契约一致(specs 通过 config baseURL/相对路径访问本服务)
+    command: "VITE_E2E=true pnpm dev",
     url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI,
     timeout: 30000,
