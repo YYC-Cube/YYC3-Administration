@@ -149,10 +149,17 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback(
     (key: string, params?: Record<string, string | number>): string => {
-      // The engine handles: LRU cache → plugin pipeline → ICU → interpolation
-      const str = engine.t(key, params as Record<string, string> | undefined)
+      // React locale 是唯一真源。engine.setLocale 在 effect 中异步对齐，
+      // 重渲染帧内引擎可能仍指向旧 locale —— 此时 engine.t() 返回旧语言值
+      // (非 key),下方 fallback 永不触发,导致切换语言后界面不更新。
+      // 因此仅当引擎 locale 已与 React locale 对齐时才信任引擎结果,
+      // 否则直接走全量扁平字典(双语包全量打包,查表确定、零竞态)。
+      const engineReady = engine.getLocale() === UI_TO_CORE[locale]
+      const str = engineReady
+        ? engine.t(key, params as Record<string, string> | undefined)
+        : key
 
-      // Fallback: if engine returns the key unchanged, try flat dict directly
+      // Engine miss (or not yet aligned): resolve from flat dict directly
       if (str === key) {
         const messages = locale === 'en' ? enMessages : zhMessages
         const fallback = messages[key] ?? zhMessages[key] ?? key

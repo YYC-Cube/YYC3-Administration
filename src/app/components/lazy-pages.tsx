@@ -16,17 +16,19 @@ import { type ComponentType, lazy, Suspense } from 'react'
 import type { PageId } from '@/app/components/app-context'
 
 import { ErrorBoundary } from '@/app/components/error-boundary'
+import { useI18n } from '@/app/components/i18n-context'
 
 // ==========================================
 // Loading Placeholder
 // ==========================================
 
 function PageLoadingFallback() {
+  const { t } = useI18n()
   return (
     <div className="flex items-center justify-center h-full min-h-[400px]">
       <div className="flex flex-col items-center gap-3">
         <Loader2 className="w-8 h-8 animate-spin text-cyan-400" />
-        <p className="text-sm text-white/40">加载中...</p>
+        <p className="text-sm text-white/40">{t('common.loading')}</p>
       </div>
     </div>
   )

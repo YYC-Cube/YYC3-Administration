@@ -12,47 +12,7 @@
 import { expect, test } from '@playwright/test'
 
 import { CATEGORY_ENTRY, dismissOnboarding } from './helpers'
-
-/** 分类 → 页面 id 列表(镜像 nav-config.ts) */
-const CATEGORY_PAGES: Record<string, readonly string[]> = {
-  overview: ['dashboard', 'logs', 'insights'],
-  conversation: ['chat'],
-  customer: ['clm', 'customerCare', 'contacts', 'customerAcquisition', 'brandMgmt'],
-  toolkit: [
-    'aicall',
-    'tools',
-    'workflow',
-    'collab',
-    'quickActions',
-    'taskBoard',
-    'devWorkspace',
-    'apiDocs',
-  ],
-  platform: [
-    'paramSettings',
-    'platformSettings',
-    'wechatConfig',
-    'channelCenter',
-    'dataIntegration',
-    'platformHub',
-    'intelligentOps',
-    'settings',
-    'profile',
-  ],
-  finance: ['finance', 'salary'],
-  supplyChain: ['forms', 'smartForm', 'procurement', 'inventory'],
-  marketing: [
-    'appOverview',
-    'marketingPlan',
-    'promotionExec',
-    'marketingAnalytics',
-    'marketingAssets',
-    'aiCreativeTools',
-    'aiMarketingEngine',
-    'aiDecisionSupport',
-    'nlpProcessing',
-  ],
-}
+import { CATEGORY_PAGES } from './page-registry'
 
 // 串行遍历:单 worker 顺序访问,避免并发压垮 dev server
 test.describe.configure({ mode: 'serial' })
@@ -79,14 +39,26 @@ test.describe('E2E-SMOKE: 全页面渲染', () => {
         if (pid !== CATEGORY_ENTRY[cat as keyof typeof CATEGORY_ENTRY]) {
           const item = page.locator('aside').first().locator(`[data-nav-id="${pid}"]`)
           await expect(item).toBeVisible({ timeout: 10000 })
-          await item.click()
+          // force: firefox 下侧栏项存在持续布局抖动(not stable)导致
+          // actionability 等待超时;冒烟语义只关心路由与渲染,跳过稳定性等待
+          await item.click({ force: true })
         }
 
         // 断言 URL hash 同步(路由化后 URL 即状态源)
         try {
           await expect(page).toHaveURL(new RegExp(`#/${pid}$`), { timeout: 5000 })
         } catch {
-          failures.push(pid + '(url)')
+          // firefox 对连续 History API 调用有限流,偶发 hash 未写入:
+          // 重试一次点击后再断言
+          const item = page.locator('aside').first().locator(`[data-nav-id="${pid}"]`)
+          const retryClick =
+            pid !== CATEGORY_ENTRY[cat as keyof typeof CATEGORY_ENTRY] && (await item.count()) > 0
+          if (retryClick) await item.click({ force: true })
+          try {
+            await expect(page).toHaveURL(new RegExp(`#/${pid}$`), { timeout: 5000 })
+          } catch {
+            failures.push(pid + '(url)')
+          }
         }
 
         // 断言内容区渲染出非空内容(懒加载 chunk 拉取 + Suspense 完成)

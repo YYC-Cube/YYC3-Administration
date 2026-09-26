@@ -52,7 +52,7 @@ const GHOST_ACCOUNTS = [
 function AuthPage() {
   const { login, register } = useAuthStore()
   const tc = useThemeColors()
-  const { locale, setLocale } = useI18n()
+  const { locale, setLocale, t } = useI18n()
   const [mode, setMode] = useState<'login' | 'register'>('login')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -68,17 +68,17 @@ function AuthPage() {
 
   const validate = useCallback((): boolean => {
     const errors: Record<string, string> = {}
-    if (!username.trim()) errors.username = '请输入用户名'
+    if (!username.trim()) errors.username = t('auth.errUsernameRequired')
     if (mode === 'register') {
-      if (!email.trim()) errors.email = '请输入邮箱'
-      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = '邮箱格式不正确'
-      if (!displayName.trim()) errors.displayName = '请输入显示名称'
+      if (!email.trim()) errors.email = t('auth.errEmailRequired')
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = t('auth.errEmailInvalid')
+      if (!displayName.trim()) errors.displayName = t('auth.errDisplayNameRequired')
     }
-    if (!password) errors.password = '请输入密码'
-    else if (mode === 'register' && password.length < 6) errors.password = '密码至少 6 位'
+    if (!password) errors.password = t('auth.errPasswordRequired')
+    else if (mode === 'register' && password.length < 6) errors.password = t('auth.errPasswordMin')
     setFieldErrors(errors)
     return Object.keys(errors).length === 0
-  }, [mode, username, email, password, displayName])
+  }, [mode, username, email, password, displayName, t])
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -109,7 +109,7 @@ function AuthPage() {
           // 成功路径由 onAuthStateChange 统一驱动状态
         } else if (mode === 'login') {
           const result = await login({ username: username.trim(), password, rememberMe })
-          if (!result.success) setError(result.error || '登录失败 / Login failed')
+          if (!result.success) setError(result.error || t('auth.errLoginFailed'))
         } else {
           const result = await register({
             username: username.trim(),
@@ -117,15 +117,15 @@ function AuthPage() {
             password,
             displayName: displayName.trim() || username.trim(),
           })
-          if (!result.success) setError(result.error || '注册失败 / Registration failed')
+          if (!result.success) setError(result.error || t('auth.errRegisterFailed'))
         }
       } catch {
-        setError('网络错误，请重试 / Network error.')
+        setError(t('auth.errNetwork'))
       } finally {
         setLoading(false)
       }
     },
-    [mode, username, email, password, displayName, rememberMe, login, register, validate],
+    [mode, username, email, password, displayName, rememberMe, login, register, validate, t],
   )
 
   const handleGhostLogin = useCallback(
@@ -152,12 +152,12 @@ function AuthPage() {
           })
         }
       } catch {
-        setError('幽灵模式登录失败')
+        setError(t('auth.errGhostLogin'))
       } finally {
         setGhostLogging(null)
       }
     },
-    [login, register],
+    [login, register, t],
   )
 
   const switchMode = useCallback(() => {
@@ -297,7 +297,7 @@ function AuthPage() {
                   className="block text-sm mb-1.5 font-medium"
                   style={{ color: tc.textSecondary }}
                 >
-                  显示名称
+                  {t('auth.displayName')}
                 </label>
                 <input
                   type="text"
@@ -308,7 +308,7 @@ function AuthPage() {
                     ...inputStyle,
                     borderColor: fieldErrors.displayName ? tc.danger : tc.borderDefault,
                   }}
-                  placeholder="您的显示名称"
+                  placeholder={t('auth.displayNamePlaceholder')}
                 />
                 {fieldErrors.displayName && (
                   <p className="text-xs mt-1" style={{ color: tc.danger }}>
@@ -323,7 +323,7 @@ function AuthPage() {
                 className="block text-sm mb-1.5 font-medium"
                 style={{ color: tc.textSecondary }}
               >
-                {mode === 'login' ? '用户名 / 邮箱' : '用户名'}
+                {mode === 'login' ? t('auth.usernameLabel') : t('auth.username')}
               </label>
               <input
                 type="text"
@@ -339,7 +339,11 @@ function AuthPage() {
                   ...inputStyle,
                   borderColor: fieldErrors.username ? tc.danger : tc.borderDefault,
                 }}
-                placeholder={mode === 'login' ? 'admin 或 admin@yyc3.local' : 'your_username'}
+                placeholder={
+                  mode === 'login'
+                    ? t('auth.usernamePlaceholder')
+                    : t('auth.registerUsernamePlaceholder')
+                }
               />
               {fieldErrors.username && (
                 <p className="text-xs mt-1" style={{ color: tc.danger }}>
@@ -354,7 +358,7 @@ function AuthPage() {
                   className="block text-sm mb-1.5 font-medium"
                   style={{ color: tc.textSecondary }}
                 >
-                  邮箱
+                  {t('auth.email')}
                 </label>
                 <input
                   type="email"
@@ -385,7 +389,7 @@ function AuthPage() {
                 className="block text-sm mb-1.5 font-medium"
                 style={{ color: tc.textSecondary }}
               >
-                密码
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <input
@@ -402,7 +406,9 @@ function AuthPage() {
                     ...inputStyle,
                     borderColor: fieldErrors.password ? tc.danger : tc.borderDefault,
                   }}
-                  placeholder={mode === 'login' ? '••••••••' : '至少 6 位'}
+                  placeholder={
+                    mode === 'login' ? '••••••••' : t('auth.registerPasswordPlaceholder')
+                  }
                 />
                 <button
                   type="button"
@@ -442,7 +448,7 @@ function AuthPage() {
                   onChange={(e) => setRememberMe(e.target.checked)}
                   className="sr-only"
                 />
-                <span style={{ color: tc.textSecondary }}>记住我（7 天）</span>
+                <span style={{ color: tc.textSecondary }}>{t('auth.rememberMe')}</span>
               </label>
             )}
 
@@ -464,12 +470,12 @@ function AuthPage() {
               ) : mode === 'login' ? (
                 <>
                   <LogIn className="w-4 h-4" />
-                  登录
+                  {t('auth.login')}
                 </>
               ) : (
                 <>
                   <UserPlus className="w-4 h-4" />
-                  注册
+                  {t('auth.register')}
                 </>
               )}
             </motion.button>
@@ -477,14 +483,14 @@ function AuthPage() {
 
           <div className="mt-6 text-center text-sm">
             <span style={{ color: tc.textMuted }}>
-              {mode === 'login' ? '没有账户？' : '已有账户？'}
+              {mode === 'login' ? t('auth.noAccount') : t('auth.hasAccount')}
             </span>
             <button
               onClick={switchMode}
               className="ml-2 hover:underline font-medium"
               style={{ color: tc.primary }}
             >
-              {mode === 'login' ? '注册新账户' : '登录'}
+              {mode === 'login' ? t('auth.toRegister') : t('auth.toLogin')}
             </button>
           </div>
 
@@ -594,12 +600,12 @@ function AuthPage() {
               }}
             >
               <KeyRound className="w-3 h-3 flex-shrink-0" />
-              <span>开发环境默认管理员: admin / admin123</span>
+              <span>{t('auth.devAdminHint')}</span>
             </div>
           )}
         </div>
         <p className="text-center text-xs mt-6" style={{ color: tc.textMuted }}>
-          言启千行代码 · 语枢万物智能
+          {t('auth.tagline')}
         </p>
         {/* Language switcher in auth */}
         <div className="flex items-center justify-center gap-2 mt-3">
@@ -628,6 +634,7 @@ function AuthPage() {
 
 function AuthLoading() {
   const tc = useThemeColors()
+  const { t } = useI18n()
   return (
     <div
       className="fixed inset-0 flex items-center justify-center"
@@ -636,7 +643,7 @@ function AuthLoading() {
       <div className="flex flex-col items-center gap-4">
         <Loader2 className="w-8 h-8 animate-spin" style={{ color: tc.primary }} />
         <p className="text-sm" style={{ color: tc.textMuted }}>
-          正在验证身份...
+          {t('auth.verifying')}
         </p>
       </div>
     </div>
@@ -693,23 +700,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return () => sub.subscription.unsubscribe()
     }
     if (E2E_AUTO_LOGIN) {
-      // 测试旁路：直接注入已认证的 admin 会话，跳过登录墙。
-      // storageState 方案不可行——secure-storage 的主密钥派生自
-      // sessionStorage 随机盐，加密数据无法跨浏览器上下文解密。
-      useAuthStore.setState({
-        user: {
-          id: 'u_e2e',
-          username: 'e2e-tester',
-          email: 'e2e@test.local',
-          role: 'admin',
-          displayName: 'E2E Tester',
-          createdAt: Date.now(),
-          lastLoginAt: Date.now(),
-        },
-        token: 'e2e-session-token',
-        status: 'authenticated',
-      })
-      return
+      // 测试豁免钩子:i18n 审计等用例需实测未登录态(登录/注册页),
+      // 通过 sessionStorage 标记跳过自动登录注入
+      let skipAutoLogin = false
+      try {
+        skipAutoLogin = sessionStorage.getItem('yyc3_e2e_skip_auto_login') === '1'
+      } catch {
+        /* storage 不可用时维持旁路 */
+      }
+      if (!skipAutoLogin) {
+        // 测试旁路：直接注入已认证的 admin 会话，跳过登录墙。
+        // storageState 方案不可行——secure-storage 的主密钥派生自
+        // sessionStorage 随机盐，加密数据无法跨浏览器上下文解密。
+        useAuthStore.setState({
+          user: {
+            id: 'u_e2e',
+            username: 'e2e-tester',
+            email: 'e2e@test.local',
+            role: 'admin',
+            displayName: 'E2E Tester',
+            createdAt: Date.now(),
+            lastLoginAt: Date.now(),
+          },
+          token: 'e2e-session-token',
+          status: 'authenticated',
+        })
+        return
+      }
     }
     void checkSession()
   }, [checkSession])

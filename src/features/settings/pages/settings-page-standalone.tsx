@@ -54,9 +54,9 @@ interface LangOption {
 
 const LANGUAGES: LangOption[] = [
   { code: 'zh', label: '简体中文', englishLabel: 'Chinese (Simplified)', flag: '🇨🇳' },
-  { code: 'en', label: 'English', englishLabel: 'English', flag: '��' },
-  { code: 'ja', label: '日本語', englishLabel: 'Japanese', flag: '��' },
-  { code: 'zh-TW', label: '繁體中文', englishLabel: 'Chinese (Traditional)', flag: '��' },
+  { code: 'en', label: 'English', englishLabel: 'English', flag: '🇺🇸' },
+  { code: 'ja', label: '日本語', englishLabel: 'Japanese', flag: '🇯🇵' },
+  { code: 'zh-TW', label: '繁體中文', englishLabel: 'Chinese (Traditional)', flag: '🇹🇼' },
   { code: 'ko', label: '한국어', englishLabel: 'Korean', flag: '🇰🇷' },
   { code: 'fr', label: 'Français', englishLabel: 'French', flag: '🇫🇷' },
   { code: 'de', label: 'Deutsch', englishLabel: 'German', flag: '🇩🇪' },
@@ -81,7 +81,7 @@ function LanguageSelector({
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
-  const selected = LANGUAGES.find((l) => l.code === value) ?? LANGUAGES[2]
+  const selected = LANGUAGES.find((l) => l.code === value) ?? LANGUAGES[0]
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
