@@ -1,7 +1,7 @@
 # CodeQL 扫描路径配置
 # docs/**(含历史粘贴归档)与测试产物不参与安全分析——
 # 归档文件中的示例密钥/URL 会产生不可行动的误报(2026-09-26 漏洞闭环)
-paths_ignore:
+paths-ignore:
   - docs/**
   - tests/**
   - '**/*.test.*'

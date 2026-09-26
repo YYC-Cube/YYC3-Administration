@@ -24,15 +24,15 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@d6317709a54fd87078d323eeb0e48ec331c8e621 # v3
+        uses: github/codeql-action/init@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
         with:
           languages: javascript-typescript
           config: .github/codeql/config.yml
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@d6317709a54fd87078d323eeb0e48ec331c8e621 # v3
+        uses: github/codeql-action/autobuild@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@d6317709a54fd87078d323eeb0e48ec331c8e621 # v3
+        uses: github/codeql-action/analyze@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
         with:
           category: '/language:javascript-typescript'
