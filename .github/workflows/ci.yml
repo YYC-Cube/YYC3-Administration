@@ -119,8 +119,33 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      # ── E2E 服务器预启动(配合 playwright.config webServer.reuseExistingServer)──
+      # run 36214765395 取证:65 例 3 分钟全绿后 Playwright 拆除挂死 26 分钟
+      # 直至超时(sh -c 'pnpm build && pnpm preview' 三代进程链杀不干净,
+      # 存活孙进程的 stdio 管道阻塞退出)。故 CI 上由 workflow 显式管理
+      # 服务器生命周期:此处预构建(内联 VITE_E2E 认证旁路)+预启动,
+      # Playwright 仅复用不 spawn;末尾 always() 步骤按端口强制回收
+      - name: Build E2E bundle (VITE_E2E inline)
+        run: VITE_E2E=true pnpm build
+
+      - name: Start preview server
+        run: |
+          nohup pnpm preview --port 5173 --strictPort >/tmp/preview.log 2>&1 &
+          echo $! > /tmp/preview.pid
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:5173/ >/dev/null && echo "preview up (${i}s)" && exit 0
+            sleep 1
+          done
+          echo "::error::preview failed to start"; tail -30 /tmp/preview.log; exit 1
+
       - name: Run E2E tests
         run: pnpm test:e2e --project=chromium --workers=1
+
+      - name: Stop preview server
+        if: always()
+        run: |
+          kill "$(cat /tmp/preview.pid 2>/dev/null)" 2>/dev/null || true
+          fuser -k 5173/tcp 2>/dev/null || true
 
       - name: Upload Playwright report
         if: always()

@@ -67,9 +67,17 @@ export default defineConfig({
     //   内存峰值导致 dev server 被 OOM 杀死 → 后续用例 ERR_CONNECTION_REFUSED
     // - preview 无按需编译,内存平稳,且测的是真实生产 bundle
     // VITE_E2E=true 于 build 时静态内联:注入 E2E 认证旁路并关演示横幅/mock 实时数据
+    //
+    // ⚠ CI 拆除挂死规避(run 36214765395 取证:65 例 3 分钟全绿后进程静默
+    //   26 分钟直至超时):sh -c 'pnpm build && pnpm preview' 的三代进程链
+    //   令 Playwright 杀不干净,存活孙进程持有的 stdio 管道阻塞退出。
+    //   故 CI 上由 workflow 预构建 + 预启动 detached preview,此处仅复用
+    //   (reuseExistingServer),Playwright 不 spawn 即无拆除问题;
+    //   服务器生命周期由 CI 的 always() 步骤显式管理
     command: "VITE_E2E=true pnpm build && VITE_E2E=true pnpm preview --port 5173 --strictPort",
     url: "http://localhost:5173",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 240_000, // 含 build 时长(CI 2 核约 1~2 分钟)
+    gracefulShutdown: { signal: "SIGTERM", timeout: 5_000 },
   },
 });
