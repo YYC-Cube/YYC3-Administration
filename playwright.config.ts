@@ -1,99 +1,75 @@
-import { defineConfig, devices } from '@playwright/test';
-
 /**
- * Playwright Configuration for E2E Testing
- * See https://playwright.dev/docs/test-configuration
+ * @file playwright.config.ts
+ * @description YYC³ Playwright Configuration — E2E test setup for the
+ *   Developer Workspace and full application testing.
+ *
+ * ⚠ 单一配置源：本文件位于仓库根目录,`playwright test` 从根目录解析时
+ *   即命中此文件(此前曾与 tests/playwright.config.ts 双源漂移——CI 实际
+ *   用的是这里的 dev-server 3171 旧配置,导致 E2E 全量 ERR_CONNECTION_REFUSED,
+ *   见 CI run 36211008325 取证)。规范配置已收敛于此,tests/ 下不再保留副本。
+ *
+ * USAGE:
+ *   pnpm test:e2e                              # Run all tests
+ *   pnpm test:e2e -- --project=chromium        # Single browser project
+ *   pnpm test:e2e:ui                           # Run with Playwright UI
+ *   pnpm test:e2e:report                       # View HTML report
+ *
+ * @author YanYuCloudCube Team <admin@0379.email>
+ * @version v2.0.0
  */
+
+import { defineConfig, devices } from "@playwright/test";
+
 export default defineConfig({
-  testDir: './tests/e2e',
-
-  // 最大测试时间
-  timeout: 60 * 1000,
-
-  // 每个测试的断言超时
-  expect: {
-    timeout: 10000,
-  },
-
-  // 并发运行测试
+  testDir: "./tests/e2e",
   fullyParallel: true,
-
-  // CI 环境下失败时不重试，本地可重试一次
-  retries: process.env.CI ? 0 : 1,
-
-  // 并发 worker 数量
-  // 本地默认（CPU 核数一半）会以 20+ 并发压垮 vite dev server（模块转换
-  // 排队导致整批假超时），限为 4；CI 维持 2
-  workers: process.env.CI ? 2 : 4,
-
-  // 测试报告
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : 0,
+  workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['html', { outputFolder: 'playwright-report' }],
-    ['json', { outputFile: 'test-results/results.json' }],
-    ['junit', { outputFile: 'test-results/junit.xml' }],
-    ['list'],
+    ["html", { open: "never" }],
+    ["json", { outputFile: "test-results/results.json" }],
+    ["list"],
   ],
-
-  // 共享设置
   use: {
-    // 基础 URL（与 vite dev server 端口一致）
-    baseURL: 'http://localhost:3171',
-
-    // 截图策略
-    screenshot: 'only-on-failure',
-
-    // 视频录制
-    video: 'retain-on-failure',
-
-    // 追踪
-    trace: 'retain-on-failure',
-
-    // 浏览器设置
-    viewport: { width: 1280, height: 720 },
-
-    // 忽略 HTTPS 错误
-    ignoreHTTPSErrors: true,
-
-    // 模拟网络条件（可选）
-    // launchOptions: {
-    //   slowMo: 50, // 减慢操作 50ms，便于观察
-    // },
+    baseURL: process.env.BASE_URL ?? "http://localhost:5173",
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
+    actionTimeout: 10000,
+    navigationTimeout: 15000,
   },
-
-  // 测试项目配置
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
-    // 移动端测试
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
     {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      name: "Mobile Chrome",
+      use: { ...devices["Pixel 5"] },
+    },
+    {
+      name: "Mobile Safari",
+      use: { ...devices["iPhone 13"] },
     },
   ],
-
-  // Web Server 配置（自动启动开发服务器）
-  // VITE_E2E=true 启用测试认证旁路：AuthProvider 直接注入 admin 会话，
-  // 跳过登录墙（登录墙曾导致全部 E2E 用例失败，见审计报告 2.3 节）。
-  // 注意 reuseExistingServer 必须为 false：复用一台未注入 VITE_E2E 的
-  // 本地 dev server 会重新撞上登录墙，产生整批假失败。
   webServer: {
-    command: 'VITE_E2E=true pnpm dev',
-    port: 3171,
-    timeout: 180 * 1000,
-    reuseExistingServer: false,
+    // 生产构建 + vite preview 静态服务(Playwright 官方最佳实践):
+    // - vite dev 按需编译在 CI(2C/7G)上会因 page-smoke 全页遍历触发全模块编译,
+    //   内存峰值导致 dev server 被 OOM 杀死 → 后续用例 ERR_CONNECTION_REFUSED
+    // - preview 无按需编译,内存平稳,且测的是真实生产 bundle
+    // VITE_E2E=true 于 build 时静态内联:注入 E2E 认证旁路并关演示横幅/mock 实时数据
+    command: "VITE_E2E=true pnpm build && VITE_E2E=true pnpm preview --port 5173 --strictPort",
+    url: "http://localhost:5173",
+    reuseExistingServer: !process.env.CI,
+    timeout: 240_000, // 含 build 时长(CI 2 核约 1~2 分钟)
   },
 });

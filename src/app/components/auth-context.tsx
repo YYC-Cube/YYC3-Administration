@@ -26,14 +26,17 @@ import { useAuthStore } from '@/stores/useAuthStore'
 // Constants
 // ==========================================
 
-// Ghost Mode（演示一键登录）与 E2E 旁路均以 import.meta.env.DEV 双重门控：
-// 生产构建中 DEV 被静态替换为 false，整段代码被 tree-shaking 移除，
-// 凭据与旁路逻辑不会进入线上 bundle。
+// Ghost Mode（演示一键登录）仍以 import.meta.env.DEV 门控：
+// 生产构建中 DEV 被静态替换为 false，凭据不会进入线上 bundle。
+// E2E 旁路例外：webServer 采用 build+preview（Playwright 最佳实践，
+// dev server 在 CI 会 OOM），故不能依赖 DEV 门控——仅由 VITE_E2E 门控。
+// 安全边界：正常/部署构建（含 GitHub Pages Deploy）从不设置 VITE_E2E，
+// 旁路代码被 define 静态剪除；仅在显式注入该变量的测试构建中存在。
 
 const GHOST_MODE_ENABLED = import.meta.env.DEV && import.meta.env.VITE_GHOST_MODE === 'true'
 
-/** E2E 自动登录：仅当 Playwright webServer 以 VITE_E2E=true 启动 dev server 时生效 */
-const E2E_AUTO_LOGIN = import.meta.env.DEV && import.meta.env.VITE_E2E === 'true'
+/** E2E 自动登录：仅当 Playwright webServer 以 VITE_E2E=true 构建时生效 */
+const E2E_AUTO_LOGIN = import.meta.env.VITE_E2E === 'true'
 
 const GHOST_ACCOUNTS = [
   { label: '管理员 Admin', username: 'admin', role: 'admin', password: 'admin123' },

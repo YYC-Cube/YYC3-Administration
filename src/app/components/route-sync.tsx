@@ -57,12 +57,24 @@ export function RouteSync() {
 
   // state → hash
   useEffect(() => {
+    const path = location.pathname.replace(/^\/+/, '')
     if (!mountedRef.current) {
       mountedRef.current = true
+      // 首帧分流:
+      // - 深链(#/<pageId>):状态尚未由 hash→state 确立,不可抢先写 URL,
+      //   否则挂载竞态会把 URL 顶回持久化旧页面(并污染历史栈)
+      // - 空路径(/):立即 replace 规范化为当前页。否则点击同页导航不会
+      //   写 hash(状态未变)、浏览器后退会回落到无 hash 入口。
+      //   dev 下 StrictMode 双执行效应掩盖过此缺陷,生产 build 首帧仅
+      //   执行一次,E2E(生产 bundle)才暴露(NAV-007 / SMOKE 遍历失败)
+      if (!path) {
+        const initial = `/${activePage}`
+        if (location.pathname !== initial) navigate(initial, { replace: true })
+      }
       return
     }
     // 本轮 location 正是刚应用到 state 的 URL(POP 进行中)——交由其完成,不抢跑
-    if (appliedFromUrlRef.current === location.pathname.replace(/^\/+/, '')) {
+    if (appliedFromUrlRef.current === path) {
       appliedFromUrlRef.current = null
       return
     }

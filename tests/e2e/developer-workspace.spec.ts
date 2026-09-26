@@ -13,7 +13,7 @@
  *   3. npx playwright test tests/e2e/developer-workspace.spec.ts
  *
  * CONFIGURATION:
- *   Create playwright.config.ts at project root (see /tests/playwright.config.ts)
+ *   Config: playwright.config.ts at project root (single source of truth)
  */
 
 import { expect, type Page, test } from '@playwright/test'

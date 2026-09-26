@@ -553,7 +553,9 @@ const realtimeActivityPool: Array<Omit<ActivityItem, 'id' | 'timestamp'>> = [
  * Periodically injects notifications (every 15-25 s) and activities
  * (every 8-15 s) from a rotating pool of mock data.
  */
-const E2E_MODE = import.meta.env.DEV && import.meta.env.VITE_E2E === 'true'
+// E2E 构建标识:webServer 以 VITE_E2E=true 构建(生产 bundle + preview),
+// 不能依赖 DEV 门控(生产构建恒为 false)
+const E2E_MODE = import.meta.env.VITE_E2E === 'true'
 
 /**
  * 假实时数据(KPI 随机波动 / 通知活动流)启用开关。
