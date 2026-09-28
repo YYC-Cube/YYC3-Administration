@@ -44,6 +44,6 @@ jobs:
         uses: github/codeql-action/autobuild@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@eaec7bdd3f18a9ef62b9f0d85d410932cf58c886 # v3.38.2
+        uses: github/codeql-action/analyze@1190a975f95ce23525efb6a3fc21ea29567c1b52 # v3.38.2
         with:
           category: "/language:javascript-typescript"
