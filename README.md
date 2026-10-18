@@ -28,7 +28,7 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-React-000000?style=flat-square)](https://ui.shadcn.com)
 [![Radix UI](https://img.shields.io/badge/Radix_UI-Primitives-8b5cf6?style=flat-square)](https://www.radix-ui.com)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-ff69b4?style=flat-square&logo=framer)](https://motion.dev)
-[![Vitest](https://img.shields.io/badge/Vitest-557_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
+[![Vitest](https://img.shields.io/badge/Vitest-695_passed-6da13f?style=flat-square&logo=vitest)](https://vitest.dev)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E-2ead33?style=flat-square&logo=playwright)](https://playwright.dev)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)](https://www.docker.com)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=flat-square&logo=pwa)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
@@ -38,10 +38,23 @@ _Words Inspire Thousands Lines of Code, Language Pivots the Intelligence of All 
 [![ESLint](https://img.shields.io/badge/ESLint-0_errors-4b32c3?style=flat-square&logo=eslint)](https://eslint.org)
 [![Prettier](https://img.shields.io/badge/Prettier-formatted-ff69b4?style=flat-square)](https://prettier.io)
 [![TypeCheck](https://img.shields.io/badge/TypeCheck-passing-00e676?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![Test Coverage](https://img.shields.io/badge/Tests-557_Unit_%2B_56_E2E-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
+[![Test Coverage](https://img.shields.io/badge/Tests-695_Unit_%2B_56_E2E-6da13f?style=flat-square)](https://github.com/YYC-Cube/YYC3-Administration/actions/workflows/ci.yml)
 [![Multi-End](https://img.shields.io/badge/Multi_End-PWA%7CH5%7CDesktop-brightgreen?style=flat-square)](./docs/YYC3-M13-MultiEnd-多端适配/)
 [![PRs Welcome](https://img.shields.io/badge/🤝_PRs-Welcome-ff69b4?style=flat-square)](./CONTRIBUTING.md)
 [![Stars](https://img.shields.io/github/stars/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Stars)](https://github.com/YYC-Cube/YYC3-Administration)
+
+[![Contributors](https://img.shields.io/github/contributors/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Contributors)](https://github.com/YYC-Cube/YYC3-Administration/graphs/contributors)
+[![Last Commit](https://img.shields.io/github/last-commit/YYC-Cube/YYC3-Administration?style=flat-square&logo=git&label=Last%20Commit)](https://github.com/YYC-Cube/YYC3-Administration/commits/main)
+[![Release](https://img.shields.io/github/v/release/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Release&color=00e5ff)](https://github.com/YYC-Cube/YYC3-Administration/releases)
+[![Code Size](https://img.shields.io/github/languages/code-size/YYC-Cube/YYC3-Administration?style=flat-square&label=Code%20Size)](https://github.com/YYC-Cube/YYC3-Administration)
+[![Repo Size](https://img.shields.io/github/repo-size/YYC-Cube/YYC3-Administration?style=flat-square&label=Repo%20Size)](https://github.com/YYC-Cube/YYC3-Administration)
+[![Top Language](https://img.shields.io/github/languages/top/YYC-Cube/YYC3-Administration?style=flat-square&label=Language)](https://github.com/YYC-Cube/YYC3-Administration)
+
+[![Contributing](https://img.shields.io/badge/🤝_Contributing-Guide-00e676?style=flat-square)](./CONTRIBUTING.md)
+[![Code of Conduct](https://img.shields.io/badge/📜_Code_of_Conduct-2.1-7c3aed?style=flat-square)](./CODE_OF_CONDUCT.md)
+[![Security Policy](https://img.shields.io/badge/🔒_Security-Policy-ea4335?style=flat-square)](./SECURITY.md)
+[![Issues](https://img.shields.io/github/issues/YYC-Cube/YYC3-Administration?style=flat-square&logo=github&label=Issues&color=f59e0b)](https://github.com/YYC-Cube/YYC3-Administration/issues)
+[![Changelog](https://img.shields.io/badge/📝_Changelog-Keep_a_Changelog-0ea5e9?style=flat-square)](./CHANGELOG.md)
 
 —— **五高架构** · **五标体系** · **五化转型** · **五维评估** ——
 
@@ -71,6 +84,7 @@ _High Availability · High Performance · High Security · High Scalability · H
       - [常用命令速查](#常用命令速查)
     - [🔐 环境变量](#-环境变量)
     - [📁 项目结构](#-项目结构)
+      - [📚 文档体系地图 · Documentation Map](#-文档体系地图--documentation-map)
     - [🎯 功能模块](#-功能模块)
       - [模块全景](#模块全景)
     - [🎨 主题系统](#-主题系统)
@@ -90,6 +104,7 @@ _High Availability · High Performance · High Security · High Scalability · H
       - [静态部署](#静态部署)
     - [📝 更新日志](#-更新日志)
     - [🤝 贡献指南](#-贡献指南)
+    - [🛡️ 开源治理 · 社区](#️-开源治理--社区)
   - [🇬🇧 English](#-english)
     - [✨ Project Overview](#-project-overview)
       - [Core Features](#core-features)
@@ -115,6 +130,7 @@ _High Availability · High Performance · High Security · High Scalability · H
       - [Static Hosting](#static-hosting)
     - [📝 Changelog](#-changelog)
     - [🤝 Contributing](#-contributing)
+    - [🛡️ Governance \& Community](#️-governance--community)
   - [📄 License](#-license)
 
 ---
@@ -223,7 +239,7 @@ flowchart LR
     C --> Q1[TypeCheck]
     C --> Q2[ESLint]
     C --> Q3[Prettier]
-    C --> Q4[Vitest 557 tests]
+    C --> Q4[Vitest 695 tests]
     C --> Q5[Build]
     Q1 & Q2 & Q3 & Q4 & Q5 --> F{All Pass?}
     F -->|✅| E2E[E2E Tests]
@@ -299,8 +315,8 @@ graph TD
 | **框架**   | React                  | 18.3.1 | StrictMode + ErrorBoundary 嵌套  |
 | **语言**   | TypeScript             | 5.x    | 严格模式，零 `any` 策略          |
 | **构建**   | Vite                   | 6.4.3  | 缓存哈希、Manifest、PWA 插件     |
-| **样式**   | Tailwind CSS v4        | 4.1.12 | @tailwindcss/vite 插件、CSS 变量 |
-| **状态**   | Zustand                | 5.0.12 | 轻量全局状态、不可变更新         |
+| **样式**   | Tailwind CSS v4        | 4.3.3  | @tailwindcss/vite 插件、CSS 变量 |
+| **状态**   | Zustand                | 5.0.15 | 轻量全局状态、不可变更新         |
 | **UI**     | shadcn/ui + Radix UI   | latest | 无障碍（WCAG）、全键盘导航       |
 | **动画**   | Framer Motion (motion) | 12     | 布局动画、手势、过渡             |
 | **AI**     | OpenAI / Anthropic SDK | latest | 流式响应、多 Provider 编排       |
@@ -331,13 +347,14 @@ pnpm install
 
 # 3. 启动开发服务器
 pnpm dev
-# → http://localhost:5173
+# → http://localhost:3171  （端口由 vite.config 显式指定）
 
 # 4. 构建生产版本
 pnpm build
 
 # 5. 预览生产构建
 pnpm preview
+# → http://localhost:4173  （Vite preview 默认端口）
 ```
 
 #### 常用命令速查
@@ -410,6 +427,53 @@ src/
 ├── styles/                   # 全局样式（tailwind / theme / cyberpunk / liquid-glass）
 └── main.tsx                  # 应用入口
 ```
+
+#### 📚 文档体系地图 · Documentation Map
+
+> 图标图例：🧭 规范 · 🎨 设计 · 🧩 模块 · 🧪 质量 · 🔒 安全/治理 · 🚀 交付 · 🗄️ 归档
+
+```mermaid
+flowchart TD
+  ROOT([📖 docs/])
+
+  ROOT --> GOV[🧭 规范与治理]
+  ROOT --> MOD[🧩 模块体系 M01–M13]
+  ROOT --> DES[🎨 设计与参考]
+  ROOT --> OPS[🔒 审核与交付]
+  ROOT --> ARC[🗄️ 归档]
+
+  GOV --> GOV1["YYC3-团队通用-标规文档<br/>（AI 协同 · 五维驱动）"]
+  GOV --> GOV2["YYC3-M01-Guidelines<br/>开发规范"]
+
+  MOD --> M1["M02 导航系统"]
+  MOD --> M2["M03 主题系统"]
+  MOD --> M4["M04 测试体系"]
+  MOD --> M5["M05 功能模块"]
+  MOD --> M6["M06 问题修复"]
+  MOD --> M7["M07 项目管理"]
+  MOD --> M8["M08 Platform 平台集成"]
+  MOD --> M9["M09 Platform 客户系统"]
+  MOD --> M10["M10 Platform 智能转型"]
+  MOD --> M11["M11 Finance 财务管理"]
+  MOD --> M12["M12 Salary 薪资系统"]
+  MOD --> M13["M13 MultiEnd 多端适配"]
+
+  DES --> DES1["design-references"]
+  DES --> DES2["advanced-features / mvp-expansion"]
+
+  OPS --> OPS1["YYC3-闭环审核-报告建议"]
+  OPS --> OPS2["yyc3-family-ai-agents"]
+
+  ARC --> ARC1["archive（历史会话）"]
+```
+
+| 图标 | 文档域     | 目录                                                      | 用途                                              |
+| :--: | :--------- | :-------------------------------------------------------- | :------------------------------------------------ |
+|  🧭  | 规范与治理 | `YYC3-团队通用-标规文档`、`YYC3-M01-Guidelines-开发规范`  | AI 协同开发流程、编码规范基线                     |
+|  🎨  | 设计与参考 | `design-references`、`advanced-features`、`mvp-expansion` | 视觉参考、进阶能力、MVP 扩展规划                  |
+|  🧩  | 模块体系   | `YYC3-M02 … M13`                                          | 导航/主题/测试/功能/财务/多端等 13 个专项模块文档 |
+|  🔒  | 审核与交付 | `YYC3-闭环审核-报告建议`、`yyc3-family-ai-agents`         | 五维闭环审核报告、智能体族谱                      |
+|  🗄️  | 归档       | `archive`                                                 | 历史会话存档（跨会话上下文衔接）                  |
 
 ---
 
@@ -534,13 +598,13 @@ pnpm test:e2e
 pnpm test:e2e:ui
 ```
 
-- **Vitest**: 单元测试 + 组件测试（39 文件 / 557 用例 / 0 失败；F-06 死代码清理后净删 94 个死代码用例）
+- **Vitest**: 单元测试 + 组件测试（61 文件 / 695 用例 / 0 失败；2026-10-18~19 覆盖率补强累计新增 22 个文件）
 - **Playwright**: E2E 测试（6 个 spec / 65 用例，Chromium 全绿 56 + 跳过 9；CI 含 PR 触发）
 - **多端适配测试**: 覆盖断点系统、平台检测、离线存储
 - **覆盖率（双口径，F-12）**：`@vitest/coverage-istanbul`
-  - 排除口径（CI 棘轮门禁，E2E 覆盖的大型 UI 页面不计入分母）：S 44.7% / B 31.8% / F 47.5% / L 46.3%
-  - 全口径（诚实公示，`pnpm test:coverage:all`，全部业务页面计入）：S 19.8% / B 10.3% / F 18.3% / L 20.0%
-  - 目标：核心路径 ≥60%（排除口径）
+  - 排除口径（CI 棘轮门禁，E2E 覆盖的大型 UI 页面不计入分母）：S 70.4% / B 66.8% / F 72.4% / L 72.9%
+  - 全口径（诚实公示，`pnpm test:coverage:all`，全部业务页面计入）：S 28.8% / B 18.8% / F 25.7% / L 29.1%
+  - 目标：核心路径 ≥60%（排除口径，**已达成**）
 - **静态门禁（CI）**: unimported 死代码/死依赖 0 容忍、madge 循环依赖 0 容忍、`pnpm audit --prod --audit-level high` 供应链门
 - **CI/CD**: GitHub Actions 自动运行 — 详见 [CI 工作流](.github/workflows/ci.yml) / [Deploy 工作流](.github/workflows/deploy.yml)（部署仅在 CI 全绿后触发）
 
@@ -606,6 +670,27 @@ pnpm build
 3. 提交变更 (`git commit -m 'feat: add amazing feature'`)
 4. 推送分支 (`git push origin feature/amazing-feature`)
 5. 创建 Pull Request
+
+---
+
+### 🛡️ 开源治理 · 社区
+
+本仓库遵循开源社区健康标准，四类治理文档齐备：
+
+| 治理文档                        | 说明                                             | 入口                                       |
+| :------------------------------ | :----------------------------------------------- | :----------------------------------------- |
+| 📄 **许可证 License**           | MIT — 自由使用、修改、分发与商用                 | [LICENSE](./LICENSE)                       |
+| 📜 **行为准则 Code of Conduct** | Contributor Covenant v2.1 — 构建无骚扰协作环境   | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
+| 🤝 **贡献指南 Contributing**    | 分支策略、代码规范、提交约定、测试门禁与 PR 清单 | [CONTRIBUTING.md](./CONTRIBUTING.md)       |
+| 🔒 **安全政策 Security Policy** | 漏洞上报通道、响应时间线、严重等级与安全基线     | [SECURITY.md](./SECURITY.md)               |
+| 📝 **更新日志 Changelog**       | 遵循 Keep a Changelog + 语义化版本               | [CHANGELOG.md](./CHANGELOG.md)             |
+
+**社区与支持**
+
+- 🐛 Bug 反馈 / ✨ 功能建议 → [GitHub Issues](https://github.com/YYC-Cube/YYC3-Administration/issues)（已启用模板）
+- 🔐 安全漏洞 → 请勿公开披露，邮件至 [admin@0379.email](mailto:admin@0379.email)
+- 💬 讨论交流 → [GitHub Discussions](https://github.com/YYC-Cube/YYC3-Administration/discussions)
+- 📧 联系团队 → [admin@0379.email](mailto:admin@0379.email)
 
 ---
 
@@ -679,8 +764,8 @@ Each module follows **Unit Autonomy** design:
 | **Framework** | React                  | 18.3.1  | StrictMode + ErrorBoundary          |
 | **Language**  | TypeScript             | 5.x     | Strict mode, zero `any` policy      |
 | **Build**     | Vite                   | 6.4.3   | Cache hash, Manifest, PWA plugin    |
-| **Styling**   | Tailwind CSS v4        | 4.1.12  | @tailwindcss/vite plugin            |
-| **State**     | Zustand                | 5.0.12  | Lightweight global state            |
+| **Styling**   | Tailwind CSS v4        | 4.3.3   | @tailwindcss/vite plugin            |
+| **State**     | Zustand                | 5.0.15  | Lightweight global state            |
 | **UI**        | shadcn/ui + Radix UI   | latest  | WCAG accessible, full keyboard nav  |
 | **Animation** | Framer Motion (motion) | 12      | Layout animations, gestures         |
 | **AI**        | OpenAI / Anthropic SDK | latest  | Streaming, multi-provider           |
@@ -703,13 +788,14 @@ pnpm install
 
 # 3. Dev server
 pnpm dev
-# → http://localhost:5173
+# → http://localhost:3171  (port fixed in vite.config)
 
 # 4. Build
 pnpm build
 
 # 5. Preview
 pnpm preview
+# → http://localhost:4173  (Vite preview default)
 ```
 
 #### Quick Commands
@@ -878,12 +964,12 @@ pnpm test:e2e
 pnpm test:e2e:ui
 ```
 
-- **Vitest**: Unit + component tests (39 files / 557 tests / 0 failures; 94 dead-code cases removed with F-06 cleanup)
+- **Vitest**: Unit + component tests (61 files / 695 tests / 0 failures; +22 files total from the 2026-10-18~19 coverage pushes)
 - **Playwright**: E2E (6 specs / 65 cases; Chromium 56 green + 9 skipped; CI runs on PRs too)
 - **Coverage (dual-scope, F-12)**: `@vitest/coverage-istanbul`
-  - Excluded scope (CI ratchet gate; large E2E-covered UI pages out of denominator): S 44.7% / B 31.8% / F 47.5% / L 46.3%
-  - Full scope (honest disclosure, `pnpm test:coverage:all`, all business pages included): S 19.8% / B 10.3% / F 18.3% / L 20.0%
-  - Target: ≥60% core paths (excluded scope)
+  - Excluded scope (CI ratchet gate; large E2E-covered UI pages out of denominator): S 70.4% / B 66.8% / F 72.4% / L 72.9%
+  - Full scope (honest disclosure, `pnpm test:coverage:all`, all business pages included): S 28.8% / B 18.8% / F 25.7% / L 29.1%
+  - Target: ≥60% core paths (excluded scope, **met**)
 - **Static gates (CI)**: unimported dead-code/unused-deps zero tolerance, madge circular-dependency zero tolerance, `pnpm audit --prod --audit-level high` supply-chain gate
 - **CI/CD**: GitHub Actions automated pipeline (TypeCheck → Lint → Audit → Dead-code/Circular gates → Unit tests + Coverage → Build → E2E → Deploy-after-CI-green)
 
@@ -946,6 +1032,27 @@ All contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md).
 3. Commit (`git commit -m 'feat: add amazing feature'`)
 4. Push (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+---
+
+### 🛡️ Governance & Community
+
+This repository follows open-source community health standards, with all four governance documents in place:
+
+| Document               | Description                                                            | Link                                       |
+| :--------------------- | :--------------------------------------------------------------------- | :----------------------------------------- |
+| 📄 **License**         | MIT — free to use, modify, distribute, and commercialize               | [LICENSE](./LICENSE)                       |
+| 📜 **Code of Conduct** | Contributor Covenant v2.1 — a harassment-free environment              | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
+| 🤝 **Contributing**    | Branching, code style, commit conventions, quality gates, PR checklist | [CONTRIBUTING.md](./CONTRIBUTING.md)       |
+| 🔒 **Security Policy** | Vulnerability reporting channel, response timeline, severity levels    | [SECURITY.md](./SECURITY.md)               |
+| 📝 **Changelog**       | Keep a Changelog + Semantic Versioning                                 | [CHANGELOG.md](./CHANGELOG.md)             |
+
+**Community & Support**
+
+- 🐛 Bug reports / ✨ Feature requests → [GitHub Issues](https://github.com/YYC-Cube/YYC3-Administration/issues) (templates enabled)
+- 🔐 Security vulnerabilities → do not disclose publicly, email [admin@0379.email](mailto:admin@0379.email)
+- 💬 Discussion → [GitHub Discussions](https://github.com/YYC-Cube/YYC3-Administration/discussions)
+- 📧 Team contact → [admin@0379.email](mailto:admin@0379.email)
 
 ---
 

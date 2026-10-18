@@ -3,21 +3,23 @@
 ## Supported Versions
 
 | Version | Supported |
-|:--------|:----------|
-| >= 1.0.x | ✅ |
-| < 1.0.0 | ❌ |
+| :------ | :-------- |
+| 1.0.x   | ✅        |
+| < 1.0.0 | ❌        |
+
+> 当前发布线：**v1.0.4**（见 [CHANGELOG.md](./CHANGELOG.md)）。仅对最新 1.0.x 提供安全修复。
 
 ## Security Architecture
 
 ### Data Protection
 
-| Aspect | Implementation |
-|:-------|:---------------|
-| API Key Storage | LocalStorage (encrypted) |
-| Request Signing | Token-based verification |
-| Rate Limiting | 10 RPS default |
-| XSS Prevention | React built-in escaping |
-| Cache Busting | Version-based auto-cleanup |
+| Aspect          | Implementation             |
+| :-------------- | :------------------------- |
+| API Key Storage | LocalStorage (encrypted)   |
+| Request Signing | Token-based verification   |
+| Rate Limiting   | 10 RPS default             |
+| XSS Prevention  | React built-in escaping    |
+| Cache Busting   | Version-based auto-cleanup |
 
 ### Environment Variables
 
@@ -42,6 +44,7 @@ When deploying to production:
 
 Instead, please report them via:
 
+- **GitHub Private Vulnerability Reporting** (preferred): [Report a vulnerability](https://github.com/YYC-Cube/YYC3-Administration/security/advisories/new)
 - **Email**: admin@0379.email
 
 Please include:
@@ -53,21 +56,21 @@ Please include:
 
 ### Response Timeline
 
-| Stage | Timeline |
-|:------|:---------|
-| Acknowledgment | Within 48 hours |
+| Stage              | Timeline               |
+| :----------------- | :--------------------- |
+| Acknowledgment     | Within 48 hours        |
 | Initial Assessment | Within 5 business days |
-| Fix Development | Depends on severity |
-| Disclosure | After fix is released |
+| Fix Development    | Depends on severity    |
+| Disclosure         | After fix is released  |
 
 ### Severity Levels
 
-| Level | Description | Response |
-|:------|:------------|:---------|
-| **Critical** | Remote code execution, data breach | Immediate hotfix |
-| **High** | Auth bypass, significant data leak | Patch within 48 hours |
-| **Medium** | XSS, CSRF, limited data exposure | Next release |
-| **Low** | Information disclosure, minor issues | Scheduled fix |
+| Level        | Description                          | Response              |
+| :----------- | :----------------------------------- | :-------------------- |
+| **Critical** | Remote code execution, data breach   | Immediate hotfix      |
+| **High**     | Auth bypass, significant data leak   | Patch within 48 hours |
+| **Medium**   | XSS, CSRF, limited data exposure     | Next release          |
+| **Low**      | Information disclosure, minor issues | Scheduled fix         |
 
 ## Security Best Practices for Contributors
 
@@ -79,4 +82,4 @@ Please include:
 
 ---
 
-*Last updated: 2026-06-02*
+_Last updated: 2026-10-18_

@@ -67,9 +67,9 @@
 | **框架**       | React                     | 18.3.1   |
 | **语言**       | TypeScript                | 5.x      |
 | **构建**       | Vite                      | 6.3.5    |
-| **样式**       | Tailwind CSS v4           | 4.1.12   |
+| **样式**       | Tailwind CSS v4           | 4.3.3    |
 | **动画**       | Motion (Framer Motion)    | 12.23.24 |
-| **状态管理**   | Zustand                   | 5.0.12   |
+| **状态管理**   | Zustand                   | 5.0.15   |
 | **UI 组件库**  | shadcn/ui + Radix UI      | Latest   |
 | **MUI**        | @mui/material             | 7.3.5    |
 | **代码编辑器** | @monaco-editor/react      | 4.7.x    |

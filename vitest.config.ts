@@ -56,18 +56,18 @@ export default defineConfig({
       include: ['src/**/*.{ts,tsx}'],
       // 注:vitest 4 移除 coverage.all 选项——include 列出的未测试文件
       // 仍会计入分母(语义等价于 v3 的 all: true)
-      // 基线棘轮 = 当前实际覆盖率,只升不降。2026-09-26 F-06 死代码清理
-      // (46 文件/1.45 万行移出分母)后实测:statements 44.85 / branches 31.78 /
-      // functions 47.87 / lines 46.4,取整略低防抖动。P2 目标:核心路径 ≥60%
-      // 棘轮仅约束默认(排除)口径;COV_ALL 全口径为公示口径,不设门禁
+      // 基线棘轮 = 当前实际覆盖率,只升不降。2026-10-19 P2 覆盖率续升
+      // (新增 4 个测试文件,覆盖 use-theme-tokens / shared/ui/badge / auth-context)
+      // 后实测:statements 70.43 / branches 66.81 / functions 72.36 / lines 72.9,
+      // 取整略低防抖动。棘轮仅约束默认(排除)口径;COV_ALL 全口径为公示口径,不设门禁
       ...(process.env.COV_ALL
         ? {}
         : {
             thresholds: {
-              statements: 44,
-              branches: 31,
-              functions: 47,
-              lines: 46,
+              statements: 70,
+              branches: 66,
+              functions: 72,
+              lines: 72,
             },
           }),
     },

@@ -3,7 +3,7 @@
 **项目**: @yyc3/my-mgmt v1.0.2  
 **日期**: 2026-05-01  
 **目标**: 从 D 级 (68分) → B 级 (80+分)  
-**预估周期**: 4 周  
+**预估周期**: 4 周
 
 ---
 
@@ -29,7 +29,7 @@
 
 **问题**: 141 个 TS2339 错误根源，影响 26 个源文件  
 **目标**: 将 TS 错误从 358 降至 <20  
-**预估**: 1 小时  
+**预估**: 1 小时
 
 **执行步骤**:
 
@@ -40,17 +40,17 @@
 interface ThemeColors {
   // ... 现有属性 ...
 
-  card: string;
-  cardForeground: string;
-  foreground: string;
-  border: string;
-  mutedForeground: string;
-  input: string;
-  ring: string;
-  popover: string;
-  popoverForeground: string;
-  secondaryForeground: string;
-  accentForeground: string;
+  card: string
+  cardForeground: string
+  foreground: string
+  border: string
+  mutedForeground: string
+  input: string
+  ring: string
+  popover: string
+  popoverForeground: string
+  secondaryForeground: string
+  accentForeground: string
 }
 
 // 在 cyberpunkColors 和 liquidGlassColors 中补充对应值:
@@ -67,7 +67,7 @@ const cyberpunkColors = {
   popoverForeground: 'rgba(255,255,255,0.9)',
   secondaryForeground: 'rgba(0,212,255,1)',
   accentForeground: 'rgba(0,255,204,1)',
-};
+}
 
 const liquidGlassColors = {
   // ... 现有 ...
@@ -82,10 +82,11 @@ const liquidGlassColors = {
   popoverForeground: 'rgba(255,255,255,0.95)',
   secondaryForeground: 'rgba(0,212,255,1)',
   accentForeground: 'rgba(0,255,170,1)',
-};
+}
 ```
 
 **验证命令**:
+
 ```bash
 npx tsc --noEmit 2>&1 | grep "error TS" | wc -l
 # 目标: < 20
@@ -97,7 +98,7 @@ npx tsc --noEmit 2>&1 | grep "error TS" | wc -l
 
 **问题**: 1.8MB 单 bundle，首屏加载 >3s  
 **目标**: 首屏 JS < 300KB  
-**预估**: 2 小时  
+**预估**: 2 小时
 
 **执行步骤**:
 
@@ -136,6 +137,7 @@ output: {
 ```
 
 **验证命令**:
+
 ```bash
 npx vite build && ls -la dist/assets/*.js | awk '{print $5, $9}'
 # 目标: 每个chunk < 500KB
@@ -147,7 +149,7 @@ npx vite build && ls -la dist/assets/*.js | awk '{print $5, $9}'
 
 **问题**: 3 个重复 key 导致 i18n 行为不确定  
 **目标**: 0 个重复 key  
-**预估**: 15 分钟  
+**预估**: 15 分钟
 
 **执行步骤**:
 
@@ -167,9 +169,10 @@ grep -n '"log\.(secAgo\|minAgo\|hourAgo)"' src/app/locales/zh.ts
 
 **问题**: 46 个文档无分类  
 **目标**: 结构化文档体系  
-**预估**: 3 小时  
+**预估**: 3 小时
 
 **目标架构**:
+
 ```
 docs/
 ├── README.md                          # 文档索引
@@ -206,6 +209,7 @@ docs/
 ```
 
 **迁移命令**:
+
 ```bash
 cd docs
 mkdir -p architecture guides standards features operations reports changelog
@@ -226,7 +230,7 @@ mv COLOR_MIGRATION_PLAN.md COLOR_UNIFICATION_*.md changelog/
 
 **问题**: 无自动化部署  
 **目标**: GitHub Actions 基础流水线  
-**预估**: 2 小时  
+**预估**: 2 小时
 
 **创建文件**: `.github/workflows/ci.yml`
 
@@ -283,14 +287,16 @@ jobs:
 
 ### P1-3: 安全加固
 
-**预估**: 3 小时  
+**预估**: 3 小时
 
 **Step 1**: 添加 CSP Meta 标签
 
 ```html
 <!-- index.html -->
-<meta http-equiv="Content-Security-Policy" 
-      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://localhost:* ws://localhost:*;">
+<meta
+  http-equiv="Content-Security-Policy"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' http://localhost:* ws://localhost:*;"
+/>
 ```
 
 **Step 2**: 添加 XSS 防护工具函数
@@ -298,9 +304,9 @@ jobs:
 ```typescript
 // src/app/utils/sanitize.ts
 export function sanitizeHTML(input: string): string {
-  const div = document.createElement('div');
-  div.textContent = input;
-  return div.innerHTML;
+  const div = document.createElement('div')
+  div.textContent = input
+  return div.innerHTML
 }
 ```
 
@@ -311,7 +317,7 @@ export function sanitizeHTML(input: string): string {
 ### P2-1: 引入路由系统
 
 **目标**: 使用 react-router 替代 Context 状态切换  
-**预估**: 8 小时  
+**预估**: 8 小时
 
 ```typescript
 // 已有依赖 react-router@7.13.0，需启用
@@ -332,17 +338,17 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 ### P2-2: 状态管理升级
 
 **目标**: 使用 zustand 替代深层 Context  
-**预估**: 6 小时  
+**预估**: 6 小时
 
 ```typescript
-// 已有依赖 zustand@^5.0.12，需启用
-import { create } from 'zustand';
+// 已有依赖 zustand@^5.0.15，需启用
+import { create } from 'zustand'
 
 interface AppStore {
-  activePage: PageId;
-  setActivePage: (page: PageId) => void;
-  theme: ThemeConfig;
-  setTheme: (config: Partial<ThemeConfig>) => void;
+  activePage: PageId
+  setActivePage: (page: PageId) => void
+  theme: ThemeConfig
+  setTheme: (config: Partial<ThemeConfig>) => void
 }
 
 export const useAppStore = create<AppStore>((set) => ({
@@ -350,13 +356,13 @@ export const useAppStore = create<AppStore>((set) => ({
   setActivePage: (page) => set({ activePage: page }),
   theme: defaultTheme,
   setTheme: (config) => set((s) => ({ theme: { ...s.theme, ...config } })),
-}));
+}))
 ```
 
 ### P2-3: 组件目录重组
 
 **目标**: 从平铺改为分层分类  
-**预估**: 4 小时  
+**预估**: 4 小时
 
 ```
 src/app/components/
@@ -415,28 +421,28 @@ Week 4 (5月第4周)
 
 ## 六、预期效果对比
 
-| 指标 | 当前 | 4周后目标 | 提升 |
-|------|------|-----------|------|
-| **综合评分** | 68 (D级) | 82 (B级) | +14 |
-| **TS 错误数** | 358 | <10 | -97% |
-| **Bundle 大小** | 1.8MB | <500KB | -72% |
-| **首屏加载** | >3s | <1s | -67% |
-| **文档体系** | 46个平铺 | 7目录分类 | ✅ |
-| **CI/CD** | 无 | GitHub Actions | ✅ |
-| **测试覆盖** | ~30% | >70% | +40% |
-| **安全评分** | 58 | 80+ | +22 |
+| 指标            | 当前     | 4周后目标      | 提升 |
+| --------------- | -------- | -------------- | ---- |
+| **综合评分**    | 68 (D级) | 82 (B级)       | +14  |
+| **TS 错误数**   | 358      | <10            | -97% |
+| **Bundle 大小** | 1.8MB    | <500KB         | -72% |
+| **首屏加载**    | >3s      | <1s            | -67% |
+| **文档体系**    | 46个平铺 | 7目录分类      | ✅   |
+| **CI/CD**       | 无       | GitHub Actions | ✅   |
+| **测试覆盖**    | ~30%     | >70%           | +40% |
+| **安全评分**    | 58       | 80+            | +22  |
 
 ---
 
 ## 七、风险与缓解
 
-| 风险 | 概率 | 影响 | 缓解措施 |
-|------|------|------|----------|
-| 路由重构导致页面崩溃 | 中 | 高 | 渐进式迁移，保留 Context 兼容层 |
-| 代码分割引入加载闪烁 | 中 | 中 | Suspense fallback 设计 loading 动画 |
-| 文档迁移链接断裂 | 低 | 低 | 生成重定向映射表 |
-| CI/CD 环境差异 | 低 | 中 | 使用 act 本地测试 GitHub Actions |
-| zustand 迁移遗漏 | 中 | 中 | 逐模块迁移，每个模块独立验证 |
+| 风险                 | 概率 | 影响 | 缓解措施                            |
+| -------------------- | ---- | ---- | ----------------------------------- |
+| 路由重构导致页面崩溃 | 中   | 高   | 渐进式迁移，保留 Context 兼容层     |
+| 代码分割引入加载闪烁 | 中   | 中   | Suspense fallback 设计 loading 动画 |
+| 文档迁移链接断裂     | 低   | 低   | 生成重定向映射表                    |
+| CI/CD 环境差异       | 低   | 中   | 使用 act 本地测试 GitHub Actions    |
+| zustand 迁移遗漏     | 中   | 中   | 逐模块迁移，每个模块独立验证        |
 
 ---
 

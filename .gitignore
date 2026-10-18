@@ -47,6 +47,9 @@ desktop.ini
 # Temp / analysis
 analyze.js
 
+# Tooling artifacts (本地插件运行目录,不推送)
+.video_agent/
+
 # Logs
 logs/
 *.log

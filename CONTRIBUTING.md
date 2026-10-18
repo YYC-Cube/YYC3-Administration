@@ -8,15 +8,15 @@
 
 ### 前置要求
 
-- **Node.js** >= 18.0.0 (推荐 20.x)
-- **pnpm** >= 8.0.0
+- **Node.js** >= 22.x（pnpm v11 要求 Node ≥ 22.13）
+- **pnpm** >= 11.0
 - **Git**
 
 ### 本地启动
 
 ```bash
-git clone <repository-url>
-cd My-mgmt
+git clone https://github.com/YYC-Cube/YYC3-Administration.git
+cd YYC3-Administration
 pnpm install
 pnpm dev          # → http://localhost:3171
 ```
@@ -27,13 +27,13 @@ pnpm dev          # → http://localhost:3171
 
 ### 1. 分支策略
 
-| 分支 | 用途 |
-|:-----|:-----|
-| `main` | 生产稳定版 |
-| `develop` | 开发主分支 |
-| `feature/*` | 功能开发 |
-| `bugfix/*` | 问题修复 |
-| `hotfix/*` | 紧急修复 |
+| 分支        | 用途       |
+| :---------- | :--------- |
+| `main`      | 生产稳定版 |
+| `develop`   | 开发主分支 |
+| `feature/*` | 功能开发   |
+| `bugfix/*`  | 问题修复   |
+| `hotfix/*`  | 紧急修复   |
 
 ### 2. 工作流程
 
@@ -48,15 +48,15 @@ pnpm dev          # → http://localhost:3171
 
 ### 命名约定
 
-| 类型 | 规范 | 示例 |
-|:-----|:-----|:-----|
-| 组件文件 | PascalCase | `DashboardPage.tsx` |
-| 工具/服务 | camelCase | `aiProxyService.ts` |
-| 样式文件 | kebab-case | `liquid-glass.css` |
-| 组件名 | PascalCase | `SmartFormSystem` |
-| 变量/函数 | camelCase | `handleSubmit` |
-| 常量 | UPPER_SNAKE | `API_BASE_URL` |
-| 类型/接口 | PascalCase | `CustomerData` |
+| 类型      | 规范        | 示例                |
+| :-------- | :---------- | :------------------ |
+| 组件文件  | PascalCase  | `DashboardPage.tsx` |
+| 工具/服务 | camelCase   | `aiProxyService.ts` |
+| 样式文件  | kebab-case  | `liquid-glass.css`  |
+| 组件名    | PascalCase  | `SmartFormSystem`   |
+| 变量/函数 | camelCase   | `handleSubmit`      |
+| 常量      | UPPER_SNAKE | `API_BASE_URL`      |
+| 类型/接口 | PascalCase  | `CustomerData`      |
 
 ### TypeScript 规范
 
@@ -68,18 +68,18 @@ pnpm dev          # → http://localhost:3171
 
 ```typescript
 // 1. React / 框架
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 // 2. 第三方库
-import { motion } from 'motion/react';
-import { useStore } from 'zustand';
+import { motion } from 'motion/react'
+import { useStore } from 'zustand'
 
 // 3. 内部模块
-import { Button } from '@/components/ui/button';
-import { useI18n } from '@/components/i18n-context';
+import { Button } from '@/components/ui/button'
+import { useI18n } from '@/components/i18n-context'
 
 // 4. 类型
-import type { DashboardData } from '@/types';
+import type { DashboardData } from '@/types'
 ```
 
 ---
@@ -96,17 +96,17 @@ import type { DashboardData } from '@/types';
 
 ### Type 列表
 
-| Type | 描述 |
-|:-----|:-----|
-| `feat` | 新功能 |
-| `fix` | Bug 修复 |
-| `docs` | 文档更新 |
-| `style` | 代码格式调整（不影响功能） |
-| `refactor` | 重构（非新功能 / 非修复） |
-| `perf` | 性能优化 |
-| `test` | 测试相关 |
-| `chore` | 构建 / 工具链 |
-| `ci` | CI/CD 配置 |
+| Type       | 描述                       |
+| :--------- | :------------------------- |
+| `feat`     | 新功能                     |
+| `fix`      | Bug 修复                   |
+| `docs`     | 文档更新                   |
+| `style`    | 代码格式调整（不影响功能） |
+| `refactor` | 重构（非新功能 / 非修复）  |
+| `perf`     | 性能优化                   |
+| `test`     | 测试相关                   |
+| `chore`    | 构建 / 工具链              |
+| `ci`       | CI/CD 配置                 |
 
 ### 示例
 
@@ -178,9 +178,9 @@ ComponentName/
 所有新组件必须同时支持 **Cyberpunk** 和 **Liquid Glass** 双主题：
 
 ```typescript
-import { useTheme } from '@/components/theme-switcher-context';
+import { useTheme } from '@/components/theme-switcher-context'
 
-const { theme } = useTheme();
+const { theme } = useTheme()
 // 根据主题切换样式
 ```
 
@@ -218,11 +218,25 @@ const { t } = useI18n();
 
 ---
 
+## 行为准则
+
+参与本项目即表示您同意遵守 [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)（Contributor Covenant v2.1）。
+请在所有交流中保持尊重、包容与专业。
+
+---
+
 ## 问题反馈
 
 - **Bug 报告**: GitHub Issues，使用 Bug Report 模板
 - **功能建议**: GitHub Issues，使用 Feature Request 模板
-- **安全问题**: 邮件 admin@0379.email
+- **安全问题**: 请勿通过公开 Issue 披露，详见 [SECURITY.md](./SECURITY.md)；紧急联系 admin@0379.email
+- **行为准则事件**: 邮件 admin@0379.email 私密上报
+
+---
+
+## 许可证
+
+本项目基于 [MIT License](./LICENSE) 发布。提交贡献即表示您同意您的贡献在同一许可证下分发。
 
 ---
 

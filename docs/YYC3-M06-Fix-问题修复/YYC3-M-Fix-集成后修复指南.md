@@ -2,7 +2,7 @@
 
 **日期**: 2026-05-01  
 **状态**: ✅ 代码修复完成，待执行依赖安装  
-**优先级**: P0 - 立即执行  
+**优先级**: P0 - 立即执行
 
 ---
 
@@ -13,6 +13,7 @@
 **文件**: [tsconfig.json](./tsconfig.json)
 
 **修改内容**:
+
 ```json
 "types": [
   "vite/client",
@@ -31,15 +32,17 @@
 **修改位置**: 第370行
 
 **错误代码**:
+
 ```typescript
-recommendations.push(`${type} 响应延迟过高 (${status.latancy}ms)，建议优化`);
+recommendations.push(`${type} 响应延迟过高 (${status.latancy}ms)，建议优化`)
 //                                                                      ^^^^^^^^
 //                                                                 拼写错误
 ```
 
 **修复后**:
+
 ```typescript
-recommendations.push(`${type} 响应延迟过高 (${status.latency}ms)，建议优化`);
+recommendations.push(`${type} 响应延迟过高 (${status.latency}ms)，建议优化`)
 //                                                                     ^^^^^^^
 //                                                               正确拼写
 ```
@@ -50,10 +53,11 @@ recommendations.push(`${type} 响应延迟过高 (${status.latency}ms)，建议�
 
 **文件**: `src/imports/pasted_text/provider-defs.ts` → `provider-defs.tsx`
 
-**问题描述**: 
+**问题描述**:
 该文件包含 React JSX 代码，但使用了 `.ts` 扩展名，导致 **1275个 TypeScript 编译错误**
 
 **错误类型示例**:
+
 ```
 error TS1161: Unterminated regular expression literal
 error TS1005: '>' expected
@@ -61,11 +65,13 @@ error TS1128: Declaration or statement expected
 ```
 
 **解决方案**:
+
 ```bash
 mv src/imports/pasted_text/provider-defs.ts src/imports/pasted_text/provider-defs.tsx
 ```
 
-**效果**: 
+**效果**:
+
 - ✅ 消除了 1275 个编译错误
 - ✅ 文件现在可以正确解析 JSX 语法
 - ✅ TypeScript 编译器可以正常工作
@@ -77,6 +83,7 @@ mv src/imports/pasted_text/provider-defs.ts src/imports/pasted_text/provider-def
 ### 问题现象
 
 运行 `npm install` 时出现以下错误：
+
 ```bash
 npm error A complete log of this run to be found in: /Volumes/Development/node_modules/.npm/_logs/xxx-debug-0.log
 ```
@@ -84,13 +91,14 @@ npm error A complete log of this run to be found in: /Volumes/Development/node_m
 ### 根本原因
 
 **npm 缓存目录权限问题**:
+
 ```
 npm error code EPERM
 npm error syscall open
 npm error path /Volumes/Development/node_modules/.npm/_cacache/tmp/xxx
 npm error errno EPERM
 
-Your cache folder contains root-owned files, due to a bug in 
+Your cache folder contains root-owned files, due to a bug in
 previous versions of npm which has since been addressed.
 ```
 
@@ -103,11 +111,13 @@ previous versions of npm which has since been addressed.
 1. **打开终端（非 Trae IDE 终端）**
 
 2. **执行以下命令修复权限**:
+
    ```bash
    sudo chown -R $(whoami):staff "/Volumes/Development/node_modules/.npm"
    ```
 
 3. **清除缓存并重新安装**:
+
    ```bash
    cd /Volumes/Max/YYC3-核心开发文档/My-mgmt
    npm cache clean --force
@@ -144,6 +154,7 @@ npm install --legacy-peer-deps
 如果 npm 问题持续存在：
 
 1. **安装 yarn** (如果没有):
+
    ```bash
    npm install -g yarn
    ```
@@ -185,6 +196,7 @@ npm install --legacy-peer-deps
 ```
 
 **预期输出**:
+
 ```
 added 1250+ packages in 45s
 
@@ -209,11 +221,13 @@ npm run typecheck
 ```
 
 **预期结果**:
+
 - ✅ 错误数量从 **1280个** 降低到 **<10个**
 - ✅ 主要剩余错误应该在测试文件中（非关键）
 - ✅ 所有 YYC³ 集成文件无错误
 
 **如果仍有错误**:
+
 ```bash
 # 查看具体错误
 npm run typecheck 2>&1 | grep "error TS"
@@ -229,14 +243,15 @@ npm run dev
 ```
 
 **预期输出**:
+
 ```
 VITE v6.3.5  ready in XXX ms
 
-➜  Local:   http://localhost:5173/
-➜  Network: http://192.168.x.x:5173/
+➜  Local:   http://localhost:3171/
+➜  Network: http://192.168.x.x:3171/
 ```
 
-**在浏览器中打开**: http://localhost:5173
+**在浏览器中打开**: http://localhost:3171
 
 ---
 
@@ -245,30 +260,35 @@ VITE v6.3.5  ready in XXX ms
 安装成功后，请逐项验证以下功能：
 
 #### ✅ 主题系统集成
+
 - [ ] 打开设置页面 → 主题配置
 - [ ] 切换到 yyc3-dark 预设
 - [ ] 确认霓虹发光效果正常
 - [ ] 测试毛玻璃效果开关
 
 #### ✅ UI 组件库
+
 - [ ] 查看 Dashboard 页面数据卡片渲染
 - [ ] 测试 Button 组件的各种变体
 - [ ] 验证 Dialog 弹窗组件
 - [ ] 检查 Tabs 标签页切换
 
 #### ✅ 情感引擎
+
 - [ ] 打开员工关怀模块
 - [ ] 输入测试文本："我今天很开心"
 - [ ] 查看情感分析结果（应为 happy）
 - [ ] 测试负面情绪识别
 
 #### ✅ 动效系统
+
 - [ ] 观察页面加载动画（弹簧效果）
 - [ ] 测试数据流背景粒子
 - [ ] 验证扫描线效果（如启用）
 - [ ] 检查霓虹脉冲动画
 
 #### ✅ MCP 连接
+
 - [ ] 打开 MCP 设置面板
 - [ ] 查看 AI Hub 连接状态
 - [ ] 测试 Git API 服务健康检查
@@ -278,15 +298,15 @@ VITE v6.3.5  ready in XXX ms
 
 ## 📊 修复前后对比
 
-| 指标 | 修复前 | 修复后 |
-|------|--------|--------|
-| **TypeScript 错误数** | 1280个 | <10个 (预估) |
-| **主要错误来源** | provider-defs.ts (1275个) | 已消除 |
-| **tsconfig 配置** | 缺少 node types | 已添加 |
-| **MCP 拼写错误** | latancy (错误) | latency (正确) |
-| **文件扩展名** | .ts (含JSX) | .tsx (正确) |
-| **YYC³ 包集成文件** | 5个新文件 | 全部创建完成 |
-| **npm 安装状态** | ❌ 失败 (EPERM) | ⏳ 待用户执行 |
+| 指标                  | 修复前                    | 修复后         |
+| --------------------- | ------------------------- | -------------- |
+| **TypeScript 错误数** | 1280个                    | <10个 (预估)   |
+| **主要错误来源**      | provider-defs.ts (1275个) | 已消除         |
+| **tsconfig 配置**     | 缺少 node types           | 已添加         |
+| **MCP 拼写错误**      | latancy (错误)            | latency (正确) |
+| **文件扩展名**        | .ts (含JSX)               | .tsx (正确)    |
+| **YYC³ 包集成文件**   | 5个新文件                 | 全部创建完成   |
+| **npm 安装状态**      | ❌ 失败 (EPERM)           | ⏳ 待用户执行  |
 
 ---
 
@@ -295,6 +315,7 @@ VITE v6.3.5  ready in XXX ms
 ### 如果 typecheck 仍有错误
 
 **查看错误详情**:
+
 ```bash
 npm run typecheck 2>&1 > /tmp/typecheck-errors.txt
 cat /tmp/typecheck-errors.txt | grep "error TS" | head -20
@@ -303,11 +324,13 @@ cat /tmp/typecheck-errors.txt | grep "error TS" | head -20
 **常见错误及解决方案**:
 
 1. **找不到模块 'react'**
+
    ```bash
    npm install react@18.3.1 react-dom@18.3.1
    ```
 
 2. **找不到类型声明**
+
    ```bash
    npm install -D @types/react@^18.2.48 @types/react-dom@^18.2.18
    ```
@@ -321,9 +344,10 @@ cat /tmp/typecheck-errors.txt | grep "error TS" | head -20
 ### 如果 dev 启动失败
 
 **端口被占用**:
+
 ```bash
 # 查看占用端口的进程
-lsof -i :5173
+lsof -i :3171
 
 # 杀掉进程
 kill -9 <PID>
@@ -333,6 +357,7 @@ npm run dev -- --port 5174
 ```
 
 **缺少环境变量**:
+
 ```bash
 # 复制环境变量模板
 cp .env.example .env
@@ -346,6 +371,7 @@ nano .env
 ### 如果 YYC³ 包未安装成功
 
 **手动安装单个包**:
+
 ```bash
 npm install @yyc3/core@1.4.0 --legacy-peer-deps
 npm install @yyc3/ui@2.0.0 --legacy-peer-deps
@@ -353,6 +379,7 @@ npm install @yyc3/ui@2.0.0 --legacy-peer-deps
 ```
 
 **验证包是否已安装**:
+
 ```bash
 ls -la node_modules/@yyc3/
 npm list @yyc3/core @yyc3/ui @yyc3/emotion
@@ -444,13 +471,13 @@ A: 运行 `npm list @yyc3/*` 应该显示 8 个包全部安装成功。
 ✅ **修复 tsconfig 配置缺失**  
 ✅ **修正 MCP 集成拼写错误**  
 ✅ **完成 5 个 YYC³ 集成模块代码编写**  
-✅ **生成完整的操作指南文档**  
+✅ **生成完整的操作指南文档**
 
 ### 待执行操作
 
 ⏳ **修复 npm 缓存权限** (需用户在终端执行)  
 ⏳ **安装项目依赖**  
-⏳ **启动并验证开发环境**  
+⏳ **启动并验证开发环境**
 
 ### 预期时间
 
