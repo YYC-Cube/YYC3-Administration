@@ -24,11 +24,12 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 )
 
 describe('ChatInterface — Smoke', () => {
+  // 首个用例含动态 import + 完整 Provider 挂载，jsdom 下约 3–6s，显式放宽超时避免 CI 抖动
   it('renders without crashing', async () => {
     const { ChatInterface } = await import('@/features/conversation/pages/chat-interface')
     const { container } = render(<ChatInterface />, { wrapper: TestWrapper })
     expect(container).toBeTruthy()
-  })
+  }, 15000)
 
   it('renders at least one element', async () => {
     const { ChatInterface } = await import('@/features/conversation/pages/chat-interface')

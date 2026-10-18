@@ -36,11 +36,9 @@ const h = vi.hoisted(() => {
     configured: true,
     unsubscribe,
     onAuthStateChange,
-    getSession: vi.fn(
-      async (): Promise<{ data: { session: unknown } }> => ({
-        data: { session: null },
-      }),
-    ),
+    getSession: vi.fn(async (): Promise<{ data: { session: unknown } }> => ({
+      data: { session: null },
+    })),
     startSync: vi.fn(async () => undefined),
     stopSync: vi.fn(),
   }
@@ -164,5 +162,6 @@ describe('UserDataSync — App 组件树挂载回归守卫(F-01)', () => {
 
     unmount()
     expect(h.stopSync).toHaveBeenCalled()
-  })
+    // 全 App 组件树挂载在 jsdom 下约 4–6s，显式放宽超时避免 CI 抖动
+  }, 15000)
 })
