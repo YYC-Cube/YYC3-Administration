@@ -48,25 +48,13 @@ export function useToast() {
     }
   }, [])
 
-  const success = useCallback(
-    (message: string, config?: ToastConfig) => toast('success', message, config),
-    [toast],
-  )
+  const success = (message: string, config?: ToastConfig) => toast('success', message, config)
 
-  const error = useCallback(
-    (message: string, config?: ToastConfig) => toast('error', message, config),
-    [toast],
-  )
+  const error = (message: string, config?: ToastConfig) => toast('error', message, config)
 
-  const warning = useCallback(
-    (message: string, config?: ToastConfig) => toast('warning', message, config),
-    [toast],
-  )
+  const warning = (message: string, config?: ToastConfig) => toast('warning', message, config)
 
-  const info = useCallback(
-    (message: string, config?: ToastConfig) => toast('info', message, config),
-    [toast],
-  )
+  const info = (message: string, config?: ToastConfig) => toast('info', message, config)
 
   const loading = useCallback((message: string) => {
     return sonnerToast.loading(message)

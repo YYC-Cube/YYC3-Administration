@@ -9,7 +9,7 @@ import {
   Search,
   Trash2,
 } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { FORM_STORAGE_KEY, formTemplates } from './smart-form-data'
 
@@ -43,26 +43,20 @@ const templateColorMap: Record<string, string> = {
  */
 export function FormHistory() {
   const { t } = useI18n()
-  const [submissions, setSubmissions] = useState<SubmissionEntry[]>([])
+  // 从 localStorage 惰性初始化,避免 effect 内同步 setState
+  const [submissions, setSubmissions] = useState<SubmissionEntry[]>(() => {
+    try {
+      const raw = localStorage.getItem(FORM_STORAGE_KEY)
+      return raw ? JSON.parse(raw) || [] : []
+    } catch {
+      return []
+    }
+  })
+  const [now] = useState(() => Date.now())
   const [search, setSearch] = useState('')
   const [filterTemplate, setFilterTemplate] = useState<string>('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
-
-  // Load from localStorage
-  const loadSubmissions = useCallback(() => {
-    try {
-      const raw = localStorage.getItem(FORM_STORAGE_KEY)
-      if (raw) setSubmissions(JSON.parse(raw) || [])
-      else setSubmissions([])
-    } catch {
-      setSubmissions([])
-    }
-  }, [])
-
-  useEffect(() => {
-    loadSubmissions()
-  }, [loadSubmissions])
 
   // Filtered list
   const filtered = useMemo(() => {
@@ -145,7 +139,6 @@ export function FormHistory() {
   function formatTime(iso: string) {
     try {
       const d = new Date(iso)
-      const now = Date.now()
       const diff = now - d.getTime()
       if (diff < 60000) return t('fhis.time.justNow')
       if (diff < 3600000) return t('fhis.time.minutesAgo', { n: Math.floor(diff / 60000) })

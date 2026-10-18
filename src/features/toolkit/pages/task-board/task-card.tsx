@@ -58,6 +58,7 @@ export function DraggableTaskCard({
   const moveTask = useTaskStore((s) => s.moveTask)
   const reorderInColumn = useTaskStore((s) => s.reorderInColumn)
   const [showMenu, setShowMenu] = useState(false)
+  const [now] = useState(() => Date.now())
   const menuRef = useRef<HTMLDivElement>(null)
 
   const [{ isDragging }, drag, preview] = useDrag({
@@ -86,7 +87,7 @@ export function DraggableTaskCard({
   const completedSubs = task.subtasks?.filter((s) => s.isCompleted).length ?? 0
   const totalSubs = task.subtasks?.length ?? 0
   const subProgress = totalSubs > 0 ? (completedSubs / totalSubs) * 100 : 0
-  const isOverdue = task.dueDate && task.dueDate < Date.now() && task.status !== 'done'
+  const isOverdue = task.dueDate && task.dueDate < now && task.status !== 'done'
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {

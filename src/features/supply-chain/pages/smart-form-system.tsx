@@ -22,7 +22,6 @@ import {
   type FocusEvent,
   memo,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -66,75 +65,77 @@ export function SmartFormPage() {
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
   const [aiSuggestionField, setAiSuggestionField] = useState<string | null>(null)
-  const [submissionCount, setSubmissionCount] = useState(0)
   const formRef = useRef<HTMLDivElement>(null)
 
-  // Phase 8.5: Load custom templates from localStorage
-  const [customTemplates, setCustomTemplates] = useState<FormTemplate[]>([])
-  useEffect(() => {
+  // Phase 8.5: Load custom templates from localStorage(惰性初始化,避免 effect 内同步 setState)
+  const [customTemplates] = useState<FormTemplate[]>(() => {
     try {
       const raw = localStorage.getItem(CUSTOM_TEMPLATES_KEY)
       if (raw) {
         const parsed = JSON.parse(raw)
         if (Array.isArray(parsed)) {
-          setCustomTemplates(
-            parsed.map((ct: Record<string, unknown>) => ({
-              id: ct.id as string,
-              title: ct.title as string,
-              subtitle: (ct.subtitle as string) || 'Custom Template',
-              icon: Puzzle,
-              color: (ct.color as string) || '#008b9d',
-              description: (ct.description as string) || 'Custom Template',
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              fields: (ct.fields as any[]) || [],
-            })),
-          )
+          return parsed.map((ct: Record<string, unknown>) => ({
+            id: ct.id as string,
+            title: ct.title as string,
+            subtitle: (ct.subtitle as string) || 'Custom Template',
+            icon: Puzzle,
+            color: (ct.color as string) || '#008b9d',
+            description: (ct.description as string) || 'Custom Template',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            fields: (ct.fields as any[]) || [],
+          }))
         }
       }
     } catch {
       /* ignore */
     }
-  }, [])
+    return []
+  })
 
   // Combined template list (built-in + custom)
   const allTemplates = useMemo(() => [...formTemplates, ...customTemplates], [customTemplates])
 
-  // Load submission count from localStorage
-  useEffect(() => {
+  // Load submission count from localStorage(惰性初始化)
+  const [submissionCount, setSubmissionCount] = useState(() => {
     try {
       const raw = localStorage.getItem(FORM_STORAGE_KEY)
       if (raw) {
         const data = JSON.parse(raw)
-        setSubmissionCount(Array.isArray(data) ? data.length : 0)
+        return Array.isArray(data) ? data.length : 0
       }
     } catch {
       /* ignore */
     }
-  }, [])
+    return 0
+  })
 
   const template = useMemo(
     () => allTemplates.find((t) => t.id === selectedTemplate) ?? null,
     [selectedTemplate, allTemplates],
   )
 
-  // Initialize form values when template changes
-  useEffect(() => {
-    if (!template) return
-    const defaults: Record<string, FormFieldValue> = {}
-    template.fields.forEach((f) => {
-      if (f.defaultValue !== undefined) defaults[f.id] = f.defaultValue
-      else if (f.type === 'checkbox') defaults[f.id] = []
-      else if (f.type === 'toggle') defaults[f.id] = false
-      else if (f.type === 'slider') defaults[f.id] = f.min ?? 0
-      else if (f.type === 'rating') defaults[f.id] = 0
-      else defaults[f.id] = ''
-    })
-    setFormValues(defaults)
-    setErrors({})
-    setTouched(new Set())
-    setSubmitSuccess(false)
-    setShowPreview(false)
-  }, [template])
+  // Initialize form values when template changes (adjust state during render)
+  const [prevTemplateId, setPrevTemplateId] = useState<string | null>(template?.id ?? null)
+  const templateId = template?.id ?? null
+  if (templateId !== prevTemplateId) {
+    setPrevTemplateId(templateId)
+    if (template) {
+      const defaults: Record<string, FormFieldValue> = {}
+      template.fields.forEach((f) => {
+        if (f.defaultValue !== undefined) defaults[f.id] = f.defaultValue
+        else if (f.type === 'checkbox') defaults[f.id] = []
+        else if (f.type === 'toggle') defaults[f.id] = false
+        else if (f.type === 'slider') defaults[f.id] = f.min ?? 0
+        else if (f.type === 'rating') defaults[f.id] = 0
+        else defaults[f.id] = ''
+      })
+      setFormValues(defaults)
+      setErrors({})
+      setTouched(new Set())
+      setSubmitSuccess(false)
+      setShowPreview(false)
+    }
+  }
 
   const updateField = useCallback((fieldId: string, value: FormFieldValue) => {
     setFormValues((prev) => ({ ...prev, [fieldId]: value }))

@@ -106,7 +106,20 @@ function makeTitle(messages: ChatMessage[]): string {
  * Supports create / delete / switch sessions; auto-titles from first user message.
  */
 export function useChatSession() {
-  const [sessions, setSessions] = useState<ChatSession[]>(loadSessions)
+  const [sessions, setSessions] = useState<ChatSession[]>(() => {
+    const loaded = loadSessions()
+    if (loaded.length > 0) return loaded
+    // 确保至少存在一个会话(惰性初始化,避免 effect 内同步 setState)
+    return [
+      {
+        id: genId(),
+        title: 'chat.newSession',
+        messages: [],
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      },
+    ]
+  })
   const [activeId, setActiveId] = useState<string | null>(loadActiveId)
 
   // Persist on change
@@ -117,23 +130,10 @@ export function useChatSession() {
     saveActiveId(activeId)
   }, [activeId])
 
-  // Ensure at least one session exists
-  useEffect(() => {
-    if (sessions.length === 0) {
-      const id = genId()
-      const session: ChatSession = {
-        id,
-        title: 'chat.newSession',
-        messages: [],
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      }
-      setSessions([session])
-      setActiveId(id)
-    } else if (!activeId || !sessions.find((s) => s.id === activeId)) {
-      setActiveId(sessions[0].id)
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  // 确保 activeId 始终指向一个存在的会话(渲染期调整 state)
+  if (sessions.length > 0 && (!activeId || !sessions.some((s) => s.id === activeId))) {
+    setActiveId(sessions[0].id)
+  }
 
   const activeSession = sessions.find((s) => s.id === activeId) ?? null
 

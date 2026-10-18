@@ -34,18 +34,20 @@ import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 type SettingTab =
   'overview' | 'interface' | 'integration' | 'security' | 'performance' | 'monitoring'
 
+// Mock performance data —— 模块级常量,避免在渲染期调用 Math.random
+const PERFORMANCE_DATA = Array.from({ length: 24 }, (_, i) => ({
+  hour: `${i}:00`,
+  cpu: 30 + Math.random() * 40,
+  memory: 40 + Math.random() * 30,
+  requests: 100 + Math.random() * 150,
+}))
+
 export function PlatformSettingsPage() {
   const tc = useThemeColors()
   const { t } = useI18n()
   const [activeTab, setActiveTab] = useState<SettingTab>('overview')
 
-  // Mock performance data
-  const performanceData = Array.from({ length: 24 }, (_, i) => ({
-    hour: `${i}:00`,
-    cpu: 30 + Math.random() * 40,
-    memory: 40 + Math.random() * 30,
-    requests: 100 + Math.random() * 150,
-  }))
+  const performanceData = PERFORMANCE_DATA
 
   const tabs = [
     { id: 'overview' as const, label: t('plt.cat.overview'), icon: Server },

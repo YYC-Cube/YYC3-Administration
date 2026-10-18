@@ -113,113 +113,117 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
     [favoriteFiles],
   )
 
-  const renderNode = useCallback(
-    (node: FileNode, depth: number = 0): React.ReactNode => {
-      const isExpanded = expandedFolders.includes(node.id)
-      const isSelected = selectedFile === node.path
-      const gitStyle = getGitStatusStyle(node.gitStatus)
-      const fileIcon = node.type === 'file' ? getFileIcon(node.name) : null
-      const FolderIcon = isExpanded ? FolderOpen : Folder
-      const FileIconComp = fileIcon?.icon ?? File
+  const handleToggleFavorite = useCallback(
+    (node: FileNode) => {
+      toggleFavorite({
+        id: node.id,
+        name: node.name,
+        path: node.path,
+        type: 'favorite',
+        lastAccessed: Date.now(),
+        language: node.language,
+      })
+    },
+    [toggleFavorite],
+  )
 
-      return (
-        <div key={node.id}>
-          <div
-            className="flex items-center gap-1 px-2 py-[3px] cursor-pointer group transition-colors rounded-md mx-1"
-            style={{
-              paddingLeft: `${depth * 14 + 8}px`,
-              background: isSelected ? `${tc.primary}12` : 'transparent',
-              color: isSelected ? tc.textPrimary : tc.textSecondary,
-            }}
-            onClick={() => handleFileClick(node)}
-            onContextMenu={(e) => handleContextMenu(e, node)}
-          >
-            {node.type === 'directory' ? (
-              <ChevronRight
-                className="w-3 h-3 shrink-0 transition-transform"
-                style={{ transform: isExpanded ? 'rotate(90deg)' : 'none', color: tc.textMuted }}
-              />
-            ) : (
-              <span className="w-3 shrink-0" />
-            )}
-            {node.type === 'directory' ? (
-              <FolderIcon
-                className="w-3.5 h-3.5 shrink-0"
-                style={{ color: isExpanded ? '#f97316' : '#eab308' }}
-              />
-            ) : (
-              <FileIconComp
-                className="w-3.5 h-3.5 shrink-0"
-                style={{ color: fileIcon?.color ?? tc.textMuted }}
-              />
-            )}
-            {renamingPath === node.path ? (
-              <input
-                autoFocus
-                value={renameValue}
-                onChange={(e) => setRenameValue(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && renameValue.trim()) {
-                    renameFileNode(node.path, renameValue.trim())
-                    setRenamingPath(null)
-                  }
-                  if (e.key === 'Escape') setRenamingPath(null)
-                }}
-                onBlur={() => {
-                  if (renameValue.trim() && renameValue !== node.name)
-                    renameFileNode(node.path, renameValue.trim())
+  // Recursive renderer — declared as a hoisted function so the recursive
+  // self-reference is resolved before the declaration is reached.
+  function renderNode(node: FileNode, depth: number = 0): React.ReactNode {
+    const isExpanded = expandedFolders.includes(node.id)
+    const isSelected = selectedFile === node.path
+    const gitStyle = getGitStatusStyle(node.gitStatus)
+    const fileIcon = node.type === 'file' ? getFileIcon(node.name) : null
+    const FolderIcon = isExpanded ? FolderOpen : Folder
+    const FileIconComp = fileIcon?.icon ?? File
+
+    return (
+      <div key={node.id}>
+        <div
+          className="flex items-center gap-1 px-2 py-[3px] cursor-pointer group transition-colors rounded-md mx-1"
+          style={{
+            paddingLeft: `${depth * 14 + 8}px`,
+            background: isSelected ? `${tc.primary}12` : 'transparent',
+            color: isSelected ? tc.textPrimary : tc.textSecondary,
+          }}
+          onClick={() => handleFileClick(node)}
+          onContextMenu={(e) => handleContextMenu(e, node)}
+        >
+          {node.type === 'directory' ? (
+            <ChevronRight
+              className="w-3 h-3 shrink-0 transition-transform"
+              style={{ transform: isExpanded ? 'rotate(90deg)' : 'none', color: tc.textMuted }}
+            />
+          ) : (
+            <span className="w-3 shrink-0" />
+          )}
+          {node.type === 'directory' ? (
+            <FolderIcon
+              className="w-3.5 h-3.5 shrink-0"
+              style={{ color: isExpanded ? '#f97316' : '#eab308' }}
+            />
+          ) : (
+            <FileIconComp
+              className="w-3.5 h-3.5 shrink-0"
+              style={{ color: fileIcon?.color ?? tc.textMuted }}
+            />
+          )}
+          {renamingPath === node.path ? (
+            <input
+              autoFocus
+              value={renameValue}
+              onChange={(e) => setRenameValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && renameValue.trim()) {
+                  renameFileNode(node.path, renameValue.trim())
                   setRenamingPath(null)
-                }}
-                className="text-[11px] flex-1 px-1 py-0 rounded border outline-none min-w-0"
-                style={{ background: tc.bgInput, borderColor: tc.primary, color: tc.textPrimary }}
-                onClick={(e) => e.stopPropagation()}
-              />
-            ) : (
-              <span
-                className="text-[11px] truncate flex-1"
-                style={{
-                  color:
-                    node.gitStatus === 'modified'
-                      ? '#eab308'
-                      : node.gitStatus === 'added'
-                        ? '#22c55e'
-                        : undefined,
-                }}
-              >
-                {node.name}
-              </span>
-            )}
-            {gitStyle.label && (
-              <span className="text-[8px] px-1 rounded shrink-0" style={{ color: gitStyle.color }}>
-                {gitStyle.label}
-              </span>
-            )}
-            {node.type === 'file' && (
-              <span
-                className="text-[8px] opacity-0 group-hover:opacity-60 transition-opacity shrink-0"
-                style={{ color: tc.textMuted }}
-              >
-                {formatFileSize(node.size)}
-              </span>
-            )}
-          </div>
-          {node.type === 'directory' && isExpanded && node.children && (
-            <div>{node.children.map((child) => renderNode(child, depth + 1))}</div>
+                }
+                if (e.key === 'Escape') setRenamingPath(null)
+              }}
+              onBlur={() => {
+                if (renameValue.trim() && renameValue !== node.name)
+                  renameFileNode(node.path, renameValue.trim())
+                setRenamingPath(null)
+              }}
+              className="text-[11px] flex-1 px-1 py-0 rounded border outline-none min-w-0"
+              style={{ background: tc.bgInput, borderColor: tc.primary, color: tc.textPrimary }}
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <span
+              className="text-[11px] truncate flex-1"
+              style={{
+                color:
+                  node.gitStatus === 'modified'
+                    ? '#eab308'
+                    : node.gitStatus === 'added'
+                      ? '#22c55e'
+                      : undefined,
+              }}
+            >
+              {node.name}
+            </span>
+          )}
+          {gitStyle.label && (
+            <span className="text-[8px] px-1 rounded shrink-0" style={{ color: gitStyle.color }}>
+              {gitStyle.label}
+            </span>
+          )}
+          {node.type === 'file' && (
+            <span
+              className="text-[8px] opacity-0 group-hover:opacity-60 transition-opacity shrink-0"
+              style={{ color: tc.textMuted }}
+            >
+              {formatFileSize(node.size)}
+            </span>
           )}
         </div>
-      )
-    },
-    [
-      expandedFolders,
-      selectedFile,
-      tc,
-      handleFileClick,
-      handleContextMenu,
-      renamingPath,
-      renameValue,
-      renameFileNode,
-    ],
-  )
+        {node.type === 'directory' && isExpanded && node.children && (
+          <div>{node.children.map((child) => renderNode(child, depth + 1))}</div>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col h-full" data-testid="file-explorer">
@@ -477,14 +481,7 @@ export function FileExplorerPanel({ tc }: { tc: ThemeColors }) {
                 label: isFavorite(contextMenu.node.path) ? 'fe.unfavorite' : 'fe.favorite',
                 icon: Heart,
                 action: () => {
-                  toggleFavorite({
-                    id: contextMenu.node.id,
-                    name: contextMenu.node.name,
-                    path: contextMenu.node.path,
-                    type: 'favorite',
-                    lastAccessed: Date.now(),
-                    language: contextMenu.node.language,
-                  })
+                  handleToggleFavorite(contextMenu.node)
                   setContextMenu(null)
                 },
               },

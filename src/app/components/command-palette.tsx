@@ -52,11 +52,17 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
   const { t } = useI18n()
   const [search, setSearch] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const [wasOpen, setWasOpen] = useState(open)
+
+  // Reset query + focus when the palette transitions to open (adjust state during render)
+  if (open !== wasOpen) {
+    setWasOpen(open)
+    if (open) setSearch('')
+  }
 
   // Focus input when opened
   useEffect(() => {
     if (open) {
-      setSearch('')
       setTimeout(() => inputRef.current?.focus(), 50)
     }
   }, [open])

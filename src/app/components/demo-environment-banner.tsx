@@ -33,17 +33,16 @@ const STORAGE_KEY = 'yyc3_demo_banner_dismissed'
  */
 export function DemoEnvironmentBanner() {
   const { t } = useI18n()
-  const [dismissed, setDismissed] = useState(false)
-  const bannerRef = useRef<HTMLDivElement>(null)
-
-  // 读取已关闭状态(session 级)
-  useEffect(() => {
+  // 读取已关闭状态(session 级)——惰性初始化,避免 effect 内同步 setState
+  const [dismissed, setDismissed] = useState(() => {
     try {
-      if (sessionStorage.getItem(STORAGE_KEY) === '1') setDismissed(true)
+      return sessionStorage.getItem(STORAGE_KEY) === '1'
     } catch {
       /* storage 不可用时保持展示(安全侧优先) */
+      return false
     }
-  }, [])
+  })
+  const bannerRef = useRef<HTMLDivElement>(null)
 
   // 自测量高度 → body padding-top,避免遮挡
   useEffect(() => {

@@ -6,6 +6,7 @@
  */
 
 import { ClipboardList, Edit3, Trash2 } from 'lucide-react'
+import { useState } from 'react'
 
 import { PRIORITY_CONFIG, STATUS_CONFIG, TYPE_CONFIG } from '../task-board-data'
 
@@ -30,6 +31,7 @@ export function ListView({
   onDelete: (id: string) => void
 }) {
   const { t } = useI18n()
+  const [now] = useState(() => Date.now())
   return (
     <div
       className="rounded-xl border overflow-hidden"
@@ -53,7 +55,7 @@ export function ListView({
         const sCfg = STATUS_CONFIG[task.status]
         const pCfg = PRIORITY_CONFIG[task.priority]
         const tCfg = TYPE_CONFIG[task.type]
-        const isOverdue = task.dueDate && task.dueDate < Date.now() && task.status !== 'done'
+        const isOverdue = task.dueDate && task.dueDate < now && task.status !== 'done'
         const SIcon = sCfg.icon
         return (
           <div

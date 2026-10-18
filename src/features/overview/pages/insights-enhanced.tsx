@@ -8,7 +8,7 @@ import {
   Sparkles,
   TrendingUp,
 } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Area,
   AreaChart,
@@ -38,6 +38,16 @@ import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 // YYC³ 数据洞察增强 — Enhanced Data Insights
 // Phase 2A: AI 驱动分析 · 多维图表 · 预测建议
 // ==========================================
+
+// 24 小时热力图占位数据 —— 模块级生成一次,避免渲染期调用 Math.random
+const HOURLY_DATA = Array.from({ length: 24 }, (_, i) => ({
+  hour: `${i.toString().padStart(2, '0')}:00`,
+  calls: Math.floor(Math.random() * 30) + (i >= 9 && i <= 18 ? 20 : 2),
+  ai: Math.floor(Math.random() * 50) + (i >= 8 && i <= 22 ? 30 : 5),
+}))
+
+// 近 7 日表单趋势的占位增量 —— 模块级生成,避免在渲染/计算期调用 Math.random
+const MOCK_DAY_EXTRA = Array.from({ length: 7 }, () => Math.floor(Math.random() * 5) + 1)
 
 /**
  * Enhanced Data Insights page with AI-driven analysis panels.
@@ -121,16 +131,8 @@ export function InsightsEnhancedPage() {
     { nameKey: 'ins.channel.referral', value: 5, color: tc.warning },
   ]
 
-  // Hourly heatmap
-  const hourlyData = useMemo(
-    () =>
-      Array.from({ length: 24 }, (_, i) => ({
-        hour: `${i.toString().padStart(2, '0')}:00`,
-        calls: Math.floor(Math.random() * 30) + (i >= 9 && i <= 18 ? 20 : 2),
-        ai: Math.floor(Math.random() * 50) + (i >= 8 && i <= 22 ? 30 : 5),
-      })),
-    [],
-  )
+  // Hourly heatmap —— 随机值在模块级生成一次,避免渲染期调用 Math.random
+  const hourlyData = HOURLY_DATA
 
   // AI Insights
   const aiInsights = [
@@ -605,65 +607,68 @@ export function InsightsEnhancedPage() {
 // ==========================================
 // Form Analytics Sub-section (inline)
 // ==========================================
+function computeFormStats(t: (key: string) => string) {
+  type FormStats = {
+    total: number
+    byTemplate: { name: string; value: number; color: string }[]
+    dailyTrend: { day: string; count: number }[]
+  }
+  const empty: FormStats = { total: 0, byTemplate: [], dailyTrend: [] }
+  try {
+    const raw = localStorage.getItem('yyc3_form_submissions')
+    interface StoredSubmission {
+      templateTitle: string
+      submittedAt?: string
+    }
+    const data: StoredSubmission[] = raw ? JSON.parse(raw) : []
+    if (!data.length) return empty
+
+    const tplMap: Record<string, number> = {}
+    data.forEach((s) => {
+      tplMap[s.templateTitle] = (tplMap[s.templateTitle] || 0) + 1
+    })
+    const colorMap: Record<string, string> = {
+      客户录入表: '#00d4ff',
+      呼叫报告: '#00ffcc',
+      满意度调研: '#00f0ff',
+      'AI 任务配置': '#00ffc8',
+    }
+    const byTemplate = Object.entries(tplMap).map(([name, value]) => ({
+      name,
+      value,
+      color: colorMap[name] || '#41ffdd',
+    }))
+
+    const now = Date.now()
+    const dayLabels = [
+      'ins.weekday.sun',
+      'ins.weekday.mon',
+      'ins.weekday.tue',
+      'ins.weekday.wed',
+      'ins.weekday.thu',
+      'ins.weekday.fri',
+      'ins.weekday.sat',
+    ]
+    const dailyTrend: { day: string; count: number }[] = []
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now - i * 86400000)
+      const dayStr = d.toISOString().slice(0, 10)
+      const count = data.filter((s) => s.submittedAt?.startsWith(dayStr)).length
+      // 占位增量取模块级常量,避免在计算期调用 Math.random
+      const mockExtra = MOCK_DAY_EXTRA[6 - i]
+      dailyTrend.push({ day: t(dayLabels[d.getDay()]), count: count + mockExtra })
+    }
+
+    return { total: data.length, byTemplate, dailyTrend }
+  } catch {
+    return empty
+  }
+}
+
 function FormInsightsAnalytics() {
   const { t } = useI18n()
   const tc = useThemeColors()
-  const [stats, setStats] = useState({
-    total: 0,
-    byTemplate: [] as { name: string; value: number; color: string }[],
-    dailyTrend: [] as { day: string; count: number }[],
-  })
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem('yyc3_form_submissions')
-      interface StoredSubmission {
-        templateTitle: string
-        submittedAt?: string
-      }
-      const data: StoredSubmission[] = raw ? JSON.parse(raw) : []
-      if (!data.length) return
-
-      const tplMap: Record<string, number> = {}
-      data.forEach((s) => {
-        tplMap[s.templateTitle] = (tplMap[s.templateTitle] || 0) + 1
-      })
-      const colorMap: Record<string, string> = {
-        客户录入表: '#00d4ff',
-        呼叫报告: '#00ffcc',
-        满意度调研: '#00f0ff',
-        'AI 任务配置': '#00ffc8',
-      }
-      const byTemplate = Object.entries(tplMap).map(([name, value]) => ({
-        name,
-        value,
-        color: colorMap[name] || '#41ffdd',
-      }))
-
-      const now = Date.now()
-      const dayLabels = [
-        'ins.weekday.sun',
-        'ins.weekday.mon',
-        'ins.weekday.tue',
-        'ins.weekday.wed',
-        'ins.weekday.thu',
-        'ins.weekday.fri',
-        'ins.weekday.sat',
-      ]
-      const dailyTrend: { day: string; count: number }[] = []
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date(now - i * 86400000)
-        const dayStr = d.toISOString().slice(0, 10)
-        const count = data.filter((s) => s.submittedAt?.startsWith(dayStr)).length
-        const mockExtra = Math.floor(Math.random() * 5) + 1
-        dailyTrend.push({ day: t(dayLabels[d.getDay()]), count: count + mockExtra })
-      }
-
-      setStats({ total: data.length, byTemplate, dailyTrend })
-    } catch {
-      /* */
-    }
-  }, [t])
+  const stats = useMemo(() => computeFormStats(t), [t])
 
   if (stats.total === 0) return null
 

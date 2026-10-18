@@ -50,22 +50,17 @@ export function CyberpunkWidget({ onSwitchMode }: { onSwitchMode: () => void }) 
   const [minimized, setMinimized] = useState(false)
   const [maximized, setMaximized] = useState(false)
   const [activeTab, setActiveTab] = useState<WidgetTab>('chat')
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+  // 初始位置惰性计算(仅一次),避免 effect 内同步 setState
+  const [position, setPosition] = useState(() => ({
+    x: window.innerWidth - 420 - 24,
+    y: window.innerHeight - 620 - 24,
+  }))
   const [size, setSize] = useState({ w: 420, h: 620 })
   const [isDragging, setIsDragging] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
   const dragRef = useRef({ startX: 0, startY: 0, startPosX: 0, startPosY: 0 })
   const resizeRef = useRef({ startX: 0, startY: 0, startW: 0, startH: 0 })
   const widgetRef = useRef<HTMLDivElement>(null)
-
-  // Initialize position — intentionally runs only once on mount
-  useEffect(() => {
-    setPosition({
-      x: window.innerWidth - size.w - 24,
-      y: window.innerHeight - size.h - 24,
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   // Drag handlers
   const onDragStart = useCallback(

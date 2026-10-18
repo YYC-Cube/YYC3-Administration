@@ -423,6 +423,12 @@ export function EditorQuickActions({
     }
   }, [result, editorInsertRef])
 
+  // editorInsertRef.current 由同级编辑器面板挂载时通过 onInsertReady 写入;
+  // 渲染期读取仅用于条件显示「插入编辑器」按钮,父组件未提供等价的 state 通道,
+  // 故此处为有意为之(保留原行为:仅当编辑器已注册插入器时显示按钮)
+  // eslint-disable-next-line react-hooks/refs -- 有意为之:仅当编辑器已注册插入器时显示按钮,父组件未暴露等价 state 通道
+  const canInsertToEditor = Boolean(editorInsertRef?.current)
+
   return (
     <div>
       {/* 操作栏 */}
@@ -565,7 +571,7 @@ export function EditorQuickActions({
               </div>
               <div className="flex flex-col gap-1 shrink-0">
                 {/* 一键插入编辑器 */}
-                {!result.streaming && result.content && editorInsertRef?.current && (
+                {!result.streaming && result.content && canInsertToEditor && (
                   <button
                     onClick={handleInsertToEditor}
                     className="text-[7px] px-1.5 py-0.5 rounded-md border transition-all hover:bg-white/5 flex items-center gap-0.5"

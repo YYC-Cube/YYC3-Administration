@@ -609,12 +609,13 @@ function ClipboardPanel({
   t: ReturnType<typeof useI18n>['t']
 }) {
   const [items, setItems] = useState(MOCK_CLIPBOARD)
+  const [now] = useState(() => Date.now())
   const [filter, setFilter] = useState<'all' | 'code' | 'text' | 'html'>('all')
 
   const filtered = filter === 'all' ? items : items.filter((i) => i.type === filter)
 
   const formatTime = (ts: number) => {
-    const diff = Date.now() - ts
+    const diff = now - ts
     if (diff < 60000) return t('quickActions.justNow')
     if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`
     return `${Math.floor(diff / 3600000)}h ago`

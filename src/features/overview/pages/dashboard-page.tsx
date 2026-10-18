@@ -165,11 +165,14 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
     weekday: 'long',
   })
 
-  // Trigger flash animation when KPIs update
+  // Trigger flash animation when KPIs update (adjust state during render)
+  const [prevRefreshKey, setPrevRefreshKey] = useState(liveKPI.refreshKey)
+  if (liveKPI.refreshKey !== prevRefreshKey) {
+    setPrevRefreshKey(liveKPI.refreshKey)
+    setFlashIdx(liveKPI.refreshKey === 0 ? null : liveKPI.refreshKey % 4)
+  }
   useEffect(() => {
     if (liveKPI.refreshKey === 0) return
-    const idx = liveKPI.refreshKey % 4
-    setFlashIdx(idx)
     const timer = setTimeout(() => setFlashIdx(null), 800)
     return () => clearTimeout(timer)
   }, [liveKPI.refreshKey])
@@ -228,8 +231,8 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
     [liveKPI.customers, liveKPI.calls, liveKPI.aiTasks, liveKPI.responseMs, t, tc],
   )
 
-  function formatTimeAgo(d: Date) {
-    const diff = Date.now() - d.getTime()
+  function formatTimeAgo(d: Date, now: number) {
+    const diff = now - d.getTime()
     if (diff < 60000) return t('common.justNow')
     if (diff < 3600000) return t('common.minutesAgo', { n: Math.floor(diff / 60000) })
     if (diff < 86400000) return t('common.hoursAgo', { n: Math.floor(diff / 3600000) })
@@ -671,7 +674,7 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
                       </p>
                     </div>
                     <span className="text-[9px] shrink-0" style={{ color: tc.textMuted }}>
-                      {formatTimeAgo(act.timestamp)}
+                      {formatTimeAgo(act.timestamp, currentTime.getTime())}
                     </span>
                   </div>
                 )
@@ -761,16 +764,15 @@ export function DashboardPage({ onOpenExport }: DashboardPageProps) {
 function FormDashboardCard({ onGoToForms }: { onGoToForms: () => void }) {
   const { t } = useI18n()
   const tc = useThemeColors()
-  const [count, setCount] = useState(0)
-  useEffect(() => {
+  const [count] = useState(() => {
     try {
       const raw = localStorage.getItem('yyc3_form_submissions')
       const d = raw ? JSON.parse(raw) : []
-      setCount(Array.isArray(d) ? d.length : 0)
+      return Array.isArray(d) ? d.length : 0
     } catch {
-      /* */
+      return 0
     }
-  }, [])
+  })
 
   return (
     <div className="mt-6">

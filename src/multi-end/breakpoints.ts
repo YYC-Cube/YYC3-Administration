@@ -105,11 +105,9 @@ export function useIsDesktop(): boolean {
  * 判断当前是否为触控设备（移动端 + 平板）
  */
 export function useIsTouchDevice(): boolean {
-  const [isTouch, setIsTouch] = useState(false)
-
-  useEffect(() => {
-    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0)
-  }, [])
+  const [isTouch] = useState<boolean>(
+    () => 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+  )
 
   return isTouch
 }

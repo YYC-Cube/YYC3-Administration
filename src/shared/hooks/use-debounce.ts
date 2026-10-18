@@ -44,8 +44,10 @@ export function useDebouncedCallback<T extends (...args: never[]) => void>(
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const callbackRef = useRef(callback)
 
-  // Update the ref each render so we always call the latest callback
-  callbackRef.current = callback
+  // Keep the ref pointing at the latest callback (updated after render, never during)
+  useEffect(() => {
+    callbackRef.current = callback
+  }, [callback])
 
   useEffect(() => {
     return () => {
@@ -78,7 +80,10 @@ export function useThrottledCallback<T extends (...args: never[]) => void>(
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const callbackRef = useRef(callback)
 
-  callbackRef.current = callback
+  // Keep the ref pointing at the latest callback (updated after render, never during)
+  useEffect(() => {
+    callbackRef.current = callback
+  }, [callback])
 
   useEffect(() => {
     return () => {

@@ -44,6 +44,29 @@ interface DataSource {
   quality: number
 }
 
+// Mock 同步吞吐数据 —— 随机值在模块级生成一次,避免渲染期调用 Math.random
+const SYNC_THROUGHPUT_DATA = Array.from({ length: 24 }, (_, i) => ({
+  hour: `${i}:00`,
+  records: 5000 + Math.random() * 10000,
+  errors: Math.random() * 100,
+}))
+
+// Mock 质量趋势数据 —— 随机值模块级生成,标签在渲染期由 i18n 提供
+const DI_QUALITY_DAY_KEYS = [
+  'ch.day.mon',
+  'ch.day.tue',
+  'ch.day.wed',
+  'ch.day.thu',
+  'ch.day.fri',
+  'ch.day.sat',
+  'ch.day.sun',
+] as const
+const DI_QUALITY_BASE = Array.from({ length: 7 }, () => ({
+  completeness: 92 + Math.random() * 6,
+  accuracy: 88 + Math.random() * 8,
+  consistency: 90 + Math.random() * 7,
+}))
+
 export function DataIntegrationPage() {
   const tc = useThemeColors()
   const { t } = useI18n()
@@ -106,25 +129,11 @@ export function DataIntegrationPage() {
     },
   ]
 
-  const syncThroughputData = Array.from({ length: 24 }, (_, i) => ({
-    hour: `${i}:00`,
-    records: 5000 + Math.random() * 10000,
-    errors: Math.random() * 100,
-  }))
+  const syncThroughputData = SYNC_THROUGHPUT_DATA
 
-  const qualityTrendData = Array.from({ length: 7 }, (_, i) => ({
-    day: [
-      t('ch.day.mon'),
-      t('ch.day.tue'),
-      t('ch.day.wed'),
-      t('ch.day.thu'),
-      t('ch.day.fri'),
-      t('ch.day.sat'),
-      t('ch.day.sun'),
-    ][i],
-    completeness: 92 + Math.random() * 6,
-    accuracy: 88 + Math.random() * 8,
-    consistency: 90 + Math.random() * 7,
+  const qualityTrendData = DI_QUALITY_DAY_KEYS.map((key, i) => ({
+    day: t(key),
+    ...DI_QUALITY_BASE[i],
   }))
 
   const tabs = [

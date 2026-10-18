@@ -62,18 +62,22 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
   const toggleGroup = useCallback((key: string) => {
     setCollapsedGroups((prev) => ({ ...prev, [key]: !prev[key] }))
   }, [])
-  // Auto-expand group when one of its items is active
-  useEffect(() => {
+  // Auto-expand group when one of its items is active (adjust state during render)
+  const [prevActivePage, setPrevActivePage] = useState(activePage)
+  if (activePage !== prevActivePage) {
+    setPrevActivePage(activePage)
     for (const g of navGroups) {
       if (g.items.some((i) => i.id === activePage) && collapsedGroups[g.groupKey]) {
         setCollapsedGroups((prev) => ({ ...prev, [g.groupKey]: false }))
         break
       }
     }
-  }, [activePage]) // eslint-disable-line react-hooks/exhaustive-deps
+  }
 
   const [exportModalOpen, setExportModalOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches,
+  )
   const [activeCategory, setActiveCategory] = useState<string>(() => {
     const cat = findCategoryByPageId(activePage)
     return cat?.id ?? 'overview'
@@ -117,7 +121,6 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
   // Responsive: detect mobile breakpoint
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
-    setIsMobile(mq.matches)
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
@@ -393,9 +396,7 @@ export function CyberpunkStandalone({ onSwitchMode }: { onSwitchMode: () => void
                     boxShadow: tc.shadowLg,
                   }}
                 >
-                  {(
-                    ['zh', 'en'] as const
-                  ).map((code) => {
+                  {(['zh', 'en'] as const).map((code) => {
                     const active = locale === code
                     const flag = localeFlags[code as keyof typeof localeFlags] ?? ''
                     const label = localeLabels[code as keyof typeof localeLabels] ?? code

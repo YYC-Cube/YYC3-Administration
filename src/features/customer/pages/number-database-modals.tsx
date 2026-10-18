@@ -27,27 +27,28 @@ function ContactFormModal({
   const { t } = useI18n()
   const isEdit = !!contact
   const [form, setForm] = useState<Contact>(
-    contact || {
-      id: `c${Date.now()}`,
-      name: '',
-      phone: '',
-      email: '',
-      company: '',
-      position: '',
-      stage: 'acquisition',
-      tags: [],
-      aiScore: 50,
-      aiInsights: ['ndbm.newContactInsight'],
-      starred: false,
-      address: '',
-      source: 'ndbm.manualEntry',
-      createdAt: new Date().toISOString().slice(0, 10),
-      lastContact: 'ndbm.justNow',
-      totalCalls: 0,
-      totalValue: 0,
-      notes: '',
-      riskLevel: 'medium',
-    },
+    () =>
+      contact || {
+        id: `c${Date.now()}`,
+        name: '',
+        phone: '',
+        email: '',
+        company: '',
+        position: '',
+        stage: 'acquisition',
+        tags: [],
+        aiScore: 50,
+        aiInsights: ['ndbm.newContactInsight'],
+        starred: false,
+        address: '',
+        source: 'ndbm.manualEntry',
+        createdAt: new Date().toISOString().slice(0, 10),
+        lastContact: 'ndbm.justNow',
+        totalCalls: 0,
+        totalValue: 0,
+        notes: '',
+        riskLevel: 'medium',
+      },
   )
 
   const updateField = (key: keyof Contact, value: string | number | string[]) =>

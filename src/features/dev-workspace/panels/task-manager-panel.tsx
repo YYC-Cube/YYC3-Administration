@@ -89,7 +89,19 @@ const STORAGE_KEY = 'yyc3-task-board-storage'
 
 export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
   const { t } = useI18n()
-  const [tasks, setTasks] = useState<MiniTask[]>([])
+  const [tasks, setTasks] = useState<MiniTask[]>(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        return parsed.state?.tasks ?? []
+      }
+    } catch {
+      /* ignore */
+    }
+    return []
+  })
+  const [now] = useState(() => Date.now())
   const [filter, setFilter] = useState<string>('all')
   const [showCreate, setShowCreate] = useState(false)
   const [newTitle, setNewTitle] = useState('')
@@ -111,7 +123,6 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
   }, [])
 
   useEffect(() => {
-    syncTasks()
     const handler = () => syncTasks()
     window.addEventListener('storage', handler)
     // Also poll periodically for same-tab updates
@@ -386,7 +397,7 @@ export function TaskManagerPanel({ tc }: { tc: ThemeColors }) {
           const sCfg = STATUS_CFG[task.status] ?? STATUS_CFG['todo']
           const pCfg = PRIORITY_CFG[task.priority] ?? PRIORITY_CFG['medium']
           const SIcon = sCfg.icon
-          const isOverdue = task.dueDate && task.dueDate < Date.now() && task.status !== 'done'
+          const isOverdue = task.dueDate && task.dueDate < now && task.status !== 'done'
           const isExpanded = expandedTask === task.id
           return (
             <div

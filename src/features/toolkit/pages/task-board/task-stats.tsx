@@ -7,6 +7,7 @@
 
 import { AlertTriangle, Brain, ClipboardList, Timer } from 'lucide-react'
 import { motion } from 'motion/react'
+import { useState } from 'react'
 
 import { KANBAN_COLUMNS, PRIORITY_CONFIG, STATUS_CONFIG } from '../task-board-data'
 import { useTaskStore } from '../task-board-store'
@@ -17,11 +18,10 @@ import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 export function TaskStats({ tc }: { tc: ReturnType<typeof useThemeColors> }) {
   const tasks = useTaskStore((s) => s.tasks)
+  const [now] = useState(() => Date.now())
   const active = tasks.filter((t) => !t.isArchived)
   const total = active.length
-  const overdue = active.filter(
-    (t) => t.dueDate && t.dueDate < Date.now() && t.status !== 'done',
-  ).length
+  const overdue = active.filter((t) => t.dueDate && t.dueDate < now && t.status !== 'done').length
   const aiInferred = active.filter((t) => t.source === 'ai-inferred').length
   const totalEstHours = active.reduce((s, t) => s + (t.estimatedHours ?? 0), 0)
 

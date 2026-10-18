@@ -35,44 +35,44 @@ export interface StatCardProps {
   trend?: 'up' | 'down'
 }
 
+const ArrowUpRight = (props: { className?: string; style?: React.CSSProperties }) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m17 7-5 5-5-5" />
+    <path d="M12 17V7h5" />
+  </svg>
+)
+
+const ArrowDownRight = (props: { className?: string; style?: React.CSSProperties }) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m17 17-5-5-5 5" />
+    <path d="M12 7v10h5" />
+  </svg>
+)
+
 export function StatCard({ label, value, icon: Icon, color, change, trend = 'up' }: StatCardProps) {
   const tc = useThemeColors()
-
-  const ArrowUpRight = (props: { className?: string; style?: React.CSSProperties }) => (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m17 7-5 5-5-5" />
-      <path d="M12 17V7h5" />
-    </svg>
-  )
-
-  const ArrowDownRight = (props: { className?: string; style?: React.CSSProperties }) => (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m17 17-5-5-5 5" />
-      <path d="M12 7v10h5" />
-    </svg>
-  )
 
   const borderColor = color + '20'
   const hoverBorderColor = color + '40'

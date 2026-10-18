@@ -45,6 +45,22 @@ interface Channel {
   roi: number
 }
 
+// Mock 渠道增长数据 —— 随机值在模块级生成一次,标签在渲染期由 i18n 提供
+const CH_GROWTH_DAY_KEYS = [
+  'ch.day.mon',
+  'ch.day.tue',
+  'ch.day.wed',
+  'ch.day.thu',
+  'ch.day.fri',
+  'ch.day.sat',
+  'ch.day.sun',
+] as const
+const CH_GROWTH_BASE = Array.from({ length: 7 }, () => ({
+  wechat: 1200 + Math.random() * 300,
+  douyin: 800 + Math.random() * 200,
+  xiaohongshu: 600 + Math.random() * 150,
+}))
+
 export function ChannelCenterPage() {
   const tc = useThemeColors()
   const { t } = useI18n()
@@ -113,19 +129,9 @@ export function ChannelCenterPage() {
     },
   ]
 
-  const channelGrowthData = Array.from({ length: 7 }, (_, i) => ({
-    day: [
-      t('ch.day.mon'),
-      t('ch.day.tue'),
-      t('ch.day.wed'),
-      t('ch.day.thu'),
-      t('ch.day.fri'),
-      t('ch.day.sat'),
-      t('ch.day.sun'),
-    ][i],
-    wechat: 1200 + Math.random() * 300,
-    douyin: 800 + Math.random() * 200,
-    xiaohongshu: 600 + Math.random() * 150,
+  const channelGrowthData = CH_GROWTH_DAY_KEYS.map((key, i) => ({
+    day: t(key),
+    ...CH_GROWTH_BASE[i],
   }))
 
   const tabs = [

@@ -45,9 +45,12 @@ export function DataExportModal({ open, onClose, preselectedDataset }: DataExpor
   const [exportDone, setExportDone] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
 
-  useEffect(() => {
+  // Sync preselected dataset (adjust state during render)
+  const [prevPreselected, setPrevPreselected] = useState(preselectedDataset)
+  if (preselectedDataset !== prevPreselected) {
+    setPrevPreselected(preselectedDataset)
     if (preselectedDataset) setSelectedDataset(preselectedDataset)
-  }, [preselectedDataset])
+  }
 
   useEffect(() => {
     if (!open) {

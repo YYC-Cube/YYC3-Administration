@@ -114,8 +114,16 @@ export function GlobalSearchPanel({ tc }: { tc: ThemeColors }) {
 
   useEffect(() => {
     if (debouncedQuery !== query) return // Wait for debounce to settle
-    if (debouncedQuery) handleSearch(debouncedQuery)
-    else setResults([])
+    // Defer to a microtask so no state is written synchronously inside the effect
+    let cancelled = false
+    void Promise.resolve().then(() => {
+      if (cancelled) return
+      if (debouncedQuery) void handleSearch(debouncedQuery)
+      else setResults([])
+    })
+    return () => {
+      cancelled = true
+    }
   }, [debouncedQuery, query, handleSearch])
 
   const handleOpenResult = useCallback(

@@ -36,6 +36,21 @@ import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 
 type ConfigTab = 'basic' | 'menu' | 'reply' | 'message' | 'users' | 'stats'
 
+// Mock fan-growth 数据 —— 随机值在模块级生成一次,标签在渲染期由 i18n 提供
+const WX_FAN_DAY_KEYS = [
+  'wx.mon',
+  'wx.tue',
+  'wx.wed',
+  'wx.thu',
+  'wx.fri',
+  'wx.sat',
+  'wx.sun',
+] as const
+const WX_FAN_BASE = Array.from({ length: 7 }, () => ({
+  newFans: Math.floor(Math.random() * 500) + 100,
+  lostFans: Math.floor(Math.random() * 100),
+}))
+
 export function WechatConfigPage() {
   const tc = useThemeColors()
   const { t } = useI18n()
@@ -49,18 +64,9 @@ export function WechatConfigPage() {
   const wechatToken = import.meta.env.VITE_WECHAT_TOKEN || '—'
   const wechatEncodingAesKey = import.meta.env.VITE_WECHAT_ENCODING_AES_KEY || '—'
 
-  const fanGrowthData = Array.from({ length: 7 }, (_, i) => ({
-    day: [
-      t('wx.mon'),
-      t('wx.tue'),
-      t('wx.wed'),
-      t('wx.thu'),
-      t('wx.fri'),
-      t('wx.sat'),
-      t('wx.sun'),
-    ][i],
-    newFans: Math.floor(Math.random() * 500) + 100,
-    lostFans: Math.floor(Math.random() * 100),
+  const fanGrowthData = WX_FAN_DAY_KEYS.map((key, i) => ({
+    day: t(key),
+    ...WX_FAN_BASE[i],
   }))
 
   const menuClickData = [

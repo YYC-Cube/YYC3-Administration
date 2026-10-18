@@ -36,11 +36,7 @@ interface PlatformAwareProps {
  * ```
  */
 export function PlatformAware({ platforms, fallback = null, children }: PlatformAwareProps) {
-  const [platform, setPlatform] = useState<Platform>('web')
-
-  useEffect(() => {
-    setPlatform(detectPlatform())
-  }, [])
+  const [platform] = useState<Platform>(() => detectPlatform())
 
   if (!platforms.includes(platform)) {
     return <>{fallback}</>
