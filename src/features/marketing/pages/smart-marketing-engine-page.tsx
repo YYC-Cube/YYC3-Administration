@@ -16,7 +16,13 @@ export function SmartMarketingEnginePage() {
   const engineStats = [
     { label: 'sme.stat.automation', value: '128', change: '+32', icon: Rocket, color: tc.primary },
     { label: 'sme.stat.suggestions', value: '45', change: '+12', icon: Brain, color: tc.secondary },
-    { label: 'sme.stat.roiBoost', value: '+42%', change: '+8%', icon: TrendingUp, color: tc.success },
+    {
+      label: 'sme.stat.roiBoost',
+      value: '+42%',
+      change: '+8%',
+      icon: TrendingUp,
+      color: tc.success,
+    },
     { label: 'sme.stat.coverage', value: '2.8M', change: '+18%', icon: Users, color: tc.accent },
   ]
 
@@ -152,7 +158,9 @@ export function SmartMarketingEnginePage() {
                     className={`px-3 py-1 rounded-full text-xs font-medium`}
                     style={{
                       background:
-                        rec.impact === 'high' ? tc.alpha(tc.danger, 0.1) : tc.alpha(tc.warning, 0.1),
+                        rec.impact === 'high'
+                          ? tc.alpha(tc.danger, 0.1)
+                          : tc.alpha(tc.warning, 0.1),
                       color: rec.impact === 'high' ? tc.danger : tc.warning,
                     }}
                   >

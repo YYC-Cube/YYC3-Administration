@@ -14,17 +14,65 @@ export function AppOverviewPage() {
   const { t } = useI18n()
 
   const coreMetrics = [
-    { label: 'appov.metric.revenue', value: '¥2.48M', change: '+28.5%', icon: DollarSign, color: tc.success },
-    { label: 'appov.metric.users', value: '125.8K', change: '+18.3%', icon: Users, color: tc.primary },
-    { label: 'appov.metric.conversion', value: '24.6%', change: '+5.2%', icon: Target, color: tc.secondary },
-    { label: 'appov.metric.activity', value: '68.9%', change: '+3.8%', icon: Activity, color: tc.accent },
+    {
+      label: 'appov.metric.revenue',
+      value: '¥2.48M',
+      change: '+28.5%',
+      icon: DollarSign,
+      color: tc.success,
+    },
+    {
+      label: 'appov.metric.users',
+      value: '125.8K',
+      change: '+18.3%',
+      icon: Users,
+      color: tc.primary,
+    },
+    {
+      label: 'appov.metric.conversion',
+      value: '24.6%',
+      change: '+5.2%',
+      icon: Target,
+      color: tc.secondary,
+    },
+    {
+      label: 'appov.metric.activity',
+      value: '68.9%',
+      change: '+3.8%',
+      icon: Activity,
+      color: tc.accent,
+    },
   ]
 
   const channelData = [
-    { channel: 'appov.channel.wechat', revenue: 890000, users: 45000, conversion: 28.5, color: tc.success },
-    { channel: 'appov.channel.douyin', revenue: 720000, users: 38000, conversion: 25.2, color: tc.primary },
-    { channel: 'appov.channel.xiaohongshu', revenue: 480000, users: 25000, conversion: 22.8, color: tc.secondary },
-    { channel: 'appov.channel.baidu', revenue: 390000, users: 17800, conversion: 18.9, color: tc.accent },
+    {
+      channel: 'appov.channel.wechat',
+      revenue: 890000,
+      users: 45000,
+      conversion: 28.5,
+      color: tc.success,
+    },
+    {
+      channel: 'appov.channel.douyin',
+      revenue: 720000,
+      users: 38000,
+      conversion: 25.2,
+      color: tc.primary,
+    },
+    {
+      channel: 'appov.channel.xiaohongshu',
+      revenue: 480000,
+      users: 25000,
+      conversion: 22.8,
+      color: tc.secondary,
+    },
+    {
+      channel: 'appov.channel.baidu',
+      revenue: 390000,
+      users: 17800,
+      conversion: 18.9,
+      color: tc.accent,
+    },
   ]
 
   const recentActivities = [

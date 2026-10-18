@@ -111,7 +111,12 @@ export function CampaignExecutionPage() {
   const getStatusConfig = (status: Campaign['status']) => {
     switch (status) {
       case 'scheduled':
-        return { label: t('camp.status.scheduled'), color: tc.textMuted, icon: Clock, bgGlow: 'none' }
+        return {
+          label: t('camp.status.scheduled'),
+          color: tc.textMuted,
+          icon: Clock,
+          bgGlow: 'none',
+        }
       case 'running':
         return {
           label: t('camp.status.running'),
@@ -122,7 +127,12 @@ export function CampaignExecutionPage() {
       case 'paused':
         return { label: t('camp.status.paused'), color: tc.warning, icon: Pause, bgGlow: 'none' }
       case 'completed':
-        return { label: t('camp.status.completed'), color: tc.success, icon: CheckCircle2, bgGlow: 'none' }
+        return {
+          label: t('camp.status.completed'),
+          color: tc.success,
+          icon: CheckCircle2,
+          bgGlow: 'none',
+        }
     }
   }
 

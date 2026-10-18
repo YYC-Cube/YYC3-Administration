@@ -101,13 +101,31 @@ export function SmartCreationPage() {
 
   const stats = [
     { label: 'sc.stat.total', value: '12.5K', change: '+28.3%', icon: Wand2, color: tc.primary },
-    { label: 'sc.stat.satisfaction', value: '96.8%', change: '+4.2%', icon: Star, color: tc.success },
+    {
+      label: 'sc.stat.satisfaction',
+      value: '96.8%',
+      change: '+4.2%',
+      icon: Star,
+      color: tc.success,
+    },
     { label: 'sc.stat.aiSpeed', value: '2.3s', change: '-15.8%', icon: Zap, color: tc.secondary },
-    { label: 'sc.stat.adoption', value: '89.2%', change: '+6.5%', icon: TrendingUp, color: tc.accent },
+    {
+      label: 'sc.stat.adoption',
+      value: '89.2%',
+      change: '+6.5%',
+      icon: TrendingUp,
+      color: tc.accent,
+    },
   ]
 
   const recentCreations = [
-    { id: 'C001', title: 'sc.recent.c001.title', type: 'image', status: 'completed', time: 'sc.recent.c001.time' },
+    {
+      id: 'C001',
+      title: 'sc.recent.c001.title',
+      type: 'image',
+      status: 'completed',
+      time: 'sc.recent.c001.time',
+    },
     {
       id: 'C002',
       title: 'sc.recent.c002.title',
@@ -115,7 +133,13 @@ export function SmartCreationPage() {
       status: 'processing',
       time: 'sc.recent.c002.time',
     },
-    { id: 'C003', title: 'sc.recent.c003.title', type: 'text', status: 'completed', time: 'sc.recent.c003.time' },
+    {
+      id: 'C003',
+      title: 'sc.recent.c003.title',
+      type: 'text',
+      status: 'completed',
+      time: 'sc.recent.c003.time',
+    },
   ]
 
   const getTypeLabel = (type: string) => {

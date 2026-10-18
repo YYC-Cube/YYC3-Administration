@@ -85,7 +85,13 @@ export function NLPProcessingPage() {
     },
     { label: 'nlp.stat.positive', value: '78.2%', change: '+5.3%', icon: Heart, color: tc.success },
     { label: 'nlp.stat.accuracy', value: '94.6%', change: '+2.1%', icon: Tag, color: tc.secondary },
-    { label: 'nlp.stat.responseSpeed', value: '0.3s', change: '-18.5%', icon: Sparkles, color: tc.accent },
+    {
+      label: 'nlp.stat.responseSpeed',
+      value: '0.3s',
+      change: '-18.5%',
+      icon: Sparkles,
+      color: tc.accent,
+    },
   ]
 
   const keywordCloud = [

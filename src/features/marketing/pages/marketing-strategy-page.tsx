@@ -48,7 +48,12 @@ export function MarketingStrategyPage() {
       budget: 50000,
       startDate: '2024-01-01',
       endDate: '2024-03-31',
-      channels: ['strat.channel.wechat', 'strat.channel.douyin', 'strat.channel.xiaohongshu', 'strat.channel.baidu'],
+      channels: [
+        'strat.channel.wechat',
+        'strat.channel.douyin',
+        'strat.channel.xiaohongshu',
+        'strat.channel.baidu',
+      ],
       kpis: [
         { name: 'strat.kpi.brandExposure', target: 1000000, current: 650000 },
         { name: 'strat.kpi.registeredUsers', target: 5000, current: 3200 },
@@ -80,7 +85,12 @@ export function MarketingStrategyPage() {
       budget: 200000,
       startDate: '2024-01-01',
       endDate: '2024-12-31',
-      channels: ['strat.channel.wechat', 'strat.channel.weibo', 'strat.channel.zhihu', 'strat.channel.bilibili'],
+      channels: [
+        'strat.channel.wechat',
+        'strat.channel.weibo',
+        'strat.channel.zhihu',
+        'strat.channel.bilibili',
+      ],
       kpis: [
         { name: 'strat.kpi.brandMentions', target: 5000000, current: 0 },
         { name: 'strat.kpi.positiveReviews', target: 90, current: 0 },
