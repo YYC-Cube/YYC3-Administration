@@ -27,6 +27,8 @@ interface ImportMetaEnv {
   /** Supabase 项目 URL(认证后端,P3);两者齐备才启用真实认证 */
   readonly VITE_SUPABASE_URL?: string
   readonly VITE_SUPABASE_ANON_KEY?: string
+  /** Sentry 错误监控 DSN(F-14);配置后激活,未配置完全惰性(零加载) */
+  readonly VITE_SENTRY_DSN?: string
 }
 
 interface ImportMeta {

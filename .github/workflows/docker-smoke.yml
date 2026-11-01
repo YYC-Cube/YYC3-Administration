@@ -1,0 +1,41 @@
+name: Docker Smoke
+
+# 容器线周冒烟（终审教训：容器线断裂 35 天无人察觉）。
+# 每周一构建镜像 + 运行 + 三探（首页 200 / 页面标识 / SPA 深路由），
+# 失败即 run 标红 + Actions 邮件通知，堵住"主线绿、容器线烂"的盲区。
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    - cron: "30 5 * * 1"
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build image
+        run: docker build -t yyc3-admin:smoke .
+
+      - name: Run & verify（首页 / 标识 / 深路由）
+        run: |
+          docker run -d --name smoke -p 8081:80 yyc3-admin:smoke
+          sleep 5
+          code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/)
+          marker=$(curl -sf http://localhost:8081/ | grep -c 'YYC³ Administration' || true)
+          deep=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8081/settings)
+          echo "home=${code} marker=${marker} deep=${deep}"
+          if [ "${code}" != "200" ] || [ "${marker:-0}" -lt 1 ] || [ "${deep}" != "200" ]; then
+            echo "::error::container smoke failed"
+            docker logs smoke 2>&1 | tail -20
+            exit 1
+          fi
+
+      - name: Cleanup
+        if: always()
+        run: docker rm -f smoke 2>/dev/null || true

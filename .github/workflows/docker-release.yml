@@ -1,0 +1,40 @@
+name: Docker Release
+
+# 打 vX.Y.Z tag → 构建镜像并推送 GHCR（版本 tag + latest 双标签）。
+# 完成终审遗留 6.2：容器回滚从"重构建"升级为"镜像 tag 秒切"。
+# 权限最小化：仅 packages:write；凭据用运行时 GITHUB_TOKEN，无静态密钥。
+
+permissions:
+  contents: read
+  packages: write
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: 计算镜像引用（ghcr 要求全小写）
+        id: img
+        run: |
+          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "image=ghcr.io/${REPO_LOWER}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Login GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build
+        run: docker build -t "${{ steps.img.outputs.image }}:${{ steps.img.outputs.version }}" -t "${{ steps.img.outputs.image }}:latest" .
+
+      - name: Push（版本 tag + latest）
+        run: |
+          docker push "${{ steps.img.outputs.image }}:${{ steps.img.outputs.version }}"
+          docker push "${{ steps.img.outputs.image }}:latest"

@@ -1,0 +1,74 @@
+name: Uptime Monitoring
+
+# 生产站可用性拨测（终审 P2/F-14 整改）。
+# 每 5 分钟拨测 https://admin.yyc3.vip：HTTP 200 + 页面标识。
+# 失败 → 创建/刷新 label=uptime-alert 告警 issue；恢复 → 自动关闭。
+# 注意：仓库 60 天无活动时 GitHub 会停用 scheduled workflows。
+
+permissions:
+  contents: read
+  issues: write
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  uptime:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拨测生产站
+        id: probe
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://admin.yyc3.vip/)
+          body_ok=$(curl -sf --max-time 20 https://admin.yyc3.vip/ | grep -c 'YYC³ Administration' || true)
+          echo "http_code=${code} body_marker=${body_ok}"
+          if [ "${code}" = "200" ] && [ "${body_ok:-0}" -ge 1 ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 失败 → 创建/刷新告警 issue
+        if: steps.probe.outputs.ok == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          ISSUE_NUM=$(gh api "repos/${{ github.repository }}/issues?labels=uptime-alert&state=open" --jq '.[0].number // empty')
+          if [ -z "$ISSUE_NUM" ]; then
+            gh api repos/${{ github.repository }}/issues \
+              -f title="🚨 [uptime] 生产站不可用告警" \
+              -f body="生产站 https://admin.yyc3.vip 拨测失败（HTTP 非 200 或页面标识缺失）。
+
+- 首次失败：${NOW}
+- 本 issue 由 uptime.yml 自动管理：恢复后自动关闭
+- 处置手册：docs/RELEASE-RUNBOOK.md §5.1" \
+              -f 'labels[]=uptime-alert'
+            echo "alert issue created"
+          else
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM} \
+              -X PATCH \
+              -f body="生产站 https://admin.yyc3.vip 拨测失败（HTTP 非 200 或页面标识缺失）。
+
+- 持续失败中，最近观测：${NOW}
+- 本 issue 由 uptime.yml 自动管理：恢复后自动关闭
+- 处置手册：docs/RELEASE-RUNBOOK.md §5.1" \
+              -f title="🚨 [uptime] 生产站不可用告警" \
+              >/dev/null
+            echo "alert issue refreshed: #${ISSUE_NUM}"
+          fi
+
+      - name: 恢复 → 自动关闭告警
+        if: steps.probe.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ISSUE_NUM=$(gh api "repos/${{ github.repository }}/issues?labels=uptime-alert&state=open" --jq '.[0].number // empty')
+          if [ -n "$ISSUE_NUM" ]; then
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM} -X PATCH -f state=closed -f state_reason=completed >/dev/null
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM}/comments \
+              -f body="✅ 拨测恢复，告警自动关闭：$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "alert issue #${ISSUE_NUM} auto-closed"
+          fi

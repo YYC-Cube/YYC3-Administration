@@ -1,0 +1,81 @@
+name: CI Stall Alert
+
+# CI 红盘停摆告警（终审 P1/P2 整改：防"连红 36 天无人察觉"复发）。
+# 每小时检查 main 最新 CI 结论：failure 且 age ≥48h → 创建/刷新
+# label=ci-stall-alert 告警 issue；恢复 success → 自动关闭。
+# 48h 宽限窗：允许正常修复时间，超窗即升级为停摆告警。
+
+permissions:
+  contents: read
+  issues: write
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ci-stall:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查 main 最新 CI 结论与停摆时长
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LATEST=$(gh run list --workflow CI --branch main --limit 1 \
+            --json conclusion,createdAt --jq '.[0]')
+          CONC=$(echo "$LATEST" | python3 -c 'import json,sys; print(json.load(sys.stdin)["conclusion"])')
+          CREATED=$(echo "$LATEST" | python3 -c 'import json,sys; print(json.load(sys.stdin)["createdAt"])')
+          AGE_H=$(( ($(date +%s) - $(date -d "$CREATED" +%s)) / 3600 ))
+          echo "latest main CI: ${CONC}, age ${AGE_H}h"
+          echo "latest=${CONC}" >> "$GITHUB_OUTPUT"
+          if [ "$CONC" = "failure" ] && [ "$AGE_H" -ge 48 ]; then
+            echo "stalled=true" >> "$GITHUB_OUTPUT"
+            echo "stalled_age=${AGE_H}h" >> "$GITHUB_OUTPUT"
+          else
+            echo "stalled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 停摆 → 创建/刷新告警 issue
+        if: steps.check.outputs.stalled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          ISSUE_NUM=$(gh api "repos/${{ github.repository }}/issues?labels=ci-stall-alert&state=open" --jq '.[0].number // empty')
+          if [ -z "$ISSUE_NUM" ]; then
+            gh api repos/${{ github.repository }}/issues \
+              -f title="🚨 [ci-stall] main CI 红盘停摆告警" \
+              -f body="main 分支最新 CI 为 failure 且已持续 ≥48h（当前 age：${{ steps.check.outputs.stalled_age }}）。
+
+- 首次告警：${NOW}
+- 处置：gh run view <run_id> --log-failed 取证 → 修复 → push → 确认绿盘
+- 手册：docs/RELEASE-RUNBOOK.md §5.3" \
+              -f 'labels[]=ci-stall-alert'
+            echo "alert issue created"
+          else
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM} \
+              -X PATCH \
+              -f body="main 分支最新 CI 为 failure 且已持续 ≥48h（当前 age：${{ steps.check.outputs.stalled_age }}）。
+
+- 持续停摆中，最近观测：${NOW}
+- 手册：docs/RELEASE-RUNBOOK.md §5.3" \
+              -f title="🚨 [ci-stall] main CI 红盘停摆告警" \
+              >/dev/null
+            echo "alert issue refreshed: #${ISSUE_NUM}"
+          fi
+
+      - name: 绿盘 → 自动关闭停摆告警
+        if: steps.check.outputs.latest == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ISSUE_NUM=$(gh api "repos/${{ github.repository }}/issues?labels=ci-stall-alert&state=open" --jq '.[0].number // empty')
+          if [ -n "$ISSUE_NUM" ]; then
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM} \
+              -X PATCH -f state=closed -f state_reason=completed >/dev/null
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM}/comments \
+              -f body="✅ main CI 已恢复 success，停摆告警自动关闭：$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "alert issue #${ISSUE_NUM} auto-closed"
+          fi
