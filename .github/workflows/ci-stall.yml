@@ -49,9 +49,9 @@ jobs:
               -f title="🚨 [ci-stall] main CI 红盘停摆告警" \
               -f body="main 分支最新 CI 为 failure 且已持续 ≥48h（当前 age：${{ steps.check.outputs.stalled_age }}）。
 
-- 首次告警：${NOW}
-- 处置：gh run view <run_id> --log-failed 取证 → 修复 → push → 确认绿盘
-- 手册：docs/RELEASE-RUNBOOK.md §5.3" \
+          - 首次告警：${NOW}
+          - 处置：gh run view <run_id> --log-failed 取证 → 修复 → push → 确认绿盘
+          - 手册：docs/RELEASE-RUNBOOK.md §5.3" \
               -f 'labels[]=ci-stall-alert'
             echo "alert issue created"
           else
@@ -59,8 +59,8 @@ jobs:
               -X PATCH \
               -f body="main 分支最新 CI 为 failure 且已持续 ≥48h（当前 age：${{ steps.check.outputs.stalled_age }}）。
 
-- 持续停摆中，最近观测：${NOW}
-- 手册：docs/RELEASE-RUNBOOK.md §5.3" \
+          - 持续停摆中，最近观测：${NOW}
+          - 手册：docs/RELEASE-RUNBOOK.md §5.3" \
               -f title="🚨 [ci-stall] main CI 红盘停摆告警" \
               >/dev/null
             echo "alert issue refreshed: #${ISSUE_NUM}"

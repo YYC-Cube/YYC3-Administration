@@ -42,9 +42,9 @@ jobs:
               -f title="🚨 [uptime] 生产站不可用告警" \
               -f body="生产站 https://admin.yyc3.vip 拨测失败（HTTP 非 200 或页面标识缺失）。
 
-- 首次失败：${NOW}
-- 本 issue 由 uptime.yml 自动管理：恢复后自动关闭
-- 处置手册：docs/RELEASE-RUNBOOK.md §5.1" \
+          - 首次失败：${NOW}
+          - 本 issue 由 uptime.yml 自动管理：恢复后自动关闭
+          - 处置手册：docs/RELEASE-RUNBOOK.md §5.1" \
               -f 'labels[]=uptime-alert'
             echo "alert issue created"
           else
@@ -52,9 +52,9 @@ jobs:
               -X PATCH \
               -f body="生产站 https://admin.yyc3.vip 拨测失败（HTTP 非 200 或页面标识缺失）。
 
-- 持续失败中，最近观测：${NOW}
-- 本 issue 由 uptime.yml 自动管理：恢复后自动关闭
-- 处置手册：docs/RELEASE-RUNBOOK.md §5.1" \
+          - 持续失败中，最近观测：${NOW}
+          - 本 issue 由 uptime.yml 自动管理：恢复后自动关闭
+          - 处置手册：docs/RELEASE-RUNBOOK.md §5.1" \
               -f title="🚨 [uptime] 生产站不可用告警" \
               >/dev/null
             echo "alert issue refreshed: #${ISSUE_NUM}"
