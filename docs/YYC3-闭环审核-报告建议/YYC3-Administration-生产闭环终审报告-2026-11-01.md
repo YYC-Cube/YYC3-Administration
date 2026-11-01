@@ -171,10 +171,18 @@ category: report
 | uptime 拨测       | `uptime.yml` 每 5 分钟拨测生产站，告警 issue 自动创建/刷新/关闭                                       | dispatch 实测 **success**                                                         |
 | CI 停摆告警       | `ci-stall.yml` 每小时检查，failure≥48h 告警（防"连红 36 天"复发）                                     | dispatch 实测 **success**（修复两处后：YAML 正文续行缩进 + `gh -R` 显式仓库参数） |
 | Sentry（F-14）    | `error-monitor.ts` 按 VITE_SENTRY_DSN 门控动态加载；未配置零 chunk（dist 实测无 sentry 产物）+ 3 单测 | 698 tests 全绿；coverage B 66.66%（+1pp）                                         |
-| GHCR 发版线       | `docker-release.yml`：tag 触发镜像构建推 GHCR（版本+latest）                                          | 下个 tag（≥v1.0.6）首跑验证                                                       |
-| 容器周冒烟        | `docker-smoke.yml` 每周一构建+运行+三探                                                               | 下个调度周期验证                                                                  |
+| GHCR 发版线       | `docker-release.yml`：tag 触发镜像构建推 GHCR（版本+latest）                                          | ✅ v1.0.6 tag **首跑 success**                                                    |
+| 容器周冒烟        | `docker-smoke.yml` 每周一构建+运行+三探                                                               | 首个调度周期待观察（周一 05:30 UTC）                                              |
 | 发版归档          | tag v1.0.5 + GitHub Release（notes 含三断点修复清单）                                                 | Release 页已建                                                                    |
 
 **Mimosa 提交门告知义务**：既有 12 处「硬编码凭据」扫描告警（tests 10 + src 2）如上定性，非新增、非真实凭据；F-05 整改优先级维持 P1 建议档。
 
-**批次三（路线图「本月」）待办**：分支用例补至 67%+ 棘轮回调 66；DnD 8 用例前置 seed ≥3 窗口（根因已定位：默认窗口数 0，单次创建 0→1 达不到守卫线 ≥2/≥3）；GHCR 首个 tag 构建验证（下个版本发布时首跑）。
+### 批次三结果（2026-11-02，commit 53416a9 / tag v1.0.6）
+
+| 项                         | 结果                                                                                               | 验证                                                  |
+| -------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| 分支用例补强 + 棘轮回调    | branches **66.66% → 67.69%**（918/1356，+14 分支）；棘轮 65 → **66** 回调（CI 地板留 ~0.7pp 余量） | 715 tests 全绿                                        |
+| DnD 全量执行口径恢复       | 新增 `ensureWindows` seed，8 用例修复后**首次真跑通过**                                            | 70 passed / 1 skipped（移动端专用，按设计）/ 0 failed |
+| GHCR 首跑 + compose 镜像化 | tag 触发首跑 success；compose 切镜像拉起（回滚 = 改 tag）                                          | workflow success + runbook §4.3 同步                  |
+| 后端规划                   | 新增《后端与数据库构建提示词闭环大纲》（A/B/C 选型 + 12 节点 + 🔒 横切约束 + M1-M4）               | 已归档同目录                                          |
+| 待观察                     | uptime 自然调度批次（cron 延迟中）；docker-smoke 周一 05:30 UTC 首批                               | 下一观察点                                            |
