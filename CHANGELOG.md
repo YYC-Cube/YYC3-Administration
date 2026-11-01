@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2026-11-02
+
+> 生产交付闭环终审（2026-11-01）产出的断点修复发版。此前生产闭环自 2026-09-26 起
+> 断裂 36 天：main CI 红盘 → Deploy 全部 skipped → 生产站冻结在 1.0.4 构建。
+
+### Fixed（生产闭环三断点修复，2026-11-01）
+
+- **覆盖率棘轮防抖**：branches 门 66 → 65（CI run 39152833151 取证：CI Node 24
+  实测 65.65% 未过门 → main 连红；本地 Node 22 实测 66.61%，两环境 ~1pp 抖动，
+  阈值取 CI 实测地板取整；整改方向为补分支用例回升，见后续迭代计划）
+- **dompurify 供应链钉扎升级**：workspace override `dompurify@<=3.4.12 → 3.4.13`
+  抬升为 `@<=3.4.16 → 3.4.17`（2026-10 后新披露 advisory 批次：1 critical +
+  1 high + 3 low，经 `@monaco-editor/react > monaco-editor` 传递进生产 bundle），
+  `pnpm audit --prod --audit-level high` 门恢复通过
+- **容器发布线断裂修复**：Dockerfile install 层此前缺 `pnpm-workspace.yaml`，
+  frozen install 触发 `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH`（overrides 于 2026-09-26
+  引入起即断裂）；补齐 COPY `.npmrc`，并钉扎 `pnpm@11` 与 CI 对齐消除版本漂移
+
+### Security（F-13 容器线安全头，2026-11-01）
+
+- nginx 新增 4 个 HTTP 安全头：X-Content-Type-Options / X-Frame-Options /
+  Referrer-Policy / Permissions-Policy（GitHub Pages 线无法设头，容器线补齐）
+- 新增 `.dockerignore`：构建上下文剔除 node_modules/.git/docs 等 14 项
+
+### Added（运维与治理，2026-11-01/02）
+
+- 新增 `docs/RELEASE-RUNBOOK.md`（发布手册）：发布架构/检查单/分级回滚/应急预案
+- 新增终审报告归档：`docs/YYC3-闭环审核-报告建议/…生产闭环终审报告-2026-11-01.md`
+- `package.json` 增补 `packageManager: pnpm@11.28.10`（消除本地 12/CI 11 版本漂移）
+
 ## [1.0.4] - 2026-09-26
 
 > 本版本整合了 1.0.3 以来的三轮整改（2026-08-19 安全止血 P0/P1、2026-08-29 P2 路由化/重组、

@@ -648,12 +648,13 @@ pnpm build
 
 ### 📝 更新日志
 
-| 版本   | 日期       | 说明                                                           |
-| :----- | :--------- | :------------------------------------------------------------- |
-| v1.0.4 | 2026-09-26 | P0 安全/性能修复（挂载缺口、演示声明、CSP、PWA）+ 文档全面对齐 |
-| v1.0.3 | 2026-07-12 | Docker Node 22 对齐、文档更新                                  |
-| v1.0.2 | 2026-03-14 | 版本缓存清理机制、依赖预打包优化                               |
-| v1.0.0 | 2026-Q2    | 初始发布：核心模块 + 双主题 + AI + CI/CD 流水线                |
+| 版本   | 日期       | 说明                                                                      |
+| :----- | :--------- | :------------------------------------------------------------------------ |
+| v1.0.5 | 2026-11-02 | 生产闭环三断点修复（覆盖率棘轮/dompurify 钉扎/容器线）+ 运维手册 + 安全头 |
+| v1.0.4 | 2026-09-26 | P0 安全/性能修复（挂载缺口、演示声明、CSP、PWA）+ 文档全面对齐            |
+| v1.0.3 | 2026-07-12 | Docker Node 22 对齐、文档更新                                             |
+| v1.0.2 | 2026-03-14 | 版本缓存清理机制、依赖预打包优化                                          |
+| v1.0.0 | 2026-Q2    | 初始发布：核心模块 + 双主题 + AI + CI/CD 流水线                           |
 
 > 详见 [CHANGELOG](./CHANGELOG.md)
 
@@ -1010,12 +1011,13 @@ pnpm build
 
 ### 📝 Changelog
 
-| Version | Date       | Description                                                                    |
-| :------ | :--------- | :----------------------------------------------------------------------------- |
-| v1.0.4  | 2026-09-26 | P0 security/perf fixes (mount gap, demo notice, CSP, PWA) + full doc alignment |
-| v1.0.3  | 2026-07-12 | Docker Node 22 alignment, docs update                                          |
-| v1.0.2  | 2026-03-14 | Version cache busting, dep pre-bundling                                        |
-| v1.0.0  | 2026-Q2    | Initial: core + dual theme + AI                                                |
+| Version | Date       | Description                                                                                       |
+| :------ | :--------- | :------------------------------------------------------------------------------------------------ |
+| v1.0.5  | 2026-11-02 | Pipeline break fix ×3 (coverage ratchet / dompurify pin / container line) + runbook + sec headers |
+| v1.0.4  | 2026-09-26 | P0 security/perf fixes (mount gap, demo notice, CSP, PWA) + full doc alignment                    |
+| v1.0.3  | 2026-07-12 | Docker Node 22 alignment, docs update                                                             |
+| v1.0.2  | 2026-03-14 | Version cache busting, dep pre-bundling                                                           |
+| v1.0.0  | 2026-Q2    | Initial: core + dual theme + AI                                                                   |
 
 > See [CHANGELOG.md](./CHANGELOG.md)
 
