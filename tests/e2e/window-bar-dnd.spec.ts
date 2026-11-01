@@ -58,6 +58,18 @@ async function createNewWindow(page: Page, type: string) {
   await page.waitForTimeout(300)
 }
 
+// 辅助函数：确保存在至少 n 个窗口标签页（批次三修复：全新档案默认 0 个窗口，
+// 此前 8 个拖拽用例因守卫线 ≥2/≥3 而整批静默跳过；此处循环补齐至守卫线）
+async function ensureWindows(page: Page, n: number) {
+  const tabs = getWindowTabs(page)
+  let created = 0
+  while ((await tabs.count()) < n && created < n + 2) {
+    await createNewWindow(page, '编辑器')
+    created++
+  }
+  expect(await tabs.count()).toBeGreaterThanOrEqual(n)
+}
+
 // ==========================================
 // 测试套件：WindowBar 拖放重排
 // ==========================================
@@ -106,8 +118,7 @@ test.describe('WindowBar 拖放标签页重排', () => {
 
   test('拖动标签页时应显示拖动视觉反馈（降低透明度）', async ({ page }) => {
     // 确保有至少 2 个标签页
-    await createNewWindow(page, '编辑器')
-    await page.waitForTimeout(300)
+    await ensureWindows(page, 2)
 
     const tabs = getWindowTabs(page)
     const count = await tabs.count()
@@ -142,9 +153,7 @@ test.describe('WindowBar 拖放标签页重排', () => {
   })
 
   test('拖放操作应触发 dragstart/dragover/drop 事件序列', async ({ page }) => {
-    await createNewWindow(page, '编辑器')
-    await createNewWindow(page, '终端')
-    await page.waitForTimeout(300)
+    await ensureWindows(page, 3)
 
     const tabs = getWindowTabs(page)
     const count = await tabs.count()
@@ -173,9 +182,7 @@ test.describe('WindowBar 拖放标签页重排', () => {
   })
 
   test('拖放重排应正确交换标签页位置', async ({ page }) => {
-    await createNewWindow(page, '编辑器')
-    await createNewWindow(page, '终端')
-    await page.waitForTimeout(400)
+    await ensureWindows(page, 3)
 
     const tabs = getWindowTabs(page)
     const count = await tabs.count()
@@ -222,8 +229,7 @@ test.describe('WindowBar 拖放标签页重排', () => {
   })
 
   test('关闭窗口后标签页应减少', async ({ page }) => {
-    await createNewWindow(page, '编辑器')
-    await page.waitForTimeout(300)
+    await ensureWindows(page, 2)
 
     const tabsBefore = await getWindowTabs(page).count()
     if (tabsBefore < 2) {
@@ -247,6 +253,8 @@ test.describe('WindowBar 拖放标签页重排', () => {
   })
 
   test('拖动手柄（GripVertical）应在悬停时可见', async ({ page }) => {
+    await ensureWindows(page, 1)
+
     const tabs = getWindowTabs(page)
     const count = await tabs.count()
     if (count === 0) {
@@ -267,6 +275,8 @@ test.describe('WindowBar 拖放标签页重排', () => {
   })
 
   test('活动标签页应有高亮背景样式', async ({ page }) => {
+    await ensureWindows(page, 1)
+
     const tabs = getWindowTabs(page)
     const count = await tabs.count()
     if (count === 0) {
@@ -285,8 +295,7 @@ test.describe('WindowBar 拖放标签页重排', () => {
   })
 
   test('拖放过程中取消操作（ESC 或拖出区域）不应改变顺序', async ({ page }) => {
-    await createNewWindow(page, '编辑器')
-    await page.waitForTimeout(300)
+    await ensureWindows(page, 2)
 
     const tabs = getWindowTabs(page)
     const count = await tabs.count()
@@ -374,8 +383,7 @@ test.describe('WindowBar 基本交互', () => {
   })
 
   test('点击标签页应切换活动窗口', async ({ page }) => {
-    await createNewWindow(page, '编辑器')
-    await page.waitForTimeout(300)
+    await ensureWindows(page, 2)
 
     const tabs = getWindowTabs(page)
     const count = await tabs.count()

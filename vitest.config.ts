@@ -60,16 +60,17 @@ export default defineConfig({
       // (新增 4 个测试文件,覆盖 use-theme-tokens / shared/ui/badge / auth-context)
       // 后实测:statements 70.43 / branches 66.81 / functions 72.36 / lines 72.9,
       // 取整略低防抖动。棘轮仅约束默认(排除)口径;COV_ALL 全口径为公示口径,不设门禁
-      // 2026-11-01 终审:branches 阈值 66→65。取证:CI run 39152833151(Node 24)
-      // 实测 branches 65.65% 未过 66 门 → main 连续红盘 → Deploy 停发 35 天;
-      // 本地(Node 22)实测 66.61%,两环境存在 ~1pp 抖动,阈值取 CI 实测地板取整。
-      // 整改方向:补分支用例回升至 66+(见终审报告遗留问题 P2)
+      // 2026-11-01 终审:branches 阈值 66→65(CI run 39152833151 取证:Node 24 实测
+      // 65.65% 未过门 → main 连红 → Deploy 停发 35 天;阈值取 CI 实测地板)。
+      // 2026-11-02 批次三:分支用例补强(useAIModelStore 引导路径 + sonner 主题矩阵,
+      // 新增 2 测试文件 17 用例)后本地实测 branches 67.69%(918/1356)→ 棘轮回调 66,
+      // 为 CI Node 24 地板(~66.7%)保留 ≥0.7pp 抖动余量。只升不降。
       ...(process.env.COV_ALL
         ? {}
         : {
             thresholds: {
               statements: 70,
-              branches: 65,
+              branches: 66,
               functions: 72,
               lines: 72,
             },
