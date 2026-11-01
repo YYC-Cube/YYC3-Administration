@@ -1,0 +1,17 @@
+# Docker 构建上下文瘦身（2026-11-01 终审补充）：
+# Dockerfile 在容器内独立 pnpm install --frozen-lockfile，宿主依赖不进镜像
+node_modules
+dist
+coverage
+test-results
+playwright-report
+.git
+.github
+docs
+tests
+.mimosa
+.v2c
+.video_agent
+.vscode
+*.tsbuildinfo
+.DS_Store

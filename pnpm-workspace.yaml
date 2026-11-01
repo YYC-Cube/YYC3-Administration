@@ -6,10 +6,12 @@ allowBuilds:
 minimumReleaseAge: 1440
 
 # 传递依赖漏洞钉扎(2026-09-26 漏洞闭环修复,来源 GitHub Advisories)
+# 2026-11-01 终审:dompurify 新披露 GHSA 批次(SAFE_FOR_TEMPLATES bypass 等 5 条,
+# 影响 <=3.4.16,经 monaco-editor 传递进生产 bundle)→ 钉扎线同步抬升至 3.4.17
 overrides:
   minimatch@9: 9.0.9
   form-data: 4.0.6
-  dompurify@<=3.4.12: 3.4.13
+  dompurify@<=3.4.16: 3.4.17
   js-yaml@<4.3.2: 4.3.2
   fast-uri@<3.1.6: 3.1.6
   postcss@<=8.5.22: 8.5.23
