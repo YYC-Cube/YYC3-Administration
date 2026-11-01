@@ -1,8 +1,12 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # 批次三(2026-11-02):容器线切换为 GHCR 镜像拉起——docker-release.yml 按
+    # vX.Y.Z tag 发布镜像(版本 tag + latest),回滚 = 改镜像 tag 后 up -d(runbook §4.3)。
+    # 本地开发或紧急自构建:注释 image 段、启用 build 段。
+    image: ghcr.io/yyc-cube/yyc3-administration:latest
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     ports:
       - "8080:80"
     restart: unless-stopped

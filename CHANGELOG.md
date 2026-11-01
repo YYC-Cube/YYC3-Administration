@@ -5,6 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2026-11-02
+
+> 批次二/三整合发版：监控告警体系落地 + 测试补强 + 容器线镜像化。
+> （1.0.5 后依次合入：89d46bb 监控与 Sentry、a5e0065/58c5bc1 workflow 修复、
+> 批次三测试补强与后端规划）
+
+### Added（监控告警体系，F-14 整改）
+
+- **uptime.yml**：每 5 分钟拨测生产站（HTTP 200 + 页面标识），告警 issue
+  自动创建/刷新/关闭（dispatch 实测 success）
+- **ci-stall.yml**：每小时检查 main CI，failure ≥48h 触发停摆告警
+  ——堵住"连红 36 天无人察觉"复发通道（dispatch 实测 success）
+- **docker-release.yml**：tag 推送触发镜像构建推 GHCR（版本 + latest 双标签），
+  容器回滚升级为镜像 tag 秒切；**docker-compose.yml 切换为镜像拉起模式**
+- **docker-smoke.yml**：容器线每周冒烟（构建+运行+三探），防再次静默断裂
+- **Sentry 惰性接入**：`src/lib/error-monitor.ts` 按 `VITE_SENTRY_DSN` 门控
+  动态加载——未配置构建零 chunk（dist 实测无 sentry 产物），配置后 release
+  绑定 APP_VERSION；新增 3 单测；ImportMetaEnv 补类型
+
+### Fixed（workflow 工程修复）
+
+- action-setup 双版本源冲突：移除 workflows 显式 `version` 输入，
+  `packageManager: pnpm@11.28.10` 为单一真源（run 41354031667 取证）
+- uptime/ci-stall YAML：issue 正文多行续行缩进（顶格截断 block scalar 致
+  workflow 注册失败）；ci-stall 补 `gh -R` 显式仓库参数（无 checkout job 内
+  gh 无法从 git 推断仓库）
+
+### Tests（批次三测试补强）
+
+- **分支覆盖率 66.66% → 67.69%（918/1356）**：新增 useAIModelStore 引导路径
+  12 用例（存储降级链/加密数据三态/幂等守卫/selector 回退）+ sonner 主题矩阵
+  5 用例；**覆盖率棘轮回调 65 → 66**（本地 67.69%，为 CI Node 24 地板留 ~0.7pp 余量）
+- **E2E 恢复全量执行口径**：DnD 8 用例补 `ensureWindows` seed（根因：全新档案
+  0 窗口，守卫线 ≥2/≥3 致整批静默跳过），修复后拖拽全链路真跑通过
+  （70 passed / 1 skipped 为移动端专用用例按设计跳过）
+
+### Docs
+
+- 新增《后端与数据库构建提示词闭环大纲》：A/B/C 路线选型 + 12 节点提示词
+  链路 + 🔒 横切安全约束（参数绑定/凭据环境变量/RLS 默认拒绝）+ M1-M4 里程碑
+
 ## [1.0.5] - 2026-11-02
 
 > 生产交付闭环终审（2026-11-01）产出的断点修复发版。此前生产闭环自 2026-09-26 起
