@@ -23,7 +23,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          LATEST=$(gh run list --workflow CI --branch main --limit 1 \
+          LATEST=$(gh run list -R "${{ github.repository }}" --workflow CI --branch main --limit 1 \
             --json conclusion,createdAt --jq '.[0]')
           CONC=$(echo "$LATEST" | python3 -c 'import json,sys; print(json.load(sys.stdin)["conclusion"])')
           CREATED=$(echo "$LATEST" | python3 -c 'import json,sys; print(json.load(sys.stdin)["createdAt"])')
