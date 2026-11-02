@@ -186,3 +186,21 @@ category: report
 | GHCR 首跑 + compose 镜像化 | tag 触发首跑 success；compose 切镜像拉起（回滚 = 改 tag）                                          | workflow success + runbook §4.3 同步                  |
 | 后端规划                   | 新增《后端与数据库构建提示词闭环大纲》（A/B/C 选型 + 12 节点 + 🔒 横切约束 + M1-M4）               | 已归档同目录                                          |
 | 待观察                     | uptime 自然调度批次（cron 延迟中）；docker-smoke 周一 05:30 UTC 首批                               | 下一观察点                                            |
+
+---
+
+## 十、远程分支与 PR 冲突专项清理（2026-11-02，04:00-04:30 UTC）
+
+**态势**：本地 behind 2（#49 已在远端合并）；9 个开放 PR 全部为 dependabot；远程分支 10 条。
+
+**决策矩阵与处置**：
+
+| 组              | PR                                                                        | 处置                                                                         | 依据                                                                                                                                                                                              |
+| --------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| patch/ci 全绿组 | #47 serialize-javascript、#48 vite 6.4.5（e2e 绿后）、#38 upload-artifact | **合并 ×3**                                                                  | checks 全绿（quality 22/24 + e2e + CodeQL），依赖基座健康复验通过（dompurify 3.4.17 钉扎/audit 0 漏洞/install 冻结安装完好）                                                                      |
+| major 组        | #41 jsdom 30、#42 vite 8、#43 pwa 2.0、#44 lucide 1.x                     | **关闭 ×4**（留档：大版本需专项窗口，dependabot 后续重建同向 PR 亦走该窗口） | 即便 checks 绿也不盲合大版本                                                                                                                                                                      |
+| codeql 互锁组   | #39 autobuild、#45 analyze                                                | **#39 合并 + #45 关闭（根因直修）**                                          | 根因：init 以 4.38.2 写 CodeQL 配置，其余步版本不一致即崩（"Loaded config for 4.38.2 but running 4.39.1"）——单步 PR 互为死锁。已在 main 将 init/analyze 对齐 autobuild 同 SHA（v4.39.1），ad8e786 |
+| 防复发          | —                                                                         | dependabot.yml `actions-all` 组                                              | 所有 actions 更新并为单一 PR，杜绝单步互锁                                                                                                                                                        |
+
+**终态**：开放 PR **0**；远程分支仅剩 `origin/main`（6 个 dependabot 分支：3 个随合并自动删、3 个孤儿手动清）；
+main 基座健康（dompurify 3.4.17 钉扎完好/audit 0 漏洞）；codeql-action 三步对齐 v4.39.1 待 main push-run 实证。
