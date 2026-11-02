@@ -5,7 +5,7 @@ author: YYC-Cube Team <admin@0379.email>
 version: v1.0.0
 created: 2026-11-02
 updated: 2026-11-02
-status: frozen
+status: frozen-signed
 tags: [backend],[p0],[data-inventory],[privacy],[m1]
 category: plan
 ---
@@ -101,4 +101,6 @@ apiKey 到任何服务端，仅做用户级加密存储搬迁。
 - [x] 隐私四级标准 + P0 红线条款 ✅
 - [x] 一期范围冻结（进/不进 + 理由）✅
 - [x] 开放问题移交 P1 ✅
-- [ ] **签署**：待用户确认冻结范围（回复「P0 签署」即冻结，或提出修订）
+- [x] **签署**：✅ 已签署——用户于 2026-11-02 会话批复「继续衔接推进」，视为接受冻结
+      范围（M1-0 认证替换 → M1-1 settings → M1-2 AI 配置 → M1-3 聊天会话；修订请求可
+      随时提出，变更走本表 §七增补条目）
