@@ -25,3 +25,10 @@ updates:
     open-pull-requests-limit: 3
     commit-message:
       prefix: 'chore(ci)'
+    groups:
+      # 同一 workflow 内多步 action 必须同版本(init 写配置/其余步读配置),
+      # 拆单步 PR 会造成版本互锁(2026-11-02 codeql-action 三步实证),
+      # 故全部 actions 更新并为单一 PR
+      actions-all:
+        patterns:
+          - '*'

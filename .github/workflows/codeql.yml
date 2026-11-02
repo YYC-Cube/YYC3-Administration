@@ -23,8 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      # ⚠ 三步(init/autobuild/analyze)必须同版本:init 写入配置时记录自身版本,
+      #   其余步读到不一致版本即崩(2026-11-02 #45 实证:"Loaded config for
+      #   4.38.2 but running 4.39.1");dependabot.yml 已将 actions 生态成组防复发
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        uses: github/codeql-action/init@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
         with:
           languages: javascript-typescript
           # ⚠ v3.38 起 config 输入仅接受内联 YAML(路径字符串会被当配置内容写盘)
@@ -44,6 +47,6 @@ jobs:
         uses: github/codeql-action/autobuild@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4.38.2
+        uses: github/codeql-action/analyze@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
         with:
           category: "/language:javascript-typescript"
