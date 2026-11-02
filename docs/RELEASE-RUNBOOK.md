@@ -96,6 +96,17 @@ docker compose up -d                      # healthcheck 通过即恢复
 2. 白屏多为前端运行时错误 → 判断是否本次发布引入 → 执行 §4.2 分钟级回滚。
 3. 留存现场：`playwright-report/`、浏览器 Console 截图、deploy run 日志。
 
+### 5.1b 场景：个别 hashed 资源 404（如 vendor-monaco.*.css）——旧缓存竞态，非部署损坏
+
+1. **判定**：拉取线上 index.html，逐一 HEAD 其引用资产——若全部 200 而报障哈希
+   不在其中（如 2026-11-02 `Cuo9tjen` vs 现行 `CNgQWNDj`），即「旧 index.html/SW
+   引用已被快照替换的旧哈希产物」，属高频重部署竞态（Pages 单快照，旧产物被清）。
+2. **自愈机制**（已在位，勿重复建设）：PWA `autoUpdate` + `cleanupOutdatedCaches`
+   → 老用户下次访问自动换新 SW 与 precache；monaco 类运行时缓存资产随之重积累。
+   最长恢复窗口 ≈ index.html CDN TTL（10 min）+ 用户一次完整访问。
+3. **用户侧立即恢复**：强刷（Cmd/Ctrl+Shift+R）或关闭重开 PWA 一次。
+4. **运维侧无需回滚**；仅当「当前 index.html 的引用也 404」才是真部署损坏 → 重发布。
+
 ### 5.2 场景：安全事件（密钥泄露 / 高危漏洞披露）
 
 1. 依赖高危披露（dompurify 类传递漏洞）：在 `pnpm-workspace.yaml` overrides 抬升钉扎线 →
