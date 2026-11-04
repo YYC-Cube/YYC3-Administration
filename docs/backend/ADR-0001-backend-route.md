@@ -4,13 +4,18 @@ description: 后端闭环 P1 —— 架构决策记录 ADR-0001：后端与数�
 author: YYC-Cube Team <admin@0379.email>
 version: v1.0.0
 created: 2026-11-02
-updated: 2026-11-02
-status: accepted
+updated: 2026-11-04
+status: accepted-superseded-in-part
 tags: [backend],[adr],[decision],[supabase],[m1]
 category: adr
 ---
 
 # 🏛️ ADR-0001 · 后端与数据库路线决策（P1）
+
+> ⚠️ **部分取代（2026-11-04）**：用户裁定不引入 Supabase 项目 → A 线载体作废，
+> 由 [ADR-0002](./ADR-0002-supabase-free-route.md) 接替：B 线（Node 自托管轻后端）
+> 提前至 M1 并吸收原 A 线数据面范围（SQLite 方言、JWT 认证、RLS 等价物改为唯一
+> 数据访问模块）。本文的评分框架、C/B 线定位与回退思想仍然有效，保留为决策链存档。
 
 > 闭环大纲节点 P1 交付物。输入：P0《数据清单与隐私分级表》（frozen-signed）+
 > CHANGELOG 1.0.4 旧决策 + 09-26《05-本地数据库替代方案分析》。
