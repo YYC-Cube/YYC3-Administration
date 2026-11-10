@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2021",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2021",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -20,23 +16,12 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "src",
-    "tests"
-  ],
-  "exclude": [
-    "src/imports/**/*",
-    "node_modules",
-    "dist"
-  ],
+  "include": ["src", "server", "tests"],
+  "exclude": ["src/imports/**/*", "node_modules", "dist"],
   "references": [
     {
       "path": "./tsconfig.node.json"

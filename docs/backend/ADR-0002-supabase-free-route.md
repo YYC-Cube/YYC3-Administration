@@ -4,13 +4,17 @@ description: 后端闭环 ADR-0002 —— 无 Supabase 的无损替代路线（�
 author: YYC-Cube Team <admin@0379.email>
 version: v1.0.0
 created: 2026-11-04
-updated: 2026-11-04
-status: accepted
-tags: [backend],[adr],[self-hosted],[sqlite],[gateway]
+updated: 2026-11-10
+status: accepted-amended
+tags: [backend],[adr],[self-hosted],[postgres],[gateway]
 category: adr
 ---
 
 # 🏛️ ADR-0002 · 无 Supabase 的无损替代路线（P1 修订）
+
+> ⚠️ **修订（2026-11-10）**：本机 PG 15 主库（localhost:5433）实测在位 → §四数据
+> 载体由 SQLite 修订为 **PostgreSQL 15**（详见 [ADR-0003](./ADR-0003-pg15-dialect.md)：
+> drizzle 方言切换、其余裁定不变）；§五部署档位定为「①本机模式（后端与主库同主机）」。
 
 > 触发：用户裁定**不引入 Supabase 项目**（2026-11-04）。本文部分取代 ADR-0001——
 > 其「A 线 = Supabase 激活」载体作废，B/C 线定位吸收合并；评分框架与回退思想沿用。
