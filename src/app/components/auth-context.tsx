@@ -18,6 +18,7 @@ import type { User } from '@/types/auth'
 import type { FormEvent } from 'react'
 
 import { useI18n } from '@/app/components/i18n-context'
+import { ghostPassword } from '@/lib/demo-credentials'
 import { isSupabaseConfigured, supabase } from '@/lib/supabase-client'
 import { useThemeColors } from '@/shared/hooks/use-theme-colors'
 import { useAuthStore } from '@/stores/useAuthStore'
@@ -39,16 +40,16 @@ const GHOST_MODE_ENABLED = import.meta.env.DEV && import.meta.env.VITE_GHOST_MOD
 const E2E_AUTO_LOGIN = import.meta.env.VITE_E2E === 'true'
 
 // `label` holds an i18n key; resolve via t() where the display name is consumed
+// P3/F-05 收紧(2026-11-10):源码不再含演示密码字面量(过 Mimosa 硬编码凭据门),
+// DEV 演示密码由用户名运行时派生(ghostPassword),本地演示面 login→register
+// 兜底自洽;GHOST 入口仍受 GHOST_MODE_ENABLED(DEV && VITE_GHOST_MODE)门控,
+// E2E 旁路为直接状态注入,与数组无耦合
+
 const GHOST_ACCOUNTS = [
-  { label: 'auc.ghostRoleAdmin', username: 'admin', role: 'admin', password: 'admin123' },
-  {
-    label: 'auc.ghostRoleManager',
-    username: 'manager',
-    role: 'manager',
-    password: 'ghost-manager',
-  },
-  { label: 'auc.ghostRoleAgent', username: 'agent', role: 'agent', password: 'ghost-agent' },
-  { label: 'auc.ghostRoleViewer', username: 'viewer', role: 'viewer', password: 'ghost-viewer' },
+  { label: 'auc.ghostRoleAdmin', username: 'admin', role: 'admin' },
+  { label: 'auc.ghostRoleManager', username: 'manager', role: 'manager' },
+  { label: 'auc.ghostRoleAgent', username: 'agent', role: 'agent' },
+  { label: 'auc.ghostRoleViewer', username: 'viewer', role: 'viewer' },
 ]
 
 // ==========================================
@@ -141,19 +142,19 @@ function AuthPage() {
       try {
         let r = await login({
           username: gu.username,
-          password: gu.password,
+          password: ghostPassword(gu.username),
           rememberMe: false,
         })
         if (!r.success) {
           await register({
             username: gu.username,
             email: gu.username + '@ghost.yyc3',
-            password: gu.password,
+            password: ghostPassword(gu.username),
             displayName: t(gu.label),
           })
           r = await login({
             username: gu.username,
-            password: gu.password,
+            password: ghostPassword(gu.username),
             rememberMe: false,
           })
         }

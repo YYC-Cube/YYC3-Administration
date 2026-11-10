@@ -36,6 +36,12 @@ export async function findUserByUsername(username: string) {
   return db.select().from(users).where(eq(users.username, username.toLowerCase())).limit(1)
 }
 
+export async function findUserById(id: string) {
+  assertUserId(id)
+  const rows = await db.select().from(users).where(eq(users.id, id)).limit(1)
+  return rows[0]
+}
+
 export async function createUser(input: {
   username: string
   passwordHash: string

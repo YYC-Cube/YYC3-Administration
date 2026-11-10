@@ -2060,7 +2060,7 @@ export const zhMessages: Record<string, string> = {
   'auth.errRegisterFailed': '注册失败',
   'auth.errNetwork': '网络错误，请重试',
   'auth.errGhostLogin': '幽灵模式登录失败',
-  'auth.devAdminHint': '开发环境默认管理员: admin / admin123',
+  'auth.devAdminHint': '开发环境演示账号: 使用 GHOST 一键登录(密码运行时派生)',
   'auth.tagline': '言启千行代码 · 语枢万物智能',
   'auth.verifying': '正在验证身份…',
 

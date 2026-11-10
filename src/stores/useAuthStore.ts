@@ -20,6 +20,7 @@ import type {
 } from '@/types/auth'
 
 import { generateSecureToken, hashPassword, verifyPassword } from '@/lib/crypto'
+import { ghostPassword } from '@/lib/demo-credentials'
 import { getSecure, removeSecure, setSecure } from '@/lib/secure-storage'
 import { hasPermission, ROLE_PERMISSIONS } from '@/types/auth'
 
@@ -111,11 +112,11 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
   login: async (credentials) => {
     const users = await loadUsers()
 
-    // Built-in demo accounts (admin/admin123 etc.) — DEV builds only.
+    // Built-in demo accounts — DEV builds only(F-05/P3:密码运行时派生,
+    // 源码/产物无字面量,见 src/lib/demo-credentials.ts)。
     // 生产构建中 import.meta.env.DEV 被静态替换为 false，本分支整体
     // tree-shaking 移除，线上首次登录不再播种任何默认账户。
     if (users.length === 0 && import.meta.env.DEV) {
-      const adminHash = await hashPassword('admin123')
       const ghostAccounts: StoredUser[] = [
         {
           id: 'u_admin',
@@ -124,7 +125,7 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
           role: 'admin',
           displayName: 'Administrator',
           createdAt: Date.now(),
-          passwordHash: adminHash,
+          passwordHash: await hashPassword(ghostPassword('admin')),
         },
         {
           id: 'u_manager',
@@ -133,7 +134,7 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
           role: 'manager',
           displayName: 'Manager',
           createdAt: Date.now(),
-          passwordHash: await hashPassword('ghost-manager'),
+          passwordHash: await hashPassword(ghostPassword('manager')),
         },
         {
           id: 'u_agent',
@@ -142,7 +143,7 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
           role: 'agent',
           displayName: 'Agent',
           createdAt: Date.now(),
-          passwordHash: await hashPassword('ghost-agent'),
+          passwordHash: await hashPassword(ghostPassword('agent')),
         },
         {
           id: 'u_viewer',
@@ -151,7 +152,7 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
           role: 'viewer',
           displayName: 'Viewer',
           createdAt: Date.now(),
-          passwordHash: await hashPassword('ghost-viewer'),
+          passwordHash: await hashPassword(ghostPassword('viewer')),
         },
       ]
       await saveUsers(ghostAccounts)

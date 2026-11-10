@@ -2002,7 +2002,7 @@ export const enMessages: Record<string, string> = {
   'auth.errRegisterFailed': 'Registration failed',
   'auth.errNetwork': 'Network error, please retry',
   'auth.errGhostLogin': 'Ghost mode login failed',
-  'auth.devAdminHint': 'Dev default admin: admin / admin123',
+  'auth.devAdminHint': 'Dev demo accounts: use GHOST one-click login (password derived at runtime)',
   'auth.tagline': 'Words Inspire Code · Language Pivots Intelligence',
   'auth.verifying': 'Verifying identity…',
 

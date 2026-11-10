@@ -1,5 +1,16 @@
 {
   "ignoreUnresolved": [],
   "ignoreUnimported": ["server/**"],
-  "ignoreUnused": ["tw-animate-css", "drizzle-orm", "pg", "drizzle-kit", "tsx", "@types/pg"]
+  "ignoreUnused": [
+    "tw-animate-css",
+    "drizzle-orm",
+    "pg",
+    "drizzle-kit",
+    "tsx",
+    "@types/pg",
+    "hono",
+    "@hono/node-server",
+    "@node-rs/argon2",
+    "zod"
+  ]
 }

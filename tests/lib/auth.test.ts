@@ -9,6 +9,7 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
+import { ghostPassword } from '@/lib/demo-credentials'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { hasPermission, ROLE_PERMISSIONS } from '@/types/auth'
 
@@ -71,7 +72,7 @@ describe('Auth Store — Login', () => {
   it('should create default admin on first login', async () => {
     const result = await useAuthStore.getState().login({
       username: 'admin',
-      password: 'admin123',
+      password: ghostPassword('admin'),
     })
 
     expect(result.success).toBe(true)
@@ -84,7 +85,7 @@ describe('Auth Store — Login', () => {
 
   it('should reject wrong password', async () => {
     // First create the admin
-    await useAuthStore.getState().login({ username: 'admin', password: 'admin123' })
+    await useAuthStore.getState().login({ username: 'admin', password: ghostPassword('admin') })
     useAuthStore.getState().logout()
 
     // Try with wrong password
@@ -100,7 +101,7 @@ describe('Auth Store — Login', () => {
 
   it('should reject non-existent user', async () => {
     // Create default admin first
-    await useAuthStore.getState().login({ username: 'admin', password: 'admin123' })
+    await useAuthStore.getState().login({ username: 'admin', password: ghostPassword('admin') })
     useAuthStore.getState().logout()
 
     const result = await useAuthStore.getState().login({
@@ -113,12 +114,12 @@ describe('Auth Store — Login', () => {
   })
 
   it('should accept email as username', async () => {
-    await useAuthStore.getState().login({ username: 'admin', password: 'admin123' })
+    await useAuthStore.getState().login({ username: 'admin', password: ghostPassword('admin') })
     useAuthStore.getState().logout()
 
     const result = await useAuthStore.getState().login({
       username: 'admin@yyc3.local',
-      password: 'admin123',
+      password: ghostPassword('admin'),
     })
 
     expect(result.success).toBe(true)
@@ -218,7 +219,7 @@ describe('Auth Store — Register', () => {
 
 describe('Auth Store — Logout & Session', () => {
   it('should clear state on logout', async () => {
-    await useAuthStore.getState().login({ username: 'admin', password: 'admin123' })
+    await useAuthStore.getState().login({ username: 'admin', password: ghostPassword('admin') })
     expect(useAuthStore.getState().status).toBe('authenticated')
 
     useAuthStore.getState().logout()
@@ -231,7 +232,7 @@ describe('Auth Store — Logout & Session', () => {
   it('should restore session on checkSession', async () => {
     await useAuthStore.getState().login({
       username: 'admin',
-      password: 'admin123',
+      password: ghostPassword('admin'),
       rememberMe: true,
     })
 
@@ -260,7 +261,7 @@ describe('Auth Store — Logout & Session', () => {
 
 describe('Auth Store — Permission Helpers', () => {
   it('hasPermission should check role correctly', async () => {
-    await useAuthStore.getState().login({ username: 'admin', password: 'admin123' })
+    await useAuthStore.getState().login({ username: 'admin', password: ghostPassword('admin') })
 
     expect(useAuthStore.getState().hasPermission('system:admin')).toBe(true)
     expect(useAuthStore.getState().hasPermission('dashboard:view')).toBe(true)
@@ -272,7 +273,7 @@ describe('Auth Store — Permission Helpers', () => {
   })
 
   it('hasRole should check current role', async () => {
-    await useAuthStore.getState().login({ username: 'admin', password: 'admin123' })
+    await useAuthStore.getState().login({ username: 'admin', password: ghostPassword('admin') })
 
     expect(useAuthStore.getState().hasRole('admin')).toBe(true)
     expect(useAuthStore.getState().hasRole('admin', 'manager')).toBe(true)

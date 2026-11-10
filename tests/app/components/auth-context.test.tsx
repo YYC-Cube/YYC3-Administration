@@ -12,6 +12,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AuthProvider, unifiedLogout } from '@/app/components/auth-context'
 import { I18nProvider } from '@/app/components/i18n-context'
 import { ThemeSwitcherProvider } from '@/app/components/theme-switcher-context'
+import { ghostPassword } from '@/lib/demo-credentials'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 // 捕获原始 store actions 以便每个用例后恢复
@@ -99,7 +100,9 @@ describe('AuthProvider — 状态分支', () => {
   it('UTC-AC-004 登录页展示开发环境提示', () => {
     setUnauth()
     renderAuth()
-    expect(screen.getByText('开发环境默认管理员: admin / admin123')).toBeInTheDocument()
+    expect(
+      screen.getByText('开发环境演示账号: 使用 GHOST 一键登录(密码运行时派生)'),
+    ).toBeInTheDocument()
   })
 })
 
@@ -189,7 +192,9 @@ describe('AuthPage — 本地认证流程', () => {
     fireEvent.change(screen.getByPlaceholderText('admin 或 admin@yyc3.local'), {
       target: { value: 'admin' },
     })
-    fireEvent.change(screen.getByPlaceholderText('••••••••'), { target: { value: 'admin123' } })
+    fireEvent.change(screen.getByPlaceholderText('••••••••'), {
+      target: { value: ghostPassword('admin') },
+    })
     fireEvent.submit(getForm(container))
     await waitFor(() => expect(useAuthStore.getState().status).toBe('authenticated'))
     expect(useAuthStore.getState().user?.username).toBe('admin')
