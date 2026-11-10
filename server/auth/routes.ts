@@ -1,62 +1,46 @@
 /**
  * @file server/auth/routes.ts
- * @description YYC³ Administration 自托管后端 —— 认证路由(P3/M1-0)
+ * @description YYC³ Administration 自托管后端 —— 认证路由(P3/M1-0;P4 契约化)
  *   POST /auth/register(限流 3/h/ip,成功即建会话)
  *   POST /auth/login   (限流 5/min/ip:username,失败统一 401 防枚举)
  *   POST /auth/logout  (清 Cookie)
  *   GET  /auth/me      (requireAuth + DB 实时角色)
- * 会话经 httpOnly Cookie 下发:SameSite=Strict + __Secure-前缀可选
- * (COOKIE_SECURE=true 时,由反代 https 终结点启用)。
+ * 请求校验/响应/错误信封全部消费 server/contract(P4 单一真源):
+ *   CredentialsSchema/RegisterRequestSchema 校验请求;publicUser 产出契约
+ *   AuthUser(ISO 时间);错误体 satisfies ApiError(编译期覆盖错误码表)。
  * @author YanYuCloudCube Team <admin@0379.email>
- * @tags backend,p3,auth,routes
+ * @tags backend,p3,p4,auth,routes,contract
  */
 
+import { type AuthUser, CredentialsSchema, RegisterRequestSchema } from '@server/contract/auth'
+import { type ApiError, toApiIssues } from '@server/contract/errors'
 import { createUser, findUserById, findUserByUsername } from '@server/db/repositories'
 import { Hono } from 'hono'
 import { deleteCookie, setCookie } from 'hono/cookie'
-import { z } from 'zod'
 
 import { type AuthedContext, requireAuth } from './middleware'
 import { hashPassword, verifyPassword } from './password'
 import { loginLimiter, registerLimiter } from './rate-limit'
 import { SESSION_COOKIE, SESSION_TTL_SEC, type SessionPayload, signSession } from './token'
 
-const credentialsSchema = z.object({
-  username: z
-    .string()
-    .trim()
-    .transform((s) => s.toLowerCase())
-    .pipe(
-      z
-        .string()
-        .min(3)
-        .max(32)
-        .regex(/^[a-z0-9_-]+$/, '仅允许字母/数字/下划线/连字符'),
-    ),
-  password: z.string().min(8).max(128),
-})
-
-const registerSchema = credentialsSchema.extend({
-  displayName: z.string().trim().min(1).max(64).optional(),
-})
-
 function clientIp(c: { req: { header: (k: string) => string | undefined } }): string {
   return c.req.header('x-forwarded-for')?.split(',')[0]?.trim() ?? 'local'
 }
 
+/** DB 行 → 契约 AuthUser(wire 形态:ISO 时间;永不含私有列) */
 function publicUser(u: {
   id: string
   username: string
   displayName: string | null
   role: string
   createdAt: Date
-}) {
+}): AuthUser {
   return {
     id: u.id,
     username: u.username,
     displayName: u.displayName,
-    role: u.role,
-    createdAt: u.createdAt,
+    role: u.role as AuthUser['role'],
+    createdAt: u.createdAt.toISOString(),
   }
 }
 
@@ -77,19 +61,24 @@ authRoutes.post('/register', async (c) => {
   const limit = registerLimiter.check('reg:' + clientIp(c))
   if (!limit.allowed) {
     return c.json(
-      { error: 'rate_limited', message: '注册过于频繁', retryAfterSec: limit.retryAfterSec },
+      {
+        error: 'rate_limited',
+        message: '注册过于频繁',
+        retryAfterSec: limit.retryAfterSec,
+      } satisfies ApiError,
       429,
     )
   }
-  const parsed = credentialsSchema
-    .extend({ displayName: registerSchema.shape.displayName })
-    .safeParse(await c.req.json().catch(() => null))
+  const parsed = RegisterRequestSchema.safeParse(await c.req.json().catch(() => null))
   if (!parsed.success) {
-    return c.json({ error: 'invalid_input', issues: parsed.error.issues }, 422)
+    return c.json(
+      { error: 'invalid_input', issues: toApiIssues(parsed.error.issues) } satisfies ApiError,
+      422,
+    )
   }
   const existing = await findUserByUsername(parsed.data.username)
   if (existing[0]) {
-    return c.json({ error: 'conflict', message: '用户名已被占用' }, 409)
+    return c.json({ error: 'conflict', message: '用户名已被占用' } satisfies ApiError, 409)
   }
   const passwordHash = await hashPassword(parsed.data.password)
   const row = await createUser({
@@ -103,14 +92,21 @@ authRoutes.post('/register', async (c) => {
 
 authRoutes.post('/login', async (c) => {
   const body = await c.req.json().catch(() => null)
-  const parsed = credentialsSchema.safeParse(body)
+  const parsed = CredentialsSchema.safeParse(body)
   if (!parsed.success) {
-    return c.json({ error: 'invalid_input', issues: parsed.error.issues }, 422)
+    return c.json(
+      { error: 'invalid_input', issues: toApiIssues(parsed.error.issues) } satisfies ApiError,
+      422,
+    )
   }
   const limit = loginLimiter.check('login:' + clientIp(c) + ':' + parsed.data.username)
   if (!limit.allowed) {
     return c.json(
-      { error: 'rate_limited', message: '尝试过于频繁', retryAfterSec: limit.retryAfterSec },
+      {
+        error: 'rate_limited',
+        message: '尝试过于频繁',
+        retryAfterSec: limit.retryAfterSec,
+      } satisfies ApiError,
       429,
     )
   }
@@ -118,7 +114,10 @@ authRoutes.post('/login', async (c) => {
   const user = rows[0]
   const ok = user ? await verifyPassword(user.passwordHash, parsed.data.password) : false
   if (!user || !ok) {
-    return c.json({ error: 'invalid_credentials', message: '用户名或密码错误' }, 401)
+    return c.json(
+      { error: 'invalid_credentials', message: '用户名或密码错误' } satisfies ApiError,
+      401,
+    )
   }
   await establishSession(c, user.id, user.role as SessionPayload['role'])
   return c.json({ user: publicUser(user) })
@@ -135,7 +134,7 @@ authRoutes.get('/me', requireAuth, async (c) => {
   if (!user) {
     // 会话有效但用户已删除:清除失效 Cookie
     deleteCookie(c, SESSION_COOKIE, { path: '/' })
-    return c.json({ error: 'unauthorized', message: '用户不存在' }, 401)
+    return c.json({ error: 'unauthorized', message: '用户不存在' } satisfies ApiError, 401)
   }
   return c.json({ user: publicUser(user) })
 })

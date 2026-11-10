@@ -10,6 +10,13 @@
 /** 用户角色 */
 export type UserRole = 'admin' | 'manager' | 'agent' | 'viewer'
 
+/**
+ * 服务端公开档案契约(P4 零漂移桥):与 server/contract/auth.ts AuthUser 同源。
+ * P6 前端接线(M1-1 数据面切换自建 API)时,User ↔ ContractAuthUser 的映射
+ * 以此类型为唯一基准,禁止手写第二份字段清单。
+ */
+export type ContractAuthUser = import('@server/contract/auth').AuthUser
+
 /** 认证状态 */
 export type AuthStatus = 'authenticated' | 'unauthenticated' | 'loading'
 
