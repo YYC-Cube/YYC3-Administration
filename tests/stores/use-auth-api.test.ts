@@ -22,7 +22,7 @@ vi.mock('@/lib/secure-storage', () => ({
 
 import type { AuthUser } from '@server/contract/auth'
 
-import { useAuthStore } from '@/stores/useAuthStore'
+import { contractUserToUser, useAuthStore } from '@/stores/useAuthStore'
 
 /** 测试口令派生(源码无字面量) */
 const pw = (s: string) => 'pw-' + s + '-pass'
@@ -91,8 +91,9 @@ describe('useAuthStore — API 模式分支(M1-0)', () => {
   })
 
   it('logout:调用服务端注销并清态', async () => {
+    // setState 的 user 为前端 User 形态(P4 桥接后含 email)
     useAuthStore.setState({
-      user: apiUser(),
+      user: contractUserToUser(apiUser()),
       token: 'self-api',
       status: 'authenticated',
     })

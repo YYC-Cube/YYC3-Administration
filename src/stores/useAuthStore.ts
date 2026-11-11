@@ -45,7 +45,7 @@ interface AuthState {
 }
 
 /** 契约 AuthUser → 前端 User(P4 零漂移桥的映射唯一实现) */
-function contractUserToUser(u: AuthUser): User {
+export function contractUserToUser(u: AuthUser): User {
   return {
     id: u.id,
     username: u.username,
