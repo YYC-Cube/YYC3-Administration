@@ -146,7 +146,10 @@ jobs:
       - name: Build E2E bundle (VITE_E2E + VITE_API_MODE inline)
         run: VITE_E2E=true VITE_API_MODE=true pnpm build
 
-      - name: Start API server (migrate + serve)
+      - name: Migrate database (幂等)
+        run: pnpm db:migrate
+
+      - name: Start API server (serve)
         run: |
           nohup env API_ALLOWED_ORIGINS=http://localhost:5173 AUTH_RATELIMIT_DISABLED=true pnpm start:server >/tmp/api.log 2>&1 &
           echo $! > /tmp/api.pid
