@@ -277,7 +277,7 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
   logout: () => {
     if (isApiConfigured) {
       // 服务端清 Cookie;本地会话记录同步清
-      void apiFetch('/auth/logout', { method: 'POST' }).catch(() => undefined)
+      void Promise.resolve(apiFetch('/auth/logout', { method: 'POST' })).catch(() => undefined)
     }
     removeSecure(SESSION_KEY)
     set({ user: null, token: null, status: 'unauthenticated' })
