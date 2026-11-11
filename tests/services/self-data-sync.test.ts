@@ -5,7 +5,7 @@
  * apiFetch 以模块 mock 注入,零网络。
  */
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const apiFetchMock = vi.hoisted(() => vi.fn())
 
