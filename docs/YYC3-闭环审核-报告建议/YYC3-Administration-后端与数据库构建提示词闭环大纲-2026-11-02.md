@@ -25,7 +25,11 @@ category: plan
 | P2 数据建模与迁移     | ✅ 完成（PG 15 方言：5 表 drizzle schema + up/down 迁移 + 唯一数据访问模块 + 越权矩阵草案；**已激活**：yyc3_app/yyc3_admin 建成，迁移应用+约束三连测过）    | `docs/backend/P2-DATA-MODEL.md` + `server/db/*`               |
 | P3 认证与权限         | ✅ 完成（argon2id+JWT httpOnly+CSRF+限流；**F-19 实证 401×5→429、F-05 实证生产 bundle 凭据 0 命中**；14 单测+活库 E2E 全绿）                                | `docs/backend/P3-AUTH.md` + `server/auth/*` + `server/app.ts` |
 | P4 API 契约与类型共享 | ✅ 完成（zod 单一真源 5 域契约 + 10 码错误表 + `satisfies ApiError` 编译期锁定 + 前端 `import type` 零漂移桥 + 类型恒等/隐私 shape 测试锁定；738 tests 绿） | `docs/backend/P4-CONTRACT.md` + `server/contract/*`           |
-| P5-P12                | ⏳ 待启动（下一节点 P5 数据面路由：/settings、/ai-configs、/chat 消费契约+repositories）                                                                    | —                                                             |
+| P5 数据面路由         | ✅ 完成（/data/settings、/ai-configs(AES-GCM 加密)、/chat、/export；全 requireAuth + 越权 404 语义）                                                        | `server/routes/data.ts` + `docs/backend/M1-WIRING.md` §一     |
+| P6 前端接线           | ✅ 完成（api-client + useAuthStore API 分支 + self-data-sync + vite 同源代理；VITE_API_MODE 门控，Pages 线零破坏）                                          | `src/services/api-client.ts` 等 + `M1-WIRING.md` §二          |
+| P8-lite 容器化/CI     | ✅ 完成（Dockerfile.server + compose server profile + CI e2e PG service，M1 spec CI 同构执行）                                                              | `Dockerfile.server` + `docker-compose.yml` + `ci.yml`         |
+| **M1 全链实地验收**   | ✅ **L1 活库 21 断言 / L2 Playwright 全链 / L3 容器部署链 / e2e 回归 70 绿**                                                                                | `docs/backend/M1-WIRING.md` §四                               |
+| P7/P9-P12             | ⏳ 待启动（越权矩阵 L1 已覆盖大半；余项按大纲推进）                                                                                                         | —                                                             |
 
 ---
 

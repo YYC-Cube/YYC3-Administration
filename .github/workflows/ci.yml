@@ -96,6 +96,25 @@ jobs:
     needs: quality
     timeout-minutes: 30 # 防 webServer/teardown 挂死空耗 runner
 
+    # M1 全链(m1-full-chain.spec):自托管 API + PostgreSQL(P5/P6 实地验收)
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: yyc3_admin
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://ci:ci@localhost:5433/yyc3_admin
+
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -119,10 +138,21 @@ jobs:
       # run 36214765395 取证:65 例 3 分钟全绿后 Playwright 拆除挂死 26 分钟
       # 直至超时(sh -c 'pnpm build && pnpm preview' 三代进程链杀不干净,
       # 存活孙进程的 stdio 管道阻塞退出)。故 CI 上由 workflow 显式管理
-      # 服务器生命周期:此处预构建(内联 VITE_E2E 认证旁路)+预启动,
-      # Playwright 仅复用不 spawn;末尾 always() 步骤按端口强制回收
-      - name: Build E2E bundle (VITE_E2E inline)
-        run: VITE_E2E=true pnpm build
+      # 服务器生命周期:此处预构建(内联 VITE_E2E 认证旁路 + VITE_API_MODE)+
+      # 预迁移 + 预启动 API 与 preview,Playwright 双 webServer 均复用不 spawn;
+      # 末尾 always() 步骤按端口强制回收
+      - name: Build E2E bundle (VITE_E2E + VITE_API_MODE inline)
+        run: VITE_E2E=true VITE_API_MODE=true pnpm build
+
+      - name: Start API server (migrate + serve)
+        run: |
+          nohup env API_ALLOWED_ORIGINS=http://localhost:5173 AUTH_RATELIMIT_DISABLED=true pnpm start:server >/tmp/api.log 2>&1 &
+          echo $! > /tmp/api.pid
+          for i in $(seq 1 60); do
+            curl -sf http://localhost:8787/healthz >/dev/null && echo "api up (${i}s)" && exit 0
+            sleep 1
+          done
+          echo "::error::api failed to start"; tail -30 /tmp/api.log; exit 1
 
       - name: Start preview server
         run: |
@@ -141,6 +171,7 @@ jobs:
         if: always()
         run: |
           kill "$(cat /tmp/preview.pid 2>/dev/null)" 2>/dev/null || true
+          kill "$(cat /tmp/api.pid 2>/dev/null)" 2>/dev/null || true
           fuser -k 5173/tcp 2>/dev/null || true
 
       - name: Upload Playwright report

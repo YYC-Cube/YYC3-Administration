@@ -1,0 +1,25 @@
+# YYC³ Administration — 自托管后端(P5/P6,ADR-0002/0003)
+# 运行:docker build -f Dockerfile.server -t yyc3-api . && docker run -d \
+#   -p 8787:8787 --env-file .env yyc3-api
+# 🔒 DATABASE_URL/JWT_SECRET 经 --env-file 注入,不进镜像层
+FROM node:22-alpine
+
+WORKDIR /app
+
+RUN npm i -g pnpm@11
+
+# 依赖层(与前端共用 lockfile;全量安装最简,P8 可再优化为 server 子集)
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+RUN pnpm install --frozen-lockfile
+
+# 源码(后端运行仅需 server/ + drizzle 迁移;但 drizzle schema 引用于迁移生成,一并带入)
+COPY server/ ./server/
+COPY tsconfig.json drizzle.config.ts ./
+
+EXPOSE 8787
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -qO- http://localhost:8787/healthz || exit 1
+
+# 迁移幂等,启动前先应用(单实例部署;多实例时迁移外置到发布流程)
+CMD ["sh", "-c", "pnpm db:migrate && pnpm start:server"]

@@ -39,6 +39,14 @@ export function requireRole(...roles: SessionPayload['role'][]) {
 
 const MUTATING = new Set(['POST', 'PUT', 'PATCH', 'DELETE'])
 
+/** 允许的跨代理 Origin(逗号分隔):反代/vite 代理拓扑下 Origin 与 Host 必然不同源 */
+const allowedOrigins = new Set(
+  (process.env.API_ALLOWED_ORIGINS ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean),
+)
+
 export async function csrfOriginGuard(c: Context, next: Next) {
   if (MUTATING.has(c.req.method)) {
     const origin = c.req.header('origin')
@@ -47,7 +55,8 @@ export async function csrfOriginGuard(c: Context, next: Next) {
     let ok = false
     if (origin && host) {
       try {
-        ok = new URL(origin).host === host
+        // 同源直连(生产反代同域) 或 显式 allowlist(vite 代理/多域名部署)
+        ok = new URL(origin).host === host || allowedOrigins.has(origin)
       } catch {
         ok = false
       }

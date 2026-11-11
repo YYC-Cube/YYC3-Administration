@@ -14,6 +14,7 @@ import { Hono } from 'hono'
 import { csrfOriginGuard, requireAuth, requireRole } from './auth/middleware'
 import { authRoutes } from './auth/routes'
 import { db, pool } from './db/client'
+import { dataRoutes } from './routes/data'
 
 import type { SessionPayload } from './auth/token'
 
@@ -32,6 +33,7 @@ export function createApp() {
   })
 
   app.route('/auth', authRoutes)
+  app.route('/data', dataRoutes())
 
   // 角色门示例(供 P3 越权矩阵测试;M2 业务表落地后由真实资源路由替换)
   app.get('/admin/ping', requireAuth, requireRole('admin'), (c) => c.json({ pong: true }))

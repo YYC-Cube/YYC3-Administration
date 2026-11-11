@@ -16,6 +16,7 @@ export type PutSettingsRequest = z.infer<typeof PutSettingsRequestSchema>
 
 export const SettingsDocumentSchema = z.object({
   data: z.record(z.string(), z.unknown()),
-  updatedAt: z.string(),
+  /** null = 该用户尚无云端文档(首次登录,本地即初始真相) */
+  updatedAt: z.string().nullable(),
 })
 export type SettingsDocument = z.infer<typeof SettingsDocumentSchema>

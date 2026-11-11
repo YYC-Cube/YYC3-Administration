@@ -217,6 +217,25 @@ export default defineConfig(({ mode }) => {
     fs: {
       strict: false,
     },
+    // P6/M1:/api → 自托管后端(本机 8787);同源代理使 Cookie/CSRF 天然成立
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8787',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/api/, ''),
+      },
+    },
+  },
+
+  // Preview(pnpm preview,Playwright webServer 用)同代理
+  preview: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8787',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/api/, ''),
+      },
+    },
   },
 
   // Clear cache on startup

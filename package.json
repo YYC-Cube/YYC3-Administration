@@ -24,9 +24,9 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx --env-file=.env server/db/migrate.ts",
-    "dev:server": "tsx watch --env-file=.env server/index.ts",
-    "start:server": "tsx --env-file=.env server/index.ts",
+    "db:migrate": "tsx --env-file-if-exists=.env server/db/migrate.ts",
+    "dev:server": "tsx watch --env-file-if-exists=.env server/index.ts",
+    "start:server": "tsx --env-file-if-exists=.env server/index.ts",
     "clean": "rm -rf dist build coverage .vite playwright-report test-results",
     "prepare": "husky || true"
   },

@@ -42,4 +42,9 @@ export function createRateLimiter(opts: RateLimitOptions) {
 }
 
 export const loginLimiter = createRateLimiter({ windowMs: 60_000, max: 5 })
-export const registerLimiter = createRateLimiter({ windowMs: 3_600_000, max: 3 })
+// register:自托管单 IP(全站同源)场景天然低频但需容忍批量重建(测试/家庭多成员),
+// 10/h 兼顾防滥用;AUTH_RATELIMIT_DISABLED=true 仅供本地开发/E2E 关闭(生产勿设)
+export const registerLimiter =
+  process.env.AUTH_RATELIMIT_DISABLED === 'true'
+    ? { check: (_key: string) => ({ allowed: true, remaining: Infinity, retryAfterSec: 0 }) }
+    : createRateLimiter({ windowMs: 3_600_000, max: 10 })

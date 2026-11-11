@@ -18,3 +18,49 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+
+  # ── 自托管后端(P5/P6,M1 数据面) ─────────────────────────────────
+  # 启动:docker compose --profile server up -d(需同目录 .env 含
+  # DATABASE_URL/JWT_SECRET;DATABASE_URL 指向 db 服务时用主机名 db)
+  # 🔒 前端经反向代理把 /api 转发到本服务(端口 8787),勿直接暴露公网明文 HTTP
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    profiles: ["server"]
+    ports:
+      - "8787:8787"
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PORT=8787
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8787/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # 项目专用 PostgreSQL(ADR-0003;本机已有主库时可用外部 DATABASE_URL 替代
+  # 并移除本服务与 depends_on)
+  db:
+    image: postgres:15-alpine
+    profiles: ["server"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: yyc3_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?请在 .env 设置 POSTGRES_PASSWORD}
+      POSTGRES_DB: yyc3_admin
+    volumes:
+      - yyc3_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yyc3_app -d yyc3_admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  yyc3_pgdata:

@@ -18,10 +18,12 @@ import type {
   User,
   UserRole,
 } from '@/types/auth'
+import type { AuthUser } from '@server/contract/auth'
 
 import { generateSecureToken, hashPassword, verifyPassword } from '@/lib/crypto'
 import { ghostPassword } from '@/lib/demo-credentials'
 import { getSecure, removeSecure, setSecure } from '@/lib/secure-storage'
+import { apiFetch, isApiConfigured } from '@/services/api-client'
 import { hasPermission, ROLE_PERMISSIONS } from '@/types/auth'
 
 // ==========================================
@@ -40,6 +42,19 @@ interface AuthState {
   user: User | null
   status: AuthStatus
   token: string | null
+}
+
+/** 契约 AuthUser → 前端 User(P4 零漂移桥的映射唯一实现) */
+function contractUserToUser(u: AuthUser): User {
+  return {
+    id: u.id,
+    username: u.username,
+    email: u.username + '@self.local',
+    role: u.role,
+    displayName: u.displayName ?? undefined,
+    createdAt: Date.parse(u.createdAt),
+    lastLoginAt: Date.now(),
+  }
 }
 
 interface AuthActions {
@@ -110,6 +125,25 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
   token: null,
 
   login: async (credentials) => {
+    // P6/M1-0:API 模式(VITE_API_MODE=true)走自托管后端,本地分支不触达
+    if (isApiConfigured) {
+      try {
+        const res = await apiFetch<{ user: AuthUser }>('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: credentials.username,
+            password: credentials.password,
+          }),
+        })
+        const user = contractUserToUser(res.user)
+        await saveSession(user, 'self-api', credentials.rememberMe ?? true)
+        set({ user, token: 'self-api', status: 'authenticated' })
+        return { success: true }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '登录失败'
+        return { success: false, error: message }
+      }
+    }
     const users = await loadUsers()
 
     // Built-in demo accounts — DEV builds only(F-05/P3:密码运行时派生,
@@ -185,6 +219,25 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
   },
 
   register: async (info) => {
+    if (isApiConfigured) {
+      try {
+        const res = await apiFetch<{ user: AuthUser }>('/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: info.username,
+            password: info.password,
+            displayName: info.displayName || info.username,
+          }),
+        })
+        const user = contractUserToUser(res.user)
+        await saveSession(user, 'self-api', true)
+        set({ user, token: 'self-api', status: 'authenticated' })
+        return { success: true }
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '注册失败'
+        return { success: false, error: message }
+      }
+    }
     const users = await loadUsers()
 
     // Check for existing username/email
@@ -222,11 +275,25 @@ export const useAuthStore = create<AuthState & AuthActions>()((set, get) => ({
   },
 
   logout: () => {
+    if (isApiConfigured) {
+      // 服务端清 Cookie;本地会话记录同步清
+      void apiFetch('/auth/logout', { method: 'POST' }).catch(() => undefined)
+    }
     removeSecure(SESSION_KEY)
     set({ user: null, token: null, status: 'unauthenticated' })
   },
 
   checkSession: async () => {
+    if (isApiConfigured) {
+      try {
+        const res = await apiFetch<{ user: AuthUser }>('/auth/me')
+        const user = contractUserToUser(res.user)
+        set({ user, token: 'self-api', status: 'authenticated' })
+      } catch {
+        set({ user: null, token: null, status: 'unauthenticated' })
+      }
+      return
+    }
     const session = await loadSession()
     if (session) {
       set({ user: session.user, token: session.token, status: 'authenticated' })

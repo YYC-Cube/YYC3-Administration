@@ -172,6 +172,16 @@ export async function listChatSessions(userId: string) {
     .limit(MAX_SESSIONS_PER_USER)
 }
 
+export async function getChatSession(userId: string, id: string) {
+  assertUserId(userId)
+  const rows = await db
+    .select()
+    .from(chatSessions)
+    .where(and(eq(chatSessions.userId, userId), eq(chatSessions.id, id)))
+    .limit(1)
+  return rows[0]
+}
+
 export async function createChatSession(userId: string, title: string) {
   assertUserId(userId)
   return db.transaction(async (tx) => {
