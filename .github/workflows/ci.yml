@@ -114,6 +114,8 @@ jobs:
 
     env:
       DATABASE_URL: postgres://ci:ci@localhost:5433/yyc3_admin
+      # 测试专用签名密钥(仅 CI e2e 会话;固定值无真实资产风险)
+      JWT_SECRET: ci-e2e-jwt-secret-0123456789abcdef0123456789abcdef
 
     steps:
       - name: Checkout

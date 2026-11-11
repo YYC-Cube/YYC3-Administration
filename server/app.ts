@@ -23,6 +23,12 @@ export function createApp() {
 
   app.use('*', csrfOriginGuard)
 
+  // 全局错误 → 统一信封(防 5xx 纯文本泄漏堆栈;签名密钥缺失等配置错误同此)
+  app.onError((error, c) => {
+    console.error('[server] unhandled:', error)
+    return c.json({ error: 'internal_error', message: '服务内部错误' }, 500)
+  })
+
   app.get('/healthz', async (c) => {
     try {
       await db.execute(sql`select 1`)
