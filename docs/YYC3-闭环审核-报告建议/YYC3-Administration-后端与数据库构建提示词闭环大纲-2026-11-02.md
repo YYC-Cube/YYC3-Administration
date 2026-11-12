@@ -29,7 +29,9 @@ category: plan
 | P6 前端接线           | ✅ 完成（api-client + useAuthStore API 分支 + self-data-sync + vite 同源代理；VITE_API_MODE 门控，Pages 线零破坏）                                          | `src/services/api-client.ts` 等 + `M1-WIRING.md` §二          |
 | P8-lite 容器化/CI     | ✅ 完成（Dockerfile.server + compose server profile + CI e2e PG service，M1 spec CI 同构执行）                                                              | `Dockerfile.server` + `docker-compose.yml` + `ci.yml`         |
 | **M1 全链实地验收**   | ✅ **L1 活库 21 断言 / L2 Playwright 全链 / L3 容器部署链 / e2e 回归 70 绿**                                                                                | `docs/backend/M1-WIRING.md` §四                               |
-| P7/P9-P12             | ⏳ 待启动（越权矩阵 L1 已覆盖大半；余项按大纲推进）                                                                                                         | —                                                             |
+| P7 越权矩阵           | ✅ 活库演练收尾（authz-drill.spec 可重复工具化：双用户交叉 404×6/settings 隔离正证/未登录 401×3/export 红线）                                               | `tests/e2e/authz-drill.spec.ts`                               |
+| P9 监控               | ◐ 配置就绪（api-health 拨测 job 待 vars.API_HEALTH_URL 启用；Sentry 三步待用户 DSN）                                                                        | `.github/workflows/uptime.yml`                                |
+| P10-P12               | ⏳ 待启动（灰度/终审/回流；v1.0.7 已发）                                                                                                                    | —                                                             |
 
 ---
 

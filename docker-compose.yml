@@ -35,6 +35,8 @@ services:
       - .env
     environment:
       - PORT=8787
+      # compose 网络内连 db 服务(覆盖 .env 中宿主开发用连接串)
+      - DATABASE_URL=postgres://yyc3_app:yyc3pg@db:5432/yyc3_admin
     depends_on:
       - db
     healthcheck:
