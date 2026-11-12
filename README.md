@@ -650,6 +650,7 @@ pnpm build
 
 | 版本   | 日期       | 说明                                                                        |
 | :----- | :--------- | :-------------------------------------------------------------------------- |
+| v1.0.7 | 2026-11-12 | M1 全链闭环（自托管后端+数据面+前端接线+越权演练+容器化）                   |
 | v1.0.6 | 2026-11-02 | 监控告警体系（拨测/停摆告警/GHCR/冒烟）+ Sentry 惰性接入 + 测试补强棘轮回调 |
 | v1.0.5 | 2026-11-02 | 生产闭环三断点修复（覆盖率棘轮/dompurify 钉扎/容器线）+ 运维手册 + 安全头   |
 | v1.0.4 | 2026-09-26 | P0 安全/性能修复（挂载缺口、演示声明、CSP、PWA）+ 文档全面对齐              |
@@ -1014,6 +1015,7 @@ pnpm build
 
 | Version | Date       | Description                                                                                       |
 | :------ | :--------- | :------------------------------------------------------------------------------------------------ |
+| v1.0.7  | 2026-11-12 | M1 full-chain closed (self-hosted backend + data plane + wiring + authz drill + containerized)    |
 | v1.0.6  | 2026-11-02 | Monitoring suite (uptime/stall/GHCR/smoke) + lazy Sentry + tests & ratchet 66                     |
 | v1.0.5  | 2026-11-02 | Pipeline break fix ×3 (coverage ratchet / dompurify pin / container line) + runbook + sec headers |
 | v1.0.4  | 2026-09-26 | P0 security/perf fixes (mount gap, demo notice, CSP, PWA) + full doc alignment                    |

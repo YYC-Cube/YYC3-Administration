@@ -14,7 +14,8 @@ on:
       - "v*"
 
 jobs:
-  build-push:
+  # 前端静态镜像(nginx,Pages 线之外的容器发布通道)
+  build-push-app:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,6 +34,32 @@ jobs:
 
       - name: Build
         run: docker build -t "${{ steps.img.outputs.image }}:${{ steps.img.outputs.version }}" -t "${{ steps.img.outputs.image }}:latest" .
+
+      - name: Push（版本 tag + latest）
+        run: |
+          docker push "${{ steps.img.outputs.image }}:${{ steps.img.outputs.version }}"
+          docker push "${{ steps.img.outputs.image }}:latest"
+
+  # 自托管后端镜像(P8 续/P5-P6 数据面;Dockerfile.server,启动即幂等迁移)
+  build-push-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: 计算镜像引用（ghcr 要求全小写）
+        id: img
+        run: |
+          REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "image=ghcr.io/${REPO_LOWER}-api" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Login GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build
+        run: docker build -f Dockerfile.server -t "${{ steps.img.outputs.image }}:${{ steps.img.outputs.version }}" -t "${{ steps.img.outputs.image }}:latest" .
 
       - name: Push（版本 tag + latest）
         run: |

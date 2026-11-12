@@ -15,6 +15,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  # 主拨测:Pages 前端站(恒定执行)
   uptime:
     runs-on: ubuntu-latest
     steps:
@@ -70,5 +71,63 @@ jobs:
             gh api repos/${{ github.repository }}/issues/${ISSUE_NUM} -X PATCH -f state=closed -f state_reason=completed >/dev/null
             gh api repos/${{ github.repository }}/issues/${ISSUE_NUM}/comments \
               -f body="✅ 拨测恢复，告警自动关闭：$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "alert issue #${ISSUE_NUM} auto-closed"
+          fi
+
+  # ── 自托管 API 拨测(P9):仓库 Variables 配置 API_HEALTH_URL 后自动启用 ──
+  api-health:
+    runs-on: ubuntu-latest
+    if: vars.API_HEALTH_URL != ''
+    steps:
+      - name: 拨测自托管 API(/healthz 含 db 探针)
+        id: probe
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "${{ vars.API_HEALTH_URL }}")
+          echo "http_code=${code}"
+          if [ "${code}" = "200" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 失败 → 创建/刷新告警 issue
+        if: steps.probe.outputs.ok == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          ISSUE_NUM=$(gh api "repos/${{ github.repository }}/issues?labels=api-health-alert&state=open" --jq '.[0].number // empty')
+          if [ -z "$ISSUE_NUM" ]; then
+            gh api repos/${{ github.repository }}/issues \
+              -f title="🚨 [api-health] 自托管 API 不可用告警" \
+              -f body="自托管 API（${{ vars.API_HEALTH_URL }}）拨测失败。
+
+          - 首次失败：${NOW}
+          - 本 issue 由 uptime.yml 自动管理：恢复后自动关闭
+          - 处置手册：docs/RELEASE-RUNBOOK.md §5.1b 同类判定" \
+              -f 'labels[]=api-health-alert'
+            echo "alert issue created"
+          else
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM} \
+              -X PATCH \
+              -f body="自托管 API（${{ vars.API_HEALTH_URL }}）拨测失败。
+
+          - 持续失败中，最近观测：${NOW}
+          - 处置手册：docs/RELEASE-RUNBOOK.md §5.1b" \
+              -f title="🚨 [api-health] 自托管 API 不可用告警" \
+              >/dev/null
+            echo "alert issue refreshed: #${ISSUE_NUM}"
+          fi
+
+      - name: 恢复 → 自动关闭告警
+        if: steps.probe.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ISSUE_NUM=$(gh api "repos/${{ github.repository }}/issues?labels=api-health-alert&state=open" --jq '.[0].number // empty')
+          if [ -n "$ISSUE_NUM" ]; then
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM} -X PATCH -f state=closed -f state_reason=completed >/dev/null
+            gh api repos/${{ github.repository }}/issues/${ISSUE_NUM}/comments \
+              -f body="✅ API 拨测恢复，告警自动关闭：$(date -u +%Y-%m-%dT%H:%M:%SZ)"
             echo "alert issue #${ISSUE_NUM} auto-closed"
           fi

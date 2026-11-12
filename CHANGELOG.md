@@ -5,6 +5,60 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2026-11-12
+
+> 🎯 **M1 全链闭环发版**：自托管后端从纸面契约到三层实地验收全绿（P0-P8-lite，
+> 后端闭环大纲 9/12 节点）。F-05/F-09/F-19 三项审计债在本版实质性清偿。
+
+### Added（自托管后端，P2-P5）
+
+- **数据面**：PG 15(drizzle-orm/pg) 5 表模型(users/user_settings/ai_configs/
+  chat_sessions/chat_messages)——partial unique 单激活、双属主 FK 级联、CHECK 枚举；
+  迁移由 drizzle-kit 生成、官方 migrator 幂等应用；唯一数据访问模块(repositories)
+  等价 RLS：全部查询强制属主作用域，他人资源 404 不泄露存在性
+- **AI 密钥静态加密**：AES-256-GCM(secret-box,scrypt 派生),密钥仅环境变量
+- **数据面路由**：/data/settings、/data/ai-configs CRUD+activate、/data/chat
+  会话/消息、/data/export 可逆出口(P0 红线:零 api key 导出)
+- **认证**：argon2id + JWT HS256 httpOnly Cookie + CSRF Origin 守卫(
+  API_ALLOWED_ORIGINS allowlist 支持代理拓扑) + 限流(login 5/60s、register 10/h,
+  AUTH_RATELIMIT_DISABLED 供本地/E2E)
+
+### Added（前端接线，P6）
+
+- `VITE_API_MODE=true` 构建期门控:认证/设置同步切换自托管 API
+  (Pages 线不设 → 本地模式零破坏);vite dev/preview 同源 /api 代理
+- useAuthStore API 分支 + contractUserToUser 契约映射(P4 零漂移桥);
+  self-data-sync 水合+防抖上行;user-data-sync 挂载件双模分流
+
+### Added（契约与演练，P4/P7）
+
+- `server/contract/` 五域 zod 契约 + 10 业务码错误表(错误体 satisfies 编译期锁定)
+- **P7 越权矩阵活库演练**：tests/e2e/authz-drill.spec.ts 可重复执行——
+  双用户交叉越权(7 项资源全 404)、settings 单文档隔离正证、未登录 401 对照、
+  export 红线;CI e2e 随全量同构执行
+
+### Security（F-05/F-19 清偿实证）
+
+- F-05：生产 bundle grep admin123|ghost-_|dev-_(演示凭据)全部 0 命中;
+  演示密码运行时派生(demo-credentials)
+- F-19：注册/登录限流;活库实证 错误密码 401×5→429
+- Hono 全局 onError 信封化(500 不再泄漏堆栈)
+
+### Ops（P8-lite）
+
+- Dockerfile.server(健康检查+启动幂等迁移) + compose server profile(api/db)
+- docker-release.yml 扩展:**api 镜像同 tag 发布 GHCR**
+- CI e2e job:postgres service + 独立迁移步骤 + API 预启动——
+  M1 全链 spec(m1-full-chain.spec.ts)在 CI 同构执行
+- uptime.yml 增 api-health 拨测 job(仓库 Variables 配 API_HEALTH_URL 后启用)
+
+### Tests
+
+- **752 tests 全绿**(+14 认证/契约/接线);覆盖率棘轮四指标全超
+  (S70.83/B67.44/F73.0/L73.08);全量 chromium e2e **71 passed**;
+  三层实地验收(L1 活库 21 断言/L2 Playwright 全链/L3 容器部署链)详见
+  docs/backend/M1-WIRING.md §四
+
 ## [1.0.6] - 2026-11-02
 
 > 批次二/三整合发版：监控告警体系落地 + 测试补强 + 容器线镜像化。
