@@ -54,8 +54,11 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: yyc3_app
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?请在 .env 设置 POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-yyc3pg}
       POSTGRES_DB: yyc3_admin
+    ports:
+      # 宿主开发共用同一库实例(开发/部署数据一致);仅绑定本机回环
+      - "127.0.0.1:55432:5432"
     volumes:
       - yyc3_pgdata:/var/lib/postgresql/data
     healthcheck:

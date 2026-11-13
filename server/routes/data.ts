@@ -25,6 +25,13 @@ import {
   type ChatSessionDetail,
   CreateChatSessionRequestSchema,
 } from '@server/contract/chat'
+import {
+  type DocScope,
+  DocScopeSchema,
+  type PutScopeDocRequest,
+  PutScopeDocRequestSchema,
+  type ScopeDocument,
+} from '@server/contract/docs'
 import { type ApiError, toApiIssues } from '@server/contract/errors'
 import {
   type PutSettingsRequest,
@@ -40,12 +47,14 @@ import {
   deleteChatSession,
   exportAll,
   getChatSession,
+  getUserDoc,
   getUserSetting,
   listAiConfigs,
   listChatMessages,
   listChatSessions,
   setActiveAiConfig,
   updateAiConfig,
+  upsertUserDoc,
   upsertUserSetting,
 } from '@server/db/repositories'
 import { Hono } from 'hono'
@@ -124,6 +133,52 @@ export function dataRoutes() {
       return c.json(doc)
     } catch (error) {
       // 护栏触发(256KB)等 → 422 语义
+      const message = error instanceof Error ? error.message : '写入失败'
+      return c.json({ error: 'invalid_input', message } satisfies ApiError, 422)
+    }
+  })
+
+  // ── docs(M2 批次一:通用域文档;scope 白名单校验) ─────────────────
+  app.get('/docs/:scope', requireAuth, async (c: AuthedContext) => {
+    const parsed = DocScopeSchema.safeParse(c.req.param('scope'))
+    if (!parsed.success) {
+      return c.json({ error: 'invalid_input', message: '未知文档域' } satisfies ApiError, 422)
+    }
+    const userId = c.get('session').sub
+    const row = await getUserDoc(userId, parsed.data)
+    const doc: ScopeDocument = row
+      ? {
+          scope: parsed.data,
+          data: (row.data ?? {}) as Record<string, unknown>,
+          updatedAt: row.updatedAt.toISOString(),
+        }
+      : { scope: parsed.data, data: {}, updatedAt: null }
+    return c.json(doc)
+  })
+
+  app.put('/docs/:scope', requireAuth, async (c: AuthedContext) => {
+    const parsedScope = DocScopeSchema.safeParse(c.req.param('scope'))
+    if (!parsedScope.success) {
+      return c.json({ error: 'invalid_input', message: '未知文档域' } satisfies ApiError, 422)
+    }
+    const parsed = PutScopeDocRequestSchema.safeParse(await c.req.json().catch(() => null))
+    if (!parsed.success) {
+      return c.json(
+        { error: 'invalid_input', issues: toApiIssues(parsed.error.issues) } satisfies ApiError,
+        422,
+      )
+    }
+    const userId = c.get('session').sub
+    const reqBody: PutScopeDocRequest = parsed.data
+    try {
+      const row = await upsertUserDoc(userId, parsedScope.data, reqBody.data)
+      const doc: ScopeDocument = {
+        scope: parsedScope.data,
+        data: (row.data ?? {}) as Record<string, unknown>,
+        updatedAt: row.updatedAt.toISOString(),
+      }
+      return c.json(doc)
+    } catch (error) {
       const message = error instanceof Error ? error.message : '写入失败'
       return c.json({ error: 'invalid_input', message } satisfies ApiError, 422)
     }

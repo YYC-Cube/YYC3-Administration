@@ -10,5 +10,6 @@
 export * from './ai-configs'
 export * from './auth'
 export * from './chat'
+export * from './docs'
 export * from './errors'
 export * from './settings'

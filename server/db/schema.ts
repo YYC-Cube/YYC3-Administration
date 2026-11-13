@@ -61,6 +61,34 @@ export const userSettings = pgTable('user_settings', {
 })
 
 // ==========================================
+// user_documents —— 通用域文档(M2 批次一)
+// 按属主+域(scope)存单文档 jsonb:task-board / smart-form 等
+// 即插即用域;字段级行式建模待该域出现查询需求时再演进
+// ==========================================
+
+export const userDocuments = pgTable(
+  'user_documents',
+  {
+    id: uuid('id')
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    /** 域标识(应用层白名单校验;路由层拒绝白名单外 scope) */
+    scope: text('scope').notNull(),
+    data: jsonb('data').notNull().default({}),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    // 每用户每域至多一份文档(读/写恒以属主+scope 寻址)
+    uniqueIndex('user_documents_user_scope_uq').on(t.userId, t.scope),
+    index('user_documents_scope_idx').on(t.scope),
+  ],
+)
+
+// ==========================================
 // ai_configs —— AI 模型配置(M1-2;api_key 静态加密存储)
 // ==========================================
 

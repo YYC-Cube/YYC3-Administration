@@ -8,6 +8,13 @@
       "when": 1794323881987,
       "tag": "0000_calm_toro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794561102610,
+      "tag": "0001_stormy_vulcan",
+      "breakpoints": true
     }
   ]
 }

@@ -17,6 +17,7 @@ import {
   type RegisterRequest,
   RegisterRequestSchema,
 } from '@server/contract/auth'
+import { DocScopeSchema, ScopeDocumentSchema } from '@server/contract/docs'
 import { ApiErrorSchema, ERROR_STATUS, toApiIssues } from '@server/contract/errors'
 import { describe, expect, expectTypeOf, it } from 'vitest'
 
@@ -86,6 +87,16 @@ describe('contract/auth — schema 语义', () => {
   it('类型恒等:z.infer ≅ 导出契约类型(零手写漂移)', () => {
     expectTypeOf<z.infer<typeof AuthUserSchema>>().toEqualTypeOf<AuthUser>()
     expectTypeOf<AuthUser['role']>().toEqualTypeOf<'viewer' | 'agent' | 'manager' | 'admin'>()
+  })
+})
+
+describe('contract/docs — scope 白名单(M2 批次一)', () => {
+  it('白名单内 scope 通过;白名单外拒绝', () => {
+    expect(DocScopeSchema.safeParse('task-board').success).toBe(true)
+    expect(DocScopeSchema.safeParse('smart-form').success).toBe(true)
+    expect(DocScopeSchema.safeParse('unknown-scope').success).toBe(false)
+    const doc = ScopeDocumentSchema.safeParse({ scope: 'task-board', data: {}, updatedAt: null })
+    expect(doc.success).toBe(true)
   })
 })
 

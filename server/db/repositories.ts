@@ -14,7 +14,7 @@
 import { and, desc, eq, sql } from 'drizzle-orm'
 
 import { db } from './client'
-import { aiConfigs, chatMessages, chatSessions, users, userSettings } from './schema'
+import { aiConfigs, chatMessages, chatSessions, userDocuments, users, userSettings } from './schema'
 
 const MAX_SETTINGS_BYTES = 256 * 1024
 const MAX_SESSIONS_PER_USER = 50
@@ -79,6 +79,37 @@ export async function upsertUserSetting(userId: string, data: unknown) {
     .values({ userId, data })
     .onConflictDoUpdate({
       target: userSettings.userId,
+      set: { data, updatedAt: new Date() },
+    })
+    .returning()
+  return row
+}
+
+// ==========================================
+// user_documents(M2 批次一:通用域文档;scope 白名单由路由层校验)
+// ==========================================
+
+export async function getUserDoc(userId: string, scope: string) {
+  assertUserId(userId)
+  const rows = await db
+    .select()
+    .from(userDocuments)
+    .where(and(eq(userDocuments.userId, userId), eq(userDocuments.scope, scope)))
+    .limit(1)
+  return rows[0]
+}
+
+export async function upsertUserDoc(userId: string, scope: string, data: unknown) {
+  assertUserId(userId)
+  const bytes = Buffer.byteLength(JSON.stringify(data) ?? '', 'utf8')
+  if (bytes > MAX_SETTINGS_BYTES) {
+    throw new GuardError(`文档 ${bytes}B 超 256KB 护栏(需拆分)`)
+  }
+  const [row] = await db
+    .insert(userDocuments)
+    .values({ userId, scope, data })
+    .onConflictDoUpdate({
+      target: [userDocuments.userId, userDocuments.scope],
       set: { data, updatedAt: new Date() },
     })
     .returning()
