@@ -31,7 +31,8 @@ category: plan
 | **M1 全链实地验收**   | ✅ **L1 活库 21 断言 / L2 Playwright 全链 / L3 容器部署链 / e2e 回归 70 绿**                                                                                | `docs/backend/M1-WIRING.md` §四                               |
 | P7 越权矩阵           | ✅ 活库演练收尾（authz-drill.spec 可重复工具化：双用户交叉 404×6/settings 隔离正证/未登录 401×3/export 红线）                                               | `tests/e2e/authz-drill.spec.ts`                               |
 | P9 监控               | ◐ 配置就绪（api-health 拨测 job 待 vars.API_HEALTH_URL 启用；Sentry 三步待用户 DSN）                                                                        | `.github/workflows/uptime.yml`                                |
-| P10-P12               | ⏳ 待启动（灰度/终审/回流；v1.0.7 已发）                                                                                                                    | —                                                             |
+| P10-P12               | ⏳ 待启动（灰度/终审/回流；v1.0.7 已发；**M2 完成後按六维度闭环标准复跑 P11 终审**）                                                                        | —                                                             |
+| **M2 批次一**         | ✅ 完成（user_documents 通用域文档表：task-board/smart-form 云端化；迁移+管线+路由+活库冒烟全绿；compose db 暴露宿主回环——开发/部署同库）                   | `docs/backend/M2-BATCH1-DOC-SCOPES.md`                        |
 
 ---
 
