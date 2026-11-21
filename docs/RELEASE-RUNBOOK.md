@@ -122,6 +122,24 @@ docker compose up -d                      # healthcheck 通过即恢复
 2. 恢复步骤：`gh run view <run_id> --log-failed` 定位失败门 → 修复或按「棘轮取整
    防抖动」惯例校准阈值（附取证注释）→ push 后确认 CI 绿 → 确认 Deploy run 不再被 skip。
 
+### 5.4 数据库巡检与恢复演练（2026-11-21 落地，命令固化）
+
+**巡检四查（对目标库执行；dev=compose db 55432，prod=45:5433）**：
+
+```bash
+# ① 版本 ② 表清单漂移 ③ 迁移账 ④ 关键约束+唯一索引
+docker exec yyc3-administration-db-1 psql -U yyc3_app -d yyc3_admin -tAc \
+  "select regexp_replace(version(),'PostgreSQL |,.*','','g');"
+# ② 期望:ai_configs,chat_messages,chat_sessions,user_documents,user_settings,users
+# ③ journal 数须 = server/db/migrations/*.sql 数
+# ④ CHECK 查 pg_constraint;唯一索引查 pg_indexes:
+#    ai_configs_user_active_uq / chat_messages_session_seq_uq / users_username_uq
+```
+
+**恢复演练（月度抽检 🔶 闭环）**：dump → 临时库恢复 → 行数比对 → 清理
+（2026-11-21 dev 实地演练全绿：408 行 dump、零 ERROR、三表行数一致）。
+prod 抽检同命令、目标库改 45 主库（凭据走 NAS api-keys.env 指针）。
+
 ## 六、已知缺口与整改（终审遗留）
 
 | #   | 缺口                                                                                                     | 级别      | 整改方向                                                                                                                            |
