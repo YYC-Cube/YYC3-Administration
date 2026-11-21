@@ -37,6 +37,10 @@ services:
       - PORT=8787
       # compose 网络内连 db 服务(覆盖 .env 中宿主开发用连接串)
       - DATABASE_URL=postgres://yyc3_app:yyc3pg@db:5432/yyc3_admin
+      # 前端(5173 preview/生产反代域)经代理转发的 Origin 白名单
+      - API_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3171
+      # 本地/演练栈关闭注册限流(生产严禁设置此项)
+      - AUTH_RATELIMIT_DISABLED=true
     depends_on:
       - db
     healthcheck:
