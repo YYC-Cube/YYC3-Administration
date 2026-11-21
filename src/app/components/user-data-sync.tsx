@@ -10,16 +10,35 @@
 
 import { useEffect } from 'react'
 
+import { useTaskStore } from '@/features/toolkit/pages/task-board-store'
 import { isSupabaseConfigured, supabase } from '@/lib/supabase-client'
 import { isApiConfigured } from '@/services/api-client'
+import { createDocSync } from '@/services/doc-sync'
 import { startSelfSync, stopSelfSync } from '@/services/self-data-sync'
 import { startSync, stopSync } from '@/services/user-data-sync'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 export function UserDataSync() {
   useEffect(() => {
-    // ── 自托管模式:跟随认证状态启停 ─────────────────────────────
+    // ── 自托管模式:跟随认证状态启停(settings + 各域文档) ─────────
     if (isApiConfigured) {
+      // task-board 域文档同步(M2 批次二):tasks+reminders 整文档
+      const taskBoardSync = createDocSync('task-board', {
+        pick: () => {
+          const { tasks, reminders } = useTaskStore.getState()
+          return { tasks, reminders }
+        },
+        subscribe: (fn) => useTaskStore.subscribe(fn),
+        apply: (remote) => {
+          const doc = remote as { tasks?: unknown[]; reminders?: unknown[] }
+          useTaskStore.setState({
+            tasks: (doc.tasks ?? []) as never[],
+            reminders: (doc.reminders ?? []) as never[],
+            _hydrated: true,
+          })
+        },
+      })
+
       let prev: string | null = null
       const check = () => {
         const { status, user } = useAuthStore.getState()
@@ -27,9 +46,11 @@ export function UserDataSync() {
         if (key && key !== prev) {
           prev = key
           void startSelfSync()
+          void taskBoardSync.start(key)
         } else if (!key && prev) {
           prev = null
           stopSelfSync()
+          taskBoardSync.stop()
         }
       }
       check()
@@ -37,6 +58,7 @@ export function UserDataSync() {
       return () => {
         unsub()
         stopSelfSync()
+        taskBoardSync.stop()
       }
     }
 
