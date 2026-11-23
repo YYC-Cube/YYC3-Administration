@@ -43,7 +43,7 @@
     "@radix-ui/react-tabs": "1.2.1",
     "@sentry/browser": "^11.10.0",
     "@supabase/supabase-js": "^2.118.0",
-    "@yyc3/i18n-core": "^3.0.0",
+    "@yyc3/i18n-core": "3.0.2",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",
