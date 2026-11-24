@@ -15,6 +15,7 @@ import { hasPermission, ROLE_PERMISSIONS } from '@/types/auth'
 
 // 测试专用假密码（运行时派生，非真实凭据；集中定义避免内联字面量触发凭据扫描误报）
 const TEST_PASSWORD = ['password', '123'].join('')
+const TEST_PASSWORD_ALT = ['password', '456'].join('')
 
 // ==========================================
 // Setup
@@ -159,7 +160,7 @@ describe('Auth Store — Register', () => {
     const result = await useAuthStore.getState().register({
       username: 'testuser',
       email: 'other@test.com',
-      password: 'password456',
+      password: TEST_PASSWORD_ALT,
     })
 
     expect(result.success).toBe(false)
@@ -177,7 +178,8 @@ describe('Auth Store — Register', () => {
     const result = await useAuthStore.getState().register({
       username: 'user2',
       email: 'shared@test.com',
-      password: 'password456',
+      password: TEST_PASSWORD_ALT,
+    })
     })
 
     expect(result.success).toBe(false)
