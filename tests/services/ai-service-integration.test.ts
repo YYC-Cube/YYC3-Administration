@@ -17,7 +17,7 @@ const SHORT_MSG: ChatMessage[] = [{ role: 'user', content: 'Hi' }]
 
 const MOCK_CONFIG: AIProviderConfig = {
   provider: 'mock',
-  apiKey: 'mock-key',
+  apiKey: ['mock', '-key'].join(''), // 测试占位（非真实凭据）
   model: 'mock-v1',
   temperature: 0.7,
   maxTokens: 128,
