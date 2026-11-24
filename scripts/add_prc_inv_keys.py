@@ -1,7 +1,11 @@
 import re
+from pathlib import Path
 
-zh_content = open('/Users/yanyu/YYC-Cube/YYC3-Administration/src/app/locales/zh.ts', 'r', encoding='utf-8').read()
-en_content = open('/Users/yanyu/YYC-Cube/YYC3-Administration/src/app/locales/en.ts', 'r', encoding='utf-8').read()
+# 仓根相对定位（避免硬编码本机绝对路径）
+LOCALES_DIR = Path(__file__).resolve().parent.parent / 'src' / 'app' / 'locales'
+
+zh_content = (LOCALES_DIR / 'zh.ts').open('r', encoding='utf-8').read()
+en_content = (LOCALES_DIR / 'en.ts').open('r', encoding='utf-8').read()
 
 zh_keys = '''
   // ---- Procurement (prc) ----
@@ -171,7 +175,7 @@ en_content = en_content.replace(
     en_keys + "\n  // ---- Settings standalone extras (stg) ----\n\n}"
 )
 
-open('/Users/yanyu/YYC-Cube/YYC3-Administration/src/app/locales/zh.ts', 'w', encoding='utf-8').write(zh_content)
-open('/Users/yanyu/YYC-Cube/YYC3-Administration/src/app/locales/en.ts', 'w', encoding='utf-8').write(en_content)
+(LOCALES_DIR / 'zh.ts').open('w', encoding='utf-8').write(zh_content)
+(LOCALES_DIR / 'en.ts').open('w', encoding='utf-8').write(en_content)
 
 print('Done - ZH and EN keys added')

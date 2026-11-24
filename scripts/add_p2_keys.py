@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Add translation keys for channel-center, collab-creation, data-integration,
 marketing-analytics, and additional tools keys to ZH and EN locale files."""
+from pathlib import Path
+
+# 仓根相对定位（避免硬编码本机绝对路径）
+LOCALES_DIR = Path(__file__).resolve().parent.parent / 'src' / 'app' / 'locales'
 
 zh_keys = """
 // ---- Channel Center (ch) ----
@@ -322,7 +326,7 @@ en_keys = """
 
 
 for locale, keys_text in [('zh', zh_keys), ('en', en_keys)]:
-    path = f'/Users/yanyu/YYC-Cube/YYC3-Administration/src/app/locales/{locale}.ts'
+    path = str(LOCALES_DIR / f'{locale}.ts')
     content = open(path).read()
 
     # Find the last '}' before the export

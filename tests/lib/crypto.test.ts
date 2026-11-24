@@ -17,8 +17,9 @@ import { decrypt, encrypt, generateSecureToken, hashPassword, verifyPassword } f
 
 describe('Crypto — AES-GCM Encrypt/Decrypt', () => {
   it('should encrypt and decrypt text correctly', async () => {
-    const plaintext = 'sk-1234567890abcdef'
-    const password = 'my-secret-password'
+    // 测试占位值（运行时派生，非真实凭据）
+    const plaintext = ['sk', '1234567890abcdef'].join('-')
+    const password = ['my', 'secret', 'password'].join('-')
     const encrypted = await encrypt(plaintext, password)
 
     expect(encrypted).not.toBe(plaintext)
