@@ -180,7 +180,6 @@ describe('Auth Store — Register', () => {
       email: 'shared@test.com',
       password: TEST_PASSWORD_ALT,
     })
-    })
 
     expect(result.success).toBe(false)
     expect(result.error).toContain('邮箱已被注册')
