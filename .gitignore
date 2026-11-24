@@ -125,3 +125,6 @@ public/clear-sw.js
 
 # Editor cache
 .next/
+
+scripts/__pycache__/
+.v2c/
