@@ -16,6 +16,10 @@ import { gitAPIService } from '@/services/git-api-service'
 
 const fetchMock = vi.fn()
 
+/** GitOperationResult 为判别联合;测试侧用宽松视图统一取 data/error */
+type LooseResult = { success: boolean; data?: unknown; error?: string }
+const loose = (r: unknown) => r as LooseResult
+
 function jsonRes(body: unknown, ok = true, status = 200): Response {
   return {
     ok,
@@ -66,7 +70,7 @@ describe('GitAPIService — createCommit(已配置)', () => {
     const result = await gitAPIService.createCommit('src/a.ts', 'content', 'feat: x')
 
     expect(result.success).toBe(true)
-    expect((result.data as { sha: string }).sha).toBe('abcdefg')
+    expect((loose(result).data as { sha: string }).sha).toBe('abcdefg')
     const [url, init] = fetchMock.mock.calls[0]
     expect(url).toContain('/contents/src/a.ts')
     expect(init.method).toBe('PUT')
@@ -97,7 +101,7 @@ describe('GitAPIService — createCommit(已配置)', () => {
     fetchMock.mockResolvedValueOnce(jsonRes({ message: 'unprocessable' }, false, 422))
     const result = await gitAPIService.createCommit('a.ts', 'x', 'm')
     expect(result.success).toBe(false)
-    expect(result.error).toContain('422')
+    expect(loose(result).error).toContain('422')
   })
 })
 
@@ -106,7 +110,7 @@ describe('GitAPIService — createBranch(已配置)', () => {
     fetchMock.mockResolvedValueOnce(jsonRes({ object: { sha: 'deadbeef1234567' } }))
     const result = await gitAPIService.createBranch('feat/x', 'mainsha')
     expect(result.success).toBe(true)
-    expect((result.data as { sha: string }).sha).toBe('deadbee')
+    expect((loose(result).data as { sha: string }).sha).toBe('deadbee')
     const body = JSON.parse(fetchMock.mock.calls[0][1].body)
     expect(body.ref).toBe('refs/heads/feat/x')
     expect(body.sha).toBe('mainsha')
@@ -116,7 +120,7 @@ describe('GitAPIService — createBranch(已配置)', () => {
     fetchMock.mockResolvedValueOnce(jsonRes({}, false, 422))
     const result = await gitAPIService.createBranch('dup', 'sha')
     expect(result.success).toBe(false)
-    expect(result.error).toContain('422')
+    expect(loose(result).error).toContain('422')
   })
 })
 
@@ -129,7 +133,7 @@ describe('GitAPIService — getFileContent(已配置)', () => {
     )
     const result = await gitAPIService.getFileContent('src/m.ts')
     expect(result.success).toBe(true)
-    expect((result.data as { content: string }).content).toBe(content)
+    expect((loose(result).data as { content: string }).content).toBe(content)
     expect(fetchMock.mock.calls[0][0]).toContain('?ref=main')
   })
 
@@ -142,14 +146,14 @@ describe('GitAPIService — getFileContent(已配置)', () => {
       jsonRes({ path: 'w.ts', content: wrapped, sha: 's', size: 1, encoding: 'base64' }),
     )
     const result = await gitAPIService.getFileContent('w.ts')
-    expect((result.data as { content: string }).content).toBe(content)
+    expect((loose(result).data as { content: string }).content).toBe(content)
   })
 
   it('获取失败返回 error', async () => {
     fetchMock.mockResolvedValueOnce(jsonRes({}, false, 404))
     const result = await gitAPIService.getFileContent('nope.ts')
     expect(result.success).toBe(false)
-    expect(result.error).toContain('404')
+    expect(loose(result).error).toContain('404')
   })
 })
 
@@ -158,7 +162,7 @@ describe('GitAPIService — deleteFile(已配置)', () => {
     fetchMock.mockResolvedValueOnce(jsonRes({ ok: true }))
     const result = await gitAPIService.deleteFile('a.ts', 'rm', 'sha9')
     expect(result.success).toBe(true)
-    expect((result.data as { deleted: boolean }).deleted).toBe(true)
+    expect((loose(result).data as { deleted: boolean }).deleted).toBe(true)
     const body = JSON.parse(fetchMock.mock.calls[0][1].body)
     expect(body).toEqual({ message: 'rm', sha: 'sha9', branch: 'main' })
   })
@@ -167,7 +171,7 @@ describe('GitAPIService — deleteFile(已配置)', () => {
     fetchMock.mockResolvedValueOnce(jsonRes({}, false, 409))
     const result = await gitAPIService.deleteFile('a.ts', 'rm', 'sha9')
     expect(result.success).toBe(false)
-    expect(result.error).toContain('409')
+    expect(loose(result).error).toContain('409')
   })
 })
 
@@ -197,7 +201,7 @@ describe('GitAPIService — listPullRequests(已配置)', () => {
     )
     const result = await gitAPIService.listPullRequests('all')
     expect(result.success).toBe(true)
-    const list = result.data as { number: number; state: string }[]
+    const list = loose(result).data as { number: number; state: string }[]
     expect(list[0].state).toBe('merged')
     expect(list[1].state).toBe('open')
     expect(fetchMock.mock.calls[0][0]).toContain('pulls?state=all')
@@ -207,7 +211,7 @@ describe('GitAPIService — listPullRequests(已配置)', () => {
     fetchMock.mockResolvedValueOnce(jsonRes({}, false, 502))
     const result = await gitAPIService.listPullRequests('open')
     expect(result.success).toBe(false)
-    expect(result.error).toContain('502')
+    expect(loose(result).error).toContain('502')
   })
 })
 
@@ -232,6 +236,6 @@ describe('GitAPIService — fetch 包装鉴权头', () => {
     } as unknown as Response)
     const result = await gitAPIService.createCommit('a.ts', 'x', 'm')
     expect(result.success).toBe(false)
-    expect(result.error).toContain('500')
+    expect(loose(result).error).toContain('500')
   })
 })

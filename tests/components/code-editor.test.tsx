@@ -226,7 +226,7 @@ describe('CodeEditor — Monaco 挂载联动', () => {
   it('model 缺失时行数保持 0 且不订阅内容变化', () => {
     const editor = makeEditorStub()
     editor.model = null as never
-    editor.getModel = vi.fn(() => null)
+    editor.getModel = vi.fn(() => null) as unknown as typeof editor.getModel
     render(<CodeEditor filePath="a.ts" />)
     monacoHooks.latest?.onMount!(editor as never, monacoStub as never)
     expect(screen.getByText('0 lines')).toBeTruthy()

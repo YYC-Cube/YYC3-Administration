@@ -72,7 +72,7 @@ describe('createDocSync — 域文档同步工厂', () => {
     return {
       pick: vi.fn(() => ({ tasks: [1, 2], reminders: [] })),
       apply: vi.fn(),
-      subscribe: vi.fn(() => vi.fn()),
+      subscribe: vi.fn((_fn: () => void) => vi.fn()),
     }
   }
 
@@ -157,7 +157,7 @@ describe('createDocSync — 域文档同步工厂', () => {
   it('stop:解订阅 + 清定时器(变更不再上行)', async () => {
     vi.useFakeTimers()
     const unsub = vi.fn()
-    const opts = { pick: vi.fn(() => ({})), apply: vi.fn(), subscribe: vi.fn(() => unsub) }
+    const opts = { pick: vi.fn(() => ({})), apply: vi.fn(), subscribe: vi.fn((_fn: () => void) => unsub) }
     apiState.apiFetch.mockResolvedValueOnce({ data: {}, updatedAt: null })
     const h = createDocSync('task-board', opts)
     await h.start('u_9')

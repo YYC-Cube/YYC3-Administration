@@ -280,7 +280,7 @@ describe('useAuthStore — updateProfile 与权限', () => {
   })
 
   it('hasPermission/hasRole:无用户恒 false,有用户按角色判定', async () => {
-    expect(useAuthStore.getState().hasPermission('settings:write')).toBe(false)
+    expect(useAuthStore.getState().hasPermission('settings:edit')).toBe(false)
     expect(useAuthStore.getState().hasRole('admin')).toBe(false)
 
     await useAuthStore.getState().register({
@@ -291,6 +291,6 @@ describe('useAuthStore — updateProfile 与权限', () => {
     // 首个用户为 admin
     expect(useAuthStore.getState().hasRole('admin')).toBe(true)
     expect(useAuthStore.getState().hasRole('viewer')).toBe(false)
-    expect(typeof useAuthStore.getState().hasPermission('settings:write')).toBe('boolean')
+    expect(typeof useAuthStore.getState().hasPermission('settings:edit')).toBe('boolean')
   })
 })

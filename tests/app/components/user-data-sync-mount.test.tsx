@@ -59,6 +59,8 @@ vi.mock('@/lib/supabase-client', () => ({
   },
 }))
 
+import type { Task } from '@/features/toolkit/pages/task-board-data'
+
 import { UserDataSync } from '@/app/components/user-data-sync'
 import { useTaskStore } from '@/features/toolkit/pages/task-board-store'
 import { createDocSync } from '@/services/doc-sync'
@@ -164,7 +166,7 @@ describe('UserDataSync — 自托管 API 模式', () => {
     // subscribe 直连 store 订阅
     const fn = vi.fn()
     const unsub = opts.subscribe(fn)
-    useTaskStore.setState({ tasks: [{ id: 't2' }] })
+    useTaskStore.setState({ tasks: [{ id: 't2' }] as unknown as Task[] })
     expect(fn).toHaveBeenCalled()
     unsub()
     useTaskStore.setState({ tasks: [] })
