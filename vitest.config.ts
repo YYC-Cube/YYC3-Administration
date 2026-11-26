@@ -56,23 +56,22 @@ export default defineConfig({
       include: ['src/**/*.{ts,tsx}'],
       // 注:vitest 4 移除 coverage.all 选项——include 列出的未测试文件
       // 仍会计入分母(语义等价于 v3 的 all: true)
-      // 基线棘轮 = 当前实际覆盖率,只升不降。2026-10-19 P2 覆盖率续升
-      // (新增 4 个测试文件,覆盖 use-theme-tokens / shared/ui/badge / auth-context)
-      // 后实测:statements 70.43 / branches 66.81 / functions 72.36 / lines 72.9,
-      // 取整略低防抖动。棘轮仅约束默认(排除)口径;COV_ALL 全口径为公示口径,不设门禁
-      // 2026-11-01 终审:branches 阈值 66→65(CI run 39152833151 取证:Node 24 实测
-      // 65.65% 未过门 → main 连红 → Deploy 停发 35 天;阈值取 CI 实测地板)。
-      // 2026-11-02 批次三:分支用例补强(useAIModelStore 引导路径 + sonner 主题矩阵,
-      // 新增 2 测试文件 17 用例)后本地实测 branches 67.69%(918/1356)→ 棘轮回调 66,
-      // 为 CI Node 24 地板(~66.7%)保留 ≥0.7pp 抖动余量。只升不降。
+      // 基线棘轮 = 当前实际覆盖率,只升不降。历史:2026-10-19 棘轮 70/66/72/72;
+      // 2026-11-01 branches 66→65(CI Node 24 地板取证);2026-11-02 批次三回调 66。
+      // 2026-11-27 85×4 冲刺(test/my-mgmt-gate-85):新增 9 个测试文件 ~140 用例
+      // (ai-proxy 网络通路/code-editor/全量 lazy 解析/particle-canvas/NeonCard 交互/
+      // UserDataSync 双模/user-data-sync 生命周期/git-api 真实通路/useAuthStore 会话自愈/
+      // doc-sync+self-data-sync/use-chat-stream 补测),门禁口径实测
+      // S 92.56 / B 85.8 / F 90.6 / L 94.3 → 阈值 85×4(branches 实测 85.8%,
+      // 保留 0.8pp CI 抖动余量)。只升不降。
       ...(process.env.COV_ALL
         ? {}
         : {
             thresholds: {
-              statements: 70,
-              branches: 66,
-              functions: 72,
-              lines: 72,
+              statements: 85,
+              branches: 85,
+              functions: 85,
+              lines: 85,
             },
           }),
     },

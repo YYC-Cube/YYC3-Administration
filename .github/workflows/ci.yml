@@ -74,6 +74,12 @@ jobs:
       - name: Unit tests with coverage
         run: pnpm test:coverage
 
+      # ── 覆盖率公示口径(COV_ALL 全口径,不设阈值,见 vitest.config.ts F-12 注释)──
+      # 仅 Node 22 跑一次以省 runner;全口径含 E2E 守护的页面组件,用于诚实公示
+      - name: Coverage disclosure (COV_ALL full scope, no gate)
+        if: matrix.node-version == 22
+        run: pnpm test:coverage:all
+
       - name: Upload coverage reports
         if: matrix.node-version == 22
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
