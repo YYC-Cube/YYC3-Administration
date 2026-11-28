@@ -59,8 +59,8 @@ importers:
         specifier: ^2.118.0
         version: 2.118.0
       '@yyc3/i18n-core':
-        specifier: 3.0.2
-        version: 3.0.2(lit@3.3.3)
+        specifier: 3.6.1
+        version: 3.6.1(lit@3.3.3)
       class-variance-authority:
         specifier: 0.7.1
         version: 0.7.1
@@ -2597,9 +2597,9 @@ packages:
   '@vue/shared@3.5.39':
     resolution: {integrity: sha512-l1rrBtBfTnmxvtsvdQDXltUUy8S1Y+ZaqdfUzmAnJkTd8Z8rv5v/ytW+TKiqEOWyHPoqtPlNFSs0lhRmYVSHVA==}
 
-  '@yyc3/i18n-core@3.0.2':
-    resolution: {integrity: sha512-ocgHkxtq0bY/3eHcXI9Eq0IAtkVvWS8ZgHSrvCbCCmTEnJeYiEExlVtURSTOzFVAHBqeS5uW+b4SDo4WaqwwaQ==}
-    engines: {node: '>=18.0.0'}
+  '@yyc3/i18n-core@3.6.1':
+    resolution: {integrity: sha512-rywlXBlqmzrmNO7uVe8YFEIRIxjeFLi+wuvgI3RfbO/yqhYZ129VfSDo+Hchz5F5AZAY7qIMDJnKEwaZz6xvrw==}
+    engines: {node: '>=20.19.0'}
     peerDependencies:
       lit: ^3.0.0
     peerDependenciesMeta:
@@ -8146,7 +8146,7 @@ snapshots:
 
   '@vue/shared@3.5.39': {}
 
-  '@yyc3/i18n-core@3.0.2(lit@3.3.3)':
+  '@yyc3/i18n-core@3.6.1(lit@3.3.3)':
     optionalDependencies:
       lit: 3.3.3
 
